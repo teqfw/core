@@ -1,0 +1,27 @@
+{
+  "name": "teqfw-core-all",
+  "version": "0.1.0",
+  "description": "Initial package to collect all core functionality.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teqfw/core-all.git"
+  },
+  "keywords": [
+    "pet",
+    "project",
+    "hobby",
+    "web",
+    "applications"
+  ],
+  "author": "Alex Gusev <alex@flancer64.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/teqfw/core-all/issues"
+  },
+  "homepage": "https://github.com/teqfw/core-all#readme",
+  "teqfw": {}
+}

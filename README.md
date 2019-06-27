@@ -1,2 +1,3 @@
-# core-all
+# teqfw-core-all
+
 Initial package to collect all core functionality.
