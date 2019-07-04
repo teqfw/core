@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/teqfw/core-all#readme",
   "dependencies": {
+    "commander": "^2.20.0",
     "express": "^4.17.1"
   },
   "teqfw": {}
