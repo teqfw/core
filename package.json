@@ -23,5 +23,8 @@
     "url": "https://github.com/teqfw/core-all/issues"
   },
   "homepage": "https://github.com/teqfw/core-all#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
   "teqfw": {}
 }
