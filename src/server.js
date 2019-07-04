@@ -5,7 +5,6 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
-const process = require("process");
 
 /** =============================================================================
  * Definitions of working elements (constants, variables, functions).
@@ -14,7 +13,7 @@ const DEF_PORT = 3000;
 const PID_FILE_NAME = "./var/server.pid";
 
 let pid;
-const cfg = global.teqfw;
+const cfg = global["teqfw"];
 const teqfw_core_all_server = express();
 
 teqfw_core_all_server.get("*", (req, res) => {
