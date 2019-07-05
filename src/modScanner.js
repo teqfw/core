@@ -17,7 +17,7 @@ const teqfw = global["teqfw"];
 
 function scan(callback) {
     const result = [];
-    const dir_node_modules = teqfw.path.root + "/node_modules";
+    const dir_node_modules = teqfw.cfg.path.root + "/node_modules";
     // read all folders in `./node_modules/``
     fs.readdir(dir_node_modules, (err, dirs) => {
         if (err) throw err;

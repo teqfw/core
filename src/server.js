@@ -22,7 +22,7 @@ teqfw_core_all_server.get("*", (req, res) => {
 
 function run() {
     pid = process.pid;
-    const pid_path = path.join(teqfw.path.root, PID_FILE_NAME);
+    const pid_path = path.join(teqfw.cfg.path.root, PID_FILE_NAME);
     // write PID to file then start the server
     fs.writeFile(pid_path, pid, (err) => {
         if (err) throw err;

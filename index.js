@@ -13,7 +13,7 @@ const mod_scanner = require("./src/modScanner");
  * Definitions of working elements (constants, variables, functions).
  * =========================================================================== */
 const teqfw = global["teqfw"];
-const version = teqfw.version;
+const version = teqfw.cfg.version;
 
 /**
  *
@@ -28,12 +28,19 @@ function Construct() {
         init(() => {
             _commander.parse(process.argv);
             if (!process.argv.slice(2).length) {
+                const boo = JSON.stringify(teqfw);
                 _commander.outputHelp();
             }
         });
     };
 
     function init(callback) {
+        (function init_globals() {
+            /* create structure for global container `teqfw` */
+            teqfw.mod = {};
+            teqfw.core = {};
+        })();
+
         const fnCliFoo = function () {
             console.log("Foo is here...");
         };
