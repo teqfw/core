@@ -23,10 +23,16 @@ teqfw_core_all_server.get("*", (req, res) => {
 function run() {
     pid = process.pid;
     const pid_path = path.join(teqfw.path.root, PID_FILE_NAME);
-    fs.writeFileSync(pid_path, pid);
-    this.listen(DEF_PORT, function () {
-        console.log(`Example app listening on port ${DEF_PORT}. PID: ${pid}.`);
+    // write PID to file then start the server
+    fs.writeFile(pid_path, pid, (err) => {
+        if (err) throw err;
+        // PID is wrote => start the server
+        this.listen(DEF_PORT, function () {
+            console.log(`Example app listening on port ${DEF_PORT}. PID: ${pid}.`);
+        });
     });
+
+
 }
 
 function stop() {
