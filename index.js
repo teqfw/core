@@ -24,6 +24,12 @@ function Construct() {
     let _commander = commander;
     _commander.version(version, "-v, --version");
 
+
+    function commandAdd(spec) {
+        let {flags, description, fnAction} = spec;
+        _commander.option(flags, description, fnAction);
+    }
+
     function run() {
         init(() => {
             _commander.parse(process.argv);
@@ -41,33 +47,37 @@ function Construct() {
             teqfw.core = {};
         })();
 
-        const fnCliFoo = function () {
-            console.log("Foo is here...");
-        };
+
         // scan all node_modules and compose list of TeqFW modules
         mod_scanner((modules_list) => {
             console.log("TeqFW modules: " + JSON.stringify(modules_list));
-            _commander.option("--foo", "command `Foo`", fnCliFoo);
+
+            // init modules
+            const mod_server = require("teqfw-core-server");
+            mod_server.init(result);
+
             callback();
         });
 
     }
 
-    return Object.freeze({
+    const result = Object.freeze({
+        commandAdd,
         run
     });
+    return result;
 }
 
 
 /** =============================================================================
  * Objects composition.
  * =========================================================================== */
-const teqfw_core_all_app = new Construct();
+const teqfw_core_app = new Construct();
 
 
 /**
  * Module exports.
  * @public
  */
-module.exports = teqfw_core_all_app;
+module.exports = teqfw_core_app;
 
