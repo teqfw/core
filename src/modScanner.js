@@ -2,7 +2,7 @@
  * Scan modules in `node_modules` and compose list of TeqFW modules.
  */
 "use strict";
-const NS = "teqfw_core_all_modScanner";
+const NS = "TeqFw_Core_ModScanner";
 
 
 /** =============================================================================
@@ -16,6 +16,10 @@ const path = require("path");
  * =========================================================================== */
 const teqfw = global["teqfw"];
 
+/**
+ *
+ * @param {callback} callback
+ */
 function scan(callback) {
     const result = {};
     const dir_node_modules = path.join(teqfw.cfg.path.root, "node_modules");
