@@ -9,6 +9,7 @@ const NS = "teqfw_core_all_modScanner";
  * Import.
  * =========================================================================== */
 const fs = require("fs");
+const path = require("path");
 
 /** =============================================================================
  * Definitions of working elements (constants, variables, functions).
@@ -16,15 +17,16 @@ const fs = require("fs");
 const teqfw = global["teqfw"];
 
 function scan(callback) {
-    const result = [];
-    const dir_node_modules = teqfw.cfg.path.root + "/node_modules";
+    const result = {};
+    const dir_node_modules = path.join(teqfw.cfg.path.root, "node_modules");
     // read all folders in `./node_modules/``
     fs.readdir(dir_node_modules, (err, dirs) => {
         if (err) throw err;
         let itemsProcessed = 0;
         dirs.forEach((item, index, array) => {
             // read `package.json` for every module
-            const file_package = dir_node_modules + "/" + item + "/package.json";
+            const dir_package = path.join(dir_node_modules, item);
+            const file_package = path.join(dir_package, "package.json");
             fs.stat(file_package, (err, stats) => {
                 if (err) {
                     // skip folders w/o package.json
@@ -37,8 +39,12 @@ function scan(callback) {
                             if (err) throw err;
                             let package_json = JSON.parse(rawdata);
                             if (package_json.teqfw) {
+                                const package_name = package_json.name;
                                 // `teqfw` node means that module is TeqFW module
-                                result.push(file_package);
+                                result[package_name] = {
+                                    path: dir_package,
+                                    desc: package_json.teqfw
+                                };
                             }
                             if (itemsProcessed >= array.length) {
                                 callback(result);

@@ -7,6 +7,8 @@ const NS = "teqfw_core_all";
  * =========================================================================== */
 const commander = require("commander");
 const path = require("path");
+
+const obm = require("teqfw-core-di");
 const mod_scanner = require("./src/modScanner");
 
 
