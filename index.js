@@ -6,6 +6,7 @@ const NS = "teqfw_core_all";
  * Import.
  * =========================================================================== */
 const commander = require("commander");
+const path = require("path");
 const mod_scanner = require("./src/modScanner");
 
 
@@ -34,7 +35,9 @@ function Construct() {
         init(() => {
             _commander.parse(process.argv);
             if (!process.argv.slice(2).length) {
-                const boo = JSON.stringify(teqfw);
+                const path_to_submodule = path.join(teqfw.cfg.path.root, "node_modules", "teqfw-core-server", "src", "subFolder", "subModule.js");
+                const boo = require(path_to_submodule);
+                console.log("BOO:" + boo.name);
                 _commander.outputHelp();
             }
         });
