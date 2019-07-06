@@ -26,5 +26,10 @@
   "dependencies": {
     "commander": "^2.20.0"
   },
-  "teqfw": {}
+  "teqfw": {
+    "autoload": {
+      "ns": "TeqFw_Core",
+      "path": "./src"
+    }
+  }
 }
