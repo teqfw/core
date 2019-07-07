@@ -28,7 +28,7 @@
   },
   "teqfw": {
     "autoload": {
-      "ns": "TeqFw_Core",
+      "ns": "TeqFw_Core_App",
       "path": "./src"
     }
   }
