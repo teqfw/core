@@ -18,45 +18,46 @@ const teqfw = global["teqfw"];
 
 /**
  *
- * @param {Function} callback
- * @return {Map<string, Object>}
+ * @return {Promise<Map<string, Object>>}
  */
-function scan(callback) {
-    const result = new Map();
-    const dir_node_modules = path.join(teqfw.cfg.path.root, "node_modules");
-    // read all folders in `./node_modules/``
-    fs.readdir(dir_node_modules, (err, dirs) => {
-        if (err) throw err;
-        let itemsProcessed = 0;
-        dirs.forEach((item, index, array) => {
-            // read `package.json` for every module
-            const dir_package = path.join(dir_node_modules, item);
-            const file_package = path.join(dir_package, "package.json");
-            fs.stat(file_package, (err, stats) => {
-                if (err) {
-                    // skip folders w/o package.json
-                    itemsProcessed += 1;
-                } else {
-                    if (stats.isFile()) {
-                        // parse `package.json` and find `teqfw` node inside
-                        fs.readFile(file_package, (err, rawdata) => {
-                            itemsProcessed += 1;
-                            if (err) throw err;
-                            let package_json = JSON.parse(rawdata);
-                            // `teqfw` node means that module is TeqFW module
-                            if (package_json.teqfw) {
-                                const package_name = package_json.name;
-                                result.set(package_name, {path: dir_package, desc: package_json.teqfw});
-                            }
-                            // return result if all folders in `./node_modules` were processed.
-                            if (itemsProcessed >= array.length) {
-                                callback(result);
-                            }
-                        });
-                    } else {
+function scan() {
+    return new Promise(function (resolve) {
+        const result = new Map();
+        const dir_node_modules = path.join(teqfw.cfg.path.root, "node_modules");
+        // read all folders in `./node_modules/``
+        fs.readdir(dir_node_modules, (err, dirs) => {
+            if (err) throw err;
+            let itemsProcessed = 0;
+            dirs.forEach((item, index, array) => {
+                // read `package.json` for every module
+                const dir_package = path.join(dir_node_modules, item);
+                const file_package = path.join(dir_package, "package.json");
+                fs.stat(file_package, (err, stats) => {
+                    if (err) {
+                        // skip folders w/o package.json
                         itemsProcessed += 1;
+                    } else {
+                        if (stats.isFile()) {
+                            // parse `package.json` and find `teqfw` node inside
+                            fs.readFile(file_package, (err, rawdata) => {
+                                itemsProcessed += 1;
+                                if (err) throw err;
+                                let package_json = JSON.parse(rawdata);
+                                // `teqfw` node means that module is TeqFW module
+                                if (package_json.teqfw) {
+                                    const package_name = package_json.name;
+                                    result.set(package_name, {path: dir_package, desc: package_json.teqfw});
+                                }
+                                // return result if all folders in `./node_modules` were processed.
+                                if (itemsProcessed >= array.length) {
+                                    resolve(result);
+                                }
+                            });
+                        } else {
+                            itemsProcessed += 1;
+                        }
                     }
-                }
+                });
             });
         });
     });

@@ -20,7 +20,6 @@ const mod_scanner = require("./src/modScanner");
  * Definitions of working elements (constants, variables, functions).
  * =========================================================================== */
 const teqfw = global["teqfw"];
-const version = teqfw.cfg.version;
 
 /**
  * TeqFW application.
@@ -30,20 +29,45 @@ const version = teqfw.cfg.version;
 function TeqFw_Core_All() {
     /** Object properties (public & private) */
 
-    let _commander = commander;
-    _commander.version(version, "-v, --version");
+    const _commander = commander;
+    _commander.version(teqfw.cfg.version, "-v, --version");
 
     /** Object methods (private) */
 
     /**
-     * Application initialization is performed in the beginning (@see this.run).
+     * Application initialization is performed in the beginning from this.run().
      *
-     * @private
-     * @param callback
+     * @return {Promise<any>}
      */
-    function init(callback) {
-        /** Function definitions */
-        function initDi(modules_list) {
+    function init() {
+        return new Promise(function (resolve) {
+            // create structure for global container `teqfw`
+            teqfw.object_manager = obm;
+            teqfw.mod = {};
+            teqfw.core = {};
+            // scan all node_modules and compose list of TeqFW modules
+            mod_scanner()
+                .then(initDi)
+                .then(initCommander)
+                .then(resolve);
+        });
+    }
+
+    function initCommander() {
+        return new Promise(function (resolve) {
+            const mod_server = obm.get("TeqFw_Core_Server");
+            /* get result from closure */
+            mod_server.init(result).then(resolve);
+        });
+    }
+
+    /**
+     *
+     * @param modules_list
+     * @return {Promise<null>}
+     */
+    function initDi(modules_list) {
+        return new Promise(function (resolve) {
             /** @type {TeqFw_Core_Di} */
             const obm = teqfw.object_manager;
             for (const module of modules_list) {
@@ -58,16 +82,8 @@ function TeqFw_Core_All() {
                 };
                 obm.addModule({module: name, data: di_data});
             }
-            callback();
-        }
-
-        /** Function process */
-        // create structure for global container `teqfw`
-        teqfw.object_manager = obm;
-        teqfw.mod = {};
-        teqfw.core = {};
-        // scan all node_modules and compose list of TeqFW modules
-        mod_scanner(initDi);
+            resolve();
+        });
     }
 
     function runCommander() {
@@ -88,16 +104,7 @@ function TeqFw_Core_All() {
      * Initialize application then run.
      */
     this.run = function () {
-        init(() => {
-            // TODO: move init modules section to separate code (we need to compose commander options only for beginning)
-            const obj = obm.get("TeqFw_Core_Server_Sub_AnyClass");
-            const obj2 = obm.get("TeqFw_Core_Server_Sub_AnyClass");
-            obj.hello();
-            obj2.boo = 4;
-            const mod_server = obm.get("TeqFw_Core_Server");
-            mod_server.init(result);
-            runCommander();
-        });
+        init().then(runCommander);
     };
 
     /** Object finalization (result) */
