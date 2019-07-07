@@ -90,8 +90,10 @@ function TeqFw_Core_All() {
     this.run = function () {
         init(() => {
             // TODO: move init modules section to separate code (we need to compose commander options only for beginning)
+            const obj = obm.get("TeqFw_Core_Server_Sub_AnyClass");
+            obj.hello();
             const mod_server = obm.get("TeqFw_Core_Server");
-            mod_server.init(result);
+            // mod_server.init(result);
             runCommander();
         });
     };
