@@ -18,10 +18,11 @@ const teqfw = global["teqfw"];
 
 /**
  *
- * @param {callback} callback
+ * @param {Function} callback
+ * @return {Map<string, Object>}
  */
 function scan(callback) {
-    const result = {};
+    const result = new Map();
     const dir_node_modules = path.join(teqfw.cfg.path.root, "node_modules");
     // read all folders in `./node_modules/``
     fs.readdir(dir_node_modules, (err, dirs) => {
@@ -42,14 +43,12 @@ function scan(callback) {
                             itemsProcessed += 1;
                             if (err) throw err;
                             let package_json = JSON.parse(rawdata);
+                            // `teqfw` node means that module is TeqFW module
                             if (package_json.teqfw) {
                                 const package_name = package_json.name;
-                                // `teqfw` node means that module is TeqFW module
-                                result[package_name] = {
-                                    path: dir_package,
-                                    desc: package_json.teqfw
-                                };
+                                result.set(package_name, {path: dir_package, desc: package_json.teqfw});
                             }
+                            // return result if all folders in `./node_modules` were processed.
                             if (itemsProcessed >= array.length) {
                                 callback(result);
                             }

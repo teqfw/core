@@ -46,8 +46,9 @@ function TeqFw_Core_All() {
         function initDi(modules_list) {
             /** @type {TeqFw_Core_Di} */
             const obm = teqfw.object_manager;
-            for (const module in modules_list) {
-                const scan_data = modules_list[module];
+            for (const module of modules_list) {
+                const name = module[0];
+                const scan_data = module[1];
                 const path_src = path.join(scan_data.path, scan_data.desc.autoload.path);
                 /** @type {TeqFw_Core_Di.ModuleData} */
                 const di_data = {
@@ -55,25 +56,8 @@ function TeqFw_Core_All() {
                     path: scan_data.path,
                     src: path_src
                 };
-                obm.addModule({module: module, data: di_data});
+                obm.addModule({module: name, data: di_data});
             }
-            // TODO: move init modules section to separate code (we need to compose commander options only for beginning)
-            const mod_server = require("teqfw-core-server");
-            mod_server.init(result);
-
-            /** TMP CODE */
-            const server = obm.get("TeqFw_Core_Server");
-
-            function Flancer32_Ntd_Downline_Controller(
-                Flancer32_Ntd_Downline_Referral_Processor
-            ) {
-                const processor = Flancer32_Ntd_Downline_Referral_Processor;
-const constructor = require("/home/alex/work/app/node_modules/fl32-ntd-dwnl/src/Referral/Processor.js");
-const obj = new constructor();
-            }
-
-            /** End of TMP CODE */
-
             callback();
         }
 
@@ -104,7 +88,12 @@ const obj = new constructor();
      * Initialize application then run.
      */
     this.run = function () {
-        init(runCommander);
+        init(() => {
+            // TODO: move init modules section to separate code (we need to compose commander options only for beginning)
+            const mod_server = obm.get("TeqFw_Core_Server");
+            mod_server.init(result);
+            runCommander();
+        });
     };
 
     /** Object finalization (result) */
