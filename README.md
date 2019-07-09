@@ -1,3 +1,3 @@
-# teqfw-core-all
+# teqfw-core-app
 
-Initial package to collect all core functionality.
+TeqFW: core application functionality.
