@@ -24,7 +24,7 @@ const commander = require("commander");
  * TeqFW application.
  *
  * @return {TeqFw_Core_App}
- * @constructor
+ * @class
  */
 function TeqFw_Core_App() {
     /** Object properties (private) */
@@ -91,6 +91,7 @@ function TeqFw_Core_App() {
             return new Promise(function (resolve) {
                 /** @type TeqFw_Core_Di */
                 const obm = new (require("teqfw-core-di"))();
+                obm.put("TeqFw_Core_Di", obm);
                 obm.put("TeqFw_Core_App", _app);
                 global["teqfw"].object_manager = obm;
                 console.log("AppInit: Object Manager is created.");

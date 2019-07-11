@@ -20,7 +20,7 @@ const path = require("path");
  * Registry for teq-modules.
  *
  * @return {TeqFw_Core_App_Module_Registry}
- * @constructor
+ * @class
  */
 function TeqFw_Core_App_Module_Registry() {
     /**

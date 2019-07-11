@@ -10,7 +10,7 @@ const fs = require("fs");
  * Application configuration.
  *
  * @return {TeqFw_Core_App_Config}
- * @constructor
+ * @class
  */
 function TeqFw_Core_App_Config() {
     /* Object properties (private) */
