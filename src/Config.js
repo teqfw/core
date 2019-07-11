@@ -34,7 +34,7 @@ function TeqFw_Core_App_Config() {
             _store = cfg;
             fs.readFile(path_local, (err, raw_data) => {
                 if (err) throw err;
-                _store.local = JSON.parse(raw_data);
+                _store.local = JSON.parse(raw_data.toString());
                 console.log(`Local configuration is read from '${path_local}'.`);
                 resolve();
             });
@@ -89,8 +89,7 @@ function TeqFw_Core_App_Config() {
     };
 
     /** Object finalization (result) */
-    const result = Object.freeze(this);
-    return result;
+    return Object.freeze(this);
 }
 
 

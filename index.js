@@ -9,7 +9,6 @@
 /** =============================================================================
  * Import.
  * =========================================================================== */
-const fs = require("fs");
 const path = require("path");
 const commander = require("commander");
 
@@ -136,18 +135,44 @@ function TeqFw_Core_App() {
         }
 
         /**
-         * Create application server, run through the teq-modules list and configure server..
+         * Create application's web server, run through the teq-modules list and configure server.
          *
          * @return {Promise<void>}
          */
         function init_server() {
             return new Promise(function (resolve) {
                 const web_server = global["teqfw"].object_manager.get("TeqFw_Core_Server");
-                web_server.init(_app).then(() => {
+                web_server.init().then(() => {
                     console.log("AppInit: Application Server is created.");
                     resolve();
                 });
             });
+        }
+
+        /**
+         * Call initialization for all teq-modules.
+         *
+         * @return {Promise<void>}
+         */
+        async function init_modules() {
+            /** @type TeqFw_Core_Di */
+            const obm = global["teqfw"].object_manager;
+            /** @type TeqFw_Core_App_Module_Registry */
+            const mod_reg = global["teqfw"].object_manager.get("TeqFw_Core_App_Module_Registry");
+            const all = mod_reg.get();
+            for (const one of all) {
+                const name = one[0];
+                const desc = one[1].desc;
+                const ns = desc.autoload.ns;
+                const obj_name = ns + "_Sys_App_Init";
+                try {
+                    const mod_init_obj = obm.get(obj_name);
+                    await mod_init_obj.exec();
+                    console.log(`AppInit: Module '${name}' is initialized.`);
+                } catch (err) {
+                    // do nothing
+                }
+            }
         }
 
         /**
@@ -166,10 +191,11 @@ function TeqFw_Core_App() {
         init_globals()                  // create `globals.teqfw` structure
             .then(init_di)              // create object manager (Dependency Injection) and place it to `globals`
             .then(create_config)        // create application config and put it into Object Manager
-            .then(load_modules_defs)    // save modules definitions to globals.teqfw.core.app.modules
+            .then(load_modules_defs)    // load modules definitions and populate Object Manager's autoload
             .then(init_commander)       // initialize application commander
             .then(init_server)          // initialize application server
-            .then(run_commander)        // run application commander
+            .then(init_modules)         // initialize teq-modules
+            .then(run_commander)        // run application's commander
             .catch((reason) => {
                 console.log("Application fatal error: " + reason);
                 throw reason;
