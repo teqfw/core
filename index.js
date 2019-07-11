@@ -166,12 +166,15 @@ function TeqFw_Core_App() {
                 const desc = one[1].desc;
                 const ns = desc.autoload.ns;
                 const obj_name = ns + "_Sys_App_Init";
+                let mod_init_obj;
                 try {
-                    const mod_init_obj = obm.get(obj_name);
+                    mod_init_obj = obm.get(obj_name);
+                } catch (err) {
+                    // do nothing if ..._Sys_App_Init object is not found for the module
+                }
+                if (mod_init_obj) {
                     await mod_init_obj.exec();
                     console.log(`AppInit: Module '${name}' is initialized.`);
-                } catch (err) {
-                    // do nothing
                 }
             }
         }
