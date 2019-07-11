@@ -45,7 +45,9 @@ function TeqFw_Core_App() {
     /**
      * Initialize application then run CLI commander.
      */
-    this.run = function () {
+    this.run = function (spec) {
+        const {root: _root, version: _version} = spec;
+        let _app_modules, _object_manager;
 
         /* Local scope functions */
 
@@ -56,6 +58,7 @@ function TeqFw_Core_App() {
          */
         function init_globals(app) {
             return new Promise(function (resolve) {
+                global["teqfw"] = {};
                 const teqfw = global["teqfw"];
                 teqfw.app = app;
                 teqfw.object_manager = {};
@@ -66,24 +69,6 @@ function TeqFw_Core_App() {
             });
         }
 
-        /**
-         * Read local configuration and put into the global.teqfw.
-         *
-         * @return {Promise<void>}
-         */
-        function load_cfg() {
-            return new Promise(function (resolve, reject) {
-                const teqfw = global["teqfw"];
-                const path_root = teqfw.cfg.path.root;
-                const path_cfg = path.join(path_root, "./cfg/local.json");
-                fs.readFile(path_cfg, (err, raw_data) => {
-                    if (err) reject(err);
-                    teqfw.cfg.local = JSON.parse(raw_data);
-                    console.log(`Local configuration is read from '${path_cfg}'.`);
-                    resolve();
-                });
-            });
-        }
 
         /**
          * Load teqfw-modules definitions and save map to global.teqfw.core.app.modules.
@@ -106,7 +91,7 @@ function TeqFw_Core_App() {
             function scan_modules() {
                 return new Promise(function (resolve, reject) {
                     const result = new Map();
-                    const dir_node_modules = path.join(teqfw.cfg.path.root, "node_modules");
+                    const dir_node_modules = path.join(_root, "node_modules");
                     // read all folders in `./node_modules/``
                     fs.readdir(dir_node_modules, (err, dirs) => {
                         if (err) reject(err);
@@ -149,14 +134,11 @@ function TeqFw_Core_App() {
             }
 
             /* Result */
-            return new Promise(function (resolve, reject) {
-                const teqfw = global["teqfw"];
+            return new Promise(function (resolve,) {
                 scan_modules().then((modules) => {
-                    teqfw.core.app.modules = modules;
+                    _app_modules = modules;
                     resolve();
-                }).catch((reason) => {
-                    reject("Cannot initiate modules: " + reason);
-                })
+                });
             });
         }
 
@@ -169,10 +151,10 @@ function TeqFw_Core_App() {
             return new Promise(function (resolve) {
                 const teqfw = global["teqfw"];
                 /** @type {Map<string, ModuleScanData>} modules */
-                const modules = teqfw.core.app.modules;
+                const modules = _app_modules;
                 /** @type TeqFw_Core_Di */
-                const obm = new (require("teqfw-core-di"))();
-                teqfw.object_manager = obm;
+                _object_manager = new (require("teqfw-core-di"))();
+                teqfw.object_manager = _object_manager;
                 for (const module of modules) {
                     const name = module[0];
                     const scan_data = module[1];
@@ -183,23 +165,41 @@ function TeqFw_Core_App() {
                         path: scan_data.path,
                         src: path_src
                     };
-                    obm.addModule({module: name, data: di_data});
+                    _object_manager.addModule({module: name, data: di_data});
                 }
                 resolve();
             });
         }
 
         /**
+         * Create application configuration object and place it into Object Manager.
+         *
+         * @return {Promise<void>}
+         */
+        function create_config() {
+            return new Promise(function (resolve) {
+                const path_cfg_local = path.join(_root, "cfg", "local.json");
+                const cfg_data = {
+                    path: {root: _root},
+                    version: _version
+                };
+                /** @type TeqFw_Core_App_Config */
+                const config = _object_manager.get("TeqFw_Core_App_Config");
+                config.init(cfg_data, path_cfg_local).then(resolve);
+            });
+        }
+
+        /**
          * Create application commander, run through the teq-modules list and add module's commands to commander.
+         *
          * @return {Promise<void>}
          */
         function init_commander() {
             return new Promise(function (resolve) {
                 const app = global.teqfw.app;
                 const obm = global.teqfw.object_manager;
-                _commander.version(teqfw.cfg.version, "-v, --version");
+                _commander.version(_version, "-v, --version");
                 const web_server = obm.get("TeqFw_Core_Server");
-                /* get result from closure */
                 web_server.init(app).then(resolve);
             });
         }
@@ -215,10 +215,10 @@ function TeqFw_Core_App() {
         }
 
         /* This function actions. */
-        init_globals(this)                  // populate structure of globals.teqfw
-            .then(load_cfg)             // read configuration and place it to globals.teqfw.cfg.local
+        init_globals(this)              // populate structure of globals.teqfw
             .then(load_modules_defs)    // save modules definitions to globals.teqfw.core.app.modules
             .then(init_di)              // initialize object manager (Dependency Injection)
+            .then(create_config)        // create application config and put it into Object Manager
             .then(init_commander)       // initialize application commander
             .then(run_commander)        // run application commander
             .catch((reason) => {
