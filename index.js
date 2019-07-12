@@ -6,20 +6,12 @@
 "use strict";
 
 
-/** =============================================================================
+/* ==============================================================================
  * Import.
  * =========================================================================== */
 const path = require("path");
-const commander = require("commander");
 
 
-/** =============================================================================
- * Define this nodejs module working elements (objects, functions, etc).
- * =========================================================================== */
-
-/** =============================================================================
- * TeqFW object composition.
- * =========================================================================== */
 /**
  * TeqFW application.
  *
@@ -27,18 +19,6 @@ const commander = require("commander");
  * @class
  */
 function TeqFw_Core_App() {
-    /** Object properties (private) */
-    const _commander = commander;
-
-    /** Object properties (public) */
-
-    /** Object methods (private) */
-
-    /** Object methods (public) */
-    this.commandAdd = function (spec) {
-        let {flags, description, fnAction} = spec;
-        _commander.option(flags, description, fnAction);
-    };
 
     /**
      * Initialize application then run CLI commander.
@@ -123,13 +103,15 @@ function TeqFw_Core_App() {
         }
 
         /**
-         * Create application commander, run through the teq-modules list and add module's commands to commander.
+         * Create application commander and set application version.
          *
          * @return {Promise<void>}
          */
         function init_commander() {
             return new Promise(function (resolve) {
-                _commander.version(_version, "-v, --version");
+                /** @type TeqFw_Core_App_Commander */
+                const commander = global["teqfw"].object_manager.get("TeqFw_Core_App_Commander");
+                commander.setVersion(_version);
                 console.log("AppInit: Application Commander is created.");
                 resolve();
             });
@@ -184,10 +166,9 @@ function TeqFw_Core_App() {
          */
         function run_commander() {
             console.log("AppInit: Initialization is completed. Run requested command.");
-            _commander.parse(process.argv);
-            if (!process.argv.slice(2).length) {
-                _commander.outputHelp();
-            }
+            /** @type TeqFw_Core_App_Commander */
+            const commander = global["teqfw"].object_manager.get("TeqFw_Core_App_Commander");
+            commander.run();
         }
 
         /* This function actions. */
