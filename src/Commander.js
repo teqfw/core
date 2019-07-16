@@ -1,53 +1,34 @@
-/**
- * Application commander.
- *
- * @namespace TeqFw_Core_App_Commander
- */
 "use strict";
 
-/* ==============================================================================
- * Import.
- * =========================================================================== */
-/* core modules (sample: "path") */
-/* project modules (from "node_modules"; sample: "express") */
-/* module sources (from this module filesystem); "./folder/script" */
-
-/* ==============================================================================
- * TeqFW object composition.
- * =========================================================================== */
 /**
- * Application commander.
+ * Application commander (wrapper for inner `_commander`).
  *
  * @return {TeqFw_Core_App_Commander}
- * @class
+ * @constructor
  */
 function TeqFw_Core_App_Commander() {
-    /* Definitions of the object structures */
     /**
+     * Command data to add to the commander.
+     *
      * @typedef {Object} TeqFw_Core_App_Commander.CommandData
-     * @property {string} flags
-     * @property {string} description
-     * @property {Function} action
+     * @property {string} flags - CLI options (`--core-server-start`).
+     * @property {string} description - Console help for the command: "Start application's web server.".
+     * @property {Function} action - Function to be called to perform requested action.
      */
 
-    /* Private properties of the object */
+    /**
+     * Inner commander.
+     *
+     * @type {commander.CommanderStatic | commander}
+     */
     const _commander = require("commander");
 
-    /* Public properties of the object */
-    this.prop_pub = {};
-
-    /* Private methods of the object */
-    function func_priv() {
-    }
-
-    /* Public methods of the object */
 
     /**
-     *
-     * @param spec
+     * Wrapper to add command to inner `_commander`.
+     * @param {CommandData} spec
      */
-    this.addCommand = (spec) => {
-        const {flags, description, action} = spec;
+    this.addCommand = ({flags, description, action}) => {
         _commander.option(flags, description, action);
     };
 
@@ -61,7 +42,7 @@ function TeqFw_Core_App_Commander() {
     };
 
     /**
-     * Run commander and execute requested commands.
+     * Run inner `_commander` and perform requested commands.
      */
     this.run = () => {
         _commander.parse(process.argv);
@@ -70,12 +51,8 @@ function TeqFw_Core_App_Commander() {
         }
     };
 
-    /* Object finalization (result) */
     return Object.freeze(this);
 }
 
-
-/* ==============================================================================
- * Module exports.
- * =========================================================================== */
+/* Module exports */
 module.exports = TeqFw_Core_App_Commander;

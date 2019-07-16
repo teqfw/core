@@ -1,27 +1,20 @@
-/**
- * Application itself.
- *
- * @namespace TeqFw_Core_App
- */
 "use strict";
-
-
-/* ==============================================================================
- * Import.
- * =========================================================================== */
-const path = require("path");
-
+const $path = require("path");
 
 /**
- * TeqFW application.
+ * TeqFW application, main (and only) entry point.
  *
  * @return {TeqFw_Core_App}
- * @class
+ * @constructor
  */
 function TeqFw_Core_App() {
 
     /**
-     * Initialize application then run CLI commander.
+     * Initialize application then run CLI commander to perform requested command.
+     *
+     * @param {Object} spec - Specification.
+     * @property {string} spec.root - Absolute path to the root folder of the application.
+     * @property {string} spec.version - Current version of the application.
      */
     this.run = function (spec) {
         /* Local scope properties */
@@ -86,7 +79,7 @@ function TeqFw_Core_App() {
          */
         function create_config() {
             return new Promise(function (resolve) {
-                const path_cfg_local = path.join(_root, "cfg", "local.json");
+                const path_cfg_local = $path.join(_root, "cfg", "local.json");
                 const cfg_init = {
                     path: {root: _root},
                     version: _version
@@ -187,13 +180,9 @@ function TeqFw_Core_App() {
             });
     };
 
-    /** Object finalization (result) */
+    /* Object finalization (result) */
     return Object.freeze(this);
 }
 
-
-/** =============================================================================
- * Module exports.
- * =========================================================================== */
+/* Module exports */
 module.exports = TeqFw_Core_App;
-

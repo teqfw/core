@@ -1,38 +1,31 @@
-/**
- * Application configuration.
- *
- * @namespace TeqFw_Core_App_Config
- */
 "use strict";
-const fs = require("fs");
+const $fs = require("fs");
 
 /**
  * Application configuration.
  *
  * @return {TeqFw_Core_App_Config}
- * @class
+ * @constructor
  */
 function TeqFw_Core_App_Config() {
-    /* Object properties (private) */
+    /**
+     * Inner object to store application configuration.
+     *
+     * @type {Object}
+     */
     let _store = {};
 
-    /* Object properties (public) */
-
-    /* Object methods (private) */
-
-    /* Object methods (public) */
-
     /**
-     * Save `cfg` object into private store as initial configuration.
+     * Save `cfg` object as initial configuration into inner store.
      *
-     * @param {Object} cfg
-     * @param {string} path_local
+     * @param {Object} cfg - Initial configuration to save to internal store.
+     * @param {string} path_local - Absolute path to JSON with local configuration.
      * @return {Promise<void>}
      */
     this.init = (cfg, path_local) => {
         return new Promise(function (resolve) {
             _store = cfg;
-            fs.readFile(path_local, (err, raw_data) => {
+            $fs.readFile(path_local, (err, raw_data) => {
                 if (err) throw err;
                 _store.local = JSON.parse(raw_data.toString());
                 console.log(`Local configuration is read from '${path_local}'.`);
@@ -44,8 +37,8 @@ function TeqFw_Core_App_Config() {
     /**
      * Get configuration value by path (`path/to/the/node`).
      *
-     * @param {string} cfg_path
-     * @return {string|boolean|number|Object}
+     * @param {string} cfg_path - Path to the node of the configuration tree (`path/to/the/node`).
+     * @return {string|boolean|number|Object} - Configuration value.
      */
     this.get = (cfg_path) => {
         let result = _store;
@@ -66,8 +59,8 @@ function TeqFw_Core_App_Config() {
     /**
      * Set configuration value by path (`path/to/the/node`).
      *
-     * @param {string} cfg_path
-     * @param {string|boolean|number|Object} data
+     * @param {string} cfg_path - Path to the node of the configuration tree (`path/to/the/node`).
+     * @param {string|boolean|number|Object} data - Value to save into configuration tree.
      */
     this.set = (cfg_path, data) => {
         const parts = cfg_path.split("/");
@@ -88,12 +81,8 @@ function TeqFw_Core_App_Config() {
         }
     };
 
-    /** Object finalization (result) */
     return Object.freeze(this);
 }
 
-
-/** =============================================================================
- * Module exports.
- * =========================================================================== */
+/* Module exports */
 module.exports = TeqFw_Core_App_Config;
