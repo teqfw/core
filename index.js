@@ -85,10 +85,10 @@ function TeqFw_Core_App() {
                     version: _version
                 };
                 // direct load with `require` cause `object_manager` is not initiated yet
-                /** @type TeqFw_Core_App_Config */
-                const config = new (require("./src/Config"))();
+                /** @type {TeqFw_Core_App_Configurator} */
+                const config = new (require("./src/Configurator"))();
                 config.init(cfg_init, path_cfg_local).then(() => {
-                    global["teqfw"].object_manager.put("TeqFw_Core_App_Config", config);
+                    global["teqfw"].object_manager.put("TeqFw_Core_App_Configurator", config);
                     console.log("AppInit: Configuration is created.");
                     resolve();
                 });

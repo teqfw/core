@@ -48,8 +48,8 @@ function TeqFw_Core_App_Module_Registry() {
 
         /** @type {TeqFw_Core_Di} */
         const _obm = global["teqfw"].object_manager;
-        /** @type {TeqFw_Core_App_Config} */
-        const config = _obm.get("TeqFw_Core_App_Config");
+        /** @type {TeqFw_Core_App_Configurator} */
+        const config = _obm.get("TeqFw_Core_App_Configurator");
         /**
          * @type {string}
          */
