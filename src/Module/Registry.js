@@ -109,7 +109,8 @@ function TeqFw_Core_App_Module_Registry() {
                     $fs.readFile(file_package, (err, raw_data) => {
                         itemsProcessed += 1;
                         if (err) throw err;
-                        let package_json = JSON.parse(raw_data);
+                        const str_data = raw_data.toString();
+                        let package_json = JSON.parse(str_data);
                         // `teqfw` node means that module is TeqFW module
                         if (package_json.teqfw) {
                             const mod_def = package_json.teqfw;
