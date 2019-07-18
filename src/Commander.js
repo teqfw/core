@@ -18,8 +18,6 @@ function TeqFw_Core_App_Commander() {
 
     /**
      * Inner commander.
-     *
-     * @type {commander.CommanderStatic | commander}
      */
     const _commander = require("commander");
 

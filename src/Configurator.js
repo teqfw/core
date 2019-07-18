@@ -1,5 +1,4 @@
 "use strict";
-const $fs = require("fs");
 
 /**
  * Application level configuration.
@@ -19,19 +18,9 @@ function TeqFw_Core_App_Configurator() {
      * Save `cfg` object as initial configuration into inner store.
      *
      * @param {Object} cfg - Initial configuration to save to internal store.
-     * @param {string} path_local - Absolute path to JSON file to load local configuration.
-     * @return {Promise<void>}
      */
-    this.init = (cfg, path_local) => {
-        return new Promise(function (resolve) {
-            _store = cfg;
-            $fs.readFile(path_local, (err, raw_data) => {
-                if (err) throw err;
-                _store.local = JSON.parse(raw_data.toString());
-                console.log(`Local configuration is read from '${path_local}'.`);
-                resolve();
-            });
-        });
+    this.init = (cfg) => {
+        _store = cfg;
     };
 
     /**
