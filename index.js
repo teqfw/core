@@ -118,6 +118,33 @@ function TeqFw_Core_App() {
         }
 
         /**
+         * Initialize DB connection..
+         *
+         * @return {Promise<void>}
+         */
+        function init_db() {
+            return new Promise(function (resolve) {
+                /** @type TeqFw_Core_App_Db_Connector */
+                const db = global["teqfw"].object_manager.get("TeqFw_Core_App_Db_Connector");
+                db.init().then(function () {
+                    console.log("AppInit: Database connection is created.");
+
+                    const knex = db.get();
+                    knex({main: "teq_core_user"}).select({id: "main.id", name: "main.name"}).then(
+                        function (raw) {
+                            const boo = raw;
+                            for (const one of raw) {
+                                console.log(`id: ${one.id}; name: ${one.name}`);
+                            }
+                            resolve();
+                        }
+                    );
+
+                });
+            });
+        }
+
+        /**
          * Register modules namespaces and path to sources into Object Manager.
          *
          * @return {Promise<void>}
@@ -177,6 +204,7 @@ function TeqFw_Core_App() {
             .then(load_modules_defs)    // load modules definitions
             .then(init_autoload)        // populate Object Manager's autoload
             .then(init_modules)         // initialize teq-modules
+            .then(init_db)              // initialize database connection
             .then(init_commander)       // initialize application commander
             .then(init_server)          // initialize application server
             .then(run_commander)        // run application's commander
