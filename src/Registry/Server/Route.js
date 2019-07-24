@@ -8,7 +8,7 @@
  */
 function TeqFw_Core_App_Registry_Server_Route() {
 
-    this.addRoute = function (spec) {
+    this.add = function (spec) {
     };
 
     /* Object finalization (result) */

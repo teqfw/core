@@ -34,7 +34,7 @@ function TeqFw_Core_App_Registry_Server_Realm() {
      *
      * @param {TeqFw_Core_App_Registry_Server_Realm.RealmData} spec - Realm definition.
      */
-    this.addRealm = function (spec) {
+    this.add = function (spec) {
         const {name} = spec;
         _registry.set(name, spec);
     };

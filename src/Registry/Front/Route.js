@@ -30,8 +30,8 @@ function TeqFw_Core_App_Registry_Front_Route() {
      * @param {TeqFw_Core_App_Registry_Front_Route.Entry} spec - Frontend route definition.
      */
     this.add = function (spec) {
-        const {name} = spec;
-        _registry.set(name, spec);
+        const {path} = spec;
+        _registry.set(path, spec);
     };
 
     /* Object finalization (result) */
