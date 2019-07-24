@@ -27,6 +27,7 @@
     "commander": "^2.20.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "teqfw-core-di": "^8.5.1",
     "knex": "^0.19.0"
   },
   "teqfw": {

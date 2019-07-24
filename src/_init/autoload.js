@@ -10,10 +10,10 @@ module.exports = function () {
     return new Promise(function (resolve) {
         /** @type TeqFw_Core_Di */
         const obm = global["teqfw"].object_manager;
-        /** @type TeqFw_Core_App_Module_Registry */
-        const registry = obm.get("TeqFw_Core_App_Module_Registry");
+        /** @type TeqFw_Core_App_Registry_Module */
+        const registry = obm.get("TeqFw_Core_App_Registry_Module");
         const all = registry.get();
-        /** @type {TeqFw_Core_App_Module_Registry.ModuleScanData} const */
+        /** @type {TeqFw_Core_App_Registry_Module.ModuleScanData} const */
         for (const one of all) {
             const name = one[0];
             const scan_data = one[1];

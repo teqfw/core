@@ -4,16 +4,16 @@
  * Application registry for teq-modules.
  *
  * @param {TeqFw_Core_Di} TeqFw_Core_Di
- * @param {TeqFw_Core_App_Module_Registry} TeqFw_Core_App_Module_Registry
+ * @param {TeqFw_Core_App_Registry_Module} TeqFw_Core_App_Registry_Module
  * @return {TeqFw_Core_App_Module_Initializer}
  * @constructor
  */
 function TeqFw_Core_App_Module_Initializer(
     TeqFw_Core_Di,
-    TeqFw_Core_App_Module_Registry
+    TeqFw_Core_App_Registry_Module
 ) {
     const _obm = TeqFw_Core_Di;
-    const _mod_reg = TeqFw_Core_App_Module_Registry;
+    const _mod_reg = TeqFw_Core_App_Registry_Module;
     const _self = this;
 
 

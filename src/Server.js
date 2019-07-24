@@ -9,7 +9,7 @@ const $path = require("path");
  * Web Server for TeqFW ("express" based).
  *
  * @param {TeqFw_Core_App_Configurator} TeqFw_Core_App_Configurator
- * @param {TeqFw_Core_App_Module_Registry} TeqFw_Core_App_Module_Registry
+ * @param {TeqFw_Core_App_Registry_Module} TeqFw_Core_App_Registry_Module
  * @param {TeqFw_Core_App_Registry_Server_Realm} TeqFw_Core_App_Registry_Server_Realm
  * @param {TeqFw_Core_App_Registry_Server_Route} TeqFw_Core_App_Registry_Server_Route
  * @return {TeqFw_Core_App_Server}
@@ -17,7 +17,7 @@ const $path = require("path");
  */
 function TeqFw_Core_App_Server(
     TeqFw_Core_App_Configurator,
-    TeqFw_Core_App_Module_Registry,
+    TeqFw_Core_App_Registry_Module,
     TeqFw_Core_App_Registry_Server_Realm,
     TeqFw_Core_App_Registry_Server_Route
 ) {
@@ -27,8 +27,8 @@ function TeqFw_Core_App_Server(
      * @type {TeqFw_Core_App_Configurator}
      */
     const _config = TeqFw_Core_App_Configurator;
-    /** @type TeqFw_Core_App_Module_Registry */
-    const _reg_mods = TeqFw_Core_App_Module_Registry;
+    /** @type TeqFw_Core_App_Registry_Module */
+    const _reg_mods = TeqFw_Core_App_Registry_Module;
     /**
      * Registry for application realms.
      *

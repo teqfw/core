@@ -72,7 +72,7 @@ module.exports = function (path_root) {
                         const mod_def = package_json.teqfw;
                         const package_name = package_json.name;
                         const path_package = $path.join(file_package, "..");
-                        /** @type TeqFw_Core_App_Module_Registry.ModuleScanData */
+                        /** @type TeqFw_Core_App_Registry_Module.ModuleScanData */
                         const scanData = {
                             name: package_name,
                             path: {root: path_package},

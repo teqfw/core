@@ -3,18 +3,18 @@
 /**
  * Application registry for teq-modules.
  *
- * @return {TeqFw_Core_App_Module_Registry}
+ * @return {TeqFw_Core_App_Registry_Module}
  * @constructor
  */
-function TeqFw_Core_App_Module_Registry() {
+function TeqFw_Core_App_Registry_Module() {
     /**
-     * @typedef {Object} TeqFw_Core_App_Module_Registry.ModuleDescriptorData
+     * @typedef {Object} TeqFw_Core_App_Registry_Module.ModuleDescriptorData
      * @property {Object} autoload - Source scripts auto-loading configuration.
      * @property {string} autoload.ns - Namespace for sources ("TeqFw_Core_Di").
      * @property {string} autoload.path - Relative path to sources folder ("./src").
      */
     /**
-     * @typedef {Object} TeqFw_Core_App_Module_Registry.ModuleScanData
+     * @typedef {Object} TeqFw_Core_App_Registry_Module.ModuleScanData
      * @property {string} name - Module name ("teqfw-core-di")
      * @property {Object} path - Paths to module's parts.
      * @property {string} path.root - Absolute path to module's root ("/.../app/node_modules/teqfw-core-di")
@@ -25,7 +25,7 @@ function TeqFw_Core_App_Module_Registry() {
     /**
      * Registry for teq-modules definitions (see `teqfw` nodes in `package.json` files).
      *
-     * @type {Map<string, TeqFw_Core_App_Module_Registry.ModuleScanData>}
+     * @type {Map<string, TeqFw_Core_App_Registry_Module.ModuleScanData>}
      */
     const _registry = new Map();
 
@@ -49,10 +49,10 @@ function TeqFw_Core_App_Module_Registry() {
     /**
      * Save scanned data for modules into the inner store.
      *
-     * @param {Array<TeqFw_Core_App_Module_Registry.ModuleScanData>} mods - Array of the scanned nodule's data.
+     * @param {Array<TeqFw_Core_App_Registry_Module.ModuleScanData>} mods - Array of the scanned nodule's data.
      */
     this.init = function (mods) {
-        /** @type {TeqFw_Core_App_Module_Registry.ModuleScanData} one */
+        /** @type {TeqFw_Core_App_Registry_Module.ModuleScanData} one */
         for (const one of mods) {
             const name = one.name;
             _registry.set(name, one);
@@ -64,4 +64,4 @@ function TeqFw_Core_App_Module_Registry() {
 }
 
 /* Module exports */
-module.exports = TeqFw_Core_App_Module_Registry;
+module.exports = TeqFw_Core_App_Registry_Module;

@@ -53,9 +53,9 @@ function TeqFw_Core_App() {
                 obm.put("TeqFw_Core_Di", obm);
                 obm.put("TeqFw_Core_App", _app);
                 // create Modules Registry
-                /** @type TeqFw_Core_App_Module_Registry */
-                const registry = new (require("./src/Module/Registry"))();
-                obm.put("TeqFw_Core_App_Module_Registry", registry);
+                /** @type TeqFw_Core_App_Registry_Module */
+                const registry = new (require("./src/Registry/Module"))();
+                obm.put("TeqFw_Core_App_Registry_Module", registry);
                 // create Application Configurator and load local configuration
                 /** @type TeqFw_Core_App_Configurator */
                 const config = new (require("./src/Configurator"))();
@@ -92,8 +92,8 @@ function TeqFw_Core_App() {
                 const load = require("./src/_init/mod_load");
                 load(path_root).then((mods) => {
                     // add modules to registry
-                    /** @type TeqFw_Core_App_Module_Registry */
-                    const reg = obm.get("TeqFw_Core_App_Module_Registry");
+                    /** @type TeqFw_Core_App_Registry_Module */
+                    const reg = obm.get("TeqFw_Core_App_Registry_Module");
                     // load modules and initialize `object_manager`
                     reg.init(mods);
                     resolve();
