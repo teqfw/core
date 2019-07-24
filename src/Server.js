@@ -194,13 +194,25 @@ function TeqFw_Core_App_Server(
             }
         }
 
-        /* This function actions. */
-        _server.use($express.json());
-        set_static_pub();
-        set_jwt();
-        set_default_route();
+        function set_routes() {
+            const all = _reg_routes.get();
+            /** @type {TeqFw_Core_App_Registry_Server_Route.Entry} one */
+            for (const one of all) {
+                const data = one[1];
+                const path = data.path;
+                const handler = data.handler;
+                _server.all(path, handler.exec);
+            }
+        }
 
+        /* This function actions. */
         return new Promise(function (resolve) {
+            // setup order is important
+            _server.use($express.json());
+            set_static_pub();
+            set_jwt();
+            set_routes();
+            set_default_route();
             resolve();
         });
     };

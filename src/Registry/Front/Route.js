@@ -2,7 +2,7 @@
 
 
 /**
- * Frontend routes registry..
+ * Frontend routes registry.
  *
  * @return {TeqFw_Core_App_Registry_Front_Route}
  * @constructor
@@ -12,8 +12,8 @@ function TeqFw_Core_App_Registry_Front_Route() {
      * Structure of the registry entry.
      *
      * @typedef {Object} TeqFw_Core_App_Registry_Front_Route.Entry
-     * @property {string} prop_str
-     * @property {Object} prop_obj
+     * @property {string} path
+     * @property {Object} component
      */
 
     /**
@@ -32,6 +32,22 @@ function TeqFw_Core_App_Registry_Front_Route() {
     this.add = function (spec) {
         const {path} = spec;
         _registry.set(path, spec);
+    };
+
+    /**
+     * Get frontend route data by name or get all frontend routes.
+     *
+     * @param path
+     * @return {Map<string, TeqFw_Core_App_Registry_Front_Route.Entry>|TeqFw_Core_App_Registry_Front_Route.Entry}
+     */
+    this.get = function (path = undefined) {
+        let result;
+        if (path) {
+            result = _registry.get(path);
+        } else {
+            result = _registry;
+        }
+        return result;
     };
 
     /* Object finalization (result) */
