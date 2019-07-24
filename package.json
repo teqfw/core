@@ -25,6 +25,8 @@
   "homepage": "https://github.com/teqfw/core-app#readme",
   "dependencies": {
     "commander": "^2.20.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.19.0"
   },
   "teqfw": {

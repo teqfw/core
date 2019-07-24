@@ -163,8 +163,8 @@ function TeqFw_Core_App() {
          */
         function init_server() {
             return new Promise(function (resolve) {
-                /** @type TeqFw_Core_Server */
-                const web_server = global["teqfw"].object_manager.get("TeqFw_Core_Server");
+                /** @type TeqFw_Core_App_Server */
+                const web_server = global["teqfw"].object_manager.get("TeqFw_Core_App_Server");
                 web_server.init().then(() => {
                     console.log("AppInit: Application Server is initialized.");
                     resolve();
