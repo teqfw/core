@@ -13,7 +13,8 @@ function TeqFw_Core_App_Registry_Front_Route() {
      *
      * @typedef {Object} TeqFw_Core_App_Registry_Front_Route.Entry
      * @property {string} path
-     * @property {Object} component
+     * @property {string} component_name
+     * @property {string} label
      */
 
     /**
