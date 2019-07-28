@@ -1,5 +1,6 @@
 "use strict";
 const $path = require("path");
+const $logger = new (require("./src/Logger"))();
 
 /**
  * TeqFW application, main (and only) entry point.
@@ -32,7 +33,7 @@ function TeqFw_Core_App() {
         function create_globals() {
             return new Promise(function (resolve) {
                 global["teqfw"] = {};
-                console.log("AppInit: `global.teqfw` object is created.");
+                $logger.info("AppInit: `global.teqfw` object is created.");
                 resolve();
             });
         }
@@ -70,7 +71,7 @@ function TeqFw_Core_App() {
                 config.init(cfg_init);
                 obm.put("TeqFw_Core_App_Configurator", config);
                 // finalize
-                console.log("AppInit: Application's main objects are created.");
+                $logger.info("AppInit: Application's main objects are created.");
                 resolve();
             });
         }
@@ -112,7 +113,7 @@ function TeqFw_Core_App() {
                 /** @type TeqFw_Core_App_Commander */
                 const commander = global["teqfw"].object_manager.get("TeqFw_Core_App_Commander");
                 commander.setVersion(_version);
-                console.log("AppInit: Application Commander is created.");
+                $logger.info("AppInit: Application Commander is created.");
                 resolve();
             });
         }
@@ -127,14 +128,14 @@ function TeqFw_Core_App() {
                 /** @type TeqFw_Core_App_Db_Connector */
                 const db = global["teqfw"].object_manager.get("TeqFw_Core_App_Db_Connector");
                 db.init().then(function () {
-                    console.log("AppInit: Database connection is created.");
+                    $logger.info("AppInit: Database connection is created.");
 
                     const knex = db.get();
                     knex({main: "teq_core_user"}).select({id: "main.id", name: "main.name"}).then(
                         function (raw) {
                             const boo = raw;
                             for (const one of raw) {
-                                console.log(`id: ${one.id}; name: ${one.name}`);
+                                $logger.info(`id: ${one.id}; name: ${one.name}`);
                             }
                             resolve();
                         }
@@ -166,7 +167,7 @@ function TeqFw_Core_App() {
                 /** @type TeqFw_Core_App_Server */
                 const web_server = global["teqfw"].object_manager.get("TeqFw_Core_App_Server");
                 web_server.init().then(() => {
-                    console.log("AppInit: Application Server is initialized.");
+                    $logger.info("AppInit: Application Server is initialized.");
                     resolve();
                 });
             });
@@ -191,7 +192,7 @@ function TeqFw_Core_App() {
          * Parse CLI arguments and execute the called command or print out help by default.
          */
         function run_commander() {
-            console.log("AppInit: Initialization is completed. Run requested command.");
+            $logger.info("AppInit: Initialization is completed. Run requested command.");
             /** @type TeqFw_Core_App_Commander */
             const commander = global["teqfw"].object_manager.get("TeqFw_Core_App_Commander");
             commander.run();
@@ -209,7 +210,7 @@ function TeqFw_Core_App() {
             .then(init_server)          // initialize application server
             .then(run_commander)        // run application's commander
             .catch((reason) => {
-                console.log("Application fatal error: " + reason);
+                $logger.info("Application fatal error: " + reason);
                 throw reason;
             });
     };
