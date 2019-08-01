@@ -10,6 +10,8 @@ module.exports = function () {
     return new Promise(function (resolve) {
         /** @type TeqFw_Core_Di */
         const obm = global["teqfw"].object_manager;
+        /** @type {TeqFw_Core_App_Logger} */
+       const logger = obm.get("TeqFw_Core_App_Logger");
         /** @type TeqFw_Core_App_Registry_Module */
         const registry = obm.get("TeqFw_Core_App_Registry_Module");
         const all = registry.get();
@@ -29,7 +31,7 @@ module.exports = function () {
                 src: path_src
             };
             obm.addModule({module: name, data: di_data});
-            console.log(`Autoload: Module '${name}' is added to Object Manager.`);
+            logger.info(`Autoload: Module '${name}' is added to Object Manager.`);
         }
         resolve();
     });

@@ -12,6 +12,7 @@ function TeqFw_Core_App_Logger() {
     const LEVEL_INFO = 1;
     const LEVEL_WARN = 2;
     const LEVEL_ERROR = 3;
+    const MARK_PID = "pid";
     const TEQ_FW_LOG_MARKERS = "teqFwLogMarkers";
 
     /**
@@ -69,6 +70,7 @@ function TeqFw_Core_App_Logger() {
      */
     const _queue = new LogQueue();
 
+    const _transports = [];
 
     /**
      * Place log record in queue, then process queue against existing transports.
@@ -81,9 +83,14 @@ function TeqFw_Core_App_Logger() {
      */
     function write(level, first, second, third) {
         const record = {};
+        // TODO: use "process.hrtime()" to get microtime
         record.date = (new Date()).getTime(); // int, UTC
         record.level = level;
         record.markers = [];
+        // all log records contain PID data
+        const mark_pid = {};
+        mark_pid[MARK_PID] = process.pid;
+        record.markers.push(mark_pid);
 
         if (arguments.length === 2) {
             if (typeof first === "string") {
@@ -136,10 +143,22 @@ function TeqFw_Core_App_Logger() {
      * Temporal implementation of the log output, for console only.
      */
     function process_queue() {
-        let item = _queue.dequeue();
-        while (item !== undefined) {
-            console.log(JSON.stringify(item));
-            item = _queue.dequeue();
+        /* process queue if transports list is not empty */
+        if (_transports.length > 0) {
+            /* compose batch with log messages to process */
+            const batch = [];
+            let item = _queue.dequeue();
+            while (item !== undefined) {
+                batch.push(item);
+                item = _queue.dequeue();
+            }
+            /* process batch against transports */
+            if (batch.length > 0) {
+                /* make async processing */
+                for (const one of _transports) {
+                    one.process(batch);
+                }
+            }
         }
     }
 
@@ -169,7 +188,16 @@ function TeqFw_Core_App_Logger() {
 
     this.getLast = function () {
         return _queue.getLast();
-    }
+    };
+
+    /**
+     * Add transport to logger.
+     *
+     * @param {Object} transport
+     */
+    this.addTransport = function (transport) {
+        _transports.push(transport);
+    };
 
     /* Object finalization (result) */
     return Object.freeze(this);

@@ -48,9 +48,10 @@ function get_mods_defs(path_root) {
  * Teq-modules definitions loader.
  *
  * @param {string} path_root Absolute path to the application root folder.
+ * @param {TeqFw_Core_App_Logger} logger
  * @return {Promise<Array>}
  */
-module.exports = function (path_root) {
+module.exports = function (path_root, logger) {
     return new Promise(function (resolve) {
         const result = [];
         get_mods_defs(path_root).then((mods) => {
@@ -85,12 +86,12 @@ module.exports = function (path_root) {
                             scanData.path.pub = path_pub;
                         }
                         result.push(scanData);
-                        console.log(`AppInit: Teq-module '${package_name}' is added to the registry.`);
+                        logger.info(`AppInit: Teq-module '${package_name}' is added to the registry.`);
                     }
                     // return result if all `package.json` files were processed.
                     if (itemsProcessed >= total) {
                         const total = result.length;
-                        console.log(`AppInit: Definitions for '${total}' teq-modules are loaded.`);
+                        logger.info(`AppInit: Definitions for '${total}' teq-modules are loaded.`);
                         resolve(result);
                     }
                 });

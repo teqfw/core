@@ -3,6 +3,7 @@
 /**
  * This object is executed on application initialization.
  *
+ * @param {TeqFw_Core_App_Logger} TeqFw_Core_App_Logger
  * @param {TeqFw_Core_App_Commander} TeqFw_Core_App_Commander
  * @param {TeqFw_Core_App_Registry_Server_Route} TeqFw_Core_App_Registry_Server_Route
  * @param {TeqFw_Core_App_Cli_Server_Start} TeqFw_Core_App_Cli_Server_Start
@@ -13,6 +14,7 @@
  * @constructor
  */
 function TeqFw_Core_App_Sys_App_Init(
+    TeqFw_Core_App_Logger,
     TeqFw_Core_App_Commander,
     TeqFw_Core_App_Registry_Server_Route,
     TeqFw_Core_App_Cli_Server_Start,
@@ -20,6 +22,7 @@ function TeqFw_Core_App_Sys_App_Init(
     TeqFw_Core_App_Server_Route_Handler_Empty,
     TeqFw_Core_App_Server_Route_Handler_Config_Get
 ) {
+    const _logger = TeqFw_Core_App_Logger;
     /** @type {TeqFw_Core_App_Commander} */
     const _commander = TeqFw_Core_App_Commander;
     /** @type {TeqFw_Core_App_Registry_Server_Route} */
@@ -58,7 +61,7 @@ function TeqFw_Core_App_Sys_App_Init(
 
         init_commander();
         init_back_routes();
-        console.log("Init Server module.");
+        _logger.info("Init Server module.");
     };
 
     /* Object finalization (result) */

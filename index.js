@@ -62,7 +62,7 @@ function TeqFw_Core_App() {
                 const config = new (require("./src/Configurator"))();
                 const path_cfg_local = $path.join(_root, "cfg", "local.json");
                 const cfg_load = require("./src/_init/cfg_load");
-                const cfg_local = cfg_load(path_cfg_local);
+                const cfg_local = cfg_load(path_cfg_local, $logger);
                 const cfg_init = {
                     local: cfg_local,
                     path: {root: _root},
@@ -70,6 +70,7 @@ function TeqFw_Core_App() {
                 };
                 config.init(cfg_init);
                 obm.put("TeqFw_Core_App_Configurator", config);
+                obm.put("TeqFw_Core_App_Logger", $logger);
                 // finalize
                 $logger.info("AppInit: Application's main objects are created.");
                 resolve();
@@ -91,7 +92,7 @@ function TeqFw_Core_App() {
                 const path_root = config.get("path/root");
                 // direct load with `require` cause `object_manager` is not initiated yet
                 const load = require("./src/_init/mod_load");
-                load(path_root).then((mods) => {
+                load(path_root, $logger).then((mods) => {
                     // add modules to registry
                     /** @type TeqFw_Core_App_Registry_Module */
                     const reg = obm.get("TeqFw_Core_App_Registry_Module");
@@ -142,6 +143,18 @@ function TeqFw_Core_App() {
                     );
 
                 });
+            });
+        }
+
+        function init_logger() {
+            return new Promise(function (resolve) {
+                /** @type {TeqFw_Core_App_Logger_Transport_Console} */
+                const console = global["teqfw"].object_manager.get("TeqFw_Core_App_Logger_Transport_Console");
+                /** @type {TeqFw_Core_App_Logger_Transport_Db} */
+                const db = global["teqfw"].object_manager.get("TeqFw_Core_App_Logger_Transport_Db");
+                $logger.addTransport(console);
+                $logger.addTransport(db);
+                resolve();
             });
         }
 
@@ -206,6 +219,7 @@ function TeqFw_Core_App() {
             .then(init_autoload)        // populate Object Manager's autoload
             .then(init_modules)         // initialize teq-modules
             .then(init_db)              // initialize database connection
+            .then(init_logger)          // set transports to logger
             .then(init_commander)       // initialize application commander
             .then(init_server)          // initialize application server
             .then(run_commander)        // run application's commander

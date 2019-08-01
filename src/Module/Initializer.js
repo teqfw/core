@@ -3,15 +3,18 @@
 /**
  * Application registry for teq-modules.
  *
+ * @param {TeqFw_Core_App_Logger} TeqFw_Core_App_Logger
  * @param {TeqFw_Core_Di} TeqFw_Core_Di
  * @param {TeqFw_Core_App_Registry_Module} TeqFw_Core_App_Registry_Module
  * @return {TeqFw_Core_App_Module_Initializer}
  * @constructor
  */
 function TeqFw_Core_App_Module_Initializer(
+    TeqFw_Core_App_Logger,
     TeqFw_Core_Di,
     TeqFw_Core_App_Registry_Module
 ) {
+    const _logger = TeqFw_Core_App_Logger;
     const _obm = TeqFw_Core_Di;
     const _mod_reg = TeqFw_Core_App_Registry_Module;
     const _self = this;
@@ -29,11 +32,11 @@ function TeqFw_Core_App_Module_Initializer(
                 mod_init_obj = _obm.get(obj_name);
             } catch (err) {
                 // do nothing if ..._Sys_App_Init object is not found for the module
-                console.log("Init error: " + err);
+                _logger.error("Init error: " + err);
             }
             if (mod_init_obj) {
                 await mod_init_obj.exec();
-                console.log(`${_self.constructor.name}: Module '${name}' initialization is started.`);
+                _logger.info(`${_self.constructor.name}: Module '${name}' initialization is started.`);
             }
         }
     }
