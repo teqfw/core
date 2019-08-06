@@ -12,7 +12,6 @@ function TeqFw_Core_App_Logger() {
     const LEVEL_INFO = 1;
     const LEVEL_WARN = 2;
     const LEVEL_ERROR = 3;
-    const MARK_PID = "pid";
     const TEQ_FW_LOG_MARKERS = "teqFwLogMarkers";
 
     /**
@@ -86,11 +85,7 @@ function TeqFw_Core_App_Logger() {
         // TODO: use "process.hrtime()" to get microtime
         record.date = (new Date()).getTime(); // int, UTC
         record.level = level;
-        record.markers = [];
-        // all log records contain PID data
-        const mark_pid = {};
-        mark_pid[MARK_PID] = process.pid;
-        record.markers.push(mark_pid);
+        record.markers = {};
 
         if (arguments.length === 2) {
             if (typeof first === "string") {
