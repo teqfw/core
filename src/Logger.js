@@ -8,10 +8,10 @@
  */
 function TeqFw_Core_App_Logger() {
 
-    const LEVEL_DEBUG = 0;
-    const LEVEL_INFO = 1;
-    const LEVEL_WARN = 2;
-    const LEVEL_ERROR = 3;
+    const LEVEL_DEBUG = 1;
+    const LEVEL_INFO = 2;
+    const LEVEL_WARN = 3;
+    const LEVEL_ERROR = 4;
     const TEQ_FW_LOG_MARKERS = "teqFwLogMarkers";
 
     /**

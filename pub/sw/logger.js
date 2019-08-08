@@ -25,10 +25,10 @@
          * @property {boolean} use_source - Add source address to the log if "true".
          */
 
-        const LEVEL_DEBUG = 0;
-        const LEVEL_INFO = 1;
-        const LEVEL_WARN = 2;
-        const LEVEL_ERROR = 3;
+        const LEVEL_DEBUG = 1;
+        const LEVEL_INFO = 2;
+        const LEVEL_WARN = 3;
+        const LEVEL_ERROR = 4;
 
         /**
          * Internal queue to save log data (FIFO).
