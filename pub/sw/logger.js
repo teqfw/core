@@ -21,8 +21,8 @@
          * Service worker log configuration.
          *
          * @typedef {Object} TeqFw_Core_App_Front_Sw_Logger.Config
-         * @property {Number} level - Logging level (0 - debug, ..., 3 - error).
-         * @property {boolean} use_source - Add source address to the log if "true".
+         * @property {Number} level_default - Logging level (0 - debug, ..., 3 - error).
+         * @property {boolean} trace_source - Add source address to the log if "true".
          */
 
         const LEVEL_DEBUG = 1;
@@ -78,8 +78,8 @@
          * @private
          */
         const _cfg = {
-            level: LEVEL_INFO,
-            use_source: false
+            level_default: LEVEL_INFO,
+            trace_source: false
         };
         /**
          * Internal queue to temporary save log data before processing with transports.
@@ -117,12 +117,12 @@
          * @param {String} message
          */
         function log(level, message) {
-            if (level >= _cfg.level) {
+            if (level >= _cfg.level_default) {
                 // log items with level not less then configured.
                 const date = (new Date()).getTime(); // int, UTC
                 let msg = message;
                 // add link to source to log message
-                if (_cfg.use_source) {
+                if (_cfg.trace_source) {
                     const stack = get_stack();
                     const source = stack.pop().replace("    at ", "")
                     msg = `${message} (${source})`;

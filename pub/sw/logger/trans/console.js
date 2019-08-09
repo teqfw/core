@@ -8,6 +8,12 @@
      * @namespace TeqFw_Core_App_Front_Sw_Logger_Trans_Console
      */
     function TeqFw_Core_App_Front_Sw_Logger_Trans_Console() {
+
+        const LEVEL_DEBUG = 1;
+        const LEVEL_INFO = 2;
+        const LEVEL_WARN = 3;
+        const LEVEL_ERROR = 4;
+
         /**
          * Formatter to output time as "hh:mm:ss".
          *
@@ -26,15 +32,15 @@
          * @return {string}
          */
         function map_level_to_str(level) {
-            let result = "UNKWN";
-            if (level === 0) {
-                result = "DEBUG";
-            } else if (level === 1) {
-                result = "INFO";
-            } else if (level === 2) {
-                result = "WARN";
-            } else if (level === 3) {
-                result = "ERROR";
+            let result = "UNKNOWN/SW";
+            if (level === LEVEL_DEBUG) {
+                result = "DEBUG/SW";
+            } else if (level === LEVEL_INFO) {
+                result = "INFO/SW";
+            } else if (level === LEVEL_WARN) {
+                result = "WARN/SW";
+            } else if (level === LEVEL_ERROR) {
+                result = "ERROR/SW";
             }
             return result;
         }
@@ -52,13 +58,13 @@
             const out = `${date}: ${level} - ${log.message}`;
             // print out to console without links to sources
             // (https://stackoverflow.com/questions/34762774/how-to-hide-source-of-log-messages-in-console)
-            if (log.level === 0) {
+            if (log.level === LEVEL_DEBUG) {
                 setTimeout(console.debug.bind(console, out));
-            } else if (log.level === 1) {
+            } else if (log.level === LEVEL_INFO) {
                 setTimeout(console.info.bind(console, out));
-            } else if (log.level === 2) {
+            } else if (log.level === LEVEL_WARN) {
                 setTimeout(console.warn.bind(console, out));
-            } else if (log.level === 3) {
+            } else if (log.level === LEVEL_ERROR) {
                 setTimeout(console.error.bind(console, out));
             }
 
