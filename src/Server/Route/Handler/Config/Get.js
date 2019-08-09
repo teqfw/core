@@ -1,13 +1,13 @@
 "use strict";
 
 /**
- * Empty handler to map to any backend route.
+ * Get configuration from backend.
  *
  * @param {TeqFw_Core_App_Registry_Front_Route} TeqFw_Core_App_Registry_Front_Route
- * @return {TeqFw_Core_App_Server_Route_Handler_Empty}
+ * @return {TeqFw_Core_App_Server_Route_Handler_Config_Get}
  * @constructor
  */
-function TeqFw_Core_App_Server_Route_Handler_Empty(
+function TeqFw_Core_App_Server_Route_Handler_Config_Get(
     TeqFw_Core_App_Registry_Front_Route
 ) {
 
@@ -46,4 +46,4 @@ function TeqFw_Core_App_Server_Route_Handler_Empty(
 }
 
 /* Module exports */
-module.exports = TeqFw_Core_App_Server_Route_Handler_Empty;
+module.exports = TeqFw_Core_App_Server_Route_Handler_Config_Get;

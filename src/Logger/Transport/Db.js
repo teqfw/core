@@ -42,7 +42,7 @@ function TeqFw_Core_App_Logger_Transport_Db(
             const values_ids = await _select_values.exec({markers, codes});
             const log_id = await knex(TBL_TEQ_LOG).insert({
                 date: new Date(log_item.date),
-                level: log_item.level_default,
+                level: log_item.level,
                 message: log_item.message,
                 details: log_item.details
             });

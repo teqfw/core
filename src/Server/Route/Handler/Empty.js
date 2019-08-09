@@ -3,10 +3,10 @@
 /**
  * Empty handler to map to any backend route.
  *
- * @return {TeqFw_Core_App_Server_Route_Handler_Config_Get}
+ * @return {TeqFw_Core_App_Server_Route_Handler_Empty}
  * @constructor
  */
-function TeqFw_Core_App_Server_Route_Handler_Config_Get() {
+function TeqFw_Core_App_Server_Route_Handler_Empty() {
 
     /**
      * Send text to the web.
@@ -22,4 +22,4 @@ function TeqFw_Core_App_Server_Route_Handler_Config_Get() {
 }
 
 /* Module exports */
-module.exports = TeqFw_Core_App_Server_Route_Handler_Config_Get;
+module.exports = TeqFw_Core_App_Server_Route_Handler_Empty;

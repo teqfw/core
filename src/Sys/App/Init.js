@@ -10,6 +10,7 @@
  * @param {TeqFw_Core_App_Cli_Server_Stop} TeqFw_Core_App_Cli_Server_Stop
  * @param {TeqFw_Core_App_Server_Route_Handler_Empty} TeqFw_Core_App_Server_Route_Handler_Empty
  * @param {TeqFw_Core_App_Server_Route_Handler_Config_Get} TeqFw_Core_App_Server_Route_Handler_Config_Get
+ * @param {TeqFw_Core_App_Server_Route_Handler_Routes_Get} TeqFw_Core_App_Server_Route_Handler_Routes_Get
  * @return {TeqFw_Core_App_Sys_App_Init}
  * @constructor
  */
@@ -20,7 +21,8 @@ function TeqFw_Core_App_Sys_App_Init(
     TeqFw_Core_App_Cli_Server_Start,
     TeqFw_Core_App_Cli_Server_Stop,
     TeqFw_Core_App_Server_Route_Handler_Empty,
-    TeqFw_Core_App_Server_Route_Handler_Config_Get
+    TeqFw_Core_App_Server_Route_Handler_Config_Get,
+    TeqFw_Core_App_Server_Route_Handler_Routes_Get
 ) {
     const _logger = TeqFw_Core_App_Logger;
     /** @type {TeqFw_Core_App_Commander} */
@@ -35,6 +37,8 @@ function TeqFw_Core_App_Sys_App_Init(
     const _hndl_empty = TeqFw_Core_App_Server_Route_Handler_Empty;
     /** @type {TeqFw_Core_App_Server_Route_Handler_Config_Get} */
     const _hndl_config_get = TeqFw_Core_App_Server_Route_Handler_Config_Get;
+    /** @type {TeqFw_Core_App_Server_Route_Handler_Routes_Get} */
+    const _hndl_routes_get = TeqFw_Core_App_Server_Route_Handler_Routes_Get;
 
     /**
      * Perform initialization of the module.
@@ -57,6 +61,7 @@ function TeqFw_Core_App_Sys_App_Init(
 
         function init_back_routes() {
             _reg_back_routes.add({path: "/core/app/config/get", handler: _hndl_config_get});
+            _reg_back_routes.add({path: "/core/app/routes/get", handler: _hndl_routes_get});
         }
 
         init_commander();
