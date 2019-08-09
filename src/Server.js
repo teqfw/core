@@ -201,7 +201,9 @@ function TeqFw_Core_App_Server(
                 const data = one[1];
                 const path = data.path;
                 const handler = data.handler;
-                _server.all(path, handler.exec);
+                if (path && handler) {
+                    _server.all(path, handler.exec);
+                }
             }
         }
 
