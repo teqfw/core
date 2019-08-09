@@ -4,9 +4,12 @@
  * Application commander (wrapper for inner `_commander`).
  *
  * @return {TeqFw_Core_App_Commander}
+ * @param {TeqFw_Core_App} TeqFw_Core_App
  * @constructor
  */
-function TeqFw_Core_App_Commander() {
+function TeqFw_Core_App_Commander(
+    TeqFw_Core_App
+) {
     /**
      * Command data to add to the commander.
      *
@@ -15,6 +18,9 @@ function TeqFw_Core_App_Commander() {
      * @property {string} description - Console help for the command: "Start application's web server.".
      * @property {Function} action - Function to be called to perform requested action.
      */
+
+    /** @type {TeqFw_Core_App} */
+    const _app = TeqFw_Core_App;
 
     /**
      * Inner commander.
@@ -26,7 +32,7 @@ function TeqFw_Core_App_Commander() {
      * Wrapper to add command to inner `_commander`.
      * @param {CommandData} spec
      */
-    this.addCommand = ({flags, description, action}) => {
+    this.addCommand = function ({flags, description, action}) {
         _commander.option(flags, description, action);
     };
 
@@ -35,17 +41,21 @@ function TeqFw_Core_App_Commander() {
      *
      * @param {string} version
      */
-    this.setVersion = (version) => {
+    this.setVersion = function (version) {
         _commander.version(version, "-v, --version");
     };
 
     /**
      * Run inner `_commander` and perform requested commands.
      */
-    this.run = () => {
+    this.run = function () {
         _commander.parse(process.argv);
         if (!process.argv.slice(2).length) {
             _commander.outputHelp();
+            _app.stop().then((boo) => {
+                // do nothing
+                const bp = 1;
+            });
         }
     };
 
