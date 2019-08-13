@@ -35,7 +35,6 @@ function TeqFw_Core_App_Server_Route_Handler_Config_Get(
      */
     this.exec = function (req, res, next) {
         init_cfg();
-        console.log("./config/get handler is here!!");
         res.json(_cached_cfg);
         // next();
     };
