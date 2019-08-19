@@ -2,7 +2,7 @@
   "name": "teqfw-core-app",
   "version": "0.1.0",
   "description": "TeqFW: core application functionality.",
-  "main": "index.js",
+  "main": "./src/Instance.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
