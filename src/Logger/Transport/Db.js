@@ -38,21 +38,25 @@ function TeqFw_Core_App_Logger_Transport_Db(
             const markers = log_item.markers || {};
             markers["inst"] = _app_instance_id;
             markers["pid"] = _pid;
-            const codes = await _select_codes.exec(markers);
-            const values_ids = await _select_values.exec({markers, codes});
-            const log_id = await knex(TBL_TEQ_LOG).insert({
-                date: new Date(log_item.date),
-                level: log_item.level,
-                message: log_item.message,
-                details: log_item.details
-            });
-            const val_inserts = knex(TBL_TEQ_LOG_TO_MARKER);
-            for (const value_id of values_ids) {
-                val_inserts.insert({
-                    log_id,
-                    marker_id: value_id
+            try {
+                const codes = await _select_codes.exec(markers);
+                const values_ids = await _select_values.exec({markers, codes});
+                const log_id = await knex(TBL_TEQ_LOG).insert({
+                    date: new Date(log_item.date),
+                    level: log_item.level,
+                    message: log_item.message,
+                    details: log_item.details
                 });
-                await val_inserts;
+                const val_inserts = knex(TBL_TEQ_LOG_TO_MARKER);
+                for (const value_id of values_ids) {
+                    val_inserts.insert({
+                        log_id,
+                        marker_id: value_id
+                    });
+                    await val_inserts;
+                }
+            } catch (e) {
+                const bp = true;
             }
         }
 

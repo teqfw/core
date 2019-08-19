@@ -44,7 +44,7 @@ function TeqFw_Core_App_Cli_Server_Start(
         $fs.writeFile(pid_path, pid, (err) => {
             if (err) throw err;
             // PID is wrote => start the server
-            _server.listen(_cfg.SERVER_DEFAULT_PORT, () => {
+            _server.listen(_cfg.SERVER_DEFAULT_PORT, (err) => {
                 console.log(`Web server is listening on port ${_cfg.SERVER_DEFAULT_PORT}. PID: ${pid}.`);
             });
         });
