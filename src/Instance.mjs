@@ -89,6 +89,21 @@ export default class TeqFw_Core_App_Instance {
                 });
             }
 
+            function config_logger() {
+                return new Promise(function (resolve) {
+                    _container.get("TeqFw_Core_App_Logger_Transport_Console")
+                        .then(/** @type {TeqFw_Core_App_Logger_Transport_Console} */(trn_console) => {
+                            _logger.addTransport(trn_console);
+                            _container.get("TeqFw_Core_App_Logger_Transport_Db")
+                                .then(/** @type {TeqFw_Core_App_Logger_Transport_Db} */(trn_db) => {
+                                    _logger.addTransport(trn_db);
+                                    _logger.debug("Application logger is configured.");
+                                    resolve();
+                                });
+                        });
+                });
+            }
+
 
             // register current NS in DI container & place application into DI container
             _container.addSourceMapping("TeqFw_Core_App", __dirname);
@@ -99,6 +114,7 @@ export default class TeqFw_Core_App_Instance {
                 .then(load_modules)
                 .then(init_autoloader)
                 .then(connect_db)
+                .then(config_logger)
                 .catch((e) => {
                     _logger.error("Application error: " + e);
                 });
