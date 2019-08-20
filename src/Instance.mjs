@@ -54,6 +54,16 @@ export default class TeqFw_Core_App_Instance {
                 });
             }
 
+            function load_modules() {
+                return new Promise(function (resolve) {
+                    _container.get("TeqFw_Core_App_Module_Loader")
+                        .then(/** @type {TeqFw_Core_App_Module_Loader} */(loader) => {
+                            loader.exec(_root)
+                                .then(resolve);
+                        });
+                });
+            }
+
 
             // register current NS in DI container & place application into DI container
             _container.addSourceMapping("TeqFw_Core_App", __dirname);
@@ -61,6 +71,7 @@ export default class TeqFw_Core_App_Instance {
             // init logger, load configuration, etc.
             init_logger()
                 .then(load_config)
+                .then(load_modules)
                 .catch((e) => {
                     _logger.error("Application error: " + e);
                 });
