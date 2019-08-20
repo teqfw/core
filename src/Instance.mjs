@@ -44,10 +44,12 @@ export default class TeqFw_Core_App_Instance {
                     _logger.info(`Local configuration is read from '${path_local}'.`);
                     $fs.readFile(path_local, (err, data) => {
                         if (err) throw err;
-                        const json = JSON.parse(data.toString());
+                        const local = JSON.parse(data.toString());
                         _container.get("TeqFw_Core_App_Configurator")
-                            .then(/** @type {TeqFw_Core_App_Configurator} */(obj) => {
-                                obj.init(json);
+                            .then(/** @type {TeqFw_Core_App_Configurator} */(configurator) => {
+                                // save local configuration to "local" node
+                                const json = {local};
+                                configurator.init(json);
                                 resolve();
                             });
                     });
@@ -74,6 +76,19 @@ export default class TeqFw_Core_App_Instance {
                 });
             }
 
+            function connect_db() {
+                return new Promise(function (resolve) {
+                    _container.get("TeqFw_Core_App_Db_Connector")
+                        .then(/** @type {TeqFw_Core_App_Db_Connector} */(db) => {
+                            db.init()
+                                .then(() => {
+                                    _logger.info("AppInit: Database connection is created.");
+                                    resolve();
+                                });
+                        });
+                });
+            }
+
 
             // register current NS in DI container & place application into DI container
             _container.addSourceMapping("TeqFw_Core_App", __dirname);
@@ -83,6 +98,7 @@ export default class TeqFw_Core_App_Instance {
                 .then(load_config)
                 .then(load_modules)
                 .then(init_autoloader)
+                .then(connect_db)
                 .catch((e) => {
                     _logger.error("Application error: " + e);
                 });
