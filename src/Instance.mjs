@@ -64,6 +64,16 @@ export default class TeqFw_Core_App_Instance {
                 });
             }
 
+            function init_autoloader() {
+                return new Promise(function (resolve) {
+                    _container.get("TeqFw_Core_App_Module_NsMapper")
+                        .then(/** @type {TeqFw_Core_App_Module_NsMapper} */(mapper) => {
+                            mapper.exec()
+                                .then(resolve);
+                        });
+                });
+            }
+
 
             // register current NS in DI container & place application into DI container
             _container.addSourceMapping("TeqFw_Core_App", __dirname);
@@ -72,6 +82,7 @@ export default class TeqFw_Core_App_Instance {
             init_logger()
                 .then(load_config)
                 .then(load_modules)
+                .then(init_autoloader)
                 .catch((e) => {
                     _logger.error("Application error: " + e);
                 });

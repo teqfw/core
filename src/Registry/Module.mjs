@@ -14,7 +14,7 @@ export default class TeqFw_Core_App_Registry_Module {
      * @property {Object} path - Paths to module's parts.
      * @property {string} path.root - Absolute path to module's root ("/.../app/node_modules/teqfw-core-di")
      * @property {string} path.pub - Absolute path to module's `pub` resources (if exist, "/.../app/node_modules/teqfw-core-di")
-     * @property {ModuleDescriptorData} desc - teqfw-descriptor from `package.json`
+     * @property {TeqFw_Core_App_Registry_Module.ModuleDescriptorData} desc - teqfw-descriptor from `package.json`
      */
 
     constructor() {
@@ -30,7 +30,7 @@ export default class TeqFw_Core_App_Registry_Module {
          *
          * @param {string}[mod_name] - Module name to get module's definitions from registry. Get all definitions
          *      for all modules if undefined.
-         * @return {Map<string, ModuleScanData>|ModuleScanData}
+         * @return {[TeqFw_Core_App_Registry_Module.ModuleScanData]|TeqFw_Core_App_Registry_Module.ModuleScanData}
          * @memberOf TeqFw_Core_App_Registry_Module.prototype
          */
         this.get = function (mod_name = undefined) {
@@ -38,7 +38,7 @@ export default class TeqFw_Core_App_Registry_Module {
             if (mod_name) {
                 result = _registry.get(mod_name);
             } else {
-                result = _registry;
+                result = Array.from(_registry.values());
             }
             return result;
         };
