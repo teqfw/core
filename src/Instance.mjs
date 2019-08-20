@@ -104,6 +104,25 @@ export default class TeqFw_Core_App_Instance {
                 });
             }
 
+            function init_commander() {
+                return new Promise(function (resolve) {
+                    _container.get("TeqFw_Core_App_Commander")
+                        .then(/** @type {TeqFw_Core_App_Commander} */(commander) => {
+                            commander.setVersion(_version);
+                            _logger.info("AppInit: Application Commander is created.");
+                            resolve();
+                        });
+                });
+            }
+
+
+            function run_commander() {
+                _logger.info("AppInit: Initialization is completed. Run requested command.");
+                _container.get("TeqFw_Core_App_Commander")
+                    .then(/** @type {TeqFw_Core_App_Commander} */(commander) => {
+                        commander.run();
+                    });
+            }
 
             // register current NS in DI container & place application into DI container
             _container.addSourceMapping("TeqFw_Core_App", __dirname);
@@ -115,9 +134,44 @@ export default class TeqFw_Core_App_Instance {
                 .then(init_autoloader)
                 .then(connect_db)
                 .then(config_logger)
+                .then(init_commander)
+                .then(run_commander)
                 .catch((e) => {
                     _logger.error("Application error: " + e);
                 });
         }
+
+        /**
+         * @memberOf TeqFw_Core_App_Instance.prototype
+         */
+        this.stop = async function () {
+            _logger.info("Close the application.");
+            /** @type {TeqFw_Core_App_Db_Connector} */
+            const db = await _container.get("TeqFw_Core_App_Db_Connector");
+            const knex = db.get();
+            const pool = knex.client.pool;
+            return new Promise(function (resolve, reject) {
+                const WAIT = 100;
+
+                /**
+                 * Check DB connections in loop and close all when all connections will be released.
+                 */
+                function check_pool() {
+                    const acquires = pool.numPendingAcquires();
+                    const creates = pool.numPendingCreates();
+                    const pending = acquires + creates;
+                    if (pending > 0) {
+                        // wait until all connections will be released
+                        setTimeout(check_pool, WAIT);
+                    } else {
+                        // close all connections
+                        knex.destroy();
+                        resolve();
+                    }
+                }
+
+                setTimeout(check_pool, WAIT);
+            });
+        };
     }
 }
