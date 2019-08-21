@@ -2,7 +2,7 @@ import $fs from "fs";
 import $path from "path";
 
 /**
- * Loader for teq-modules definitions.
+ * Loader for teq-modules definitions (load `package.json` files and save "teqfw" nodes to module registry).
  *
  * Don't confuse loader with initializer.
  */

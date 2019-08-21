@@ -19,7 +19,7 @@ export default class TeqFw_Core_App_Logger_Transport_Db_ValuesIdsSelect {
          * @param {Object} markers - markers values ({code: value})
          * @param {Object} codes - code IDs ({code_value: code_id})
          * @return {Promise<Array>}
-         * @memberOf TeqFw_Core_App_Logger_Transport_Db_ValuesIdsSelect
+         * @memberOf TeqFw_Core_App_Logger_Transport_Db_ValuesIdsSelect.prototype
          */
         this.exec = async function ({markers, codes}) {
             const result = [];

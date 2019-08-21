@@ -49,6 +49,8 @@ export default class TeqFw_Core_App_Instance {
                             .then(/** @type {TeqFw_Core_App_Configurator} */(configurator) => {
                                 // save local configuration to "local" node
                                 const json = {local};
+                                // add path to app root folder
+                                json.path = {root: _root};
                                 configurator.init(json);
                                 resolve();
                             });
@@ -115,6 +117,14 @@ export default class TeqFw_Core_App_Instance {
                 });
             }
 
+            function init_modules() {
+                return new Promise(function (resolve) {
+                    _container.get("TeqFw_Core_App_Module_Initializer")
+                        .then(/** @type {TeqFw_Core_App_Module_Initializer} */(initializer) => {
+                            initializer.exec().then(resolve);
+                        });
+                });
+            }
 
             function run_commander() {
                 _logger.info("AppInit: Initialization is completed. Run requested command.");
@@ -135,8 +145,10 @@ export default class TeqFw_Core_App_Instance {
                 .then(connect_db)
                 .then(config_logger)
                 .then(init_commander)
+                .then(init_modules)
                 .then(run_commander)
                 .catch((e) => {
+                    console.error("Application error: " + e);
                     _logger.error("Application error: " + e);
                 });
         }

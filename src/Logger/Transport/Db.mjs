@@ -23,7 +23,7 @@ export default class TeqFw_Core_App_Logger_Transport_Db {
          * Process all log entries.
          *
          * @param logs
-         * @memberOf TeqFw_Core_App_Logger_Transport_Db
+         * @memberOf TeqFw_Core_App_Logger_Transport_Db.prototype
          */
         this.process = async function (logs) {
             const knex = _db.get();
