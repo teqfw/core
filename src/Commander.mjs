@@ -52,9 +52,8 @@ export default class TeqFw_Core_App_Commander {
             _commander.parse(process.argv);
             if (!process.argv.slice(2).length) {
                 _commander.outputHelp();
-                _app.stop().then((boo) => {
-                    // do nothing
-                    const bp = 1;
+                _app.stop().then(() => {
+                    /* do nothing*/
                 });
             }
         };

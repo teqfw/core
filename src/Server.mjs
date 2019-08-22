@@ -30,6 +30,7 @@ export default class TeqFw_Core_App_Server {
          * @type {TeqFw_Core_App_Registry_Server_Route}
          */
         const _reg_routes = spec.TeqFw_Core_App_Registry_Server_Route;
+
         /**
          * Instance of "express" web server.
          *

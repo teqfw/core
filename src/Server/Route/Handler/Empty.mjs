@@ -8,7 +8,6 @@ export default class TeqFw_Core_App_Server_Route_Handler_Empty {
          * @memberOf TeqFw_Core_App_Server_Route_Handler_Empty.prototype
          */
         this.exec = function (req, res, next) {
-            console.log("Empty handler is here!!");
             res.send("Empty handler is here!!");
             // next();
         };

@@ -13,6 +13,8 @@ export default class TeqFw_Core_App_Cli_Server_Start {
         const _cfg = spec.TeqFw_Core_App_Config;
         /** @type {TeqFw_Core_App_Server} */
         const _server = spec.TeqFw_Core_App_Server;
+        /** @type {TeqFw_Core_App_Logger} */
+        const _logger = spec.TeqFw_Core_App_Logger;
 
         /**
          * Start web server and save PID into file.
@@ -29,7 +31,7 @@ export default class TeqFw_Core_App_Cli_Server_Start {
                     if (err) throw err;
                     // PID is wrote => start the server
                     _server.listen(_cfg.SERVER_DEFAULT_PORT, (err) => {
-                        console.log(`Web server is listening on port ${_cfg.SERVER_DEFAULT_PORT}. PID: ${pid}.`);
+                        _logger.info(`Web server is listening on port ${_cfg.SERVER_DEFAULT_PORT}. PID: ${pid}.`);
                     });
                 });
             });
