@@ -173,10 +173,10 @@ export default class TeqFw_Core_App_Server {
                 // map `./pub/` folders for modules
                 const mods = _reg_mods.get();
                 for (const one of mods) {
-                    const name = one[0];
-                    const def = one[1];
-                    if (def.path && def.path.pub) {
-                        const path_pub = def.path.pub;
+                    const name = one.name;
+                    const path = one.path;
+                    if (path && path.pub) {
+                        const path_pub = path.pub;
                         const url = "/pub/" + name;
                         _server.use(url, $express.static(path_pub));
                     }
