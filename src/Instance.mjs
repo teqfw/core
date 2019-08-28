@@ -10,6 +10,8 @@ const __filename = $url.fileURLToPath(import.meta.url);
 const __dirname = $path.dirname(__filename);
 
 /**
+ * Backend application.
+ *
  * @memberOf TeqFw_Core_App
  */
 export default class TeqFw_Core_App_Instance {
@@ -29,7 +31,7 @@ export default class TeqFw_Core_App_Instance {
 
             function init_logger() {
                 return new Promise(function (resolve) {
-                    _container.get("TeqFw_Core_App_Logger")
+                    _container.get("TeqFw_Core_App_Logger$")
                         .then(/** @type {TeqFw_Core_App_Logger} */(logger) => {
                             _logger = logger;
                             logger.debug("Application logger is created.");
@@ -45,7 +47,7 @@ export default class TeqFw_Core_App_Instance {
                     $fs.readFile(path_local, (err, data) => {
                         if (err) throw err;
                         const local = JSON.parse(data.toString());
-                        _container.get("TeqFw_Core_App_Configurator")
+                        _container.get("TeqFw_Core_App_Configurator$")
                             .then(/** @type {TeqFw_Core_App_Configurator} */(configurator) => {
                                 // save local configuration to "local" node
                                 const json = {local};
@@ -60,7 +62,7 @@ export default class TeqFw_Core_App_Instance {
 
             function load_modules() {
                 return new Promise(function (resolve) {
-                    _container.get("TeqFw_Core_App_Module_Loader")
+                    _container.get("TeqFw_Core_App_Module_Loader$")
                         .then(/** @type {TeqFw_Core_App_Module_Loader} */(loader) => {
                             loader.exec(_root)
                                 .then(resolve);
@@ -70,7 +72,7 @@ export default class TeqFw_Core_App_Instance {
 
             function init_autoloader() {
                 return new Promise(function (resolve) {
-                    _container.get("TeqFw_Core_App_Module_NsMapper")
+                    _container.get("TeqFw_Core_App_Module_NsMapper$")
                         .then(/** @type {TeqFw_Core_App_Module_NsMapper} */(mapper) => {
                             mapper.exec()
                                 .then(resolve);
@@ -80,7 +82,7 @@ export default class TeqFw_Core_App_Instance {
 
             function connect_db() {
                 return new Promise(function (resolve) {
-                    _container.get("TeqFw_Core_App_Db_Connector")
+                    _container.get("TeqFw_Core_App_Db_Connector$")
                         .then(/** @type {TeqFw_Core_App_Db_Connector} */(db) => {
                             db.init()
                                 .then(() => {
@@ -93,10 +95,10 @@ export default class TeqFw_Core_App_Instance {
 
             function config_logger() {
                 return new Promise(function (resolve) {
-                    _container.get("TeqFw_Core_App_Logger_Transport_Console")
+                    _container.get("TeqFw_Core_App_Logger_Transport_Console$")
                         .then(/** @type {TeqFw_Core_App_Logger_Transport_Console} */(trn_console) => {
                             _logger.addTransport(trn_console);
-                            _container.get("TeqFw_Core_App_Logger_Transport_Db")
+                            _container.get("TeqFw_Core_App_Logger_Transport_Db$")
                                 .then(/** @type {TeqFw_Core_App_Logger_Transport_Db} */(trn_db) => {
                                     _logger.addTransport(trn_db);
                                     _logger.debug("Application logger is configured.");
@@ -108,7 +110,7 @@ export default class TeqFw_Core_App_Instance {
 
             function init_commander() {
                 return new Promise(function (resolve) {
-                    _container.get("TeqFw_Core_App_Commander")
+                    _container.get("TeqFw_Core_App_Commander$")
                         .then(/** @type {TeqFw_Core_App_Commander} */(commander) => {
                             commander.setVersion(_version);
                             _logger.info("AppInit: Application Commander is created.");
@@ -119,7 +121,7 @@ export default class TeqFw_Core_App_Instance {
 
             function init_modules() {
                 return new Promise(function (resolve) {
-                    _container.get("TeqFw_Core_App_Module_Initializer")
+                    _container.get("TeqFw_Core_App_Module_Initializer$")
                         .then(/** @type {TeqFw_Core_App_Module_Initializer} */(initializer) => {
                             initializer.exec().then(resolve);
                         });
@@ -128,7 +130,7 @@ export default class TeqFw_Core_App_Instance {
 
             function run_commander() {
                 _logger.info("AppInit: Initialization is completed. Run requested command.");
-                _container.get("TeqFw_Core_App_Commander")
+                _container.get("TeqFw_Core_App_Commander$")
                     .then(/** @type {TeqFw_Core_App_Commander} */(commander) => {
                         commander.run();
                     });
@@ -136,7 +138,7 @@ export default class TeqFw_Core_App_Instance {
 
             // register current NS in DI container & place application into DI container
             _container.addSourceMapping("TeqFw_Core_App", __dirname);
-            _container.put("TeqFw_Core_App_Instance", this);
+            _container.set("TeqFw_Core_App_Instance$", this);
             // init logger, load configuration, etc.
             init_logger()
                 .then(load_config)
@@ -159,7 +161,7 @@ export default class TeqFw_Core_App_Instance {
         this.stop = async function () {
             _logger.info("Close the application.");
             /** @type {TeqFw_Core_App_Db_Connector} */
-            const db = await _container.get("TeqFw_Core_App_Db_Connector");
+            const db = await _container.get("TeqFw_Core_App_Db_Connector$");
             const knex = db.get();
             const pool = knex.client.pool;
             return new Promise(function (resolve, reject) {

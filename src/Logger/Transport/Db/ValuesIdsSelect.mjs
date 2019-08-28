@@ -7,7 +7,7 @@ export default class TeqFw_Core_App_Logger_Transport_Db_ValuesIdsSelect {
 
     constructor(spec) {
         /** @type {TeqFw_Core_App_Db_Connector} */
-        const _db = spec.TeqFw_Core_App_Db_Connector;
+        const _db = spec.TeqFw_Core_App_Db_Connector$;
         /** @type {Object} - cache for already selected values {code_id: {value: value_id}} */
         const _cached_values = {};
         const _knex = _db.get();

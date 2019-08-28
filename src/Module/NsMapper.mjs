@@ -7,11 +7,11 @@ export default class TeqFw_Core_App_Module_NsMapper {
 
     constructor(spec) {
         /** @type {TeqFw_Core_App_Logger} */
-        const _logger = spec.TeqFw_Core_App_Logger;
+        const _logger = spec.TeqFw_Core_App_Logger$;
         /** @type {TeqFw_Core_App_Registry_Module} */
-        const _mod_reg = spec.TeqFw_Core_App_Registry_Module;
+        const _mod_reg = spec.TeqFw_Core_App_Registry_Module$;
         /** @type {TeqFw_Di_Container} */
-        const _di = spec.TeqFw_Di_Container;
+        const _di = spec.TeqFw_Di_Container$;
 
         /**
          * Get all modules from registry and map namespaces to filesystem in DI Container.

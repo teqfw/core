@@ -8,13 +8,13 @@ export default class TeqFw_Core_App_Logger_Transport_Db {
 
     constructor(spec) {
         /** @type {TeqFw_Core_App_Configurator} */
-        const _config = spec.TeqFw_Core_App_Configurator;
+        const _config = spec.TeqFw_Core_App_Configurator$;
         /** @type {TeqFw_Core_App_Db_Connector} */
-        const _db = spec.TeqFw_Core_App_Db_Connector;
+        const _db = spec.TeqFw_Core_App_Db_Connector$;
         /** @type {TeqFw_Core_App_Logger_Transport_Db_CodesIdsSelect} */
-        const _select_codes = spec.TeqFw_Core_App_Logger_Transport_Db_CodesIdsSelect;
+        const _select_codes = spec.TeqFw_Core_App_Logger_Transport_Db_CodesIdsSelect$;
         /** @type {TeqFw_Core_App_Logger_Transport_Db_ValuesIdsSelect} */
-        const _select_values = spec.TeqFw_Core_App_Logger_Transport_Db_ValuesIdsSelect;
+        const _select_values = spec.TeqFw_Core_App_Logger_Transport_Db_ValuesIdsSelect$;
 
         const _app_instance_id = _config.get("local/app/instance");
         const _pid = process.pid;

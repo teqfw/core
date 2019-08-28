@@ -9,13 +9,13 @@ export default class TeqFw_Core_App_Cli_Server_Stop {
     constructor(spec) {
         /* Private properties of the object */
         /** @type {TeqFw_Core_App_Configurator} */
-        const _config = spec.TeqFw_Core_App_Configurator;
+        const _config = spec.TeqFw_Core_App_Configurator$;
         /** @type {TeqFw_Core_App_Config} */
-        const _cfg = spec.TeqFw_Core_App_Config;
+        const _cfg = spec.TeqFw_Core_App_Config$;
         /** @type {TeqFw_Core_App_Instance} */
-        const _app = spec.TeqFw_Core_App_Instance;
+        const _app = spec.TeqFw_Core_App_Instance$;
         /** @type {TeqFw_Core_App_Logger} */
-        const _logger = spec.TeqFw_Core_App_Logger;
+        const _logger = spec.TeqFw_Core_App_Logger$;
 
 
         /* Public methods of the object */

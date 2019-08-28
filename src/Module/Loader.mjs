@@ -10,9 +10,9 @@ export default class TeqFw_Core_App_Module_Loader {
 
     constructor(spec) {
         /** @type {TeqFw_Core_App_Logger} */
-        const _logger = spec.TeqFw_Core_App_Logger;
+        const _logger = spec.TeqFw_Core_App_Logger$;
         /** @type {TeqFw_Core_App_Registry_Module} */
-        const _mod_reg = spec.TeqFw_Core_App_Registry_Module;
+        const _mod_reg = spec.TeqFw_Core_App_Registry_Module$;
 
         /**
          * Get absolute paths to all `package.json` files from `node_modules/.../` folders.

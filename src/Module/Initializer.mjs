@@ -6,11 +6,11 @@
 export default class TeqFw_Core_App_Module_Initializer {
     constructor(spec) {
         /** @type {TeqFw_Core_App_Logger} */
-        const _logger = spec.TeqFw_Core_App_Logger;
+        const _logger = spec.TeqFw_Core_App_Logger$;
         /** @type {TeqFw_Di_Container} */
-        const container = spec.TeqFw_Di_Container;
+        const container = spec.TeqFw_Di_Container$;
         /** @type {TeqFw_Core_App_Registry_Module} */
-        const _mod_reg = spec.TeqFw_Core_App_Registry_Module;
+        const _mod_reg = spec.TeqFw_Core_App_Registry_Module$;
         /** @type {TeqFw_Core_App_Module_Initializer} */
         const _self = this;
 

@@ -8,13 +8,13 @@ export default class TeqFw_Core_App_Cli_Server_Start {
 
     constructor(spec) {
         /** @type {TeqFw_Core_App_Configurator} */
-        const _config = spec.TeqFw_Core_App_Configurator;
+        const _config = spec.TeqFw_Core_App_Configurator$;
         /** @type {TeqFw_Core_App_Config} */
-        const _cfg = spec.TeqFw_Core_App_Config;
+        const _cfg = spec.TeqFw_Core_App_Config$;
         /** @type {TeqFw_Core_App_Server} */
-        const _server = spec.TeqFw_Core_App_Server;
+        const _server = spec.TeqFw_Core_App_Server$;
         /** @type {TeqFw_Core_App_Logger} */
-        const _logger = spec.TeqFw_Core_App_Logger;
+        const _logger = spec.TeqFw_Core_App_Logger$;
 
         /**
          * Start web server and save PID into file.

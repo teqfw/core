@@ -4,7 +4,7 @@
 export default class TeqFw_Core_App_Server_Route_Handler_Config_Get {
     constructor(spec) {
         /** @type {TeqFw_Core_App_Registry_Front_Route} */
-        const _reg_front_routes = spec.TeqFw_Core_App_Registry_Front_Route;
+        const _reg_front_routes = spec.TeqFw_Core_App_Registry_Front_Route$;
 
         let _cached_cfg;
 

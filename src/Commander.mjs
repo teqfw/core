@@ -15,7 +15,7 @@ export default class TeqFw_Core_App_Commander {
          */
 
         /** @type {TeqFw_Core_App_Instance} */
-        const _app = spec.TeqFw_Core_App_Instance;
+        const _app = spec.TeqFw_Core_App_Instance$;
 
         /**
          * Inner commander.

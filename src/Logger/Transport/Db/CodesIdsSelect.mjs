@@ -6,7 +6,7 @@ const TBL_TEQ_LOG_MARKER_CODE = "teq_log_marker_code";
 export default class TeqFw_Core_App_Logger_Transport_Db_CodesIdsSelect {
     constructor(spec) {
         /** @type {TeqFw_Core_App_Db_Connector} */
-        const _db = spec.TeqFw_Core_App_Db_Connector;
+        const _db = spec.TeqFw_Core_App_Db_Connector$;
         /** @type {Object} - cache for already selected codes {code: id} */
         const _cached_codes = {};
         const _knex = _db.get();

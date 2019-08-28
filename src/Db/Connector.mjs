@@ -5,9 +5,9 @@ import $knex from "knex";
  */
 export default class TeqFw_Core_App_Db_Connector {
 
-    constructor({TeqFw_Core_App_Configurator}) {
+    constructor(spec) {
         /** @type TeqFw_Core_App_Configurator */
-        const _config = TeqFw_Core_App_Configurator;
+        const _config = spec.TeqFw_Core_App_Configurator$;
         let _knex;
 
         /**

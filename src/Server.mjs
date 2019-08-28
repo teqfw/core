@@ -14,22 +14,22 @@ export default class TeqFw_Core_App_Server {
          *
          * @type {TeqFw_Core_App_Configurator}
          */
-        const _config = spec.TeqFw_Core_App_Configurator;
+        const _config = spec.TeqFw_Core_App_Configurator$;
         /** @type TeqFw_Core_App_Registry_Module */
-        const _reg_mods = spec.TeqFw_Core_App_Registry_Module;
+        const _reg_mods = spec.TeqFw_Core_App_Registry_Module$;
         /**
          * Registry for application realms.
          *
          * @type {TeqFw_Core_App_Registry_Server_Realm}
          * @const
          */
-        const _reg_realms = spec.TeqFw_Core_App_Registry_Server_Realm;
+        const _reg_realms = spec.TeqFw_Core_App_Registry_Server_Realm$;
         /**
          * Registry for application routes.
          *
          * @type {TeqFw_Core_App_Registry_Server_Route}
          */
-        const _reg_routes = spec.TeqFw_Core_App_Registry_Server_Route;
+        const _reg_routes = spec.TeqFw_Core_App_Registry_Server_Route$;
 
         /**
          * Instance of "express" web server.
