@@ -123,7 +123,8 @@ export default class TeqFw_Core_App_Instance {
                 return new Promise(function (resolve) {
                     _container.get("TeqFw_Core_App_Module_Initializer$")
                         .then(/** @type {TeqFw_Core_App_Module_Initializer} */(initializer) => {
-                            initializer.exec().then(resolve);
+                            initializer.exec()
+                                .then(resolve);
                         });
                 });
             }
