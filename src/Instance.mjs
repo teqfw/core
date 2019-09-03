@@ -138,7 +138,7 @@ export default class TeqFw_Core_App_Instance {
             }
 
             // register current NS in DI container & place application into DI container
-            _container.addSourceMapping("TeqFw_Core_App", __dirname);
+            _container.addSourceMapping("TeqFw_Core_App", __dirname, true);
             _container.set("TeqFw_Core_App_Instance$", this);
             // init logger, load configuration, etc.
             init_logger()

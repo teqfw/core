@@ -171,6 +171,12 @@ export default class TeqFw_Core_App_Server {
                 const path_favicon = $path.join(path_root, "pub", "favicon.ico");
                 _server.use("/favicon.ico", $express.static(path_favicon));
 
+                // map DI lib
+                const path_di = $path.join(path_root, "node_modules", "@teqfw", "di", "src",);
+                _server.use("/Container.mjs", $express.static($path.join(path_di, "Container.mjs")));
+                _server.use("/Container/", $express.static($path.join(path_di, "Container")));
+                _server.use("/Util.mjs", $express.static($path.join(path_di, "Util.mjs")));
+
                 // map `./pub/` folders for modules
                 const mods = _reg_mods.get();
                 for (const one of mods) {

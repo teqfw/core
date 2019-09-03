@@ -29,7 +29,8 @@ export default class TeqFw_Core_App_Module_NsMapper {
                         const ns = autoload.ns;
                         const path_src = autoload.path;
                         const path = $path.join(path_root, path_src);
-                        _di.addSourceMapping(ns, path);
+                        // map paths as absolute (not relative)
+                        _di.addSourceMapping(ns, path, true);
                     }
                 }
                 resolve();
