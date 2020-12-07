@@ -1,5 +1,6 @@
 /**
  * Handler to process GET requests to static resources in modules.
+ * TODO: path map should be configured externally
  */
 // NODE.JS IMPORTS
 import $fs from 'fs';
@@ -29,7 +30,7 @@ export default class TeqFw_Core_App_Server_Route_Static {
 
         // instance's internal vars
         const pathRoot = config.get('/path/root');
-        const pathWeb = $path.join(pathRoot, 'src/web');
+        const pathWeb = $path.join(pathRoot, '/node_modules/@flancer32/pwa_leana_app/src/web');
 
         // request handler
         this.handle = async function (req, res, next) {

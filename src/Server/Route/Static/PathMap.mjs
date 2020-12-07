@@ -5,8 +5,8 @@
  */
 
 const PATH_MAP = {
-    appSource: {from: '/src/leana/', to: '/src/'},
-    appStatic: {from: '/static/mod/leana/', to: '/src/web/'},
+    appSource: {from: '/src/leana/', to: '/node_modules/@flancer32/pwa_leana_app/src/'},
+    appStatic: {from: '/static/mod/leana/', to: '/node_modules/@flancer32/pwa_leana_app/web/'},
     i18next: {from: '/node/i18next/', to: '/node_modules/i18next/dist/umd/'},
     i18nextBld: {from: '/node/i18next-bld/', to: '/node_modules/i18next-browser-languagedetector/dist/umd/'},
     jsDatepicker: {from: '/node/js-datepicker/', to: '/node_modules/js-datepicker/dist/'},
