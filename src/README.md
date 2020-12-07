@@ -1,9 +1,3 @@
-# `/src/` folder
+# @teqfw/core-app: ES6 sources
 
-This folder contains sources for `teqfw_core_app` module.
-
-
-
-## `./_init/`
-
-Contain initialization scripts that are loaded directly (using `require()`), without autoloader.
+This folder contains ES6 sources for `@teqfw/core-app` module.
