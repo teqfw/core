@@ -27,7 +27,7 @@
     "commander": "*",
     "express": "*",
     "jsonwebtoken": "*",
-    "@teqfw/di": "*",
+    "@teqfw/di": "github:teqfw/di",
     "knex": "*"
   },
   "teqfw": {
