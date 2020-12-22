@@ -34,7 +34,7 @@ function TeqFw_Core_App_Util_Store_RDb_NameForForeignKey(tblSrc, fldSrc, tblTrg,
  * @exports TeqFw_Core_App_Util_Store_RDb_NameForUniqueKey
  */
 function TeqFw_Core_App_Util_Store_RDb_NameForUniqueKey(tbl, fld) {
-    let result = `UQ_${tbl}_`;
+    let result = `UK_${tbl}_`;
     if (typeof fld === 'string') {
         result += `_${fld.toLowerCase()}`;
     } else if (Array.isArray(fld)) {
