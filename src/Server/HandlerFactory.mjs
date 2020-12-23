@@ -17,7 +17,7 @@ export default class TeqFw_Core_App_Server_HandlerFactory {
                     } catch (error) {
                         console.error(error);
                         res.setHeader('Content-Type', 'application/json');
-                        res.code = 500;
+                        res.status(500);
                         res.end(JSON.stringify({error}));
                     }
                 }
