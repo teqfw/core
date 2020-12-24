@@ -14,25 +14,29 @@ export default class TeqFw_Core_App_Server_HandlerFactory {
                         const dataOut = await processRequest(dataIn);
                         res.setHeader('Content-Type', 'application/json; charset=UTF-8');
                         res.end(JSON.stringify({data: dataOut}));
-                    } catch (error) {
-                        console.error(error);
+                    } catch (err) {
+                        const stack = (err.stack) ?? '';
+                        const message = err.message ?? 'Unknown error';
+                        const error = {message, stack};
+                        const str = JSON.stringify({error});
+                        console.error(str);
                         res.setHeader('Content-Type', 'application/json');
                         res.status(500);
-                        res.end(JSON.stringify({error}));
+                        res.end(str);
                     }
-                }
+                };
             }
 
             // MAIN FUNCTIONALITY
             const service = await container.get(dependencyId);
             const route = service.getRoute();
             const parse = service.getParser();
-            const process = service.getProcessor()
+            const process = service.getProcessor();
 
             const fullRoute = `/api/${module}${route}`;
             const handler = createHandler(parse, process);
             server.all(fullRoute, handler);
-        }
+        };
     }
 }
 
