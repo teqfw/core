@@ -11,7 +11,7 @@ export default class TeqFw_Core_App_Server_HandlerFactory {
                 return async function handler(req, res, next) {
                     try {
                         const dataIn = await parseRequest(req);
-                        const dataOut = await processRequest(dataIn);
+                        const dataOut = await processRequest(dataIn, res, next);
                         res.setHeader('Content-Type', 'application/json; charset=UTF-8');
                         res.end(JSON.stringify({data: dataOut}));
                     } catch (err) {
