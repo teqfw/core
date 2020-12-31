@@ -15,11 +15,11 @@ function TeqFw_Core_App_Util_Store_RDb_NameForForeignKey(tblSrc, fldSrc, tblTrg,
         result += `_${fldSrc}__${tblTrg}__${fldTrg}`;  // tblSrc__col__tblTrg__col
     } else if (Array.isArray(fldSrc)) { // tblSrc__col1_col2__tblTrg__col1_col2
         for (const one of fldSrc) {
-            result += `_${one}`
+            result += `_${one}`;
         }
         result += `__${tblTrg}_`;
         for (const one of fldTrg) {
-            result += `_${one}`
+            result += `_${one}`;
         }
     }
     return result;
@@ -39,7 +39,7 @@ function TeqFw_Core_App_Util_Store_RDb_NameForUniqueKey(tbl, fld) {
         result += `_${fld.toLowerCase()}`;
     } else if (Array.isArray(fld)) {
         for (const one of fld) {
-            result += `_${one.toLowerCase()}`
+            result += `_${one.toLowerCase()}`;
         }
     }
     return result;
