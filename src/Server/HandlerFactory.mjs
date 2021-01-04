@@ -1,9 +1,21 @@
 export default class TeqFw_Core_App_Server_HandlerFactory {
 
+    /**
+     * @param {TeqFw_Di_SpecProxy} spec
+     */
     constructor(spec) {
         /** @type {TeqFw_Di_Container} */
-        const container = spec.TeqFw_Di_Container$;
+        const container = spec['TeqFw_Di_Container$'];  // singleton instance
 
+        // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
+
+        /**
+         * Use service parts factory to create request handler and register it to appropriate route.
+         * @param {Function} server (expressjs?)
+         * @param {String} module empty string for application level services or module name ('user')
+         * @param {String} dependencyId 'path' to service parts factory
+         * @return {Promise<void>}
+         */
         this.registerHandler = async function (server, module, dependencyId) {
             // DEFINE INNER FUNCTIONS
             function createHandler(parseRequest, processRequest) {
