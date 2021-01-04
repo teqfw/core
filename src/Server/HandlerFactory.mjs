@@ -16,7 +16,7 @@ export default class TeqFw_Core_App_Server_HandlerFactory {
          * @param {String} dependencyId 'path' to service parts factory
          * @return {Promise<void>}
          */
-        this.registerHandler = async function (server, module, dependencyId) {
+        this.registerService = async function (server, module, dependencyId) {
             // DEFINE INNER FUNCTIONS
             function createHandler(parseRequest, processRequest) {
 
@@ -42,8 +42,8 @@ export default class TeqFw_Core_App_Server_HandlerFactory {
             // MAIN FUNCTIONALITY
             const service = await container.get(dependencyId);
             const route = service.getRoute();
-            const parse = service.getParser();
-            const process = service.getProcessor();
+            const parse = service.createParser();
+            const process = service.createProcessor();
 
             const fullRoute = `/api/${module}${route}`;
             const handler = createHandler(parse, process);
