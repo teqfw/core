@@ -5,7 +5,7 @@ export default class TeqFw_Core_App_Server_HandlerFactory {
      */
     constructor(spec) {
         /** @type {TeqFw_Di_Container} */
-        const container = spec['TeqFw_Di_Container$'];  // singleton instance
+        const container = spec['TeqFw_Di_Container$'];  // singleton class instance
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
 
