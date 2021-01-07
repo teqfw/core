@@ -26,6 +26,26 @@ function TeqFw_Core_App_Util_Store_RDb_NameForForeignKey(tblSrc, fldSrc, tblTrg,
 }
 
 /**
+ * Create name for index key constraint.
+ *
+ * @param {String} tbl
+ * @param {String|String[]} fld
+ * @return {string}
+ * @exports TeqFw_Core_App_Util_Store_RDb_NameForUniqueKey
+ */
+function TeqFw_Core_App_Util_Store_RDb_NameForIndexKey(tbl, fld) {
+    let result = `IK_${tbl}_`;
+    if (typeof fld === 'string') {
+        result += `_${fld.toLowerCase()}`;
+    } else if (Array.isArray(fld)) {
+        for (const one of fld) {
+            result += `_${one.toLowerCase()}`;
+        }
+    }
+    return result;
+}
+
+/**
  * Create name for unique key constraint.
  *
  * @param {String} tbl
@@ -47,5 +67,6 @@ function TeqFw_Core_App_Util_Store_RDb_NameForUniqueKey(tbl, fld) {
 
 export {
     TeqFw_Core_App_Util_Store_RDb_NameForForeignKey as NameForForeignKey,
+    TeqFw_Core_App_Util_Store_RDb_NameForIndexKey as NameForIndexKey,
     TeqFw_Core_App_Util_Store_RDb_NameForUniqueKey as NameForUniqueKey,
 };
