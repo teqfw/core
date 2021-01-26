@@ -1,14 +1,6 @@
 export default class TeqFw_Core_App_Defaults {
-    /**
-     * Default port for listing.
-     * @type {number}
-     * @default
-     */
-    SERVER_DEFAULT_PORT = 3000;
-    /**
-     * PID file to stop running server.
-     * @type {string}
-     * @default
-     */
-    PID_FILE_NAME = './var/server.pid';
+    DI_BOOTSTRAP = 'bootstrap'; // DI container label for bootstrap configuration.
+    DI_CONTAINER = 'container'; // DI container label for container itself (see TeqFw_Di_Container.constructor).
+    PID_FILE_NAME = './var/server.pid'; // PID file to stop running server.
+    SERVER_DEFAULT_PORT = 3000; // Default port for listing.
 }
