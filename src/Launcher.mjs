@@ -1,7 +1,6 @@
 /**
  * Application itself.
  */
-// NODE.JS IMPORTS
 import $commander from 'commander';
 import $path from 'path';
 
@@ -13,11 +12,13 @@ import $path from 'path';
  * @property {string} version current version of the application (`0.1.0`)
  */
 
-// MODULE'S EXPORT
+/**
+ * Main class to launch application: read modules meta data, initialize parts of app, then start the app.
+ */
 export default class TeqFw_Core_App_Launcher {
 
     constructor(spec) {
-        // INJECT DEPENDENCIES INTO THIS INSTANCE
+        // CONSTRUCTOR INJECTED DEPS
         /** @type {TeqFw_Core_App_Defaults} */
         const DEF = spec['TeqFw_Core_App_Defaults$'];
         /** @type {TeqFw_Core_App_Launcher.Bootstrap} */
@@ -36,6 +37,43 @@ export default class TeqFw_Core_App_Launcher {
          */
         this.init = async function () {
             // DEFINE INNER FUNCTIONS
+            const me = this;
+
+            /**
+             * Run 'commander' initialization code for all plugins.
+             *
+             * @param {TeqFw_Core_App_Plugin_Registry} plugins
+             * @return {Promise<void>}
+             */
+            async function setupCommander(plugins) {
+                // DEFINE INNER FUNCTIONS
+                /**
+                 * Add single command to the app's commander.
+                 *
+                 * @param {string} className 'Vendor_Module_Fw_Cli_Command_Name'
+                 * @returns {Promise<void>}
+                 */
+                async function addCommand(className) {
+                    /** @type {TeqFw_Core_App_Cli_Command} */
+                    const cmd = await container.get(className, me.constructor.name);
+                    const {ns, name, desc, action} = await cmd.create();
+                    const fullName = (ns) ? `${ns}-${name}` : name;
+                    commander.command(fullName)
+                        .description(desc)
+                        .action(action);
+                }
+
+                // MAIN FUNCTIONALITY
+                for (const item of plugins.items()) {
+                    if (item.initClass) {
+                        const init = await container.get(item.initClass);
+                        for (const cmdId of init.getCommands()) {
+                            await addCommand(cmdId);
+                        }
+                    }
+                }
+            }
+
             /**
              * Run through all plugins and register namespaces in DI container.
              * @param {TeqFw_Core_App_Plugin_Registry} plugins
@@ -53,6 +91,7 @@ export default class TeqFw_Core_App_Launcher {
             // MAIN FUNCTIONALITY
             const plugins = await pluginScan.exec(bootCfg.root);
             setupDiContainer(plugins);
+            await setupCommander(plugins);
         };
 
         /**

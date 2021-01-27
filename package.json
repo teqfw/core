@@ -24,10 +24,10 @@
   },
   "homepage": "https://github.com/teqfw/core-app#readme",
   "dependencies": {
-    "commander": "*",
-    "express": "*",
-    "jsonwebtoken": "*",
     "@teqfw/di": "github:teqfw/di",
+    "commander": "*",
+    "cookie-parser": "*",
+    "express": "*",
     "knex": "*"
   },
   "teqfw": {

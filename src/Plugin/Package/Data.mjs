@@ -4,6 +4,11 @@
 
 class TeqFw_Core_App_Plugin_Package_Data_Autoload {
     /**
+     * Extensions for ES6 sources (default: 'mjs').
+     * @type {String}
+     */
+    ext = 'mjs';
+    /**
      * Plugn's namespace ('Vendor_Project_Module').
      * @type {String}
      */

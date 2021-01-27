@@ -1,17 +1,31 @@
-/**
- * Base class for application commands.
- */
+class TeqFw_Core_App_Cli_Command_Data {
+    /**
+     * Commander action (@see https://www.npmjs.com/package/commander#commands).
+     *
+     *  @type {Function}
+     */
+    action;
+    desc;
+    name;
+    ns;
+}
 
-// MODULE'S EXPORT
-export default class TeqFw_Core_App_Cli_Command {
+class TeqFw_Core_App_Cli_Command {
 
-    getCommandData() {
-        return {
-            ns: this.namespace || '',
-            name: this.name || 'unknown',
-            desc: this.description || '',
-            action: this.action || function () {
-            }
+    async create() {
+        // this is sample code:
+        const result = new TeqFw_Core_App_Cli_Command_Data();
+        result.ns = 'vnd-prj';
+        result.name = 'command';
+        result.desc = '`vnd-prj-command` will be added to commander.';
+        result.action = function () {
+            console.log('action for commander');
         };
+        return result;
     }
 }
+
+export {
+    TeqFw_Core_App_Cli_Command as default,
+    TeqFw_Core_App_Cli_Command_Data as Data,
+};
