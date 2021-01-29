@@ -1,3 +1,3 @@
-# `/pub/` folder
+# `/web/` folder
 
-This folder is reserved for module files with public access through the web.
+Contains static resources accessed through the Web.

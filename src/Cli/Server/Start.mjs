@@ -11,6 +11,10 @@ export default class TeqFw_Core_App_Cli_Server_Start {
         const bootCfg = spec[DEF.DI_BOOTSTRAP]; // named singleton
         /** @type {TeqFw_Di_Container} */
         const container = spec['TeqFw_Di_Container$'];  // instance singleton
+        /** @type {TeqFw_Core_App_Config} */
+        const config = spec['TeqFw_Core_App_Config$'];  // instance singleton
+        /** @type {TeqFw_Core_App_Logger} */
+        const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
         /** @type {typeof TeqFw_Core_App_Cli_Command_Data} */
         const Command = spec['TeqFw_Core_App_Cli_Command#Data'];    // class constructor
 
@@ -31,11 +35,12 @@ export default class TeqFw_Core_App_Cli_Server_Start {
             result.name = 'server-start';
             result.desc = 'Start the application server.';
             result.action = async function () {
+                logger.info(result.desc);
                 const server = await getServer();
                 await server.init();
 
                 // collect startup configuration then compose path to PID file
-                const portCfg = null;//_config.get('local/server/port');
+                const portCfg = config.get('local/server/port');
                 const port = portCfg || DEF.SERVER_DEFAULT_PORT;
                 const pid = process.pid.toString();
                 const pidPath = $path.join(bootCfg.root, DEF.PID_FILE_NAME);
@@ -45,13 +50,12 @@ export default class TeqFw_Core_App_Cli_Server_Start {
                     // PID is wrote => start the server
                     await server.listen(
                         port,
-                        () => console.info(`Web server is listening on port ${port}. PID: ${pid}.`)
+                        () => logger.info(`Web server is listening on port ${port}. PID: ${pid}.`)
                     );
                 } catch (e) {
                     console.error('%s', e);
                 }
 
-                console.log('core-server-start');
             };
             return result;
         };

@@ -27,6 +27,8 @@ class TeqFw_Core_App_Plugin_Scan_Item {
 class TeqFw_Core_App_Plugin_Scan {
     constructor(spec) {
         // CONSTRUCTOR INJECTED DEPS
+        /** @type {TeqFw_Core_App_Logger} */
+        const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
         /** @type {TeqFw_Core_App_Plugin_Registry} */
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
         /** @type {typeof TeqFw_Core_App_Plugin_Package_Data} */
@@ -63,6 +65,7 @@ class TeqFw_Core_App_Plugin_Scan {
                             const content = buffer.toString();
                             const json = JSON.parse(content);
                             if (json['teqfw']) {
+                                let msg = `Teq-module is found in '${filename}'`;
                                 result = new TeqFw_Core_App_Plugin_Scan_Item();
                                 result.name = json.name;
                                 result.path = $path.join(filename, '..');
@@ -74,8 +77,10 @@ class TeqFw_Core_App_Plugin_Scan {
                                     const filepath = $path.join(srcRoot, 'Plugin', `Init.${ext}`);
                                     if ($fs.existsSync(filepath)) {
                                         result.initClass = `${autoload.ns}_Plugin_Init$`;
+                                        msg = `${msg} (pluggable)`;
                                     }
                                 }
+                                logger.info(`${msg}.`);
                             }
                         }
                     } catch (e) {
@@ -114,8 +119,10 @@ class TeqFw_Core_App_Plugin_Scan {
             }
 
             // MAIN FUNCTIONALITY
+            logger.info(`Scan '${root}' for teq-modules.`);
             const items = await getPackages(root);
             for (const item of items) registry.set(item.name, item);
+            logger.info(`Total '${items.length}' teq-modules are found.`);
             return registry;
         };
 

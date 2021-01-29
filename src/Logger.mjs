@@ -8,10 +8,6 @@ const LEVEL_ERROR = 4;
 const TEQ_FW_LOG_MARKERS = 'teqFwLogMarkers';
 
 export default class TeqFw_Core_App_Logger {
-    /** @type {LogQueue} */
-    _queue
-    /** @type {Array<Object>} */
-    _transports = []
 
     constructor() {
 
@@ -64,9 +60,10 @@ export default class TeqFw_Core_App_Logger {
          * @type {LogQueue}
          * @private
          */
-        this._queue = new LogQueue();
+        const queue = new LogQueue();
 
-        const me = this;
+        /** @type {Array<Object>} */
+        const transports = [];
 
         /**
          * Place log record in queue, then process queue against existing transports.
@@ -126,7 +123,7 @@ export default class TeqFw_Core_App_Logger {
                 // OK, it is 4 arguments max are expected, but (see upper)).
                 throw 'Logger error. Max 3 arguments are expected!';
             }
-            me._queue.queue(record);
+            queue.queue(record);
             // print or save logs in queue
             processQueue();
         }
@@ -136,18 +133,18 @@ export default class TeqFw_Core_App_Logger {
          */
         function processQueue() {
             /* process queue if transports list is not empty */
-            if (me._transports.length > 0) {
+            if (transports.length > 0) {
                 /* compose batch with log messages to process */
                 const batch = [];
-                let item = me._queue.dequeue();
+                let item = queue.dequeue();
                 while (item !== undefined) {
                     batch.push(item);
-                    item = me._queue.dequeue();
+                    item = queue.dequeue();
                 }
                 /* process batch against transports */
                 if (batch.length > 0) {
                     /* make async processing */
-                    for (const one of me._transports) {
+                    for (const one of transports) {
                         one.process(batch);
                     }
                 }
@@ -177,19 +174,19 @@ export default class TeqFw_Core_App_Logger {
             params.unshift(LEVEL_ERROR);
             write.apply(this, params);
         };
+
+        this.getLast = function () {
+            return queue.getLast();
+        };
+
+        /**
+         * Add transport to logger.
+         *
+         * @param {Object} transport
+         */
+        this.addTransport = function (transport) {
+            transports.push(transport);
+        };
     }
 
-
-    getLast() {
-        return this._queue.getLast();
-    }
-
-    /**
-     * Add transport to logger.
-     *
-     * @param {Object} transport
-     */
-    addTransport(transport) {
-        this._transports.push(transport);
-    }
 }
