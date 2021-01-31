@@ -8,6 +8,7 @@ export default class TeqFw_Core_App_Plugin_Init {
         this.getCommands = async function () {
             return [
                 'TeqFw_Core_App_Cli_Server_Start$',
+                'TeqFw_Core_App_Cli_Server_Start2$',
                 'TeqFw_Core_App_Cli_Server_Stop$',
             ];
         };
