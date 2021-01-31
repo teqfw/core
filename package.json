@@ -26,8 +26,6 @@
   "dependencies": {
     "@teqfw/di": "github:teqfw/di",
     "commander": "*",
-    "cookie-parser": "*",
-    "express": "*",
     "knex": "*"
   },
   "teqfw": {

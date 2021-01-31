@@ -1,6 +1,7 @@
 import $fs from 'fs';
 import $mimeTypes from 'mime-types';
 import $path from 'path';
+import {constants as H2} from 'http2';
 
 /**
  * Factory to create handler for static files.
@@ -10,15 +11,15 @@ export default class TeqFw_Core_App_Server_Handler_Static {
     constructor(spec) {
         /** @type {TeqFw_Core_App_Defaults} */
         const DEF = spec['TeqFw_Core_App_Defaults$'];
-        /** @type {TeqFw_Core_App_Logger} */
-        const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
         /** @type {TeqFw_Core_App_Config} */
         const config = spec['TeqFw_Core_App_Config$'];  // instance singleton
+        /** @type {TeqFw_Core_App_Logger} */
+        const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
         /** @type {TeqFw_Core_App_Plugin_Registry} */
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
 
         /**
-         * @return {TeqFw_Core_App_Server_Handler_Static_Handler}
+         * @return {TeqFw_Core_App_Server_Handler_Static_Fn}
          */
         this.createHandler = function () {
             // PARSE INPUT & DEFINE WORKING VARS
@@ -30,12 +31,13 @@ export default class TeqFw_Core_App_Server_Handler_Static {
 
             /**
              * Handler to process HTTP requests as middleware and to log request data.
-             * @param req
-             * @param res
-             * @param next
+             *
+             * @param {ServerHttp2Stream} stream
+             * @param {IncomingHttpHeaders} headers
+             * @return {Promise<void>}
              * @constructor
              */
-            async function TeqFw_Core_App_Server_Handler_Static_Handler(req, res, next) {
+            async function TeqFw_Core_App_Server_Handler_Static_Fn(stream, headers) {
                 // DEFINE INNER FUNCTIONS
                 /**
                  * Compose absolute path to requested resource:
@@ -65,9 +67,10 @@ export default class TeqFw_Core_App_Server_Handler_Static {
 
                     // MAIN FUNCTIONALITY
                     let result;
-                    const mapped = pathMap(url);
-                    if (url === mapped) {   // URL w/o mapping should be resolved relative to web root
-                        result = $path.join(rootWeb, url);
+                    const normal = (url === '/') ? '/index.html' : url;
+                    const mapped = pathMap(normal);
+                    if (normal === mapped) {   // URL w/o mapping should be resolved relative to web root
+                        result = $path.join(rootWeb, normal);
                     } else {    // URL w mapping should be resolved relative to project root
                         result = mapped;
                     }
@@ -75,49 +78,46 @@ export default class TeqFw_Core_App_Server_Handler_Static {
                 }
 
                 /**
-                 * Read and return regular file (HTML, CSS, JS, imgase, ...).
+                 * Read regular file (HTML, CSS, JS, imgase, ...) and write it to the response stream.
                  *
-                 * @param {string} path
-                 * @returns {Promise<void>}
+                 * @param {ServerHttp2Stream} stream
+                 * @param {String} filepath
+                 * @return {Promise<boolean>}
                  */
-                async function processRegular(path) {
-                    const mimeType = $mimeTypes.lookup(path);
+                async function processRegular(stream, filepath) {
+                    let result = false;
+                    const mimeType = $mimeTypes.lookup(filepath);
                     if (mimeType) {
-                        res.setHeader('Access-Control-Allow-Origin', '*');
-                        res.setHeader('Content-Type', mimeType);
-                        res.sendFile(path);
-                    } else {
-                        next();
+                        stream.respondWithFile(filepath, {
+                            [H2.HTTP2_HEADER_STATUS]: H2.HTTP_STATUS_OK,
+                            [H2.HTTP2_HEADER_CONTENT_TYPE]: mimeType
+                        });
+                        result = true;
                     }
+                    return result;
                 }
 
                 // MAIN FUNCTIONALITY
-                try {
-                    const path = getPath(req.url);
-                    if ($fs.existsSync(path) && $fs.statSync(path).isFile()) {
-                        await processRegular(path);
-                    } else {
-                        next();
-                    }
-                } catch (err) {
-                    const stack = (err.stack) ?? '';
-                    const message = err.message ?? 'Unknown error';
-                    const error = {message, stack};
-                    const str = JSON.stringify({error});
-                    logger.error(str);
-                    next();
+                let result = false;
+                const url = headers[H2.HTTP2_HEADER_PATH];
+                const path = getPath(url);
+                if ($fs.existsSync(path) && $fs.statSync(path).isFile()) {
+                    result = await processRegular(stream, path);
                 }
+                return result;
             }
 
             // MAIN FUNCTIONALITY
             // compose static routes map for plugins
+            logger.debug('Map plugins folders for static resources:');
             const items = registry.items();
             for (const item of items) {
                 mapRoutes[item.name] = $path.join(item.path, DEF.FS_WEB);
+                logger.debug(`    ${item.name} => ${mapRoutes[item.name]}`);
             }
 
             // COMPOSE RESULT
-            return TeqFw_Core_App_Server_Handler_Static_Handler;
+            return TeqFw_Core_App_Server_Handler_Static_Fn;
         };
     }
 

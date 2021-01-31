@@ -9,14 +9,8 @@ export default class TeqFw_Core_App_Cli_Server_Start {
         const DEF = spec['TeqFw_Core_App_Defaults$'];   // instance singleton
         /** @type {TeqFw_Core_App_Launcher.Bootstrap} */
         const bootCfg = spec[DEF.DI_BOOTSTRAP]; // named singleton
-        /** @type {TeqFw_Di_Container} */
-        const container = spec['TeqFw_Di_Container$'];  // instance singleton
         /** @type {typeof TeqFw_Core_App_Cli_Command_Data} */
         const Command = spec['TeqFw_Core_App_Cli_Command#Data'];    // class constructor
-
-        // RUNTIME INJECTED DEPS
-        /**  @return {Promise<TeqFw_Core_App_Server>} */
-        const getServer = async () => await container.get('TeqFw_Core_App_Server$', this.constructor.name);
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
 
@@ -34,9 +28,9 @@ export default class TeqFw_Core_App_Cli_Server_Start {
                 try {
                     const pidPath = $path.join(bootCfg.root, DEF.PID_FILE_NAME);
                     const data = $fs.readFileSync(pidPath);
-                    const strData = data.toString();
-                    console.info(`Stop web server (PID: ${strData}).`);
-                    process.kill(strData, 'SIGINT');
+                    const pid = data.toString();
+                    console.info(`Stop web server (PID: ${pid}).`);
+                    process.kill(pid, 'SIGINT');
                 } catch (e) {
                     console.error('Cannot kill API server process.');
                 }

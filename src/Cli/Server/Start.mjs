@@ -1,6 +1,9 @@
 import $path from 'path';
 import $fs from 'fs';
 
+/**
+ * CLI command to start HTTP2 server.
+ */
 export default class TeqFw_Core_App_Cli_Server_Start {
 
     constructor(spec) {
@@ -19,8 +22,8 @@ export default class TeqFw_Core_App_Cli_Server_Start {
         const Command = spec['TeqFw_Core_App_Cli_Command#Data'];    // class constructor
 
         // RUNTIME INJECTED DEPS
-        /**  @return {Promise<TeqFw_Core_App_Server>} */
-        const getServer = async () => await container.get('TeqFw_Core_App_Server$', this.constructor.name);
+        /**  @return {Promise<TeqFw_Core_App_Server_Http2>} */
+        const getServer = async () => await container.get('TeqFw_Core_App_Server_Http2$', this.constructor.name);
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
 
@@ -32,8 +35,8 @@ export default class TeqFw_Core_App_Cli_Server_Start {
             // this is sample code:
             const result = new Command();
             result.ns = 'core';
-            result.name = 'server-start';
-            result.desc = 'Start the application server.';
+            result.name = 'server-start2';
+            result.desc = 'Start the HTTP2 server.';
             result.action = async function () {
                 logger.info(result.desc);
                 const server = await getServer();
@@ -48,10 +51,8 @@ export default class TeqFw_Core_App_Cli_Server_Start {
                 try {
                     $fs.writeFileSync(pidPath, pid);
                     // PID is wrote => start the server
-                    await server.listen(
-                        port,
-                        () => logger.info(`Web server is listening on port ${port}. PID: ${pid}.`)
-                    );
+                    await server.listen(port);
+                    logger.info(`HTTP2 server is listening on port ${port}. PID: ${pid}.`);
                 } catch (e) {
                     console.error('%s', e);
                 }
