@@ -11,6 +11,8 @@ export default class TeqFw_Core_App_Server_Handler_Static {
     constructor(spec) {
         /** @type {TeqFw_Core_App_Defaults} */
         const DEF = spec['TeqFw_Core_App_Defaults$'];
+        /** @type {TeqFw_Di_Container} */
+        const container = spec[DEF.DI_CONTAINER];   // named singleton
         /** @type {TeqFw_Core_App_Config} */
         const config = spec['TeqFw_Core_App_Config$'];  // instance singleton
         /** @type {TeqFw_Core_App_Logger} */
@@ -19,13 +21,13 @@ export default class TeqFw_Core_App_Server_Handler_Static {
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
 
         /**
-         * @return {TeqFw_Core_App_Server_Handler_Static_Fn}
+         * @return {Promise<TeqFw_Core_App_Server_Handler_Static_Fn>}
          */
-        this.createHandler = function () {
+        this.createHandler = async function () {
             // PARSE INPUT & DEFINE WORKING VARS
             const rootFs = config.get('/path/root');    // path to project root
             const rootWeb = $path.join(rootFs, DEF.FS_WEB);    // default path to app web root
-            const mapRoutes = {};   // '/@teqfw/core-app' => '/.../pwa_men2/node_modules/@teqfw/core-app'
+            const mapRoutes = {};   // '/src/@teqfw/core-app' => '/.../node_modules/@teqfw/core-app/src'
 
             // DEFINE INNER FUNCTIONS
 
@@ -41,22 +43,24 @@ export default class TeqFw_Core_App_Server_Handler_Static {
                 // DEFINE INNER FUNCTIONS
                 /**
                  * Compose absolute path to requested resource:
-                 *  - /node/vue/vue.global.js => /node_modules/vue/dist/vue.global.js
-                 *  - /favicon.ico => /src/web/favicon.ico
+                 *  - /src/vue/vue.global.js => /.../node_modules/vue/dist/vue.global.js
+                 *  - /web/@flancer32/teqfw-app-sample/favicon.ico => /.../@flancer32/teqfw-app-sample/web/favicon.ico
+                 *  - /index.html => /.../web/index.html
                  *
-                 * @param {string} url
-                 * @returns {string}
+                 * @param {String} url
+                 * @returns {String}
                  */
                 function getPath(url) {
+
                     // DEFINE INNER FUNCTIONS
                     function pathMap(url) {
                         let result = url;
                         for (const key in mapRoutes) {
                             const one = mapRoutes[key];
-                            const regex = new RegExp(`(.*)(/${DEF.REALM_STATIC}/${key})(.*)`);
-                            const parts = regex.exec(url);
-                            if (Array.isArray(parts)) {
-                                const tail = parts[3];
+                            const regSrc = new RegExp(`(.*)(${key})(.*)`);
+                            const partsSrc = regSrc.exec(url);
+                            if (Array.isArray(partsSrc)) {
+                                const tail = partsSrc[3];
                                 result = `${one}/${tail}`;
                                 result = result.replace(/\/\//g, '/');
                                 break;
@@ -112,8 +116,30 @@ export default class TeqFw_Core_App_Server_Handler_Static {
             logger.debug('Map plugins folders for static resources:');
             const items = registry.items();
             for (const item of items) {
-                mapRoutes[item.name] = $path.join(item.path, DEF.FS_WEB);
-                logger.debug(`    ${item.name} => ${mapRoutes[item.name]}`);
+                // map URLs to filesystem for ES6/JS sources
+                const srcUrl = $path.join('/', DEF.REALM_SRC, item.name);
+                const srcPath = $path.join(item.path, DEF.FS_SRC);
+                mapRoutes[srcUrl] = srcPath;
+                logger.debug(`    ${srcUrl} => ${srcPath}`);
+                // map URLs to filesystem for static resources
+                const statUrl = $path.join('/', DEF.REALM_WEB, item.name);
+                const statPath = $path.join(item.path, DEF.FS_WEB);
+                mapRoutes[statUrl] = statPath;
+                logger.debug(`    ${statUrl} => ${statPath}`);
+                // map additional resources
+                if (item.initClass) {
+                    /** @type {TeqFw_Core_App_Plugin_Init} */
+                    const plugin = await container.get(item.initClass, this.constructor.name);
+                    if (plugin && (typeof plugin.getHttp2StaticMaps === 'function')) {
+                        const map = await plugin.getHttp2StaticMaps();
+                        for (const key in map) {
+                            const url = $path.join('/', DEF.REALM_SRC, key);
+                            const path = $path.join(rootFs, 'node_modules', map[key]);
+                            mapRoutes[url] = path;
+                            logger.debug(`    ${url} => ${path}`);
+                        }
+                    }
+                }
             }
 
             // COMPOSE RESULT

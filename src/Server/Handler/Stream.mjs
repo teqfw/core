@@ -20,7 +20,7 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
         // PARSE INPUT & DEFINE WORKING VARS
         const regexApi = new RegExp(`^(/${DEF.REALM_API}/)(.*)`);
         /** @type {TeqFw_Core_App_Server_Handler_Static_Fn} */
-        const hndlStatic = factHndlStatic.createHandler();
+        let hndlStatic;
 
         // DEFINE INNER FUNCTIONS
 
@@ -138,9 +138,11 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
 
         /**
          * Factory function to create handler for 'Http2Server.stream' events.
-         * @return {TeqFw_Core_App_Server_Handler_Stream_Fn}
+         * @return {Promise<TeqFw_Core_App_Server_Handler_Stream_Fn>}
          */
-        this.createHandler = function () {
+        this.createHandler = async function () {
+            hndlStatic = await factHndlStatic.createHandler();
+
             /**
              * Handler to process 'stream' events.
              *
