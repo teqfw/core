@@ -35,7 +35,7 @@ export default class TeqFw_Core_App_Cli_Server_Start {
             // this is sample code:
             const result = new Command();
             result.ns = 'core';
-            result.name = 'server-start2';
+            result.name = 'server-start';
             result.desc = 'Start the HTTP2 server.';
             result.action = async function () {
                 logger.info(result.desc);
