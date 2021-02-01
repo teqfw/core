@@ -77,7 +77,7 @@ export default class TeqFw_Core_App_Launcher {
                         /** @type {TeqFw_Core_App_Plugin_Init} */
                         const init = await container.get(item.initClass);
                         if (typeof init.getCommands === 'function') {
-                            const commandIds = await init.getCommands();
+                            const commandIds = init.getCommands();
                             logger.info(`Add commands for '${item.name}' plugin.`);
                             for (const id of commandIds) {
                                 await addCommand(id);

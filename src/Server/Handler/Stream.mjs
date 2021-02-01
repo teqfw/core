@@ -4,7 +4,7 @@ const REQ_TYPE_API = 'api';
 const REQ_TYPE_STATIC = 'static';
 
 /**
- * Factory to create handler for server's stream.
+ * Factory to create handler for server's streams.
  */
 export default class TeqFw_Core_App_Server_Handler_Stream {
 
@@ -14,11 +14,15 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
         const DEF = spec['TeqFw_Core_App_Defaults$'];
         /** @type {TeqFw_Core_App_Logger} */
         const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
+        /** @type {TeqFw_Core_App_Server_Handler_Api} */
+        const factHndlApi = spec['TeqFw_Core_App_Server_Handler_Api$']; // instance singleton
         /** @type {TeqFw_Core_App_Server_Handler_Static} */
         const factHndlStatic = spec['TeqFw_Core_App_Server_Handler_Static$'];  // instance singleton
 
         // PARSE INPUT & DEFINE WORKING VARS
         const regexApi = new RegExp(`^(/${DEF.REALM_API}/)(.*)`);
+        /** @type {TeqFw_Core_App_Server_Handler_Api_Fn} */
+        let hndlApi;
         /** @type {TeqFw_Core_App_Server_Handler_Static_Fn} */
         let hndlStatic;
 
@@ -102,17 +106,9 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
                 let isHandled = false;
                 const type = getRequestType(headers);
                 if (type === REQ_TYPE_API) {
-                    isHandled = true;
-
-                    stream.respond({
-                        [H2.HTTP2_HEADER_STATUS]: H2.HTTP_STATUS_OK,
-                        [H2.HTTP2_HEADER_CONTENT_TYPE]: 'application/json; charset=utf-8'
-                    });
-                    const content = 'API Handler should be here.';
-                    stream.end(content);
-
+                    isHandled = await hndlApi(stream, headers, body);
                 } else {
-                    isHandled = await hndlStatic(stream, headers, body);
+                    isHandled = await hndlStatic(stream, headers, flags);
                 }
                 // respond with error if request is not handled yet
                 if (!isHandled) {
@@ -138,22 +134,23 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
 
         /**
          * Factory function to create handler for 'Http2Server.stream' events.
-         * @return {Promise<TeqFw_Core_App_Server_Handler_Stream_Fn>}
+         * @return {Promise<TeqFw_Core_App_Server_Handler_Stream.handler>}
          */
         this.createHandler = async function () {
+            // PARSE INPUT & DEFINE WORKING VARS
+            hndlApi = await factHndlApi.createHandler();
             hndlStatic = await factHndlStatic.createHandler();
 
+            // DEFINE INNER FUNCTIONS
             /**
              * Handler to process 'stream' events.
              *
              * @param {ServerHttp2Stream} stream
              * @param {IncomingHttpHeaders} headers
              * @param {Number} flags
-             * @constructor
+             * @name TeqFw_Core_App_Server_Handler_Stream.handler
              */
-            async function TeqFw_Core_App_Server_Handler_Stream_Fn(stream, headers, flags) {
-
-                // MAIN FUNCTIONALITY
+            async function handler(stream, headers, flags) {
                 try {
                     // vars to collect input data for POSTs
                     const chunks = [];
@@ -192,8 +189,12 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
                 }
             }
 
-            // We should place function separately to allow JSDoc & IDEA hints & navigation.
-            return TeqFw_Core_App_Server_Handler_Stream_Fn;
+            // COMPOSE RESULT
+            Object.defineProperty(handler, 'name', {
+                writable: false,
+                value: this.constructor.name + '.' + handler.name,
+            });
+            return handler;
         };
     }
 

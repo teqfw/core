@@ -23,7 +23,7 @@ export default class TeqFw_Core_App_Server_Http2 {
          */
         this.init = async function () {
             // PARSE INPUT & DEFINE WORKING VARS
-            /** @type {TeqFw_Core_App_Server_Handler_Stream_Fn} */
+            /** @type {TeqFw_Core_App_Server_Handler_Stream.handler} */
             const onStreamHndl = await factHndlStream.createHandler();
 
             // DEFINE INNER FUNCTIONS

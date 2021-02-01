@@ -131,7 +131,7 @@ export default class TeqFw_Core_App_Server_Handler_Static {
                     /** @type {TeqFw_Core_App_Plugin_Init} */
                     const plugin = await container.get(item.initClass, this.constructor.name);
                     if (plugin && (typeof plugin.getHttp2StaticMaps === 'function')) {
-                        const map = await plugin.getHttp2StaticMaps();
+                        const map = plugin.getHttp2StaticMaps();
                         for (const key in map) {
                             const url = $path.join('/', DEF.REALM_SRC, key);
                             const path = $path.join(rootFs, 'node_modules', map[key]);

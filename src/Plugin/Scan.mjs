@@ -33,6 +33,8 @@ class TeqFw_Core_App_Plugin_Scan {
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
         /** @type {typeof TeqFw_Core_App_Plugin_Package_Data} */
         const Data = spec['TeqFw_Core_App_Plugin_Package_Data#'];  // class constructor
+        /** @type {typeof TeqFw_Core_App_Plugin_Package_Data_Autoload} */
+        const DAutoload = spec['TeqFw_Core_App_Plugin_Package_Data#Autoload'];  // class constructor
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
 
@@ -70,6 +72,7 @@ class TeqFw_Core_App_Plugin_Scan {
                                 result.name = json.name;
                                 result.path = $path.join(filename, '..');
                                 result.teqfw = Object.assign(new Data(), json.teqfw);
+                                result.teqfw.autoload = Object.assign(new DAutoload(), result.teqfw.autoload);
                                 const autoload = result.teqfw.autoload;
                                 if (autoload && autoload.ns && autoload.path) {
                                     const srcRoot = $path.join(result.path, autoload.path);
