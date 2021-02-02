@@ -2,7 +2,7 @@ import $path from 'path';
 import $fs from 'fs';
 
 /**
- * CLI command to start HTTP2 server.
+ * Factory class to create CLI command to start HTTP2 server.
  */
 export default class TeqFw_Core_App_Cli_Server_Start {
 

@@ -1,3 +1,6 @@
+/**
+ * Data structure to add command to commander (@see TeqFw_Core_App_Launcher.init.initCommander.addCommand).
+ */
 class TeqFw_Core_App_Cli_Command_Data {
     /**
      * Commander action (@see https://www.npmjs.com/package/commander#commands).
@@ -10,6 +13,9 @@ class TeqFw_Core_App_Cli_Command_Data {
     ns;
 }
 
+/**
+ * Interface sample to create commands factories.
+ */
 class TeqFw_Core_App_Cli_Command {
 
     async create() {

@@ -1,7 +1,10 @@
 import $path from 'path';
 import $fs from 'fs';
 
-export default class TeqFw_Core_App_Cli_Server_Start {
+/**
+ * Factory class to create CLI command to stop HTTP2 server.
+ */
+export default class TeqFw_Core_App_Cli_Server_Stop {
 
     constructor(spec) {
         // CONSTRUCTOR INJECTED DEPS

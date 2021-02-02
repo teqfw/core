@@ -9,6 +9,7 @@ export default class TeqFw_Core_App_Plugin_Init {
             return [
                 'TeqFw_Core_App_Cli_Server_Start$',
                 'TeqFw_Core_App_Cli_Server_Stop$',
+                'TeqFw_Core_App_Cli_Version$',
             ];
         };
 

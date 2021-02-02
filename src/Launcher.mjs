@@ -50,6 +50,7 @@ export default class TeqFw_Core_App_Launcher {
              *
              * @param {TeqFw_Core_App_Plugin_Registry} plugins
              * @return {Promise<void>}
+             * @memberOf TeqFw_Core_App_Launcher.init
              */
             async function initCommander(plugins) {
                 // DEFINE INNER FUNCTIONS
@@ -58,6 +59,7 @@ export default class TeqFw_Core_App_Launcher {
                  *
                  * @param {string} className 'Vendor_Module_Fw_Cli_Command_Name'
                  * @returns {Promise<void>}
+                 * @memberOf TeqFw_Core_App_Launcher.init.initCommander
                  */
                 async function addCommand(className) {
                     /** @type {TeqFw_Core_App_Cli_Command} */
