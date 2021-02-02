@@ -32,7 +32,8 @@ export default class TeqFw_Core_App_Plugin_Init {
 
         this.getHttp2Services = function () {
             return [
-                'TeqFw_Core_App_Back_Service_LoadNs$'
+                'TeqFw_Core_App_Back_Service_Load_Config$',
+                'TeqFw_Core_App_Back_Service_Load_Namespaces$',
             ];
         };
     }

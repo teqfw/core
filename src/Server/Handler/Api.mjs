@@ -88,6 +88,7 @@ export default class TeqFw_Core_App_Server_Handler_Api {
                             /** @type {TeqFw_Core_App_Back_Service_LoadNs.processor} */
                             const processor = factory.createProcessor();
                             router[route] = {parser, processor};
+                            logger.debug(`    ${route} => ${one}`);
                         }
                     }
                 }
