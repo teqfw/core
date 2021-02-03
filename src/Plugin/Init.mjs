@@ -3,7 +3,9 @@
  */
 export default class TeqFw_Core_App_Plugin_Init {
 
-    constructor() {
+    constructor(spec) {
+        /** @type {TeqFw_Core_App_Defaults} */
+        const DEF = spec['TeqFw_Core_App_Defaults$'];    // instance singleton
 
         this.getCommands = function () {
             return [
@@ -27,7 +29,7 @@ export default class TeqFw_Core_App_Plugin_Init {
         };
 
         this.getHttp2BackRealm = function () {
-            return 'core';
+            return DEF.BACK_REALM;
         };
 
         this.getHttp2Services = function () {

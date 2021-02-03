@@ -4,87 +4,89 @@ import $knex from 'knex';
  * 'knex' based connector to relational database.
  */
 export default class TeqFw_Core_App_Db_Connector {
-    /** @type {TeqFw_Core_App_Config} */
-    _config
-    /** @type {TeqFw_Core_App_Logger} */
-    _logger
-    _knex
 
-    /**  @param {Object} spec */
     constructor(spec) {
-        this._config = spec.TeqFw_Core_App_Config$;
-        this._logger = spec.TeqFw_Core_App_Logger$;
-    }
+        /** @type {TeqFw_Core_App_Config} */
+        const config = spec['TeqFw_Core_App_Config$'];
+        /** @type {TeqFw_Core_App_Logger} */
+        const logger = spec['TeqFw_Core_App_Logger$'];
 
-    /**
-     * Initialize connection to 'main' database.
-     *
-     * @returns {Promise<void>}
-     */
-    async init() {
-        const dbSpec = this._config.get('/local/db/main');
-        const db = dbSpec.connection.database + '@' + dbSpec.connection.host;
-        const user = dbSpec.connection.user;
-        try {
-            this._knex = await $knex(dbSpec);
-            this._logger.info('Connected to DB \'' + db + '\' as \'' + user + '\'.');
-        } catch (e) {
-            this._logger.error('Cannot connect to DB \'' + db + '\' as \'' + user + '\'. Error: ' + e);
-        }
-    }
+        let knex;
 
-    /**
-     * Start new knex transaction.
-     *
-     * @returns {Promise<*>}
-     */
-    async startTransaction() {
-        return await this._knex.transaction();
-    }
-
-    /**
-     * Accessor for 'knex' object.
-     *
-     * @return {*}
-     */
-    getKnex() {
-        return this._knex;
-    }
-
-    /**
-     * Accessor for 'knex.schema' object.
-     * @returns {*}
-     */
-    getSchema() {
-        return this._knex.schema;
-    }
-
-    async disconnect() {
-        const me = this;
-        const pool = me._knex.client.pool;
-        return new Promise(function (resolve) {
-            const WAIT = 100;
-
-            /**
-             * Check DB connections in loop and close all when all connections will be released.
-             */
-            function checkPool() {
-                const acquires = pool.numPendingAcquires();
-                const creates = pool.numPendingCreates();
-                const pending = acquires + creates;
-                if (pending > 0) {
-                    // wait until all connections will be released
-                    setTimeout(checkPool, WAIT);
-                } else {
-                    // close all connections
-                    me._knex.destroy();
-                    me._logger.info('All database connections are closed.');
-                    resolve();
-                }
+        /**
+         * Initialize connection to 'main' database.
+         *
+         * @returns {Promise<void>}
+         */
+        this.init = async function () {
+            const dbSpec = config.get('/local/db/main');
+            const db = dbSpec.connection.database + '@' + dbSpec.connection.host;
+            const user = dbSpec.connection.user;
+            try {
+                knex = await $knex(dbSpec);
+                logger.info('Connected to DB \'' + db + '\' as \'' + user + '\'.');
+            } catch (e) {
+                logger.error('Cannot connect to DB \'' + db + '\' as \'' + user + '\'. Error: ' + e);
             }
+        };
 
-            setTimeout(checkPool, WAIT);
-        });
 
+        /**
+         * Start new knex transaction.
+         *
+         * @returns {Promise<*>}
+         */
+        this.startTransaction = async function () {
+            if (!knex) await this.init();
+            return await knex.transaction();
+        };
+
+        /**
+         * Accessor for 'knex' object.
+         *
+         * @return {*}
+         */
+        this.getKnex = async function () {
+            if (!knex) await this.init();
+            return knex;
+        };
+
+        /**
+         * Accessor for 'knex.schema' object.
+         * (empty array is returned for async function)
+         * @returns {SchemaBuilder}
+         */
+        this.getSchema = function () {
+            return knex.schema;
+        };
+
+        this.disconnect = async function () {
+            if (!knex) await this.init();
+            const pool = knex.client.pool;
+            return new Promise(function (resolve) {
+                const WAIT = 100;
+
+                /**
+                 * Check DB connections in loop and close all when all connections will be released.
+                 */
+                function checkPool() {
+                    const acquires = pool.numPendingAcquires();
+                    const creates = pool.numPendingCreates();
+                    const pending = acquires + creates;
+                    if (pending > 0) {
+                        // wait until all connections will be released
+                        setTimeout(checkPool, WAIT);
+                    } else {
+                        // close all connections
+                        knex.destroy();
+                        logger.info('All database connections are closed.');
+                        resolve();
+                    }
+                }
+
+                setTimeout(checkPool, WAIT);
+            });
+
+        };
     }
 }

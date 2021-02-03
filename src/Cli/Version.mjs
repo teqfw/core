@@ -21,7 +21,7 @@ export default class TeqFw_Core_App_Cli_Version {
         this.create = async function () {
             // this is sample code:
             const result = new DCommand();
-            result.ns = 'core';
+            result.ns = DEF.BACK_REALM;
             result.name = 'version';
             result.desc = 'Get version of the application.';
             result.action = async function () {

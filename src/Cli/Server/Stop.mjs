@@ -24,7 +24,7 @@ export default class TeqFw_Core_App_Cli_Server_Stop {
         this.create = async function () {
             // this is sample code:
             const result = new Command();
-            result.ns = 'core';
+            result.ns = DEF.BACK_REALM;
             result.name = 'server-stop';
             result.desc = 'Stop the application server.';
             result.action = async function () {
