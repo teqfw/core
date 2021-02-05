@@ -27,7 +27,6 @@ export default class TeqFw_Core_App_Back_Service_Load_Config {
             // COMPOSE RESULT
             // add namespace marker to the object name
             Object.defineProperty(parser, 'name', {
-                writable: false,
                 value: this.constructor.name + '.' + parser.name,
             });
             return parser;
@@ -48,7 +47,6 @@ export default class TeqFw_Core_App_Back_Service_Load_Config {
             // COMPOSE RESULT
             // add namespace marker to the object name
             Object.defineProperty(processor, 'name', {
-                writable: false,
                 value: this.constructor.name + '.' + processor.name,
             });
             return processor;

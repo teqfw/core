@@ -17,46 +17,56 @@ export default class TeqFw_Core_App_Server_Handler_Api {
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
 
         /**
-         * @return {Promise<TeqFw_Core_App_Server_Handler_Api_Fn>}
+         * @return {Promise<TeqFw_Core_App_Server_Handler_Api.handler>}
          */
         this.createHandler = async function () {
             // PARSE INPUT & DEFINE WORKING VARS
+            const regexApi = new RegExp(`^(/${DEF.REALM_API}/)(.*)`);
             let router = {};
 
             // DEFINE INNER FUNCTIONS
 
             /**
-             * @name TeqFw_Core_App_Server_Handler_Api_Fn
-             * @function
-             * @param stream
-             * @param headers
-             * @return {Promise<boolean>}
+             * @name handler
+             * @param {Object} context
+             * @return {Promise<Boolean>}
+             * @memberOf TeqFw_Core_App_Server_Handler_Api
              */
-            async function TeqFw_Core_App_Server_Handler_Api_Fn(stream, headers, body) {
+            async function handler(context) {
                 // DEFINE INNER FUNCTIONS
+                /** @type {String} */
+                const body = context[DEF.HTTP_REQ_CTX_BODY];
+                /** @type {IncomingHttpHeaders} */
+                const headers = context[DEF.HTTP_REQ_CTX_HEADERS];
+                /** @type {ServerHttp2Stream} */
+                const stream = context[DEF.HTTP_REQ_CTX_STREAM];
 
                 // MAIN FUNCTIONALITY
                 let result = false;
                 try {
-                    for (const route in router) {
-                        const uri = headers[H2.HTTP2_HEADER_PATH];
-                        if (route === uri) {
-                            const parser = router[route].parser;
-                            const processor = router[route].processor;
-                            const req = await parser(body, headers);
-                            const {response, headers: moreHeaders} = await processor();
-                            if (response) {
-                                if (stream.writable) {
-                                    if (moreHeaders) {
-                                        stream.respond(moreHeaders);
+                    const path = headers[H2.HTTP2_HEADER_PATH];
+                    const parts = regexApi.exec(path);
+                    if (Array.isArray(parts)) {
+                        for (const route in router) {
+                            const uri = headers[H2.HTTP2_HEADER_PATH];
+                            if (route === uri) {
+                                const parser = router[route].parser;
+                                const processor = router[route].processor;
+                                const req = await parser(body, headers);
+                                const {response, headers: moreHeaders} = await processor(req, headers);
+                                if (response) {
+                                    if (stream.writable) {
+                                        if (moreHeaders) {
+                                            stream.respond(moreHeaders);
+                                        }
+                                        stream.respond({
+                                            [H2.HTTP2_HEADER_STATUS]: H2.HTTP_STATUS_OK,
+                                            [H2.HTTP2_HEADER_CONTENT_TYPE]: 'application/json'
+                                        });
+                                        const json = JSON.stringify({data: response});
+                                        stream.end(json);
+                                        result = true;
                                     }
-                                    stream.respond({
-                                        [H2.HTTP2_HEADER_STATUS]: H2.HTTP_STATUS_OK,
-                                        [H2.HTTP2_HEADER_CONTENT_TYPE]: 'application/json'
-                                    });
-                                    const json = JSON.stringify({data: response});
-                                    stream.end(json);
-                                    result = true;
                                 }
                             }
                         }
@@ -95,7 +105,10 @@ export default class TeqFw_Core_App_Server_Handler_Api {
             }
 
             // COMPOSE RESULT
-            return TeqFw_Core_App_Server_Handler_Api_Fn;
+            Object.defineProperty(handler, 'name', {
+                value: this.constructor.name + '.' + handler.name,
+            });
+            return handler;
         };
     }
 

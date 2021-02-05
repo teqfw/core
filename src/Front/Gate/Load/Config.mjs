@@ -3,10 +3,10 @@
  */
 export default function (spec) {
     /** @type {Fl32_Leana_Defaults} */
-    const DEF = spec['Fl32_Leana_Defaults$'];   // singleton instance
+    const DEF = spec['Fl32_Leana_Defaults$'];   // instance singleton
     const config = spec[DEF.DI_CONFIG]; // named singleton
     /** @type {TeqFw_Di_Container} */
-    const container = spec['TeqFw_Di_Container$'];  // singleton instance
+    const container = spec['TeqFw_Di_Container$'];  // instance singleton
     /** @type {typeof Fl32_Leana_Shared_Service_Route_User_Profile_SaveField_Response} */
     const Response = spec['Fl32_Leana_Shared_Service_Route_User_Profile_SaveField#Response'];
     /** @type {typeof TeqFw_Core_App_Front_Gate_Response_Error} */

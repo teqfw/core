@@ -18,13 +18,14 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
         const factHndlApi = spec['TeqFw_Core_App_Server_Handler_Api$']; // instance singleton
         /** @type {TeqFw_Core_App_Server_Handler_Static} */
         const factHndlStatic = spec['TeqFw_Core_App_Server_Handler_Static$'];  // instance singleton
+        /** @type {Fl32_Teq_User_App_Server_Session} */
+        const factHndlUserSession = spec['Fl32_Teq_User_App_Server_Session$'];  // instance singleton
+
 
         // PARSE INPUT & DEFINE WORKING VARS
         const regexApi = new RegExp(`^(/${DEF.REALM_API}/)(.*)`);
-        /** @type {TeqFw_Core_App_Server_Handler_Api_Fn} */
-        let hndlApi;
-        /** @type {TeqFw_Core_App_Server_Handler_Static_Fn} */
-        let hndlStatic;
+        /** @type {Array.<TeqFw_Core_App_Server_Handler_Factory.handler>} */
+        const handlers = [];  // ordered array with handlers
 
         // DEFINE INNER FUNCTIONS
 
@@ -61,6 +62,8 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
          */
         async function processRequest(stream, headers, flags, body) {
 
+            // DEFINE INNER FUNCTIONS
+
             /**
              * Define type of the request: API or static resources.
              * @param {IncomingHttpHeaders} headers
@@ -74,7 +77,6 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
                 return result;
             }
 
-            // DEFINE INNER FUNCTIONS
             /**
              * Validate HTTP request method.
              *
@@ -103,12 +105,15 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
 
             // Analyze input and define type of the request (api or static)
             if (hasValidMethod(headers)) {
+                // init request context (contains all data required for current request processing)
+                const context = {stream, headers, flags, body}; // see DEF.HTTP_REQ_CTX_...
+
+                // TODO: insert middleware here...
+
                 let isHandled = false;
-                const type = getRequestType(headers);
-                if (type === REQ_TYPE_API) {
-                    isHandled = await hndlApi(stream, headers, body);
-                } else {
-                    isHandled = await hndlStatic(stream, headers, flags);
+                for (const handler of handlers) {
+                    isHandled = await handler(context);
+                    if (isHandled) break;
                 }
                 // respond with error if request is not handled yet
                 if (!isHandled) {
@@ -138,8 +143,17 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
          */
         this.createHandler = async function () {
             // PARSE INPUT & DEFINE WORKING VARS
-            hndlApi = await factHndlApi.createHandler();
-            hndlStatic = await factHndlStatic.createHandler();
+            /** @type {TeqFw_Core_App_Server_Handler_Factory.handler} */
+            const hndlApi = await factHndlApi.createHandler();
+            /** @type {TeqFw_Core_App_Server_Handler_Factory.handler} */
+            const hndlStatic = await factHndlStatic.createHandler();
+            /** @type {TeqFw_Core_App_Server_Handler_Factory.handler} */
+            const hndlUser = await factHndlUserSession.createHandler();
+
+            // push handlers to registry with orders
+            handlers.push(hndlUser);
+            handlers.push(hndlApi);
+            handlers.push(hndlStatic);
 
             // DEFINE INNER FUNCTIONS
             /**
@@ -191,7 +205,6 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
 
             // COMPOSE RESULT
             Object.defineProperty(handler, 'name', {
-                writable: false,
                 value: this.constructor.name + '.' + handler.name,
             });
             return handler;

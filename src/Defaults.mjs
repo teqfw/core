@@ -4,6 +4,11 @@ export default class TeqFw_Core_App_Defaults {
     DI_CONTAINER = 'container'; // DI container label for container itself (see TeqFw_Di_Container.constructor).
     FS_SRC = 'src'; // default folder for plugin's static resources in filesystem
     FS_WEB = 'web'; // default folder for plugin's static resources in filesystem
+    HTTP_REQ_CTX_BODY = 'body';
+    HTTP_REQ_CTX_FLAGS = 'flags';
+    HTTP_REQ_CTX_HEADERS = 'headers';
+    HTTP_REQ_CTX_STREAM = 'stream';
+    HTTP_REQ_CTX_TRANS = 'transaction';
     PID_FILE_NAME = './var/server.pid'; // PID file to stop running server.
     REALM_API = 'api';    // URL prefix for API requests: https://.../api/...
     REALM_SRC = 'src';    // URL prefix for ES6/JS sources: https://.../src/...

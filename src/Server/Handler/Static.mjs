@@ -21,7 +21,7 @@ export default class TeqFw_Core_App_Server_Handler_Static {
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
 
         /**
-         * @return {Promise<TeqFw_Core_App_Server_Handler_Static_Fn>}
+         * @return {Promise<TeqFw_Core_App_Server_Handler_Static.handler>}
          */
         this.createHandler = async function () {
             // PARSE INPUT & DEFINE WORKING VARS
@@ -34,12 +34,17 @@ export default class TeqFw_Core_App_Server_Handler_Static {
             /**
              * Handler to process HTTP requests as middleware and to log request data.
              *
-             * @param {ServerHttp2Stream} stream
-             * @param {IncomingHttpHeaders} headers
-             * @return {Promise<void>}
-             * @constructor
+             * @param {Object} context
+             * @return {Promise<Boolean>}
+             * @memberOf TeqFw_Core_App_Server_Handler_Static
              */
-            async function TeqFw_Core_App_Server_Handler_Static_Fn(stream, headers) {
+            async function handler(context) {
+                // DEFINE INNER FUNCTIONS
+                /** @type {IncomingHttpHeaders} */
+                const headers = context[DEF.HTTP_REQ_CTX_HEADERS];
+                /** @type {ServerHttp2Stream} */
+                const stream = context[DEF.HTTP_REQ_CTX_STREAM];
+
                 // DEFINE INNER FUNCTIONS
                 /**
                  * Compose absolute path to requested resource:
@@ -143,7 +148,10 @@ export default class TeqFw_Core_App_Server_Handler_Static {
             }
 
             // COMPOSE RESULT
-            return TeqFw_Core_App_Server_Handler_Static_Fn;
+            Object.defineProperty(handler, 'name', {
+                value: this.constructor.name + '.' + handler.name,
+            });
+            return handler;
         };
     }
 
