@@ -50,36 +50,36 @@ export default class TeqFw_Core_App_Back_Service_Load_Namespaces {
              * @return {TeqFw_Core_App_Shared_Api_Route_Load_Namespaces_Request}
              * @memberOf TeqFw_Core_App_Back_Service_Load_Namespaces
              */
-            function parser() {
+            function parse() {
                 return new Request();
             }
 
-            Object.defineProperty(parser, 'name', {
-                value: this.constructor.name + '.' + parser.name,
+            Object.defineProperty(parse, 'name', {
+                value: `${this.constructor.name}.${parse.name}`,
             });
-            return parser;
+            return parse;
         };
 
-        this.createProcessor = function () {
+        this.createService = function () {
             /**
              *
              * @return {Promise<{response: TeqFw_Core_App_Shared_Api_Route_Load_Namespaces_Response}>}
              * @memberOf TeqFw_Core_App_Back_Service_Load_Namespaces
              */
-            async function processor() {
+            async function service() {
                 const response = new Response();
                 response.items = namespaces;
                 return {response};
             }
 
-            Object.defineProperty(processor, 'name', {
-                value: this.constructor.name + '.' + processor.name,
+            Object.defineProperty(service, 'name', {
+                value: `${this.constructor.name}.${service.name}`,
             });
-            return processor;
+            return service;
         };
 
         this.getRoute = function () {
-            return '/load/namespaces';
+            return DEF.API_LOAD_NS;
         };
     }
 }

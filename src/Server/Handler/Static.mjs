@@ -37,6 +37,7 @@ export default class TeqFw_Core_App_Server_Handler_Static {
              * @param {Object} context
              * @return {Promise<Boolean>}
              * @memberOf TeqFw_Core_App_Server_Handler_Static
+             * @implements {TeqFw_Core_App_Server_Handler_Factory.handler}
              */
             async function handler(context) {
                 // DEFINE INNER FUNCTIONS

@@ -5,6 +5,8 @@ export default class TeqFw_Core_App_Back_Service_Load_Config {
 
     constructor(spec) {
         // CONSTRUCTOR INJECTED DEPS
+        /** @type {TeqFw_Core_App_Defaults} */
+        const DEF = spec['TeqFw_Core_App_Defaults$'];
         /** @type {TeqFw_Core_App_Config} */
         const config = spec['TeqFw_Core_App_Config$'];  // instance singleton
         /** @type {typeof TeqFw_Core_App_Shared_Api_Route_Load_Config_Request} */
@@ -20,24 +22,24 @@ export default class TeqFw_Core_App_Back_Service_Load_Config {
              * @return {TeqFw_Core_App_Shared_Api_Route_Load_Config_Request}
              * @memberOf TeqFw_Core_App_Back_Service_Load_Config
              */
-            function parser() {
+            function parse() {
                 return new Request();
             }
 
             // COMPOSE RESULT
             // add namespace marker to the object name
-            Object.defineProperty(parser, 'name', {
-                value: this.constructor.name + '.' + parser.name,
+            Object.defineProperty(parse, 'name', {
+                value: `${this.constructor.name}.${parse.name}`,
             });
-            return parser;
+            return parse;
         };
 
-        this.createProcessor = function () {
+        this.createService = function () {
             /**
              * @return {Promise<{response: TeqFw_Core_App_Shared_Api_Route_Load_Config_Response}>}
              * @memberOf TeqFw_Core_App_Back_Service_Load_Config
              */
-            async function processor() {
+            async function service() {
                 const cfg = config.get();
                 /** @type {TeqFw_Core_App_Shared_Api_Route_Load_Config_Response} */
                 const response = Object.assign(new Response(), cfg.local.web);
@@ -46,14 +48,14 @@ export default class TeqFw_Core_App_Back_Service_Load_Config {
 
             // COMPOSE RESULT
             // add namespace marker to the object name
-            Object.defineProperty(processor, 'name', {
-                value: this.constructor.name + '.' + processor.name,
+            Object.defineProperty(service, 'name', {
+                value: `${this.constructor.name}.${service.name}`,
             });
-            return processor;
+            return service;
         };
 
         this.getRoute = function () {
-            return '/load/config';
+            return DEF.API_LOAD_CFG;
         };
     }
 }

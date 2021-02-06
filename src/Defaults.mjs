@@ -1,7 +1,10 @@
 export default class TeqFw_Core_App_Defaults {
+    API_LOAD_CFG = '/load/config';
+    API_LOAD_NS = '/load/namespaces';
     BACK_REALM = 'core';  // realm for API services ('/api/core/...') and CLI commands ('core-...')
     DI_BOOTSTRAP = 'bootstrap'; // DI container label for bootstrap configuration.
     DI_CONTAINER = 'container'; // DI container label for container itself (see TeqFw_Di_Container.constructor).
+    DI_I18N = 'core_i18n';  // TODO: move to 'vue' plugin
     FS_SRC = 'src'; // default folder for plugin's static resources in filesystem
     FS_WEB = 'web'; // default folder for plugin's static resources in filesystem
     HTTP_REQ_CTX_BODY = 'body';

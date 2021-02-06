@@ -27,10 +27,10 @@ export default class TeqFw_Core_App_Server_Handler_Api {
             // DEFINE INNER FUNCTIONS
 
             /**
-             * @name handler
-             * @param {Object} context
+             * @param {TeqFw_Core_App_Server_Request_Context} context
              * @return {Promise<Boolean>}
              * @memberOf TeqFw_Core_App_Server_Handler_Api
+             * @implements {TeqFw_Core_App_Server_Handler_Factory.handler}
              */
             async function handler(context) {
                 // DEFINE INNER FUNCTIONS
@@ -50,19 +50,18 @@ export default class TeqFw_Core_App_Server_Handler_Api {
                         for (const route in router) {
                             const uri = headers[H2.HTTP2_HEADER_PATH];
                             if (route === uri) {
-                                const parser = router[route].parser;
-                                const processor = router[route].processor;
-                                const req = await parser(body, headers);
-                                const {response, headers: moreHeaders} = await processor(req, headers);
+                                const service = router[route].service;
+                                const {response, headers: moreHeaders} = await service(context);
                                 if (response) {
                                     if (stream.writable) {
-                                        if (moreHeaders) {
-                                            stream.respond(moreHeaders);
-                                        }
-                                        stream.respond({
+                                        let headsOut = {
                                             [H2.HTTP2_HEADER_STATUS]: H2.HTTP_STATUS_OK,
                                             [H2.HTTP2_HEADER_CONTENT_TYPE]: 'application/json'
-                                        });
+                                        };
+                                        if (moreHeaders) {
+                                            headsOut = Object.assign({}, moreHeaders, headsOut);
+                                        }
+                                        stream.respond(headsOut);
                                         const json = JSON.stringify({data: response});
                                         stream.end(json);
                                         result = true;
@@ -73,6 +72,11 @@ export default class TeqFw_Core_App_Server_Handler_Api {
                     }
                 } catch (e) {
                     debugger;
+                    if (stream.writable) {
+                        // TODO: how to send HTTP 500 status if headers are already sent?
+                        stream.end(e.message);
+                        result = true;
+                    }
                 }
                 return result;
             }
@@ -90,14 +94,15 @@ export default class TeqFw_Core_App_Server_Handler_Api {
                         const prefix = $path.join('/', DEF.REALM_API, realm);
                         const map = plugin.getHttp2Services();
                         for (const one of map) {
-                            /** @type {TeqFw_Core_App_Back_Service_LoadNs} */
+                            /** @type {TeqFw_Core_App_Back_Service_Load_Namespaces} */
                             const factory = await container.get(one);
                             const tail = factory.getRoute();
                             const route = $path.join(prefix, tail);
+                            /** @type {TeqFw_Core_App_Back_Service_Load_Namespaces.parser} */
                             const parser = factory.createParser();
-                            /** @type {TeqFw_Core_App_Back_Service_LoadNs.processor} */
-                            const processor = factory.createProcessor();
-                            router[route] = {parser, processor};
+                            /** @type {TeqFw_Core_App_Server_Handler_Api_Factory.service} */
+                            const service = factory.createService();
+                            router[route] = {parser, service};
                             logger.debug(`    ${route} => ${one}`);
                         }
                     }
