@@ -12,7 +12,7 @@ export default class TeqFw_Core_App_Server_Handler_Api_Factory {
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
         /**
          * Parse input data and compose API request data object.
-         * @returns {TeqFw_Core_App_Server_Handler_Api_Factory.parser}
+         * @returns {TeqFw_Core_App_Server_Handler_Api_Factory.parse}
          */
         this.createInputParser = function () {
             // DEFINE INNER FUNCTIONS
@@ -24,14 +24,14 @@ export default class TeqFw_Core_App_Server_Handler_Api_Factory {
              * @memberOf TeqFw_Core_App_Server_Handler_Api_Factory
              * @interface
              */
-            async function parser(httpCtx) {
+            async function parse(httpCtx) {
             }
 
             // COMPOSE RESULT
-            Object.defineProperty(parser, 'name', {
-                value: `${this.constructor.name}.${parser.name}`,
+            Object.defineProperty(parse, 'name', {
+                value: `${this.constructor.name}.${parse.name}`,
             });
-            return parser;
+            return parse;
         };
         /**
          * Factory to create service (handler to process HTTP API request).
@@ -44,7 +44,7 @@ export default class TeqFw_Core_App_Server_Handler_Api_Factory {
              * Service to handle HTTP API requests.
              *
              * @param {TeqFw_Core_App_Server_Handler_Api_Context} apiCtx
-             * @returns {Promise<void>}
+             * @returns {Promise<TeqFw_Core_App_Server_Handler_Api_Result>}
              * @memberOf TeqFw_Core_App_Server_Handler_Api_Factory
              * @interface
              */

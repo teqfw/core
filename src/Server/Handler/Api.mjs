@@ -62,7 +62,7 @@ export default class TeqFw_Core_App_Server_Handler_Api {
                             const service = router[route][SERVICE];
                             if (typeof parser === 'function') {
                                 // TODO: add HTTP 400 Bad request state processing
-                                apiCtx.request = await parser(httpCtx);
+                                apiCtx.request = parser(httpCtx);
                             }
                             const {response, headers: moreHeaders} = await service(apiCtx);
                             if (response) {
@@ -111,7 +111,7 @@ export default class TeqFw_Core_App_Server_Handler_Api {
                                 logger.debug(`    ${route} => ${one}`);
                                 router[route] = {};
                                 if (typeof factory.createInputParser === 'function') {
-                                    /** @type {TeqFw_Core_App_Server_Handler_Api_Factory.parser} */
+                                    /** @type {TeqFw_Core_App_Server_Handler_Api_Factory.parse} */
                                     router[route][PARSER] = factory.createInputParser();
                                 }
                                 /** @type {TeqFw_Core_App_Server_Handler_Api_Factory.service} */
