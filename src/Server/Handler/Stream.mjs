@@ -1,8 +1,5 @@
 import {constants as H2} from 'http2';
 
-const REQ_TYPE_API = 'api';
-const REQ_TYPE_STATIC = 'static';
-
 /**
  * Factory to create handler for server's streams.
  */
@@ -14,16 +11,19 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
         const DEF = spec['TeqFw_Core_App_Defaults$'];
         /** @type {TeqFw_Core_App_Logger} */
         const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
+        /** @type {typeof TeqFw_Core_App_Server_Http2_Context} */
+        const HttpContext = spec['TeqFw_Core_App_Server_Http2_Context#'];   // class constructor
+        /** @type {typeof TeqFw_Core_App_Server_Http2_Context_Shared} */
+        const SharedContext = spec['TeqFw_Core_App_Server_Http2_Context_Shared#'];   // class constructor
         /** @type {TeqFw_Core_App_Server_Handler_Api} */
         const factHndlApi = spec['TeqFw_Core_App_Server_Handler_Api$']; // instance singleton
         /** @type {TeqFw_Core_App_Server_Handler_Static} */
         const factHndlStatic = spec['TeqFw_Core_App_Server_Handler_Static$'];  // instance singleton
-        /** @type {Fl32_Teq_User_App_Server_Session} */
-        const factHndlUserSession = spec['Fl32_Teq_User_App_Server_Session$'];  // instance singleton
+        /** @type {Fl32_Teq_User_App_Server_Handler_Session} */
+        const factHndlUserSession = spec['Fl32_Teq_User_App_Server_Handler_Session$'];  // instance singleton
 
 
         // PARSE INPUT & DEFINE WORKING VARS
-        const regexApi = new RegExp(`^(/${DEF.REALM_API}/)(.*)`);
         /** @type {Array.<TeqFw_Core_App_Server_Handler_Factory.handler>} */
         const handlers = [];  // ordered array with handlers
 
@@ -55,7 +55,7 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
          * Process HTTP request after body has been read.
          *
          * @param {ServerHttp2Stream} stream
-         * @param {IncomingHttpHeaders} headers
+         * @param {Object<String, String>} headers
          * @param {Number} flags
          * @param {String} body
          * @return {Promise<void>}
@@ -65,22 +65,9 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
             // DEFINE INNER FUNCTIONS
 
             /**
-             * Define type of the request: API or static resources.
-             * @param {IncomingHttpHeaders} headers
-             * @return {String}
-             */
-            function getRequestType(headers) {
-                let result = REQ_TYPE_STATIC;
-                const path = headers[H2.HTTP2_HEADER_PATH];
-                const parts = regexApi.exec(path);
-                if (Array.isArray(parts)) result = REQ_TYPE_API;
-                return result;
-            }
-
-            /**
              * Validate HTTP request method.
              *
-             * @param {IncomingHttpHeaders} headers
+             * @param {Object<String, String>} headers
              * @return {boolean}
              */
             function hasValidMethod(headers) {
@@ -91,7 +78,7 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
             /**
              * Log request data.
              *
-             * @param {IncomingHttpHeaders} headers
+             * @param {Object<String, String>} headers
              */
             function logRequest(headers) {
                 const method = headers[H2.HTTP2_HEADER_METHOD];
@@ -106,13 +93,14 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
             // Analyze input and define type of the request (api or static)
             if (hasValidMethod(headers)) {
                 // init request context (contains all data required for current request processing)
-                const context = {stream, headers, flags, body}; // see DEF.HTTP_REQ_CTX_...
+                const httpCtx = Object.assign(new HttpContext(), {stream, headers, flags, body});
+                httpCtx.shared = new SharedContext();
 
                 // TODO: insert middleware here...
 
                 let isHandled = false;
                 for (const handler of handlers) {
-                    isHandled = await handler(context);
+                    isHandled = await handler(httpCtx);
                     if (isHandled) break;
                 }
                 // respond with error if request is not handled yet
@@ -160,7 +148,7 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
              * Handler to process 'stream' events.
              *
              * @param {ServerHttp2Stream} stream
-             * @param {IncomingHttpHeaders} headers
+             * @param {Object<String, String>} headers
              * @param {Number} flags
              * @name TeqFw_Core_App_Server_Handler_Stream.handler
              */

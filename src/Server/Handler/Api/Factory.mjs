@@ -10,39 +10,46 @@ export default class TeqFw_Core_App_Server_Handler_Api_Factory {
         const DEF = spec['TeqFw_Core_App_Defaults$'];
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
+        /**
+         * Parse input data and compose API request data object.
+         * @returns {TeqFw_Core_App_Server_Handler_Api_Factory.parser}
+         */
+        this.createInputParser = function () {
+            // DEFINE INNER FUNCTIONS
+            /**
+             * Parser to structure HTTP request data.
+             *
+             * @param {TeqFw_Core_App_Server_Http2_Context} httpCtx
+             * @returns {Promise<Object>}
+             * @memberOf TeqFw_Core_App_Server_Handler_Api_Factory
+             * @interface
+             */
+            async function parser(httpCtx) {
+            }
 
+            // COMPOSE RESULT
+            Object.defineProperty(parser, 'name', {
+                value: `${this.constructor.name}.${parser.name}`,
+            });
+            return parser;
+        };
         /**
          * Factory to create service (handler to process HTTP API request).
          * @returns {TeqFw_Core_App_Server_Handler_Api_Factory.service}
          */
         this.createService = function () {
             // DEFINE INNER FUNCTIONS
-            /**
-             * Parse input data and compose API request data object.
-             * @param {TeqFw_Core_App_Server_Request_Context} context HTTP2 request context
-             */
-            function parseInput(context) {
-            }
 
             /**
              * Service to handle HTTP API requests.
              *
-             * @param {TeqFw_Core_App_Server_Request_Context} context
+             * @param {TeqFw_Core_App_Server_Handler_Api_Context} apiCtx
              * @returns {Promise<void>}
              * @memberOf TeqFw_Core_App_Server_Handler_Api_Factory
              * @interface
              */
-            async function service(context) {
+            async function service(apiCtx) {
                 // PARSE INPUT & DEFINE WORKING VARS
-                /** @type {String} */
-                const body = context[DEF.HTTP_REQ_CTX_BODY];
-                /** @type {Number} */
-                const flags = context[DEF.HTTP_REQ_CTX_FLAGS];
-                /** @type {IncomingHttpHeaders} */
-                const headers = context[DEF.HTTP_REQ_CTX_HEADERS];
-                /** @type {ServerHttp2Stream} */
-                const stream = context[DEF.HTTP_REQ_CTX_STREAM];
-
                 // DEFINE INNER FUNCTIONS
                 // MAIN FUNCTIONALITY
                 // COMPOSE RESULT

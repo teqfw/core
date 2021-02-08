@@ -1,27 +1,29 @@
 /**
  * Frontend gate to "Save one field of user profile" service.
  */
-export default function (spec) {
-    /** @type {Fl32_Leana_Defaults} */
-    const DEF = spec['Fl32_Leana_Defaults$'];   // instance singleton
+export default function TeqFw_Core_App_Front_Gate_Load_Config(spec) {
+    /** @type {TeqFw_Core_App_Defaults} */
+    const DEF = spec['TeqFw_Core_App_Defaults$'];   // instance singleton
+    /** @type {TeqFw_Core_App_Front_Data_Config} */
     const config = spec[DEF.DI_CONFIG]; // named singleton
     /** @type {TeqFw_Di_Container} */
     const container = spec['TeqFw_Di_Container$'];  // instance singleton
-    /** @type {typeof Fl32_Leana_Shared_Service_Route_User_Profile_SaveField_Response} */
-    const Response = spec['Fl32_Leana_Shared_Service_Route_User_Profile_SaveField#Response'];
+    /** @type {typeof TeqFw_Core_App_Shared_Api_Route_Load_Config_Response} */
+    const Response = spec['TeqFw_Core_App_Shared_Api_Route_Load_Config#Response']; // class constructor
     /** @type {typeof TeqFw_Core_App_Front_Gate_Response_Error} */
     const GateError = spec['TeqFw_Core_App_Front_Gate_Response_Error#'];    // class constructor
 
     // TODO: we need to map gate to API URI
-    const URL = `https://${config.web.urlBase}/api/${DEF.API_ROUTE_USER_PROFILE_SAVE_FIELD}`;
+    const URL = `https://${config.urlBase}/api/${DEF.API_LOAD_CFG}`;
 
     /**
-     * @param {Fl32_Leana_Shared_Service_Route_User_Profile_SaveField_Request} data
-     * @return {Promise<Fl32_Leana_Shared_Service_Route_User_Profile_SaveField_Response|TeqFw_Core_App_Front_Gate_Response_Error>}
-     * @exports Fl32_Leana_Front_Gate_User_Profile_SaveField
+     * @param {TeqFw_Core_App_Shared_Api_Route_Load_Config_Request} data
+     * @return {Promise<TeqFw_Core_App_Shared_Api_Route_Load_Config_Response|TeqFw_Core_App_Front_Gate_Response_Error>}
+     * @memberOf TeqFw_Core_App_Front_Gate_Load_Config
      */
-    async function Fl32_Leana_Front_Gate_User_Profile_SaveField(data) {
+    async function gate(data) {
         try {
+            // TODO: ajax loader interface from core should be here
             const store = await container.get(DEF.DI_STORE); // named singleton
             store.commit('app/startLoader');
             const res = await fetch(URL, {
@@ -33,7 +35,7 @@ export default function (spec) {
             });
             store.commit('app/stopLoader');
             const json = await res.json();
-            /** @type {Fl32_Leana_Shared_Service_Route_User_Profile_SaveField_Response} */
+            /** @type {TeqFw_Core_App_Shared_Api_Route_Load_Config_Response} */
             const result = new Response();
             Object.assign(result, json.data);
             return result;
@@ -46,7 +48,8 @@ export default function (spec) {
         }
     }
 
-    // We should place function separately to allow JSDoc & IDEA hints & navigation.
-    return Fl32_Leana_Front_Gate_User_Profile_SaveField;
+    // COMPOSE RESULT
+    Object.defineProperty(gate, 'name', {value: 'TeqFw_Core_App_Front_Gate_Load_Config.gate'});
+    return gate;
 }
 

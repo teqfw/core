@@ -34,17 +34,17 @@ export default class TeqFw_Core_App_Server_Handler_Static {
             /**
              * Handler to process HTTP requests as middleware and to log request data.
              *
-             * @param {Object} context
+             * @param {TeqFw_Core_App_Server_Http2_Context} httpCtx
              * @return {Promise<Boolean>}
              * @memberOf TeqFw_Core_App_Server_Handler_Static
              * @implements {TeqFw_Core_App_Server_Handler_Factory.handler}
              */
-            async function handler(context) {
+            async function handler(httpCtx) {
                 // DEFINE INNER FUNCTIONS
-                /** @type {IncomingHttpHeaders} */
-                const headers = context[DEF.HTTP_REQ_CTX_HEADERS];
+                /** @type {Object<String, String>} */
+                const headers = httpCtx.headers;
                 /** @type {ServerHttp2Stream} */
-                const stream = context[DEF.HTTP_REQ_CTX_STREAM];
+                const stream = httpCtx.stream;
 
                 // DEFINE INNER FUNCTIONS
                 /**
