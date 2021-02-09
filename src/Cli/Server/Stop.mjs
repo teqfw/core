@@ -19,7 +19,7 @@ export default class TeqFw_Core_App_Cli_Server_Stop {
 
         /**
          * @see TeqFw_Core_App_Cli_Command.create
-         * @return {Promise<TeqFw_Core_App_Cli_Command>}
+         * @returns {Promise<TeqFw_Core_App_Cli_Command>}
          */
         this.create = async function () {
             // this is sample code:

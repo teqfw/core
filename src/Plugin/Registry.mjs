@@ -8,13 +8,13 @@ export default class TeqFw_Core_App_Plugin_Registry {
 
         /**
          * @param {String} packageName
-         * @return {TeqFw_Core_App_Plugin_Scan_Item|null}
+         * @returns {TeqFw_Core_App_Plugin_Scan_Item|null}
          */
         this.get = function (packageName) {
             return store[packageName] ?? null;
         };
         /**
-         * @return {TeqFw_Core_App_Plugin_Scan_Item[]}
+         * @returns {TeqFw_Core_App_Plugin_Scan_Item[]}
          */
         this.items = function () {
             return Object.values(store);

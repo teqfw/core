@@ -19,7 +19,7 @@ export default class TeqFw_Core_App_Back_Service_Load_Config {
 
             /**
              *
-             * @return {TeqFw_Core_App_Shared_Api_Route_Load_Config_Request}
+             * @returns {TeqFw_Core_App_Shared_Api_Route_Load_Config_Request}
              * @memberOf TeqFw_Core_App_Back_Service_Load_Config
              */
             function parse() {
@@ -36,7 +36,7 @@ export default class TeqFw_Core_App_Back_Service_Load_Config {
 
         this.createService = function () {
             /**
-             * @return {Promise<{response: TeqFw_Core_App_Shared_Api_Route_Load_Config_Response}>}
+             * @returns {Promise<{response: TeqFw_Core_App_Shared_Api_Route_Load_Config_Response}>}
              * @memberOf TeqFw_Core_App_Back_Service_Load_Config
              */
             async function service() {

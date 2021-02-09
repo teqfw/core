@@ -39,7 +39,7 @@ export default class TeqFw_Core_App_Launcher {
 
         /**
          * Initialize TeqFW application (load plugins, register services, etc.).
-         * @return {Promise<void>}
+         * @returns {Promise<void>}
          */
         this.init = async function () {
             // DEFINE INNER FUNCTIONS
@@ -49,7 +49,7 @@ export default class TeqFw_Core_App_Launcher {
              * Run 'commander' initialization code for all plugins.
              *
              * @param {TeqFw_Core_App_Plugin_Registry} plugins
-             * @return {Promise<void>}
+             * @returns {Promise<void>}
              * @memberOf TeqFw_Core_App_Launcher.init
              */
             async function initCommander(plugins) {
@@ -116,7 +116,7 @@ export default class TeqFw_Core_App_Launcher {
         /**
          * Run application (perform requested command).
          *
-         * @return {Promise<void>}
+         * @returns {Promise<void>}
          */
         this.run = async function () {
             commander.parse(process.argv);
@@ -129,7 +129,7 @@ export default class TeqFw_Core_App_Launcher {
 
         /**
          * Close all connections and stop processes in all plugins.
-         * @return {Promise<void>}
+         * @returns {Promise<void>}
          */
         this.stop = async function () {
             // close DB connections here

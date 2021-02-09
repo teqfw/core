@@ -19,7 +19,7 @@ export default class TeqFw_Core_App_Server_Http2 {
         /**
          * Create HTTP2 server and set event handlers.
          *
-         * @return {Promise<void>}
+         * @returns {Promise<void>}
          */
         this.init = async function () {
             // PARSE INPUT & DEFINE WORKING VARS

@@ -58,7 +58,7 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
          * @param {Object<String, String>} headers
          * @param {Number} flags
          * @param {String} body
-         * @return {Promise<void>}
+         * @returns {Promise<void>}
          */
         async function processRequest(stream, headers, flags, body) {
 
@@ -68,7 +68,7 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
              * Validate HTTP request method.
              *
              * @param {Object<String, String>} headers
-             * @return {boolean}
+             * @returns {boolean}
              */
             function hasValidMethod(headers) {
                 const method = headers[H2.HTTP2_HEADER_METHOD];
@@ -127,7 +127,7 @@ export default class TeqFw_Core_App_Server_Handler_Stream {
 
         /**
          * Factory function to create handler for 'Http2Server.stream' events.
-         * @return {Promise<TeqFw_Core_App_Server_Handler_Stream.handler>}
+         * @returns {Promise<TeqFw_Core_App_Server_Handler_Stream.handler>}
          */
         this.createHandler = async function () {
             // PARSE INPUT & DEFINE WORKING VARS

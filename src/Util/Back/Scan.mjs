@@ -7,7 +7,7 @@ import $path from 'path';
  * @see https://stackoverflow.com/a/47492545/4073821
  *
  * @param {string} path
- * @return {Array.<string>}
+ * @returns {Array.<string>}
  */
 function TeqFw_Core_App_Util_Back_Scan_FilesRecursively(path) {
     // DEFINE INNER FUNCTIONS

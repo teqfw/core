@@ -18,7 +18,7 @@ export default function TeqFw_Core_App_Front_Gate_Load_Config(spec) {
 
     /**
      * @param {TeqFw_Core_App_Shared_Api_Route_Load_Config_Request} data
-     * @return {Promise<TeqFw_Core_App_Shared_Api_Route_Load_Config_Response|TeqFw_Core_App_Front_Gate_Response_Error>}
+     * @returns {Promise<TeqFw_Core_App_Shared_Api_Route_Load_Config_Response|TeqFw_Core_App_Front_Gate_Response_Error>}
      * @memberOf TeqFw_Core_App_Front_Gate_Load_Config
      */
     async function gate(data) {

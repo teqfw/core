@@ -23,7 +23,7 @@ export default class TeqFw_Core_App_Server_Handler_Api {
 
 
         /**
-         * @return {Promise<TeqFw_Core_App_Server_Handler_Factory.handler>}
+         * @returns {Promise<TeqFw_Core_App_Server_Handler_Factory.handler>}
          */
         this.createHandler = async function () {
             // PARSE INPUT & DEFINE WORKING VARS
@@ -36,7 +36,7 @@ export default class TeqFw_Core_App_Server_Handler_Api {
              * Handler to process API requests.
              *
              * @param {TeqFw_Core_App_Server_Http2_Context} httpCtx
-             * @return {Promise<Boolean>}
+             * @returns {Promise<Boolean>}
              * @memberOf TeqFw_Core_App_Server_Handler_Api
              * @implements {TeqFw_Core_App_Server_Handler_Factory.handler}
              */

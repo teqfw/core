@@ -44,7 +44,7 @@ export default class TeqFw_Core_App_Db_Connector {
         /**
          * Accessor for 'knex' object.
          *
-         * @return {*}
+         * @returns {*}
          */
         this.getKnex = async function () {
             if (!knex) await this.init();

@@ -41,14 +41,14 @@ class TeqFw_Core_App_Plugin_Scan {
         /**
          * Scan packages and register TeqFW plugins in the registry.
          * @param {String} root
-         * @return {Promise<TeqFw_Core_App_Plugin_Registry>}
+         * @returns {Promise<TeqFw_Core_App_Plugin_Registry>}
          */
         this.exec = async function (root) {
             // DEFINE INNER FUNCTIONS
 
             /**
              * @param {String} root
-             * @return {Promise<TeqFw_Core_App_Plugin_Scan_Item[]>}
+             * @returns {Promise<TeqFw_Core_App_Plugin_Scan_Item[]>}
              */
             async function getPackages(root) {
                 // DEFINE INNER FUNCTIONS
@@ -56,7 +56,7 @@ class TeqFw_Core_App_Plugin_Scan {
                 /**
                  * Check does 'package.json' exist, read content, parse and return data if 'yes'.
                  * @param {String} filename
-                 * @return {Promise<TeqFw_Core_App_Plugin_Scan_Item|null>}
+                 * @returns {Promise<TeqFw_Core_App_Plugin_Scan_Item|null>}
                  */
                 async function checkPlugin(filename) {
                     let result = null;
@@ -130,7 +130,7 @@ class TeqFw_Core_App_Plugin_Scan {
         };
 
         /**
-         * @return {TeqFw_Core_App_Plugin_Registry}
+         * @returns {TeqFw_Core_App_Plugin_Registry}
          */
         this.getRegistry = function () {
             return registry;

@@ -21,7 +21,7 @@ export default class TeqFw_Core_App_Server_Handler_Static {
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
 
         /**
-         * @return {Promise<TeqFw_Core_App_Server_Handler_Static.handler>}
+         * @returns {Promise<TeqFw_Core_App_Server_Handler_Static.handler>}
          */
         this.createHandler = async function () {
             // PARSE INPUT & DEFINE WORKING VARS
@@ -35,7 +35,7 @@ export default class TeqFw_Core_App_Server_Handler_Static {
              * Handler to process HTTP requests as middleware and to log request data.
              *
              * @param {TeqFw_Core_App_Server_Http2_Context} httpCtx
-             * @return {Promise<Boolean>}
+             * @returns {Promise<Boolean>}
              * @memberOf TeqFw_Core_App_Server_Handler_Static
              * @implements {TeqFw_Core_App_Server_Handler_Factory.handler}
              */
@@ -92,7 +92,7 @@ export default class TeqFw_Core_App_Server_Handler_Static {
                  *
                  * @param {ServerHttp2Stream} stream
                  * @param {String} filepath
-                 * @return {Promise<boolean>}
+                 * @returns {Promise<boolean>}
                  */
                 async function processRegular(stream, filepath) {
                     let result = false;

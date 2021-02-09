@@ -7,7 +7,7 @@ export default class TeqFw_Core_App_Util_Back_Cookie {
      * Compose expired HTTP cookie to remove existing cookie with the same name in the browser.
      *
      * @param {String} name
-     * @return {String}
+     * @returns {String}
      */
     clear(name) {
         // MAIN FUNCTIONALITY
@@ -21,7 +21,7 @@ export default class TeqFw_Core_App_Util_Back_Cookie {
      * Compose HTTP cookie content.
      *
      * @param {String} name
-     * @return {String}
+     * @returns {String}
      */
     compose(name) {
         // DEFINE INNER FUNCTIONS

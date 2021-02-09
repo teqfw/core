@@ -22,14 +22,14 @@ export default class TeqFw_Core_App_Cli_Server_Start {
         const Command = spec['TeqFw_Core_App_Cli_Command#Data'];    // class constructor
 
         // RUNTIME INJECTED DEPS
-        /**  @return {Promise<TeqFw_Core_App_Server_Http2>} */
+        /**  @returns {Promise<TeqFw_Core_App_Server_Http2>} */
         const getServer = async () => await container.get('TeqFw_Core_App_Server_Http2$', this.constructor.name);
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
 
         /**
          * @see TeqFw_Core_App_Cli_Command.create
-         * @return {Promise<TeqFw_Core_App_Cli_Command>}
+         * @returns {Promise<TeqFw_Core_App_Cli_Command>}
          */
         this.create = async function () {
             // this is sample code:

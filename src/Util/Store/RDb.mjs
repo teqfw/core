@@ -5,7 +5,7 @@
  * @param {String|String[]} fldSrc
  * @param {String} tblTrg
  * @param {String|String[]} fldTrg
- * @return {string}
+ * @returns {string}
  * @exports TeqFw_Core_App_Util_Store_RDb_NameForForeignKey
  */
 function TeqFw_Core_App_Util_Store_RDb_NameForForeignKey(tblSrc, fldSrc, tblTrg, fldTrg) {
@@ -30,7 +30,7 @@ function TeqFw_Core_App_Util_Store_RDb_NameForForeignKey(tblSrc, fldSrc, tblTrg,
  *
  * @param {String} tbl
  * @param {String|String[]} fld
- * @return {string}
+ * @returns {string}
  * @exports TeqFw_Core_App_Util_Store_RDb_NameForUniqueKey
  */
 function TeqFw_Core_App_Util_Store_RDb_NameForIndexKey(tbl, fld) {
@@ -50,7 +50,7 @@ function TeqFw_Core_App_Util_Store_RDb_NameForIndexKey(tbl, fld) {
  *
  * @param {String} tbl
  * @param {String|String[]} fld
- * @return {string}
+ * @returns {string}
  * @exports TeqFw_Core_App_Util_Store_RDb_NameForUniqueKey
  */
 function TeqFw_Core_App_Util_Store_RDb_NameForUniqueKey(tbl, fld) {

@@ -56,9 +56,7 @@ export default class TeqFw_Core_App_Server_Handler_Api_Factory {
             }
 
             // COMPOSE RESULT
-            Object.defineProperty(service, 'name', {
-                value: `${this.constructor.name}.${service.name}`,
-            });
+            Object.defineProperty(service, 'name', {value: `${this.constructor.name}.${service.name}`});
             return service;
         };
 

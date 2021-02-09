@@ -33,7 +33,7 @@ export default class TeqFw_Core_App_Logger {
             /**
              * Get last queued item.
              *
-             * @return {Object}
+             * @returns {Object}
              */
             getLast() {
                 return this.get(this.insertionIndex - 1);
@@ -42,7 +42,7 @@ export default class TeqFw_Core_App_Logger {
             /**
              * Get log record from queue.
              *
-             * @return {Object}
+             * @returns {Object}
              */
             dequeue() {
                 const result = this.get(this.removalIndex);

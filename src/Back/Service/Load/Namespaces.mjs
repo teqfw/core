@@ -47,7 +47,7 @@ export default class TeqFw_Core_App_Back_Service_Load_Namespaces {
 
             /**
              *
-             * @return {TeqFw_Core_App_Shared_Api_Route_Load_Namespaces_Request}
+             * @returns {TeqFw_Core_App_Shared_Api_Route_Load_Namespaces_Request}
              * @memberOf TeqFw_Core_App_Back_Service_Load_Namespaces
              */
             function parse() {
@@ -63,7 +63,7 @@ export default class TeqFw_Core_App_Back_Service_Load_Namespaces {
         this.createService = function () {
             /**
              *
-             * @return {Promise<{response: TeqFw_Core_App_Shared_Api_Route_Load_Namespaces_Response}>}
+             * @returns {Promise<{response: TeqFw_Core_App_Shared_Api_Route_Load_Namespaces_Response}>}
              * @memberOf TeqFw_Core_App_Back_Service_Load_Namespaces
              */
             async function service() {

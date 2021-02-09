@@ -42,7 +42,7 @@ export default class TeqFw_Core_App_Config {
          * Get configuration value by path (`path/to/the/node`).
          *
          * @param {string} cfgPath - Path to the node of the configuration tree (`path/to/the/node`).
-         * @return {null|string|boolean|number|Object} - Configuration value.
+         * @returns {null|string|boolean|number|Object} - Configuration value.
          */
         this.get = function (cfgPath) {
             let result = store;
