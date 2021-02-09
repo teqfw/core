@@ -7,7 +7,7 @@ const SERVICE = 'service';
 /**
  * Data structure to group input data for API services.
  */
-class TeqFw_Core_App_Server_Handler_Api_Context {
+class TeqFw_Core_App_Server_Http2_Handler_Api_Context {
     /**
      * Structured body data.
      * @type {Object}
@@ -15,12 +15,12 @@ class TeqFw_Core_App_Server_Handler_Api_Context {
     request;
     /**
      * Data being shared between handlers.
-     * @type {TeqFw_Core_App_Server_Http2_Handler_Stream_Shared}
+     * @type {TeqFw_Core_App_Server_Http2_Stream_Shared}
      */
     sharedContext;
 }
 
-class TeqFw_Core_App_Server_Handler_Api_Result {
+class TeqFw_Core_App_Server_Http2_Handler_Api_Result {
     /** @type {Object.<String, String>} */
     headers = {}; // see nodejs 'http2.constants' with 'HTTP2_HEADER_...' prefixes
     /** @type {Object} */
@@ -30,9 +30,9 @@ class TeqFw_Core_App_Server_Handler_Api_Result {
 /**
  * Factory to create HTTP2 server handler for API requests.
  *
- * @implements {TeqFw_Core_App_Server_Handler_Factory}
+ * @implements {TeqFw_Core_App_Server_Http2_Handler_Factory}
  */
-class TeqFw_Core_App_Server_Handler_Api {
+class TeqFw_Core_App_Server_Http2_Handler_Api {
 
     constructor(spec) {
         /** @type {TeqFw_Core_App_Defaults} */
@@ -43,8 +43,8 @@ class TeqFw_Core_App_Server_Handler_Api {
         const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
         /** @type {TeqFw_Core_App_Plugin_Registry} */
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
-        /** @type {typeof TeqFw_Core_App_Server_Http2_Handler_Stream_Report} */
-        const Report = spec['TeqFw_Core_App_Server_Http2_Handler_Stream#Report'];   // class constructor
+        /** @type {typeof TeqFw_Core_App_Server_Http2_Stream_Report} */
+        const Report = spec['TeqFw_Core_App_Server_Http2_Stream#Report'];   // class constructor
 
         /**
          * Create handler to load user sessions data to request context.
@@ -60,16 +60,16 @@ class TeqFw_Core_App_Server_Handler_Api {
             /**
              * Handler to process API requests.
              *
-             * @param {TeqFw_Core_App_Server_Http2_Handler_Stream_Context} context
-             * @returns {Promise<TeqFw_Core_App_Server_Http2_Handler_Stream_Report>}
-             * @memberOf TeqFw_Core_App_Server_Handler_Api
-             * @implements {TeqFw_Core_App_Server_Http2_Handler_Stream.handler}
+             * @param {TeqFw_Core_App_Server_Http2_Stream_Context} context
+             * @returns {Promise<TeqFw_Core_App_Server_Http2_Stream_Report>}
+             * @memberOf TeqFw_Core_App_Server_Http2_Handler_Api
+             * @implements {TeqFw_Core_App_Server_Http2_Stream.handler}
              */
             async function handler(context) {
                 // MAIN FUNCTIONALITY
                 const result = new Report();
-                /** @type {TeqFw_Core_App_Server_Handler_Api_Context} */
-                const apiCtx = new TeqFw_Core_App_Server_Handler_Api_Context();
+                /** @type {TeqFw_Core_App_Server_Http2_Handler_Api_Context} */
+                const apiCtx = new TeqFw_Core_App_Server_Http2_Handler_Api_Context();
                 apiCtx.sharedContext = context.shared;
                 const path = context.headers[H2.HTTP2_HEADER_PATH];
                 const parts = regexApi.exec(path);
@@ -133,17 +133,17 @@ class TeqFw_Core_App_Server_Handler_Api {
                             const prefix = $path.join('/', DEF.REALM_API, realm);
                             const map = plugin.getHttp2Services();
                             for (const one of map) {
-                                /** @type {TeqFw_Core_App_Server_Handler_Api_Factory} */
+                                /** @type {TeqFw_Core_App_Server_Http2_Handler_Api_Factory} */
                                 const factory = await container.get(one, mainClassName);
                                 const tail = factory.getRoute();
                                 const route = $path.join(prefix, tail);
                                 logger.debug(`    ${route} => ${one}`);
                                 router[route] = {};
                                 if (typeof factory.createInputParser === 'function') {
-                                    /** @type {TeqFw_Core_App_Server_Handler_Api_Factory.parse} */
+                                    /** @type {TeqFw_Core_App_Server_Http2_Handler_Api_Factory.parse} */
                                     router[route][PARSE] = factory.createInputParser();
                                 }
-                                /** @type {TeqFw_Core_App_Server_Handler_Api_Factory.service} */
+                                /** @type {TeqFw_Core_App_Server_Http2_Handler_Api_Factory.service} */
                                 const service = factory.createService();
                                 router[route][SERVICE] = service;
                             }
@@ -166,7 +166,7 @@ class TeqFw_Core_App_Server_Handler_Api {
 }
 
 export {
-    TeqFw_Core_App_Server_Handler_Api as default,
-    TeqFw_Core_App_Server_Handler_Api_Context as Context,
-    TeqFw_Core_App_Server_Handler_Api_Result as Result,
+    TeqFw_Core_App_Server_Http2_Handler_Api as default,
+    TeqFw_Core_App_Server_Http2_Handler_Api_Context as Context,
+    TeqFw_Core_App_Server_Http2_Handler_Api_Result as Result,
 };

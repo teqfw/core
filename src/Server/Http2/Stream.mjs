@@ -3,34 +3,34 @@ import {constants as H2} from 'http2';
 /**
  * This is marker function for HTTP2 stream handlers.
  *
- * @param {TeqFw_Core_App_Server_Http2_Handler_Stream_Context} context
- * @returns {TeqFw_Core_App_Server_Http2_Handler_Stream_Report}
- * @memberOf TeqFw_Core_App_Server_Http2_Handler_Stream
+ * @param {TeqFw_Core_App_Server_Http2_Stream_Context} context
+ * @returns {TeqFw_Core_App_Server_Http2_Stream_Report}
+ * @memberOf TeqFw_Core_App_Server_Http2_Stream
  * @interface
  */
 // eslint-disable-next-line no-unused-vars
 function handler(context) {
-    return new TeqFw_Core_App_Server_Http2_Handler_Stream_Report();
+    return new TeqFw_Core_App_Server_Http2_Stream_Report();
 }
 
 /**
  * Data structure to group input data for the handlers.
  */
-class TeqFw_Core_App_Server_Http2_Handler_Stream_Context {
+class TeqFw_Core_App_Server_Http2_Stream_Context {
     /** @type {String} */
     body;
     /** @type {Number} */
     flags;
     /** @type {Object.<String, String>} */
     headers;
-    /** @type {TeqFw_Core_App_Server_Http2_Handler_Stream_Shared} */
+    /** @type {TeqFw_Core_App_Server_Http2_Stream_Shared} */
     shared;
 }
 
 /**
  * Data structure to group handler's processing results (output headers, body, etc.).
  */
-class TeqFw_Core_App_Server_Http2_Handler_Stream_Report {
+class TeqFw_Core_App_Server_Http2_Stream_Report {
     /**
      * 'true' if current handler has processed the request completely.
      * @type {Boolean}
@@ -53,9 +53,9 @@ class TeqFw_Core_App_Server_Http2_Handler_Stream_Report {
     output;
     /**
      * Additional shared objects to be added to input context for remaining handlers.
-     * @type {TeqFw_Core_App_Server_Http2_Handler_Stream_Shared}
+     * @type {TeqFw_Core_App_Server_Http2_Stream_Shared}
      */
-    sharedAdditional = new TeqFw_Core_App_Server_Http2_Handler_Stream_Shared();
+    sharedAdditional = new TeqFw_Core_App_Server_Http2_Stream_Shared();
 }
 
 /**
@@ -67,13 +67,13 @@ class TeqFw_Core_App_Server_Http2_Handler_Stream_Report {
  * It is not a good solution but it is flexible solution. I need the flexibility for the time.
  *
  */
-class TeqFw_Core_App_Server_Http2_Handler_Stream_Shared {
+class TeqFw_Core_App_Server_Http2_Stream_Shared {
 }
 
 /**
  * Factory to create handler for server's streams.
  */
-class TeqFw_Core_App_Server_Http2_Handler_Stream {
+class TeqFw_Core_App_Server_Http2_Stream {
 
     constructor(spec) {
         // CONSTRUCTOR INJECTED DEPS
@@ -85,7 +85,7 @@ class TeqFw_Core_App_Server_Http2_Handler_Stream {
         const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
 
         // PARSE INPUT & DEFINE WORKING VARS
-        /** @type {Array.<TeqFw_Core_App_Server_Http2_Handler_Stream.handler>} */
+        /** @type {Array.<TeqFw_Core_App_Server_Http2_Stream.handler>} */
         const handlers = [];  // ordered array with handlers
 
         // DEFINE INNER FUNCTIONS
@@ -175,7 +175,7 @@ class TeqFw_Core_App_Server_Http2_Handler_Stream {
             /**
              * Write out complete result to the stream.
              * @param {ServerHttp2Stream} stream
-             * @param {TeqFw_Core_App_Server_Http2_Handler_Stream_Report} report
+             * @param {TeqFw_Core_App_Server_Http2_Stream_Report} report
              */
             function respondComplete(stream, report) {
                 if (stream.writable) {
@@ -196,13 +196,13 @@ class TeqFw_Core_App_Server_Http2_Handler_Stream {
                 try {
                     // init request context (contains all data required for current request processing)
                     const context = Object.assign(
-                        new TeqFw_Core_App_Server_Http2_Handler_Stream_Context(),
+                        new TeqFw_Core_App_Server_Http2_Stream_Context(),
                         {headers, flags, body}
                     );
-                    context.shared = new TeqFw_Core_App_Server_Http2_Handler_Stream_Shared();
-                    let result = new TeqFw_Core_App_Server_Http2_Handler_Stream_Report();
+                    context.shared = new TeqFw_Core_App_Server_Http2_Stream_Shared();
+                    let result = new TeqFw_Core_App_Server_Http2_Stream_Report();
                     for (const handler of handlers) {
-                        /** @type {TeqFw_Core_App_Server_Http2_Handler_Stream_Report} */
+                        /** @type {TeqFw_Core_App_Server_Http2_Stream_Report} */
                         const report = await handler(context);
                         Object.assign(result.headers, report.headers);  // add additional headers to results
                         Object.assign(context.shared, report.sharedAdditional); // add shared objects to context
@@ -232,23 +232,23 @@ class TeqFw_Core_App_Server_Http2_Handler_Stream {
 
         /**
          * Factory function to create handler for 'Http2Server.stream' events.
-         * @returns {Promise<TeqFw_Core_App_Server_Http2_Handler_Stream.handler>}
+         * @returns {Promise<TeqFw_Core_App_Server_Http2_Stream.handler>}
          */
         this.createHandler = async function () {
             // PARSE INPUT & DEFINE WORKING VARS
 
-            /** @type {TeqFw_Core_App_Server_Handler_Api} */
-            const factHndlApi = await container.get('TeqFw_Core_App_Server_Handler_Api$', this.constructor.name);
-            /** @type {TeqFw_Core_App_Server_Handler_Static} */
-            const factHndlStatic = await container.get('TeqFw_Core_App_Server_Handler_Static$', this.constructor.name);
+            /** @type {TeqFw_Core_App_Server_Http2_Handler_Api} */
+            const factHndlApi = await container.get('TeqFw_Core_App_Server_Http2_Handler_Api$', this.constructor.name);
+            /** @type {TeqFw_Core_App_Server_Http2_Handler_Static} */
+            const factHndlStatic = await container.get('TeqFw_Core_App_Server_Http2_Handler_Static$', this.constructor.name);
             /** @type {Fl32_Teq_User_App_Server_Handler_Session} */
             const factHndlUserSession = await container.get('Fl32_Teq_User_App_Server_Handler_Session$', this.constructor.name);
 
-            /** @type {TeqFw_Core_App_Server_Handler_Factory.handler} */
+            /** @type {TeqFw_Core_App_Server_Http2_Handler_Factory.handler} */
             const hndlApi = await factHndlApi.createHandler();
-            /** @type {TeqFw_Core_App_Server_Handler_Factory.handler} */
+            /** @type {TeqFw_Core_App_Server_Http2_Handler_Factory.handler} */
             const hndlStatic = await factHndlStatic.createHandler();
-            /** @type {TeqFw_Core_App_Server_Handler_Factory.handler} */
+            /** @type {TeqFw_Core_App_Server_Http2_Handler_Factory.handler} */
             const hndlUser = await factHndlUserSession.createHandler();
 
             // push handlers to registry with orders
@@ -263,7 +263,7 @@ class TeqFw_Core_App_Server_Http2_Handler_Stream {
              * @param {ServerHttp2Stream} stream
              * @param {Object<String, String>} headers
              * @param {Number} flags
-             * @memberOf TeqFw_Core_App_Server_Http2_Handler_Stream
+             * @memberOf TeqFw_Core_App_Server_Http2_Stream
              */
             async function handler(stream, headers, flags) {
                 try {
@@ -313,8 +313,8 @@ class TeqFw_Core_App_Server_Http2_Handler_Stream {
 }
 
 export {
-    TeqFw_Core_App_Server_Http2_Handler_Stream as default,
-    TeqFw_Core_App_Server_Http2_Handler_Stream_Context as Context,
-    TeqFw_Core_App_Server_Http2_Handler_Stream_Report as Report,
-    TeqFw_Core_App_Server_Http2_Handler_Stream_Shared as Shared,
+    TeqFw_Core_App_Server_Http2_Stream as default,
+    TeqFw_Core_App_Server_Http2_Stream_Context as Context,
+    TeqFw_Core_App_Server_Http2_Stream_Report as Report,
+    TeqFw_Core_App_Server_Http2_Stream_Shared as Shared,
 };

@@ -6,9 +6,9 @@ import {constants as H2} from 'http2';
 /**
  * Factory to create handler for static files.
  *
- * @implements {TeqFw_Core_App_Server_Handler_Factory}
+ * @implements {TeqFw_Core_App_Server_Http2_Handler_Factory}
  */
-export default class TeqFw_Core_App_Server_Handler_Static {
+export default class TeqFw_Core_App_Server_Http2_Handler_Static {
 
     constructor(spec) {
         /** @type {TeqFw_Core_App_Defaults} */
@@ -21,11 +21,11 @@ export default class TeqFw_Core_App_Server_Handler_Static {
         const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
         /** @type {TeqFw_Core_App_Plugin_Registry} */
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
-        /** @type {typeof TeqFw_Core_App_Server_Http2_Handler_Stream_Report} */
-        const Report = spec['TeqFw_Core_App_Server_Http2_Handler_Stream#Report'];   // class constructor
+        /** @type {typeof TeqFw_Core_App_Server_Http2_Stream_Report} */
+        const Report = spec['TeqFw_Core_App_Server_Http2_Stream#Report'];   // class constructor
 
         /**
-         * @returns {Promise<TeqFw_Core_App_Server_Handler_Static.handler>}
+         * @returns {Promise<TeqFw_Core_App_Server_Http2_Handler_Static.handler>}
          */
         this.createHandler = async function () {
             // PARSE INPUT & DEFINE WORKING VARS
@@ -37,10 +37,10 @@ export default class TeqFw_Core_App_Server_Handler_Static {
             /**
              * Handler to process static files.
              *
-             * @param {TeqFw_Core_App_Server_Http2_Handler_Stream_Context} context
-             * @returns {Promise<TeqFw_Core_App_Server_Http2_Handler_Stream_Report>}
-             * @memberOf TeqFw_Core_App_Server_Handler_Static
-             * @implements {TeqFw_Core_App_Server_Http2_Handler_Stream.handler}
+             * @param {TeqFw_Core_App_Server_Http2_Stream_Context} context
+             * @returns {Promise<TeqFw_Core_App_Server_Http2_Stream_Report>}
+             * @memberOf TeqFw_Core_App_Server_Http2_Handler_Static
+             * @implements {TeqFw_Core_App_Server_Http2_Stream.handler}
              */
             async function handler(context) {
                 // DEFINE INNER FUNCTIONS

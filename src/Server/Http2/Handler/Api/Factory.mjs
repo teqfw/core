@@ -2,7 +2,7 @@
  * Template for factories to create API services.
  * @interface
  */
-export default class TeqFw_Core_App_Server_Handler_Api_Factory {
+export default class TeqFw_Core_App_Server_Http2_Handler_Api_Factory {
 
     constructor(spec) {
         // CONSTRUCTOR INJECTED DEPS
@@ -12,19 +12,19 @@ export default class TeqFw_Core_App_Server_Handler_Api_Factory {
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
         /**
          * Parse input data and compose API request data object.
-         * @returns {TeqFw_Core_App_Server_Handler_Api_Factory.parse}
+         * @returns {TeqFw_Core_App_Server_Http2_Handler_Api_Factory.parse}
          */
         this.createInputParser = function () {
             // DEFINE INNER FUNCTIONS
             /**
              * Parser to structure HTTP request data.
              *
-             * @param {TeqFw_Core_App_Server_Http2_Context} httpCtx
+             * @param {TeqFw_Core_App_Server_Http2_Stream_Context} context
              * @returns {Promise<Object>}
-             * @memberOf TeqFw_Core_App_Server_Handler_Api_Factory
+             * @memberOf TeqFw_Core_App_Server_Http2_Handler_Api_Factory
              * @interface
              */
-            async function parse(httpCtx) {
+            async function parse(context) {
             }
 
             // COMPOSE RESULT
@@ -35,7 +35,7 @@ export default class TeqFw_Core_App_Server_Handler_Api_Factory {
         };
         /**
          * Factory to create service (handler to process HTTP API request).
-         * @returns {TeqFw_Core_App_Server_Handler_Api_Factory.service}
+         * @returns {TeqFw_Core_App_Server_Http2_Handler_Api_Factory.service}
          */
         this.createService = function () {
             // DEFINE INNER FUNCTIONS
@@ -43,9 +43,9 @@ export default class TeqFw_Core_App_Server_Handler_Api_Factory {
             /**
              * Service to handle HTTP API requests.
              *
-             * @param {TeqFw_Core_App_Server_Handler_Api_Context} apiCtx
-             * @returns {Promise<TeqFw_Core_App_Server_Handler_Api_Result>}
-             * @memberOf TeqFw_Core_App_Server_Handler_Api_Factory
+             * @param {TeqFw_Core_App_Server_Http2_Handler_Api_Context} apiCtx
+             * @returns {Promise<TeqFw_Core_App_Server_Http2_Handler_Api_Result>}
+             * @memberOf TeqFw_Core_App_Server_Http2_Handler_Api_Factory
              * @interface
              */
             async function service(apiCtx) {
