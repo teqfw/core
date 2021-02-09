@@ -5,6 +5,8 @@ import {constants as H2} from 'http2';
 
 /**
  * Factory to create handler for static files.
+ *
+ * @implements {TeqFw_Core_App_Server_Handler_Factory}
  */
 export default class TeqFw_Core_App_Server_Handler_Static {
 
@@ -19,6 +21,8 @@ export default class TeqFw_Core_App_Server_Handler_Static {
         const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
         /** @type {TeqFw_Core_App_Plugin_Registry} */
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
+        /** @type {typeof TeqFw_Core_App_Server_Http2_Handler_Stream_Report} */
+        const Report = spec['TeqFw_Core_App_Server_Http2_Handler_Stream#Report'];   // class constructor
 
         /**
          * @returns {Promise<TeqFw_Core_App_Server_Handler_Static.handler>}
@@ -30,22 +34,15 @@ export default class TeqFw_Core_App_Server_Handler_Static {
             const mapRoutes = {};   // '/src/@teqfw/core-app' => '/.../node_modules/@teqfw/core-app/src'
 
             // DEFINE INNER FUNCTIONS
-
             /**
-             * Handler to process HTTP requests as middleware and to log request data.
+             * Handler to process static files.
              *
-             * @param {TeqFw_Core_App_Server_Http2_Context} httpCtx
-             * @returns {Promise<Boolean>}
+             * @param {TeqFw_Core_App_Server_Http2_Handler_Stream_Context} context
+             * @returns {Promise<TeqFw_Core_App_Server_Http2_Handler_Stream_Report>}
              * @memberOf TeqFw_Core_App_Server_Handler_Static
-             * @implements {TeqFw_Core_App_Server_Handler_Factory.handler}
+             * @implements {TeqFw_Core_App_Server_Http2_Handler_Stream.handler}
              */
-            async function handler(httpCtx) {
-                // DEFINE INNER FUNCTIONS
-                /** @type {Object<String, String>} */
-                const headers = httpCtx.headers;
-                /** @type {ServerHttp2Stream} */
-                const stream = httpCtx.stream;
-
+            async function handler(context) {
                 // DEFINE INNER FUNCTIONS
                 /**
                  * Compose absolute path to requested resource:
@@ -87,32 +84,20 @@ export default class TeqFw_Core_App_Server_Handler_Static {
                     return result;
                 }
 
-                /**
-                 * Read regular file (HTML, CSS, JS, imgase, ...) and write it to the response stream.
-                 *
-                 * @param {ServerHttp2Stream} stream
-                 * @param {String} filepath
-                 * @returns {Promise<boolean>}
-                 */
-                async function processRegular(stream, filepath) {
-                    let result = false;
-                    const mimeType = $mimeTypes.lookup(filepath);
-                    if (mimeType) {
-                        stream.respondWithFile(filepath, {
-                            [H2.HTTP2_HEADER_STATUS]: H2.HTTP_STATUS_OK,
-                            [H2.HTTP2_HEADER_CONTENT_TYPE]: mimeType
-                        });
-                        result = true;
-                    }
-                    return result;
-                }
-
                 // MAIN FUNCTIONALITY
-                let result = false;
+                const result = new Report();
+                /** @type {Object<String, String>} */
+                const headers = context.headers;
                 const url = headers[H2.HTTP2_HEADER_PATH];
                 const path = getPath(url);
                 if ($fs.existsSync(path) && $fs.statSync(path).isFile()) {
-                    result = await processRegular(stream, path);
+                    const mimeType = $mimeTypes.lookup(path);
+                    if (mimeType) {
+                        result.headers[H2.HTTP2_HEADER_STATUS] = H2.HTTP_STATUS_OK;
+                        result.headers[H2.HTTP2_HEADER_CONTENT_TYPE] = mimeType;
+                        result.filepath = path;
+                        result.complete = true;
+                    }
                 }
                 return result;
             }
@@ -149,9 +134,7 @@ export default class TeqFw_Core_App_Server_Handler_Static {
             }
 
             // COMPOSE RESULT
-            Object.defineProperty(handler, 'name', {
-                value: this.constructor.name + '.' + handler.name,
-            });
+            Object.defineProperty(handler, 'name', {value: `${this.constructor.name}.${handler.name}`});
             return handler;
         };
     }

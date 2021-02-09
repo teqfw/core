@@ -5,9 +5,34 @@ const PARSE = 'parse';
 const SERVICE = 'service';
 
 /**
- * Factory to create handler for API requests.
+ * Data structure to group input data for API services.
  */
-export default class TeqFw_Core_App_Server_Handler_Api {
+class TeqFw_Core_App_Server_Handler_Api_Context {
+    /**
+     * Structured body data.
+     * @type {Object}
+     */
+    request;
+    /**
+     * Data being shared between handlers.
+     * @type {TeqFw_Core_App_Server_Http2_Handler_Stream_Shared}
+     */
+    sharedContext;
+}
+
+class TeqFw_Core_App_Server_Handler_Api_Result {
+    /** @type {Object.<String, String>} */
+    headers = {}; // see nodejs 'http2.constants' with 'HTTP2_HEADER_...' prefixes
+    /** @type {Object} */
+    response;
+}
+
+/**
+ * Factory to create HTTP2 server handler for API requests.
+ *
+ * @implements {TeqFw_Core_App_Server_Handler_Factory}
+ */
+class TeqFw_Core_App_Server_Handler_Api {
 
     constructor(spec) {
         /** @type {TeqFw_Core_App_Defaults} */
@@ -18,12 +43,12 @@ export default class TeqFw_Core_App_Server_Handler_Api {
         const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
         /** @type {TeqFw_Core_App_Plugin_Registry} */
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
-        /** @type {typeof TeqFw_Core_App_Server_Handler_Api_Context} */
-        const ApiContext = spec['TeqFw_Core_App_Server_Handler_Api_Context#']; // class constructor
-
+        /** @type {typeof TeqFw_Core_App_Server_Http2_Handler_Stream_Report} */
+        const Report = spec['TeqFw_Core_App_Server_Http2_Handler_Stream#Report'];   // class constructor
 
         /**
-         * @returns {Promise<TeqFw_Core_App_Server_Handler_Factory.handler>}
+         * Create handler to load user sessions data to request context.
+         * @returns {Promise<Fl32_Teq_User_App_Server_Handler_Session.handler>}
          */
         this.createHandler = async function () {
             // PARSE INPUT & DEFINE WORKING VARS
@@ -35,51 +60,55 @@ export default class TeqFw_Core_App_Server_Handler_Api {
             /**
              * Handler to process API requests.
              *
-             * @param {TeqFw_Core_App_Server_Http2_Context} httpCtx
-             * @returns {Promise<Boolean>}
+             * @param {TeqFw_Core_App_Server_Http2_Handler_Stream_Context} context
+             * @returns {Promise<TeqFw_Core_App_Server_Http2_Handler_Stream_Report>}
              * @memberOf TeqFw_Core_App_Server_Handler_Api
-             * @implements {TeqFw_Core_App_Server_Handler_Factory.handler}
+             * @implements {TeqFw_Core_App_Server_Http2_Handler_Stream.handler}
              */
-            async function handler(httpCtx) {
-                // DEFINE INNER FUNCTIONS
-                /** @type {Object<String, String>} */
-                const headers = httpCtx.headers;
-                /** @type {ServerHttp2Stream} */
-                const stream = httpCtx.stream;
-                /** @type {TeqFw_Core_App_Server_Handler_Api_Context} */
-                const apiCtx = new ApiContext();
-                apiCtx.sharedContext = httpCtx.shared;
-
+            async function handler(context) {
                 // MAIN FUNCTIONALITY
-                let result = false;
-                const path = headers[H2.HTTP2_HEADER_PATH];
+                const result = new Report();
+                /** @type {TeqFw_Core_App_Server_Handler_Api_Context} */
+                const apiCtx = new TeqFw_Core_App_Server_Handler_Api_Context();
+                apiCtx.sharedContext = context.shared;
+                const path = context.headers[H2.HTTP2_HEADER_PATH];
                 const parts = regexApi.exec(path);
                 if (Array.isArray(parts)) {
                     for (const route in router) {
-                        const uri = headers[H2.HTTP2_HEADER_PATH];
+                        const uri = context.headers[H2.HTTP2_HEADER_PATH];
                         if (route === uri) {
                             const parser = router[route][PARSE];
                             const service = router[route][SERVICE];
-                            if (typeof parser === 'function') {
-                                // TODO: add HTTP 400 Bad request state processing
-                                apiCtx.request = parser(httpCtx);
+                            // try to parse request data
+                            try {
+                                if (typeof parser === 'function') {
+                                    // TODO: add HTTP 400 Bad request state processing
+                                    apiCtx.request = parser(context);
+                                }
+                            } catch (e) {
+                                const stack = (e.stack) ?? '';
+                                const message = e.message ?? 'Unknown error';
+                                const error = {message, stack};
+                                const out = JSON.stringify({error});
+                                console.error(out);
+                                result.complete = true;
+                                result.headers[H2.HTTP2_HEADER_STATUS] = H2.HTTP_STATUS_BAD_REQUEST;
+                                result.headers[H2.HTTP2_HEADER_CONTENT_TYPE] = 'application/json';
+                                result.output = out;
                             }
-                            const {response, headers: moreHeaders} = await service(apiCtx);
-                            if (response) {
-                                if (stream.writable) {
-                                    let headsOut = {
-                                        [H2.HTTP2_HEADER_STATUS]: H2.HTTP_STATUS_OK,
-                                        [H2.HTTP2_HEADER_CONTENT_TYPE]: 'application/json'
-                                    };
-                                    if (moreHeaders) {
-                                        headsOut = Object.assign({}, moreHeaders, headsOut);
-                                    }
-                                    stream.respond(headsOut);
-                                    const json = JSON.stringify({data: response});
-                                    stream.end(json);
-                                    result = true;
+                            if (!result.complete) {
+                                const {response, headers: moreHeaders} = await service(apiCtx);
+                                if (moreHeaders) {
+                                    Object.assign(result.headers, moreHeaders);
+                                }
+                                if (response) {
+                                    result.complete = true;
+                                    result.headers[H2.HTTP2_HEADER_STATUS] = H2.HTTP_STATUS_OK;
+                                    result.headers[H2.HTTP2_HEADER_CONTENT_TYPE] = 'application/json';
+                                    result.output = JSON.stringify({data: response});
                                 }
                             }
+                            break;  // exit from router loop
                         }
                     }
                 }
@@ -125,6 +154,8 @@ export default class TeqFw_Core_App_Server_Handler_Api {
 
             // MAIN FUNCTIONALITY
             await initRoutes(this.constructor.name);
+            const name = `${this.constructor.name}.${handler.name}`;
+            logger.debug(`HTTP2 requests handler '${name}' is created.`);
 
             // COMPOSE RESULT
             Object.defineProperty(handler, 'name', {value: `${this.constructor.name}.${handler.name}`});
@@ -133,3 +164,9 @@ export default class TeqFw_Core_App_Server_Handler_Api {
     }
 
 }
+
+export {
+    TeqFw_Core_App_Server_Handler_Api as default,
+    TeqFw_Core_App_Server_Handler_Api_Context as Context,
+    TeqFw_Core_App_Server_Handler_Api_Result as Result,
+};

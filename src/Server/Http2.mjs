@@ -7,8 +7,8 @@ export default class TeqFw_Core_App_Server_Http2 {
 
     constructor(spec) {
         // CONSTRUCTOR INJECTED DEPS
-        /** @type {TeqFw_Core_App_Server_Handler_Stream} */
-        const factHndlStream = spec['TeqFw_Core_App_Server_Handler_Stream$'];   // instance singleton
+        /** @type {TeqFw_Core_App_Server_Http2_Handler_Stream} */
+        const factHndlStream = spec['TeqFw_Core_App_Server_Http2_Handler_Stream$'];   // instance singleton
 
         // INIT OWN PROPERTIES AND DEFINE WORKING VARS
         /** @type {Http2Server} */
@@ -23,7 +23,7 @@ export default class TeqFw_Core_App_Server_Http2 {
          */
         this.init = async function () {
             // PARSE INPUT & DEFINE WORKING VARS
-            /** @type {TeqFw_Core_App_Server_Handler_Stream.handler} */
+            /** @type {TeqFw_Core_App_Server_Http2_Handler_Stream.handler} */
             const onStreamHndl = await factHndlStream.createHandler();
 
             // DEFINE INNER FUNCTIONS
