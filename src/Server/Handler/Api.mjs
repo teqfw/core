@@ -1,7 +1,7 @@
 import $path from 'path';
 import {constants as H2} from 'http2';
 
-const PARSER = 'parser';
+const PARSE = 'parse';
 const SERVICE = 'service';
 
 /**
@@ -58,7 +58,7 @@ export default class TeqFw_Core_App_Server_Handler_Api {
                     for (const route in router) {
                         const uri = headers[H2.HTTP2_HEADER_PATH];
                         if (route === uri) {
-                            const parser = router[route][PARSER];
+                            const parser = router[route][PARSE];
                             const service = router[route][SERVICE];
                             if (typeof parser === 'function') {
                                 // TODO: add HTTP 400 Bad request state processing
@@ -112,7 +112,7 @@ export default class TeqFw_Core_App_Server_Handler_Api {
                                 router[route] = {};
                                 if (typeof factory.createInputParser === 'function') {
                                     /** @type {TeqFw_Core_App_Server_Handler_Api_Factory.parse} */
-                                    router[route][PARSER] = factory.createInputParser();
+                                    router[route][PARSE] = factory.createInputParser();
                                 }
                                 /** @type {TeqFw_Core_App_Server_Handler_Api_Factory.service} */
                                 const service = factory.createService();
