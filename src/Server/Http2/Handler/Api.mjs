@@ -120,13 +120,14 @@ class TeqFw_Core_App_Server_Http2_Handler_Api {
              *
              * @param {String} mainClassName context name for DI container to get plugin initializers.
              * @returns {Promise<void>}
+             * @memberOf TeqFw_Core_App_Server_Http2_Handler_Api.createHandler
              */
             async function initRoutes(mainClassName) {
                 logger.debug('Map plugins API services:');
                 const items = registry.items();
                 for (const item of items) {
                     if (item.initClass) {
-                        /** @type {TeqFw_Core_App_Plugin_Init} */
+                        /** @type {TeqFw_Core_App_Plugin_Init_Base} */
                         const plugin = await container.get(item.initClass, mainClassName);
                         if (plugin && (typeof plugin.getHttp2Services === 'function')) {
                             const realm = plugin.getHttp2BackRealm();
