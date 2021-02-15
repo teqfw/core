@@ -15,6 +15,8 @@ export default class TeqFw_Core_App_Server_Http2_Handler_Factory {
     constructor(spec) {
         /** @type {TeqFw_Core_App_Logger} */
         const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
+        /** @type {typeof TeqFw_Core_App_Server_Http2_Stream_Report} */
+        const Report = spec['TeqFw_Core_App_Server_Http2_Stream#Report'];   // class constructor
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
 
@@ -27,7 +29,7 @@ export default class TeqFw_Core_App_Server_Http2_Handler_Factory {
             /**
              *
              * @param {TeqFw_Core_App_Server_Http2_Stream_Context} context
-             * @returns {Promise<boolean>}
+             * @returns {Promise<TeqFw_Core_App_Server_Http2_Stream_Report>}
              * @memberOf TeqFw_Core_App_Server_Http2_Handler_Factory
              * @interface
              */
@@ -35,10 +37,11 @@ export default class TeqFw_Core_App_Server_Http2_Handler_Factory {
                 // PARSE INPUT & DEFINE WORKING VARS
                 // DEFINE INNER FUNCTIONS
                 // MAIN FUNCTIONALITY
-                let result = false;
+                let result = new Report();
                 try {
                     // process request, compose response and write it to the 'stream'
-                    result = true;  // return 'true' if request is completely processed
+                    result.output = '<p>content</p>';
+                    result.complete = true;  // set 'true' if request is completely processed
                 } catch (e) {
                     debugger;
                 }

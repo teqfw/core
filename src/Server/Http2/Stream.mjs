@@ -1,20 +1,7 @@
 import {constants as H2} from 'http2';
 
 /**
- * This is marker function for HTTP2 stream handlers.
- *
- * @param {TeqFw_Core_App_Server_Http2_Stream_Context} context
- * @returns {TeqFw_Core_App_Server_Http2_Stream_Report}
- * @memberOf TeqFw_Core_App_Server_Http2_Stream
- * @interface
- */
-// eslint-disable-next-line no-unused-vars
-function handler(context) {
-    return new TeqFw_Core_App_Server_Http2_Stream_Report();
-}
-
-/**
- * Data structure to group input data for the handlers.
+ * Data structure to group input data for the 'middleware' handlers.
  */
 class TeqFw_Core_App_Server_Http2_Stream_Context {
     /** @type {String} */
@@ -28,7 +15,7 @@ class TeqFw_Core_App_Server_Http2_Stream_Context {
 }
 
 /**
- * Data structure to group handler's processing results (output headers, body, etc.).
+ * Data structure to group 'middleware' handler's processing results (output headers, body, etc.).
  */
 class TeqFw_Core_App_Server_Http2_Stream_Report {
     /**
@@ -85,7 +72,7 @@ class TeqFw_Core_App_Server_Http2_Stream {
         const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
 
         // PARSE INPUT & DEFINE WORKING VARS
-        /** @type {Array.<TeqFw_Core_App_Server_Http2_Stream.handler>} */
+        /** @type {Array.<TeqFw_Core_App_Server_Http2_Handler_Factory.handler>} */
         const handlers = [];  // ordered array with handlers
 
         // DEFINE INNER FUNCTIONS
@@ -121,7 +108,7 @@ class TeqFw_Core_App_Server_Http2_Stream {
          * @param {String} body
          * @returns {Promise<void>}
          */
-        async function processRequest(stream, headers, flags, body) {
+        async function requestHandler(stream, headers, flags, body) {
 
             // DEFINE INNER FUNCTIONS
 
@@ -267,7 +254,7 @@ class TeqFw_Core_App_Server_Http2_Stream {
              */
             async function handler(stream, headers, flags) {
                 try {
-                    // vars to collect input data for POSTs
+                    // buffer to collect input data for POSTs
                     const chunks = [];
                     /* Available events for 'Http2Stream':
                     *   - aborted
@@ -297,7 +284,7 @@ class TeqFw_Core_App_Server_Http2_Stream {
                     // collect input data into array of chunks (if exists)
                     stream.on('data', (chunk) => chunks.push(chunk));
                     // continue process after input has been read
-                    stream.on('end', () => processRequest(stream, headers, flags, Buffer.concat(chunks).toString()));
+                    stream.on('end', () => requestHandler(stream, headers, flags, Buffer.concat(chunks).toString()));
                     stream.on('error', (err) => respond500(stream, err));
                 } catch (err) {
                     respond500(err, stream);
