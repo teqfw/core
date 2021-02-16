@@ -17,15 +17,13 @@ export default class TeqFw_Core_App_Plugin_Init {
         };
 
         this.getHttp2StaticMaps = function () {
-            // TODO: what about wrong mapping? Perhaps, we need mapping below 'node_modules' folder:
-            // '/i18next-detect/' => '/i18next-browser-languagedetector/dist/umd/'
-            // and map as '$path.join(rootFs, 'node_modules', map[key])'
             return {
                 '/i18next-detect/': '/i18next-browser-languagedetector/dist/umd/',
                 '/i18next/': '/i18next/dist/umd/',
                 '/vue-router/': '/vue-router/dist/',
                 '/vue/': '/vue/dist/',
                 '/vuex/': '/vuex/dist/',
+
             };
         };
 
