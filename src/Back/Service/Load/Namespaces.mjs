@@ -24,7 +24,7 @@ export default class TeqFw_Core_App_Back_Service_Load_Namespaces {
         // DEFINE INNER FUNCTIONS
         /**
          * Loop through all plugins and compose namespace mapping for static sources.
-         * (@see TeqFw_Core_App_Server_Http2_Handler_Static)
+         * (@see TeqFw_Http2_Back_Server_Handler_Static)
          * @param {TeqFw_Core_App_Plugin_Registry} registry
          * @memberOf TeqFw_Core_App_Back_Service_Load_Namespaces
          */

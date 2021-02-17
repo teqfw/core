@@ -10,9 +10,7 @@ export default class TeqFw_Core_App_Defaults {
     DI_QUASAR = 'core_quasar';  // TODO: move to 'vue' plugin
     FS_SRC = 'src'; // default folder for plugin's static resources in filesystem
     FS_WEB = 'web'; // default folder for plugin's static resources in filesystem
-    PID_FILE_NAME = './var/server.pid'; // PID file to stop running server.
     REALM_API = 'api';    // URL prefix for API requests: https://.../api/...
     REALM_SRC = 'src';    // URL prefix for ES6/JS sources: https://.../src/...
     REALM_WEB = 'web';    // URL prefix for static files: https://.../web/...
-    SERVER_DEFAULT_PORT = 3000; // Default port for listing.
 }

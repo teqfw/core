@@ -22,7 +22,7 @@ class TeqFw_Core_App_Shared_Api_Route_Load_Namespaces_ResponseItem {
     ns;
     /**
      * Path to the sources in URL ('/src/@vendor/prj').
-     * (@see TeqFw_Core_App_Server_Http2_Handler_Static)
+     * (@see TeqFw_Http2_Back_Server_Handler_Static)
      * @type {String}
      */
     path;

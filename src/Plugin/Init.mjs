@@ -10,13 +10,11 @@ export default class TeqFw_Core_App_Plugin_Init {
 
         this.getCommands = function () {
             return [
-                'TeqFw_Core_App_Cli_Server_Start$',
-                'TeqFw_Core_App_Cli_Server_Stop$',
                 'TeqFw_Core_App_Cli_Version$',
             ];
         };
 
-        this.getHttp2StaticMaps = function () {
+        this.getHttpStaticMaps = function () {
             return {
                 '/i18next-detect/': '/i18next-browser-languagedetector/dist/umd/',
                 '/i18next/': '/i18next/dist/umd/',
