@@ -2,6 +2,7 @@ export default class TeqFw_Core_App_Defaults {
     API_LOAD_CFG = '/load/config';
     API_LOAD_NS = '/load/namespaces';
     BACK_REALM = 'core';  // realm for API services ('/api/core/...') and CLI commands ('core-...')
+    DI_APP = 'core_app';  // TODO: move to 'vue' plugin
     DI_BOOTSTRAP = 'bootstrap'; // DI container label for bootstrap configuration.
     DI_CONFIG = 'core_config'; // DI container label for frontend configuration.
     DI_CONTAINER = 'container'; // DI container label for container itself (see TeqFw_Di_Container.constructor).
