@@ -20,10 +20,10 @@ export default class TeqFw_Core_App_Plugin_Init {
             return {
                 '/i18next-detect/': '/i18next-browser-languagedetector/dist/umd/',
                 '/i18next/': '/i18next/dist/umd/',
+                '/quasar/': '/quasar/dist/',
                 '/vue-router/': '/vue-router/dist/',
                 '/vue/': '/vue/dist/',
                 '/vuex/': '/vuex/dist/',
-
             };
         };
 
