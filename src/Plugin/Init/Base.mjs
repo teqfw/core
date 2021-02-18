@@ -10,11 +10,11 @@ export default class TeqFw_Core_App_Plugin_Init_Base {
         ];
     }
 
-    getHttp2BackRealm() {
+    getServicesRealm() {
         return 'core';
     }
 
-    getHttp2Services() {
+    getServicesList() {
         return [
             'TeqFw_Core_App_Back_Service_Load_Config$',
         ];

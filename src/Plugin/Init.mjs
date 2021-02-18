@@ -25,15 +25,15 @@ export default class TeqFw_Core_App_Plugin_Init {
             };
         };
 
-        this.getHttp2BackRealm = function () {
-            return DEF.BACK_REALM;
-        };
-
-        this.getHttp2Services = function () {
+        this.getServicesList = function () {
             return [
                 'TeqFw_Core_App_Back_Service_Load_Config$',
                 'TeqFw_Core_App_Back_Service_Load_Namespaces$',
             ];
+        };
+
+        this.getServicesRealm = function () {
+            return DEF.BACK_REALM;
         };
     }
 
