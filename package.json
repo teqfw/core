@@ -26,6 +26,8 @@
   "dependencies": {
     "@teqfw/di": "github:teqfw/di",
     "commander": "*",
+    "i18next": "*",
+    "i18next-browser-languagedetector": "*",
     "knex": "*"
   },
   "teqfw": {
