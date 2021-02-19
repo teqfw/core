@@ -1,6 +1,8 @@
 const template = `
 <div class="layoutCentered">
-    <slot></slot>
+    <div>
+        <slot></slot>
+    </div>
 </div>
 `;
 
