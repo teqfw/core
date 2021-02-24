@@ -1,5 +1,6 @@
 /**
- * Set of utilities for frontend activities.
+ * Set of utilities for frontend activities as methods of class.
+ * @deprecated place utils to TeqFw_Core_App_Front_...
  */
 export default class TeqFw_Core_App_Util_Front_Dom {
     constructor() {
