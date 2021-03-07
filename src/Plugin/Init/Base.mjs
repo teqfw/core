@@ -22,7 +22,7 @@ export default class TeqFw_Core_App_Plugin_Init_Base {
 
     getHttpStaticMaps() {
         return {
-            '/vue/': '/vue/dist/',
+            '/web/path/': '/fs/path/',
         };
     }
 }
