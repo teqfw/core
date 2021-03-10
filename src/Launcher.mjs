@@ -134,7 +134,8 @@ export default class TeqFw_Core_App_Launcher {
          * @returns {Promise<void>}
          */
         this.stop = async function () {
-            // close DB connections here
+            // TODO: close DB connections here
+            // await connector.disconnect();
             console.log('stopped');
         };
     }
