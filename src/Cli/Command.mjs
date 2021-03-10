@@ -15,6 +15,7 @@ class TeqFw_Core_App_Cli_Command_Data {
 
 /**
  * Interface sample to create commands factories.
+ * @deprecated use Factory function instead of class
  */
 class TeqFw_Core_App_Cli_Command {
 

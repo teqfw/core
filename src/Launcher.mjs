@@ -57,19 +57,21 @@ export default class TeqFw_Core_App_Launcher {
                 /**
                  * Add single command to the app's commander.
                  *
-                 * @param {string} className 'Vendor_Module_Fw_Cli_Command_Name'
+                 * @param {string} factoryName 'Vendor_Module_Cli_Command$'
                  * @returns {Promise<void>}
                  * @memberOf TeqFw_Core_App_Launcher.init.initCommander
                  */
-                async function addCommand(className) {
-                    /** @type {TeqFw_Core_App_Cli_Command} */
-                    const cmd = await container.get(className, me.constructor.name);
-                    const {ns, name, desc, action} = await cmd.create();
-                    const fullName = (ns) ? `${ns}-${name}` : name;
-                    commander.command(fullName)
-                        .description(desc)
-                        .action(action);
-                    logger.info(`'${fullName}' command is added.`);
+                async function addCommand(factoryName) {
+                    try {
+                        const {ns, name, desc, action} = await container.get(factoryName, me.constructor.name);
+                        const fullName = (ns) ? `${ns}-${name}` : name;
+                        commander.command(fullName)
+                            .description(desc)
+                            .action(action);
+                        logger.info(`'${fullName}' command is added.`);
+                    } catch (e) {
+                        logger.error(`Cannot create command using '${factoryName}' factory. Error: ${e.message}`);
+                    }
                 }
 
                 // MAIN FUNCTIONALITY
