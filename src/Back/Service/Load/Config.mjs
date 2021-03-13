@@ -1,7 +1,7 @@
 /**
  * Load local configuration data available for the front realms.
  */
-export default class TeqFw_Core_App_Back_Service_Load_Config {
+class TeqFw_Core_App_Back_Service_Load_Config {
 
     constructor(spec) {
         // CONSTRUCTOR INJECTED DEPS
@@ -9,17 +9,17 @@ export default class TeqFw_Core_App_Back_Service_Load_Config {
         const DEF = spec['TeqFw_Core_App_Defaults$'];
         /** @type {TeqFw_Core_App_Config} */
         const config = spec['TeqFw_Core_App_Config$'];  // instance singleton
-        /** @type {typeof TeqFw_Core_App_Shared_Api_Route_Load_Config_Request} */
-        const Request = spec['TeqFw_Core_App_Shared_Api_Route_Load_Config#Request'];   // class constructor
-        /** @type {typeof TeqFw_Core_App_Shared_Api_Route_Load_Config_Response} */
-        const Response = spec['TeqFw_Core_App_Shared_Api_Route_Load_Config#Response']; // class constructor
+        /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Config_Request} */
+        const Request = spec['TeqFw_Core_App_Shared_Service_Route_Load_Config#Request'];   // class constructor
+        /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Config_Response} */
+        const Response = spec['TeqFw_Core_App_Shared_Service_Route_Load_Config#Response']; // class constructor
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
         this.createParser = function () {
 
             /**
              *
-             * @returns {TeqFw_Core_App_Shared_Api_Route_Load_Config_Request}
+             * @returns {TeqFw_Core_App_Shared_Service_Route_Load_Config_Request}
              * @memberOf TeqFw_Core_App_Back_Service_Load_Config
              */
             function parse() {
@@ -36,12 +36,12 @@ export default class TeqFw_Core_App_Back_Service_Load_Config {
 
         this.createService = function () {
             /**
-             * @returns {Promise<{response: TeqFw_Core_App_Shared_Api_Route_Load_Config_Response}>}
+             * @returns {Promise<{response: TeqFw_Core_App_Shared_Service_Route_Load_Config_Response}>}
              * @memberOf TeqFw_Core_App_Back_Service_Load_Config
              */
             async function service() {
                 const cfg = config.get();
-                /** @type {TeqFw_Core_App_Shared_Api_Route_Load_Config_Response} */
+                /** @type {TeqFw_Core_App_Shared_Service_Route_Load_Config_Response} */
                 const response = Object.assign(new Response(), cfg.local.web);
                 return {response};
             }
@@ -59,3 +59,5 @@ export default class TeqFw_Core_App_Back_Service_Load_Config {
         };
     }
 }
+
+export default TeqFw_Core_App_Back_Service_Load_Config;

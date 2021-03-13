@@ -3,7 +3,7 @@ import $path from 'path';
 /**
  * Load namespaces data to initialize DI container on the front.
  */
-export default class TeqFw_Core_App_Back_Service_Load_Namespaces {
+class TeqFw_Core_App_Back_Service_Load_Namespaces {
 
     constructor(spec) {
         // CONSTRUCTOR INJECTED DEPS
@@ -11,12 +11,12 @@ export default class TeqFw_Core_App_Back_Service_Load_Namespaces {
         const DEF = spec['TeqFw_Core_App_Defaults$'];
         /** @type {TeqFw_Core_App_Plugin_Registry} */
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
-        /** @type {typeof TeqFw_Core_App_Shared_Api_Route_Load_Namespaces_Request} */
-        const Request = spec['TeqFw_Core_App_Shared_Api_Route_Load_Namespaces#Request'];   // class constructor
-        /** @type {typeof TeqFw_Core_App_Shared_Api_Route_Load_Namespaces_Response} */
-        const Response = spec['TeqFw_Core_App_Shared_Api_Route_Load_Namespaces#Response']; // class constructor
-        /** @type {typeof TeqFw_Core_App_Shared_Api_Route_Load_Namespaces_ResponseItem} */
-        const DItem = spec['TeqFw_Core_App_Shared_Api_Route_Load_Namespaces#ResponseItem']; // class constructor
+        /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Namespaces_Request} */
+        const Request = spec['TeqFw_Core_App_Shared_Service_Route_Load_Namespaces#Request'];   // class constructor
+        /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Namespaces_Response} */
+        const Response = spec['TeqFw_Core_App_Shared_Service_Route_Load_Namespaces#Response']; // class constructor
+        /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Namespaces_ResponseItem} */
+        const DItem = spec['TeqFw_Core_App_Shared_Service_Route_Load_Namespaces#ResponseItem']; // class constructor
 
         // INIT OWN PROPERTIES AND DEFINE WORKING VARS
         const namespaces = getNamespaces(registry); // cache for namespaces
@@ -47,7 +47,7 @@ export default class TeqFw_Core_App_Back_Service_Load_Namespaces {
 
             /**
              *
-             * @returns {TeqFw_Core_App_Shared_Api_Route_Load_Namespaces_Request}
+             * @returns {TeqFw_Core_App_Shared_Service_Route_Load_Namespaces_Request}
              * @memberOf TeqFw_Core_App_Back_Service_Load_Namespaces
              */
             function parse() {
@@ -63,7 +63,7 @@ export default class TeqFw_Core_App_Back_Service_Load_Namespaces {
         this.createService = function () {
             /**
              *
-             * @returns {Promise<{response: TeqFw_Core_App_Shared_Api_Route_Load_Namespaces_Response}>}
+             * @returns {Promise<{response: TeqFw_Core_App_Shared_Service_Route_Load_Namespaces_Response}>}
              * @memberOf TeqFw_Core_App_Back_Service_Load_Namespaces
              */
             async function service() {
@@ -83,3 +83,5 @@ export default class TeqFw_Core_App_Back_Service_Load_Namespaces {
         };
     }
 }
+
+export default TeqFw_Core_App_Back_Service_Load_Namespaces;
