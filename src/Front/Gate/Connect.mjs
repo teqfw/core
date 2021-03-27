@@ -12,7 +12,7 @@ export default class TeqFw_Core_App_Front_Gate_Connect {
         /** @type {TeqFw_Core_App_Front_Gate_Connect_ErrorHandler} */
         const errHndl = spec['TeqFw_Core_App_Front_Gate_Connect_ErrorHandler$']; // instance singleton
 
-        const BASE = `https://${config.urlBase}/${DEF.REALM_API}`;
+        const BASE = `https://${config.urlBase}/${config.realm}/${DEF.REALM_API}`;
 
         /**
          * Send API service request to backend.
