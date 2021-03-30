@@ -34,7 +34,7 @@ class TeqFw_Core_App_Back_Service_Load_Namespaces {
             for (const one of plugins) {
                 /** @type {TeqFw_Core_App_Plugin_Package_Data_Autoload} */
                 const auto = one.teqfw.autoload;
-                const srcUrl = $path.join('/', DEF.REALM_SRC, one.name);
+                const srcUrl = $path.join('/', DEF.AREA_SRC, one.name);
                 const item = Object.assign(new DItem(), auto);
                 item.path = srcUrl;
                 result[item.ns] = item;

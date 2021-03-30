@@ -14,6 +14,9 @@ export default class TeqFw_Core_App_Plugin_Init_Base {
             ];
         };
 
+        this.getFrontendRealms = function () {
+            return ['pub', 'sign'];
+        };
 
         this.getHttpStaticMaps = function () {
             return {
