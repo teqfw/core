@@ -1,4 +1,8 @@
 /**
+ * @namespace TeqFw_Core_App_Shared_Util
+ */
+
+/**
  * Deep merge of the 2 objects.
  * Source: https://gist.github.com/ahtcx/0cd94e62691f539160b32ecda18af3d6#gistcomment-2930530
  *
@@ -29,10 +33,6 @@ function deepMerge(target, source) {
 
     return target;
 }
-
-/**
- * @namespace TeqFw_Core_App_Shared_Util
- */
 
 /**
  * Convert local date to YYYY/MM/DD.
@@ -72,6 +72,44 @@ function formatDateTime(dateIn = null) {
 }
 
 /**
+ * Convert UTC date to YYYY/MM/DD.
+ * @param {Date|string|null} dateIn
+ * @return {string}
+ * @memberOf TeqFw_Core_App_Shared_Util
+ */
+function formatUtcDate(dateIn = null) {
+    /** @type {Date} */
+    const date = (dateIn) ?
+        (dateIn instanceof Date) ? dateIn : new Date(dateIn) :
+        new Date();
+    const y = date.getUTCFullYear();
+    const m = `${date.getUTCMonth() + 1}`.padStart(2, '0');
+    const d = `${date.getUTCDate()}`.padStart(2, '0');
+    return `${y}/${m}/${d}`;
+}
+
+
+/**
+ * Convert UTC date to YYYY/MM/DD HH:MM:SS.
+ * @param {Date|string|null} dateIn
+ * @return {string}
+ * @memberOf TeqFw_Core_App_Shared_Util
+ */
+function formatUtcDateTime(dateIn = null) {
+    /** @type {Date} */
+    const date = (dateIn) ?
+        (dateIn instanceof Date) ? dateIn : new Date(dateIn) :
+        new Date();
+    const y = date.getUTCFullYear();
+    const m = `${date.getUTCMonth() + 1}`.padStart(2, '0');
+    const d = `${date.getUTCDate()}`.padStart(2, '0');
+    const h = `${date.getUTCHours()}`.padStart(2, '0');
+    const i = `${date.getUTCMinutes()}`.padStart(2, '0');
+    const s = `${date.getUTCSeconds()}`.padStart(2, '0');
+    return `${y}/${m}/${d} ${h}:${i}:${s}`;
+}
+
+/**
  * Convert UTC time to HH:MM:SS.
  * @param {Date|string|null} dateIn
  * @return {string}
@@ -103,6 +141,8 @@ export {
     deepMerge,
     formatDate,
     formatDateTime,
+    formatUtcDate,
+    formatUtcDateTime,
     formatUtcTime,
     isEmpty,
 };
