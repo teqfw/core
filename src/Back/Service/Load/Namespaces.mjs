@@ -12,11 +12,11 @@ class TeqFw_Core_App_Back_Service_Load_Namespaces {
         /** @type {TeqFw_Core_App_Plugin_Registry} */
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
         /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Namespaces_Request} */
-        const Request = spec['TeqFw_Core_App_Shared_Service_Route_Load_Namespaces#Request'];   // class constructor
+        const Request = spec['TeqFw_Core_App_Shared_Service_Route_Load_Namespaces#Request'];   // class
         /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Namespaces_Response} */
-        const Response = spec['TeqFw_Core_App_Shared_Service_Route_Load_Namespaces#Response']; // class constructor
+        const Response = spec['TeqFw_Core_App_Shared_Service_Route_Load_Namespaces#Response']; // class
         /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Namespaces_ResponseItem} */
-        const DItem = spec['TeqFw_Core_App_Shared_Service_Route_Load_Namespaces#ResponseItem']; // class constructor
+        const DItem = spec['TeqFw_Core_App_Shared_Service_Route_Load_Namespaces#ResponseItem']; // class
 
         // INIT OWN PROPERTIES AND DEFINE WORKING VARS
         const namespaces = getNamespaces(registry); // cache for namespaces

@@ -32,9 +32,9 @@ class TeqFw_Core_App_Plugin_Scan {
         /** @type {TeqFw_Core_App_Plugin_Registry} */
         const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
         /** @type {typeof TeqFw_Core_App_Plugin_Package_Data} */
-        const Data = spec['TeqFw_Core_App_Plugin_Package_Data#'];  // class constructor
+        const Data = spec['TeqFw_Core_App_Plugin_Package_Data#'];  // class
         /** @type {typeof TeqFw_Core_App_Plugin_Package_Data_Autoload} */
-        const DAutoload = spec['TeqFw_Core_App_Plugin_Package_Data#Autoload'];  // class constructor
+        const DAutoload = spec['TeqFw_Core_App_Plugin_Package_Data#Autoload'];  // class
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
 

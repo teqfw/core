@@ -10,9 +10,9 @@ class TeqFw_Core_App_Back_Service_Load_Config {
         /** @type {TeqFw_Core_App_Config} */
         const config = spec['TeqFw_Core_App_Config$'];  // instance singleton
         /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Config_Request} */
-        const Request = spec['TeqFw_Core_App_Shared_Service_Route_Load_Config#Request'];   // class constructor
+        const Request = spec['TeqFw_Core_App_Shared_Service_Route_Load_Config#Request'];   // class
         /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Config_Response} */
-        const Response = spec['TeqFw_Core_App_Shared_Service_Route_Load_Config#Response']; // class constructor
+        const Response = spec['TeqFw_Core_App_Shared_Service_Route_Load_Config#Response']; // class
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
         this.createParser = function () {

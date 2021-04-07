@@ -9,9 +9,9 @@ export default function TeqFw_Core_App_Front_Gate_Load_Config(spec) {
     /** @type {TeqFw_Di_Container} */
     const container = spec['TeqFw_Di_Container$'];  // instance singleton
     /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Config_Response} */
-    const Response = spec['TeqFw_Core_App_Shared_Service_Route_Load_Config#Response']; // class constructor
+    const Response = spec['TeqFw_Core_App_Shared_Service_Route_Load_Config#Response']; // class
     /** @type {typeof TeqFw_Core_App_Front_Gate_Response_Error} */
-    const GateError = spec['TeqFw_Core_App_Front_Gate_Response_Error#'];    // class constructor
+    const GateError = spec['TeqFw_Core_App_Front_Gate_Response_Error#'];    // class
 
     // TODO: we need to map gate to API URI
     const URL = `https://${config.urlBase}/api/${DEF.API_LOAD_CFG}`;
