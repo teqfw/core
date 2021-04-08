@@ -112,6 +112,7 @@ export default class TeqFw_Core_App_Launcher {
             config.load({rootPath: bootCfg.root});  // load local configuration
             const plugins = await pluginScan.exec(bootCfg.root);
             initDiContainer(plugins);
+            container.set(DEF.DI_CONFIG, config.get());
             await initCommander(plugins);
         };
 
