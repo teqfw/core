@@ -7,7 +7,7 @@ export default function TeqFw_Core_App_Front_Gate_Load_Config(spec) {
     /** @type {TeqFw_Core_App_Front_Data_Config} */
     const config = spec[DEF.DI_CONFIG]; // named singleton
     /** @type {TeqFw_Di_Container} */
-    const container = spec['TeqFw_Di_Container$'];  // instance singleton
+    const container = spec[DEF.DI_CONTAINER];  // instance singleton
     /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Config_Response} */
     const Response = spec['TeqFw_Core_App_Shared_Service_Route_Load_Config#Response']; // class
     /** @type {typeof TeqFw_Core_App_Front_Gate_Response_Error} */

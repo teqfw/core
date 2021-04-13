@@ -27,6 +27,10 @@ class TeqFw_Core_App_Plugin_Scan_Item {
 class TeqFw_Core_App_Plugin_Scan {
     constructor(spec) {
         // CONSTRUCTOR INJECTED DEPS
+        /** @type {TeqFw_Core_App_Defaults} */
+        const DEF = spec['TeqFw_Core_App_Defaults$'];
+        /** @type {TeqFw_Di_Util_PluginScanner} */
+        const scanner = spec['TeqFw_Di_Util_PluginScanner$']; // instance singleton
         /** @type {TeqFw_Core_App_Logger} */
         const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
         /** @type {TeqFw_Core_App_Plugin_Registry} */
@@ -47,83 +51,51 @@ class TeqFw_Core_App_Plugin_Scan {
             // DEFINE INNER FUNCTIONS
 
             /**
-             * @param {String} root
+             * @param {Object.<string, TeqFw_Di_Api_ScanData>} scanItems
              * @returns {Promise<TeqFw_Core_App_Plugin_Scan_Item[]>}
              */
-            async function getPackages(root) {
+            async function getPlugins(scanItems) {
                 // DEFINE INNER FUNCTIONS
 
                 /**
                  * Check does 'package.json' exist, read content, parse and return data if 'yes'.
-                 * @param {String} filename
-                 * @returns {Promise<TeqFw_Core_App_Plugin_Scan_Item|null>}
+                 * @param {TeqFw_Di_Api_ScanData} scanItem
+                 * @returns {TeqFw_Core_App_Plugin_Scan_Item}
                  */
-                async function checkPlugin(filename) {
-                    let result = null;
-                    try {
-                        const stat = $fs.statSync(filename);
-                        if (stat.isFile()) {
-                            const buffer = $fs.readFileSync(filename);
-                            const content = buffer.toString();
-                            const json = JSON.parse(content);
-                            if (json['teqfw']) {
-                                let msg = `Teq-module is found in '${filename}'`;
-                                result = new TeqFw_Core_App_Plugin_Scan_Item();
-                                result.name = json.name;
-                                result.path = $path.join(filename, '..');
-                                result.teqfw = Object.assign(new Data(), json.teqfw);
-                                result.teqfw.autoload = Object.assign(new DAutoload(), result.teqfw.autoload);
-                                const autoload = result.teqfw.autoload;
-                                if (autoload && autoload.ns && autoload.path) {
-                                    const srcRoot = $path.join(result.path, autoload.path);
-                                    const ext = autoload.ext ?? 'mjs';
-                                    const filepath = $path.join(srcRoot, 'Plugin', `Init.${ext}`);
-                                    if ($fs.existsSync(filepath)) {
-                                        result.initClass = `${autoload.ns}_Plugin_Init$`;
-                                        msg = `${msg} (pluggable)`;
-                                    }
-                                }
-                                logger.info(`${msg}.`);
-                            }
+                function extractPluginItem(scanItem) {
+                    const result = new TeqFw_Core_App_Plugin_Scan_Item();
+                    let msg = `Teq-module is found in '${scanItem.path}'`;
+                    result.name = scanItem.package.name;
+                    result.path = scanItem.path;
+                    result.teqfw = scanItem.teqfw;
+                    result.teqfw.autoload = Object.assign(new DAutoload(), result.teqfw.autoload);
+                    const autoload = result.teqfw.autoload;
+                    if (autoload && autoload.ns && autoload.path) {
+                        const srcRoot = $path.join(result.path, autoload.path);
+                        const ext = autoload.ext ?? 'mjs';
+                        const filepath = $path.join(srcRoot, 'Plugin', `Init.${ext}`);
+                        if ($fs.existsSync(filepath)) {
+                            result.initClass = `${autoload.ns}_Plugin_Init$`;
+                            msg = `${msg} (pluggable)`;
                         }
-                    } catch (e) {
-                        // stealth exception if 'package.json' does not exist
                     }
+                    logger.info(`${msg}.`);
                     return result;
                 }
 
                 // MAIN FUNCTIONALITY
                 const result = [];
-                // get 'package.json' for application itself
-                const fileApp = $path.join(root, 'package.json');
-                const appItem = await checkPlugin(fileApp);
-                if (appItem) result.push(appItem);
-                // get all 'package.json' from 'node modules' folder of the project
-                const rootNodeMods = $path.join(root, 'node_modules');
-                const packages = $fs.readdirSync(rootNodeMods);
-                for (const pack of packages) {
-                    if (pack[0] === '@') {
-                        // scan nested packages for a scope
-                        const rootVnd = $path.join(rootNodeMods, pack);
-                        const nestedPkg = $fs.readdirSync(rootVnd);
-                        for (const sub of nestedPkg) {
-                            const filePackage = $path.join(rootVnd, sub, 'package.json');
-                            const item = await checkPlugin(filePackage);
-                            if (item) result.push(item);
-                        }
-                    } else {
-                        // scan package from 'node_modules'
-                        const filePackage = $path.join(rootNodeMods, pack, 'package.json');
-                        const item = await checkPlugin(filePackage);
-                        if (item) result.push(item);
-                    }
+                for (const [path, scanItem] of Object.entries(scanItems)) {
+                    const pluginItem = extractPluginItem(scanItem);
+                    result.push(pluginItem);
                 }
                 return result;
             }
 
             // MAIN FUNCTIONALITY
             logger.info(`Scan '${root}' for teq-modules.`);
-            const items = await getPackages(root);
+            const scanData = await scanner.scanFilesystem(root);
+            const items = await getPlugins(scanData);
             for (const item of items) registry.set(item.name, item);
             logger.info(`Total '${items.length}' teq-modules are found.`);
             return registry;

@@ -29,11 +29,5 @@
     "i18next": "*",
     "i18next-browser-languagedetector": "*",
     "knex": "*"
-  },
-  "teqfw": {
-    "autoload": {
-      "ns": "TeqFw_Core_App",
-      "path": "./src"
-    }
   }
 }

@@ -1,0 +1,6 @@
+{
+  "autoload": {
+    "ns": "TeqFw_Core_App",
+    "path": "./src"
+  }
+}
