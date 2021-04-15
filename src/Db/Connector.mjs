@@ -55,8 +55,18 @@ export default class TeqFw_Core_App_Db_Connector {
          * Accessor for 'knex.schema' object.
          * (empty array is returned for async function)
          * @returns {SchemaBuilder}
+         * @deprecated use 'getSchemaBuilder' instead; should be removed after 2021/10/15
          */
         this.getSchema = function () {
+            return knex.schema;
+        };
+
+        /**
+         * Accessor for 'knex.schema' object.
+         * (empty array is returned for async function)
+         * @returns {SchemaBuilder}
+         */
+        this.getSchemaBuilder = function () {
             return knex.schema;
         };
 

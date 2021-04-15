@@ -3,6 +3,8 @@
  *
  * @namespace TeqFw_Core_App_Back_Util_RDb
  */
+// MODULE'S VARS
+const NS = 'TeqFw_Core_App_Back_Util_RDb';
 
 // MODULE'S FUNCTIONS
 
