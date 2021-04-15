@@ -7,6 +7,7 @@
  * @param {String|String[]} fldTrg
  * @returns {string}
  * @exports TeqFw_Core_App_Util_Store_RDb_NameForForeignKey
+ * @deprecated use 'TeqFw_Core_App_Back_Util_RDb.nameFK' (should be removed after 2021/10/15)
  */
 function TeqFw_Core_App_Util_Store_RDb_NameForForeignKey(tblSrc, fldSrc, tblTrg, fldTrg) {
     let result = `FK_${tblSrc}_`;
@@ -31,7 +32,8 @@ function TeqFw_Core_App_Util_Store_RDb_NameForForeignKey(tblSrc, fldSrc, tblTrg,
  * @param {String} tbl
  * @param {String|String[]} fld
  * @returns {string}
- * @exports TeqFw_Core_App_Util_Store_RDb_NameForUniqueKey
+ * @exports TeqFw_Core_App_Util_Store_RDb_NameForIndexKey
+ * @deprecated use 'TeqFw_Core_App_Back_Util_RDb.nameNX' (should be removed after 2021/10/15)
  */
 function TeqFw_Core_App_Util_Store_RDb_NameForIndexKey(tbl, fld) {
     let result = `IK_${tbl}_`;
@@ -52,6 +54,7 @@ function TeqFw_Core_App_Util_Store_RDb_NameForIndexKey(tbl, fld) {
  * @param {String|String[]} fld
  * @returns {string}
  * @exports TeqFw_Core_App_Util_Store_RDb_NameForUniqueKey
+ * @deprecated use 'TeqFw_Core_App_Back_Util_RDb.nameUQ' (should be removed after 2021/10/15)
  */
 function TeqFw_Core_App_Util_Store_RDb_NameForUniqueKey(tbl, fld) {
     let result = `UK_${tbl}_`;
