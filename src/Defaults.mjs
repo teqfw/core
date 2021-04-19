@@ -9,10 +9,11 @@ export default class TeqFw_Core_App_Defaults {
 
     BACK_REALM = 'core';  // realm for API services ('/api/core/...') and CLI commands ('core-...')
 
+    DI_APP = 'coreApp'; // DI container label for Vue application singleton.
     DI_BOOTSTRAP = 'bootstrap'; // DI container label for bootstrap configuration.
-    DI_CONFIG = 'core_config'; // TODO: should we use named singleton or instance 'TeqFw_Di_Container$'?
+    DI_CONFIG = 'coreConfig'; // TODO: should we use named singleton or instance 'TeqFw_Di_Container$'?
     DI_CONTAINER = 'container'; // DI container label for container itself (see TeqFw_Di_Container.constructor).
-    DI_I18N = 'core_i18n';
+    DI_I18N = 'coreI18n';
 
     FS_SRC = 'src'; // default folder for plugin's static resources in filesystem
     FS_WEB = 'web'; // default folder for plugin's static resources in filesystem
