@@ -15,24 +15,7 @@ class TeqFw_Core_App_Back_Service_Load_Config {
         const Response = spec['TeqFw_Core_App_Shared_Service_Route_Load_Config#Response']; // class
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
-        this.createParser = function () {
-
-            /**
-             *
-             * @returns {TeqFw_Core_App_Shared_Service_Route_Load_Config_Request}
-             * @memberOf TeqFw_Core_App_Back_Service_Load_Config
-             */
-            function parse() {
-                return new Request();
-            }
-
-            // COMPOSE RESULT
-            // add namespace marker to the object name
-            Object.defineProperty(parse, 'name', {
-                value: `${this.constructor.name}.${parse.name}`,
-            });
-            return parse;
-        };
+        // this.createInputParser = function () {};
 
         this.createService = function () {
             /**

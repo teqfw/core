@@ -43,22 +43,7 @@ class TeqFw_Core_App_Back_Service_Load_Namespaces {
         }
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
-        this.createParser = function () {
-
-            /**
-             *
-             * @returns {TeqFw_Core_App_Shared_Service_Route_Load_Namespaces_Request}
-             * @memberOf TeqFw_Core_App_Back_Service_Load_Namespaces
-             */
-            function parse() {
-                return new Request();
-            }
-
-            Object.defineProperty(parse, 'name', {
-                value: `${this.constructor.name}.${parse.name}`,
-            });
-            return parse;
-        };
+        // this.createInputParser = function () {};
 
         this.createService = function () {
             /**
