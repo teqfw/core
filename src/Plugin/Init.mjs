@@ -24,7 +24,6 @@ export default class TeqFw_Core_App_Plugin_Init {
         this.getServicesList = function () {
             return [
                 'TeqFw_Core_App_Back_Service_Load_Config$',
-                'TeqFw_Core_App_Back_Service_Load_I18n$',
                 'TeqFw_Core_App_Back_Service_Load_Namespaces$',
             ];
         };

@@ -1,5 +1,6 @@
 /**
  * Used by gates to connect to backend services (API).
+ * TODO: move gate functionality to 'http2' plugin
  */
 export default class TeqFw_Core_App_Front_Gate_Connect {
     constructor(spec) {

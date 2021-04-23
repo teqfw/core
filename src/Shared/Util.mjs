@@ -7,7 +7,7 @@
  * Source: https://gist.github.com/ahtcx/0cd94e62691f539160b32ecda18af3d6#gistcomment-2930530
  *
  * @param {Object} target
- * @param {Object}source
+ * @param {Object} source
  * @returns {Object}
  * @memberOf TeqFw_Core_App_Shared_Util
  */
