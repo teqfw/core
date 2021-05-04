@@ -9,6 +9,16 @@ const NS = 'TeqFw_Core_App_Back_Util_RDb';
 // MODULE'S FUNCTIONS
 
 /**
+ * Return 'true' if knex client is connected to Postgres DB.
+ * @param client
+ * @return {boolean}
+ * @memberOf TeqFw_Core_App_Back_Util_RDb
+ */
+function isPostgres(client) {
+    return client.constructor.name === 'Client_PG';
+}
+
+/**
  * Create name for foreign key constraint.
  *
  * @param {String} tblSrc
@@ -69,11 +79,13 @@ function nameUQ(tbl, fld) {
 
 
 // MODULE'S EXPORT
+Object.defineProperty(isPostgres, 'name', {value: `${NS}.${isPostgres.name}`});
 Object.defineProperty(nameFK, 'name', {value: `${NS}.${nameFK.name}`});
 Object.defineProperty(nameNX, 'name', {value: `${NS}.${nameNX.name}`});
 Object.defineProperty(nameUQ, 'name', {value: `${NS}.${nameUQ.name}`});
 
 export {
+    isPostgres,
     nameFK,
     nameNX,
     nameUQ,
