@@ -1,6 +1,8 @@
 /**
  * Connector to IndexedDb to use with async/await in TeqFW apps.
  */
+const NS = 'TeqFw_Core_App_Front_Idb_Connect';
+
 class TeqFw_Core_App_Front_Idb_Connect {
     constructor() {
         let /** @type {function} */
