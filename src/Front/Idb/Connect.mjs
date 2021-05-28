@@ -26,6 +26,18 @@ class TeqFw_Core_App_Front_Idb_Connect {
             return db !== undefined;
         }
 
+        this.delete = function (dbName) {
+            return new Promise(function (resolve, reject) {
+                const req = indexedDB.deleteDatabase(dbName);
+                req.onerror = function () {
+                    reject(req.error);
+                };
+                req.onsuccess = function () {
+                    resolve();
+                };
+            });
+        }
+
         this.trans = function (stores, mode = null, options = null) {
             if (!db) throw new Error("Please, connect to DB first.");
             return new Transaction(db.transaction(stores, mode, options));
