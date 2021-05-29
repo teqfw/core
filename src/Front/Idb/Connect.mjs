@@ -65,7 +65,8 @@ class Store {
 
         this.put = function (value, key) {
             return new Promise(function (resolve, reject) {
-                const request = store.put(value, key);
+                const data = JSON.parse(JSON.stringify(value)); // save DTO w/o Proxy
+                const request = key ? store.put(data, key) : store.put(data);
                 request.onerror = () => reject(request.error);
                 request.onsuccess = () => resolve(request.result);
             });
