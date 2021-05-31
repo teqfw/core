@@ -72,6 +72,24 @@ function formatDateTime(dateIn = null) {
 }
 
 /**
+ * Convert local time to HH:MM:SS.
+ * @param {Date|string|null} dateIn
+ * @param {boolean} withSeconds
+ * @return {string}
+ * @memberOf TeqFw_Core_App_Shared_Util
+ */
+function formatTime(dateIn = null, withSeconds = true) {
+    /** @type {Date} */
+    const date = (dateIn) ?
+        (dateIn instanceof Date) ? dateIn : new Date(dateIn) :
+        new Date();
+    const h = `${date.getHours()}`.padStart(2, '0');
+    const i = `${date.getMinutes()}`.padStart(2, '0');
+    const s = `${date.getSeconds()}`.padStart(2, '0');
+    return (withSeconds) ? `${h}:${i}:${s}` : `${h}:${i}`;
+}
+
+/**
  * Convert UTC date to YYYY/MM/DD.
  * @param {Date|string|null} dateIn
  * @return {string}
@@ -88,6 +106,18 @@ function formatUtcDate(dateIn = null) {
     return `${y}/${m}/${d}`;
 }
 
+/**
+ * Round number to 'places' decimals.
+ *
+ * (https://stackoverflow.com/a/19722641/4073821)
+ *
+ * @param {number} num
+ * @param {number} places (integer)
+ * @return {number}
+ */
+function round(num, places) {
+    return +(Math.round(num + "e+" + places) + "e-" + places);
+}
 
 /**
  * Convert UTC date to YYYY/MM/DD HH:MM:SS.
@@ -141,8 +171,10 @@ export {
     deepMerge,
     formatDate,
     formatDateTime,
+    formatTime,
     formatUtcDate,
     formatUtcDateTime,
     formatUtcTime,
     isEmpty,
+    round,
 };
