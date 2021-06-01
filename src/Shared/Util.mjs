@@ -54,10 +54,11 @@ function formatDate(dateIn = null) {
 /**
  * Convert local date to YYYY/MM/DD HH:MM:SS.
  * @param {Date|string|null} dateIn
+ * @param {boolean} withSeconds
  * @return {string}
  * @memberOf TeqFw_Core_App_Shared_Util
  */
-function formatDateTime(dateIn = null) {
+function formatDateTime(dateIn = null, withSeconds = true) {
     /** @type {Date} */
     const date = (dateIn) ?
         (dateIn instanceof Date) ? dateIn : new Date(dateIn) :
@@ -68,7 +69,8 @@ function formatDateTime(dateIn = null) {
     const h = `${date.getHours()}`.padStart(2, '0');
     const i = `${date.getMinutes()}`.padStart(2, '0');
     const s = `${date.getSeconds()}`.padStart(2, '0');
-    return `${y}/${m}/${d} ${h}:${i}:${s}`;
+    const time = (withSeconds) ? `${h}:${i}:${s}` : `${h}:${i}`;
+    return `${y}/${m}/${d} ${time}`;
 }
 
 /**
@@ -114,9 +116,24 @@ function formatUtcDate(dateIn = null) {
  * @param {number} num
  * @param {number} places (integer)
  * @return {number}
+ * @memberOf TeqFw_Core_App_Shared_Util
  */
-function round(num, places) {
-    return +(Math.round(num + "e+" + places) + "e-" + places);
+function round(num, places = 2) {
+    const norm = (typeof num === 'number') ? num : Number.parseFloat(num);
+    return +(Math.round(norm + "e+" + places) + "e-" + places);
+}
+
+/**
+ * Convert input to 'X.XX CUR'.
+ *
+ * @param {number} amount
+ * @param {string} cur
+ * @return {string}
+ * @memberOf TeqFw_Core_App_Shared_Util
+ */
+function formatAmount(amount, cur) {
+    const norm = round(amount);
+    return `${norm.toFixed(2)} ${cur.toUpperCase()}`
 }
 
 /**
@@ -169,6 +186,7 @@ function isEmpty(val) {
 
 export {
     deepMerge,
+    formatAmount,
     formatDate,
     formatDateTime,
     formatTime,
