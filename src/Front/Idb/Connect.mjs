@@ -28,8 +28,14 @@ class TeqFw_Core_App_Front_Idb_Connect {
 
         this.delete = function (dbName) {
             return new Promise(function (resolve, reject) {
+                if (db) db.close();
                 const req = indexedDB.deleteDatabase(dbName);
+                req.onblocked = function () {
+                    debugger
+                    reject(req);
+                }
                 req.onerror = function () {
+                    debugger
                     reject(req.error);
                 };
                 req.onsuccess = function () {
