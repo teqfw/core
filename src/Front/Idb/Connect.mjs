@@ -15,10 +15,16 @@ class TeqFw_Core_App_Front_Idb_Connect {
         this.openDb = function (name, version, _fnUpgrade) {
             fnUpgrade = _fnUpgrade;
             return new Promise(function (resolve, reject) {
-                const openRequest = indexedDB.open(name, version);
-                if (typeof fnUpgrade === 'function') openRequest.onupgradeneeded = fnUpgrade;
-                openRequest.onerror = () => reject(openRequest.error);
-                openRequest.onsuccess = () => (db = openRequest.result) && resolve(db);
+                const req = indexedDB.open(name, version);
+                if (typeof fnUpgrade === 'function') req.onupgradeneeded = fnUpgrade;
+                req.onerror = function () {
+                    console.log('IDB open error:' + req.error);
+                    reject(req.error);
+                }
+                req.onsuccess = function () {
+                    db = req.result;
+                    resolve(db);
+                }
             });
         }
 
@@ -31,11 +37,11 @@ class TeqFw_Core_App_Front_Idb_Connect {
                 if (db) db.close();
                 const req = indexedDB.deleteDatabase(dbName);
                 req.onblocked = function () {
-                    debugger
+                    console.log('IDB delete error:' + req);
                     reject(req);
                 }
                 req.onerror = function () {
-                    debugger
+                    console.log('IDB delete error:' + req.error);
                     reject(req.error);
                 };
                 req.onsuccess = function () {
@@ -44,66 +50,58 @@ class TeqFw_Core_App_Front_Idb_Connect {
             });
         }
 
-        this.trans = function (stores, mode = null, options = null) {
+        this.store = function (name) {
             if (!db) throw new Error("Please, connect to DB first.");
-            return new Transaction(db.transaction(stores, mode, options));
+            return new Store(name, db);
         }
     }
 
 }
 
 /**
- * Wrapper for IDBObjectStore.
+ * Wrapper for IDBObjectStore. Add async/await and transaction-per-request features.
+ *
+ * https://stackoverflow.com/a/61373664/4073821
  *
  * @memberOf TeqFw_Core_App_Front_Idb_Connect
  */
 class Store {
-    constructor(_store) {
-        const store = _store;
+    constructor($name, $db) {
+        const db = $db;
+        const name = $name;
 
         this.getByKey = function (key) {
             return new Promise(function (resolve, reject) {
-                const request = store.get(key);
-                request.onerror = () => reject(request.error);
-                request.onsuccess = () => resolve(request.result);
+                const trn = db.transaction(name);
+                const store = trn.objectStore(name);
+                const req = store.get(key);
+                req.onerror = function () {
+                    console.log('IDB Store error:' + req.error);
+                    reject(req.error);
+                }
+                req.onsuccess = function () {
+                    resolve(req.result);
+                }
             });
         }
 
         this.put = function (value, key) {
             return new Promise(function (resolve, reject) {
                 const data = JSON.parse(JSON.stringify(value)); // save DTO w/o Proxy
-                const request = key ? store.put(data, key) : store.put(data);
-                request.onerror = () => reject(request.error);
-                request.onsuccess = () => resolve(request.result);
+                const trn = db.transaction(name, 'readwrite');
+                const store = trn.objectStore(name);
+                const req = key ? store.put(data, key) : store.put(data);
+                req.onerror = function () {
+                    console.log('IDB Store error:' + req.error);
+                    reject(req.error);
+                }
+                req.onsuccess = function () {
+                    resolve(req.result);
+                }
             });
         }
     }
 }
 
 Object.defineProperty(Store, 'name', {value: `${NS}.${Store.name}`});
-
-/**
- * Wrapper for IDBTransaction.
- *
- * @memberOf TeqFw_Core_App_Front_Idb_Connect
- */
-class Transaction {
-    constructor($tran) {
-        const tran = $tran;
-
-        /**
-         * Return IDB store wrapper.
-         *
-         * @param storeName
-         * @return {TeqFw_Core_App_Front_Idb_Connect.Store}
-         */
-        this.getStore = function (storeName) {
-            return new Store(tran.objectStore(storeName));
-        }
-    }
-}
-
-Object.defineProperty(Transaction, 'name', {value: `${NS}.${Transaction.name}`});
-
 export default TeqFw_Core_App_Front_Idb_Connect;
-export {Store, Transaction}
