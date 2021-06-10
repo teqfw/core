@@ -127,13 +127,14 @@ function round(num, places = 2) {
  * Convert input to 'X.XX CUR'.
  *
  * @param {number} amount
- * @param {string} cur
+ * @param {string|null} cur
  * @return {string}
  * @memberOf TeqFw_Core_App_Shared_Util
  */
-function formatAmount(amount, cur) {
-    const norm = round(amount);
-    return `${norm.toFixed(2)} ${cur.toUpperCase()}`
+function formatAmount(amount, cur = null) {
+    const normAmnt = round(amount);
+    const normCur = (typeof cur === 'string') ? cur : '';
+    return `${normAmnt.toFixed(2)} ${normCur.toUpperCase()}`
 }
 
 /**
