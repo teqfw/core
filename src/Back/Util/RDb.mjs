@@ -9,6 +9,32 @@ const NS = 'TeqFw_Core_App_Back_Util_RDb';
 // MODULE'S FUNCTIONS
 
 /**
+ * Get list of available tables.
+ * @param trx
+ * @return {Promise<*[]>}
+ * @memberOf TeqFw_Core_App_Back_Util_RDb
+ */
+async function getTables(trx) {
+    const result = [];
+    const dialect = trx.client.config.client;
+    if (['mysql', 'mysql2'].includes(dialect)) {
+        const rs = await trx.raw('show tables');
+        if (Array.isArray(rs)) {
+            const column = rs[1][0]['name'];
+            rs[0].map(one => result.push(one[column]));
+        }
+    } else if (['pg'].includes(dialect)) {
+        const rs = await trx.raw('SELECT * FROM information_schema.tables  WHERE table_schema = \'public\'');
+        if (Array.isArray(rs?.rows)) {
+            rs.rows.map(one => result.push(one['table_name']));
+        }
+    } else {
+        throw new Error(`This dialect (${dialect}) is not supported.`);
+    }
+    return result;
+}
+
+/**
  * Return 'true' if knex client is connected to Postgres DB.
  * @param client
  * @return {boolean}
@@ -16,6 +42,36 @@ const NS = 'TeqFw_Core_App_Back_Util_RDb';
  */
 function isPostgres(client) {
     return client.constructor.name === 'Client_PG';
+}
+
+/**
+ * Insert table items selected by 'itemsSelect'.
+ * @param trx
+ * @param dump
+ * @param entity
+ * @return {Promise<void>}
+ * @memberOf TeqFw_Core_App_Back_Util_RDb
+ */
+async function itemsInsert(trx, dump, entity) {
+    if (Array.isArray(dump[entity]) && dump[entity].length > 0) {
+        await trx(entity).insert(dump[entity]);
+    }
+}
+
+/**
+ * Select * from 'entity' if 'entity' exists in 'tables' or null otherwise.
+ * @param trx
+ * @param {String[]} tables
+ * @param {String} entity
+ * @returns {Promise<*|null>}
+ * @memberOf TeqFw_Core_App_Back_Util_RDb
+ */
+async function itemsSelect(trx, tables, entity) {
+    if (tables.includes(entity)) {
+        return await trx.select().from(entity);
+    } else {
+        return null;
+    }
 }
 
 /**
@@ -77,6 +133,41 @@ function nameUQ(tbl, fld) {
     return result;
 }
 
+/**
+ * Get 'nextval' for Postgres serial.
+ * @param schema
+ * @param {String[]} serials
+ * @returns {Promise<Object>}
+ * @memberOf TeqFw_Core_App_Back_Util_RDb
+ */
+async function serialsGet(schema, serials) {
+    const result = {};
+    for (const one of serials) {
+        schema.raw(`SELECT nextval('${one}')`);
+    }
+    const rs = await schema;
+    for (const i in rs) {
+        const key = serials[i];
+        result[key] = rs[i].rows[0].nextval;
+    }
+    return result;
+}
+
+/**
+ * Get nextval for Postgres serial.
+ * @param schema
+ * @param {Object} serials
+ * @returns {Promise<void>}
+ * @memberOf TeqFw_Core_App_Back_Util_RDb
+ */
+async function serialsSet(schema, serials) {
+    for (const one of Object.keys(serials)) {
+        if (one !== 'app_group_id_seq')
+            schema.raw(`SELECT setval('${one}', ${serials[one]})`);
+    }
+    await schema;
+}
+
 
 // MODULE'S EXPORT
 Object.defineProperty(isPostgres, 'name', {value: `${NS}.${isPostgres.name}`});
@@ -85,8 +176,13 @@ Object.defineProperty(nameNX, 'name', {value: `${NS}.${nameNX.name}`});
 Object.defineProperty(nameUQ, 'name', {value: `${NS}.${nameUQ.name}`});
 
 export {
+    getTables,
     isPostgres,
+    itemsInsert,
+    itemsSelect,
     nameFK,
     nameNX,
     nameUQ,
+    serialsGet,
+    serialsSet,
 };
