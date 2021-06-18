@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/teqfw/core-app#readme",
   "dependencies": {
-    "@teqfw/di": "github:teqfw/di",
+    "@teqfw/di": "*",
     "commander": "*",
     "i18next": "*",
     "i18next-browser-languagedetector": "*",
