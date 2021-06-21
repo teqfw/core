@@ -61,14 +61,19 @@ async function itemsInsert(trx, dump, entity) {
 /**
  * Select * from 'entity' if 'entity' exists in 'tables' or null otherwise.
  * @param trx
- * @param {String[]} tables
- * @param {String} entity
+ * @param {string[]} tables
+ * @param {string} entity
+ * @param {string[]|null} cols
  * @returns {Promise<*|null>}
  * @memberOf TeqFw_Core_App_Back_Util_RDb
  */
-async function itemsSelect(trx, tables, entity) {
+async function itemsSelect(trx, tables, entity, cols = null) {
     if (tables.includes(entity)) {
-        return await trx.select().from(entity);
+        if (Array.isArray(cols)) {
+            return await trx.select(cols).from(entity);
+        } else {
+            return await trx.select().from(entity);
+        }
     } else {
         return null;
     }
@@ -146,9 +151,9 @@ async function serialsGet(schema, serials) {
         schema.raw(`SELECT nextval('${one}')`);
     }
     const rs = await schema;
-    for (const i in rs) {
+    for (const i in rs.rows) {
         const key = serials[i];
-        result[key] = rs[i].rows[0].nextval;
+        result[key] = rs.rows[0].nextval;
     }
     return result;
 }
