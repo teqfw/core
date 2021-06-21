@@ -25,7 +25,7 @@ const template = `
  */
 function TeqFw_Core_App_Front_Widget_Form_Button(spec) {
     /** @type {TeqFw_Core_App_Util_Front_Dom} */
-    const utilDom = spec['TeqFw_Core_App_Util_Front_Dom$']; // instance singleton
+    const utilDom = spec['TeqFw_Core_App_Util_Front_Dom$']; // singleton
 
     return {
         name: 'TextInput',

@@ -3,11 +3,11 @@
  */
 export default function TeqFw_Core_App_Front_Gate_Load_Config(spec) {
     /** @type {TeqFw_Core_App_Defaults} */
-    const DEF = spec['TeqFw_Core_App_Defaults$'];   // instance singleton
+    const DEF = spec['TeqFw_Core_App_Defaults$'];   // singleton
     /** @type {TeqFw_Core_App_Front_Data_Config} */
-    const config = spec[DEF.DI_CONFIG]; // named singleton
+    const config = spec[DEF.DI_CONFIG]; // singleton
     /** @type {TeqFw_Di_Container} */
-    const container = spec[DEF.DI_CONTAINER];  // instance singleton
+    const container = spec[DEF.DI_CONTAINER];  // singleton
     /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Config_Response} */
     const Response = spec['TeqFw_Core_App_Shared_Service_Route_Load_Config#Response']; // class
     /** @type {typeof TeqFw_Core_App_Front_Gate_Response_Error} */
@@ -24,7 +24,7 @@ export default function TeqFw_Core_App_Front_Gate_Load_Config(spec) {
     async function gate(data) {
         try {
             // TODO: ajax loader interface from core should be here
-            const store = await container.get(DEF.DI_STORE); // named singleton
+            const store = await container.get(DEF.DI_STORE); // singleton
             store.commit('app/startLoader');
             const res = await fetch(URL, {
                 method: 'POST',

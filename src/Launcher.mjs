@@ -22,17 +22,17 @@ export default class TeqFw_Core_App_Launcher {
         /** @type {TeqFw_Core_App_Defaults} */
         const DEF = spec['TeqFw_Core_App_Defaults$'];
         /** @type {TeqFw_Core_App_Launcher.Bootstrap} */
-        const bootCfg = spec[DEF.DI_BOOTSTRAP]; // named singleton
+        const bootCfg = spec[DEF.DI_BOOTSTRAP]; // singleton
         /** @type {TeqFw_Di_Container} */
-        const container = spec[DEF.DI_CONTAINER];   // named singleton
+        const container = spec[DEF.DI_CONTAINER];   // singleton
         /** @type {TeqFw_Core_App_Config} */
-        const config = spec['TeqFw_Core_App_Config$'];  // instance singleton
+        const config = spec['TeqFw_Core_App_Config$'];  // singleton
         /** @type {TeqFw_Core_App_Logger} */
-        const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
+        const logger = spec['TeqFw_Core_App_Logger$'];  // singleton
         /** @type {TeqFw_Core_App_Logger_Transport_Console} */
-        const logToConsole = spec['TeqFw_Core_App_Logger_Transport_Console$'];  // instance singleton
+        const logToConsole = spec['TeqFw_Core_App_Logger_Transport_Console$'];  // singleton
         /** @type {TeqFw_Core_App_Plugin_Scan} */
-        const pluginScan = spec['TeqFw_Core_App_Plugin_Scan$']; // instance singleton
+        const pluginScan = spec['TeqFw_Core_App_Plugin_Scan$']; // singleton
 
         // INIT OWN PROPERTIES AND DEFINE WORKING VARS
         const commander = new $commander.Command();

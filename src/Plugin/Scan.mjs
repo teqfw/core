@@ -30,11 +30,11 @@ class TeqFw_Core_App_Plugin_Scan {
         /** @type {TeqFw_Core_App_Defaults} */
         const DEF = spec['TeqFw_Core_App_Defaults$'];
         /** @type {TeqFw_Di_Util_PluginScanner} */
-        const scanner = spec['TeqFw_Di_Util_PluginScanner$']; // instance singleton
+        const scanner = spec['TeqFw_Di_Util_PluginScanner$']; // singleton
         /** @type {TeqFw_Core_App_Logger} */
-        const logger = spec['TeqFw_Core_App_Logger$'];  // instance singleton
+        const logger = spec['TeqFw_Core_App_Logger$'];  // singleton
         /** @type {TeqFw_Core_App_Plugin_Registry} */
-        const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
+        const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // singleton
         /** @type {typeof TeqFw_Core_App_Plugin_Package_Data} */
         const Data = spec['TeqFw_Core_App_Plugin_Package_Data#'];  // class
         /** @type {typeof TeqFw_Core_App_Plugin_Package_Data_Autoload} */

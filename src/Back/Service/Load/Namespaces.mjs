@@ -10,7 +10,7 @@ class TeqFw_Core_App_Back_Service_Load_Namespaces {
         /** @type {TeqFw_Core_App_Defaults} */
         const DEF = spec['TeqFw_Core_App_Defaults$'];
         /** @type {TeqFw_Core_App_Plugin_Registry} */
-        const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // instance singleton
+        const registry = spec['TeqFw_Core_App_Plugin_Registry$'];   // singleton
         /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Namespaces_Request} */
         const Request = spec['TeqFw_Core_App_Shared_Service_Route_Load_Namespaces#Request'];   // class
         /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Namespaces_Response} */

@@ -5,13 +5,13 @@
 export default class TeqFw_Core_App_Front_Gate_Connect {
     constructor(spec) {
         /** @type {TeqFw_Core_App_Defaults} */
-        const DEF = spec['TeqFw_Core_App_Defaults$'];   // instance singleton
+        const DEF = spec['TeqFw_Core_App_Defaults$'];   // singleton
         /** @type {TeqFw_Core_App_Front_Data_Config} */
-        const config = spec[DEF.DI_CONFIG]; // named singleton
+        const config = spec[DEF.DI_CONFIG]; // singleton
         /** @type {TeqFw_Core_App_Front_Gate_Connect_AjaxLed} */
-        const ajaxLed = spec['TeqFw_Core_App_Front_Gate_Connect_AjaxLed$']; // instance singleton
+        const ajaxLed = spec['TeqFw_Core_App_Front_Gate_Connect_AjaxLed$']; // singleton
         /** @type {TeqFw_Core_App_Front_Gate_Connect_ErrorHandler} */
-        const errHndl = spec['TeqFw_Core_App_Front_Gate_Connect_ErrorHandler$']; // instance singleton
+        const errHndl = spec['TeqFw_Core_App_Front_Gate_Connect_ErrorHandler$']; // singleton
 
         const BASE = `https://${config.urlBase}/${config.realm}/${DEF.AREA_API}`;
 

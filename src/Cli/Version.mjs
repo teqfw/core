@@ -16,9 +16,9 @@ const NS = 'TeqFw_Core_App_Cli_Version';
 function Factory(spec) {
     // PARSE INPUT & DEFINE WORKING VARS
     /** @type {TeqFw_Core_App_Defaults} */
-    const DEF = spec['TeqFw_Core_App_Defaults$'];   // instance singleton
+    const DEF = spec['TeqFw_Core_App_Defaults$'];   // singleton
     /** @type {TeqFw_Core_App_Launcher.Bootstrap} */
-    const bootCfg = spec[DEF.DI_BOOTSTRAP]; // named singleton
+    const bootCfg = spec[DEF.DI_BOOTSTRAP]; // singleton
     /** @type {typeof TeqFw_Core_App_Cli_Command_Data} */
     const DCommand = spec['TeqFw_Core_App_Cli_Command#Data']; // class
 

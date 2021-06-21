@@ -8,7 +8,7 @@ class TeqFw_Core_App_Back_Service_Load_Config {
         /** @type {TeqFw_Core_App_Defaults} */
         const DEF = spec['TeqFw_Core_App_Defaults$'];
         /** @type {TeqFw_Core_App_Config} */
-        const config = spec['TeqFw_Core_App_Config$'];  // instance singleton
+        const config = spec['TeqFw_Core_App_Config$'];  // singleton
         /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Config_Request} */
         const Request = spec['TeqFw_Core_App_Shared_Service_Route_Load_Config#Request'];   // class
         /** @type {typeof TeqFw_Core_App_Shared_Service_Route_Load_Config_Response} */
