@@ -1,5 +1,5 @@
 /**
- * Load local configuration data available for the front realms.
+ * Load local configuration data available for the front areas.
  */
 class TeqFw_Core_App_Back_Service_Load_Config {
 
