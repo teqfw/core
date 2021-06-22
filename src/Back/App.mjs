@@ -1,32 +1,39 @@
 /**
- * Application itself.
+ * Backend application itself.
+ * @namespace TeqFw_Core_App_Back_App
  */
+// MODULE'S IMPORT
 import $commander from 'commander';
 import $path from 'path';
 
+// MODULE'S CLASSES
 /**
- * Define data structure.
+ * Define data structure for backend app bootstrap config.
  *
- * @typedef {Object} TeqFw_Core_App_Launcher.Bootstrap
- * @property {string} root absolute path to the root folder of the project
- * @property {string} version current version of the application (`0.1.0`)
+ * @memberOf TeqFw_Core_App_Back_App
  */
+class Bootstrap {
+    /** @type {string} absolute path to the root folder of the project */
+    root;
+    /** @type {string} current version of the application (`0.1.0`) */
+    version;
+}
 
 /**
- * Main class to launch application: read modules meta data, initialize parts of app, then start the app.
+ * Main class to launch application: read modules meta data, initialize parts of app, start the app.
  */
-export default class TeqFw_Core_App_Launcher {
+class TeqFw_Core_App_Back_App {
 
     constructor(spec) {
-        // CONSTRUCTOR INJECTED DEPS
+        // EXTRACT DEPS
         /** @type {TeqFw_Core_App_Defaults} */
         const DEF = spec['TeqFw_Core_App_Defaults$'];
-        /** @type {TeqFw_Core_App_Launcher.Bootstrap} */
+        /** @type {TeqFw_Core_App_Back_App.Bootstrap} */
         const bootCfg = spec[DEF.DI_BOOTSTRAP]; // singleton
         /** @type {TeqFw_Di_Container} */
         const container = spec[DEF.DI_CONTAINER];   // singleton
-        /** @type {TeqFw_Core_App_Config} */
-        const config = spec['TeqFw_Core_App_Config$'];  // singleton
+        /** @type {TeqFw_Core_App_Back_Config} */
+        const config = spec['TeqFw_Core_App_Back_Config$'];  // singleton
         /** @type {TeqFw_Core_App_Logger} */
         const logger = spec['TeqFw_Core_App_Logger$'];  // singleton
         /** @type {TeqFw_Core_App_Logger_Transport_Console} */
@@ -50,7 +57,7 @@ export default class TeqFw_Core_App_Launcher {
              *
              * @param {TeqFw_Core_App_Plugin_Registry} plugins
              * @returns {Promise<void>}
-             * @memberOf TeqFw_Core_App_Launcher.init
+             * @memberOf TeqFw_Core_App_Back_App.init
              */
             async function initCommander(plugins) {
                 // DEFINE INNER FUNCTIONS
@@ -59,7 +66,7 @@ export default class TeqFw_Core_App_Launcher {
                  *
                  * @param {string} factoryName 'Vendor_Module_Cli_Command$'
                  * @returns {Promise<void>}
-                 * @memberOf TeqFw_Core_App_Launcher.init.initCommander
+                 * @memberOf TeqFw_Core_App_Back_App.init.initCommander
                  */
                 async function addCommand(factoryName) {
                     try {
@@ -142,4 +149,9 @@ export default class TeqFw_Core_App_Launcher {
     }
 
 
+}
+
+export {
+    TeqFw_Core_App_Back_App as default,
+    Bootstrap
 }

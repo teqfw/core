@@ -10,7 +10,7 @@ export default class TeqFw_Core_App_Plugin_Init_Base {
 
         this.getCommands = function () {
             return [
-                'TeqFw_Core_App_Cli_Version$',
+                'TeqFw_Core_App_Back_Cli_Version$',
             ];
         };
 

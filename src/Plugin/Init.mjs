@@ -10,10 +10,11 @@ export default class TeqFw_Core_App_Plugin_Init {
 
         this.getCommands = function () {
             return [
-                'TeqFw_Core_App_Cli_Version$',
+                'TeqFw_Core_App_Back_Cli_Version$',
             ];
         };
 
+        // TODO: move this mapping to i18n plugin and to teqfw.json
         this.getHttpStaticMaps = function () {
             return {
                 '/i18next-detect/': '/i18next-browser-languagedetector/dist/umd/',
@@ -21,12 +22,12 @@ export default class TeqFw_Core_App_Plugin_Init {
             };
         };
 
-        this.getServicesList = function () {
-            return [
-                'TeqFw_Core_App_Back_Service_Load_Config$',
-                'TeqFw_Core_App_Back_Service_Load_Namespaces$',
-            ];
-        };
+        // this.getServicesList = function () {
+        //     return [
+        //         'TeqFw_Core_App_Back_Service_Load_Config$',
+        //         'TeqFw_Core_App_Back_Service_Load_Namespaces$',
+        //     ];
+        // };
 
         this.getServicesRealm = function () {
             return DEF.BACK_REALM;

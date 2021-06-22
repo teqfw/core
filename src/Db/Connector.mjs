@@ -6,8 +6,8 @@ import $knex from 'knex';
 export default class TeqFw_Core_App_Db_Connector {
 
     constructor(spec) {
-        /** @type {TeqFw_Core_App_Config} */
-        const config = spec['TeqFw_Core_App_Config$'];
+        /** @type {TeqFw_Core_App_Back_Config} */
+        const config = spec['TeqFw_Core_App_Back_Config$'];
         /** @type {TeqFw_Core_App_Logger} */
         const logger = spec['TeqFw_Core_App_Logger$'];
 

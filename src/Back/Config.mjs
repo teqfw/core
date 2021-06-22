@@ -5,7 +5,7 @@ import $path from 'path';
  * TODO:
  *  - add ACL to configuration (is it possible? we should prevent access to certain configuration nodes for some modules)
  */
-export default class TeqFw_Core_App_Config {
+export default class TeqFw_Core_App_Back_Config {
 
     constructor() {
         /** @type {null|Object} storage for configuration options */

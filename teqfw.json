@@ -2,5 +2,12 @@
   "autoload": {
     "ns": "TeqFw_Core_App",
     "path": "./src"
+  },
+  "http2": {
+    "realm": "core",
+    "services": [
+      "TeqFw_Core_App_Back_Service_Load_Config$",
+      "TeqFw_Core_App_Back_Service_Load_Namespaces$"
+    ]
   }
 }

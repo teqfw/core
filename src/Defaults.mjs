@@ -1,6 +1,8 @@
+/**
+ * Plugin level constants (hardcoded configuration).
+ */
 export default class TeqFw_Core_App_Defaults {
     API_LOAD_CFG = '/load/config';
-    API_LOAD_I18N = '/load/i18n';
     API_LOAD_NS = '/load/namespaces';
 
     AREA_API = 'api';    // URL prefix for API requests: https://.../realm/api/...

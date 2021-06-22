@@ -2,7 +2,7 @@
  * Cookie related utilities.
  * @deprecated use TeqFw_Http2_Back_Util instead, should be removed after 2021/10/21
  */
-export default class TeqFw_Core_App_Util_Back_Cookie {
+export default class TeqFw_Core_App_Back_Util_Cookie {
 
     /**
      * Compose expired HTTP cookie to remove existing cookie with the same name in the browser.
