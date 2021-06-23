@@ -2,8 +2,9 @@ import $knex from 'knex';
 
 /**
  * 'knex' based connector to relational database.
+ * TODO: move RDB to standalone plugin
  */
-export default class TeqFw_Core_Db_Connector {
+export default class TeqFw_Core_Back_RDb_Connector {
 
     constructor(spec) {
         /** @type {TeqFw_Core_Back_Config} */

@@ -43,13 +43,13 @@ class TeqFw_Core_Back_App {
         /** @type {TeqFw_Core_Back_App.Bootstrap} */
         const bootCfg = spec[DEF.DI_BOOTSTRAP]; // singleton
         /** @type {TeqFw_Di_Container} */
-        const container = spec[DEF.DI_CONTAINER];   // singleton
+        const container = spec['TeqFw_Di_Container$']; // singleton
         /** @type {TeqFw_Core_Back_Config} */
-        const config = spec['TeqFw_Core_Back_Config$'];  // singleton
+        const config = spec['TeqFw_Core_Back_Config$']; // singleton
         /** @type {TeqFw_Core_Logger} */
-        const logger = spec['TeqFw_Core_Logger$'];  // singleton
+        const logger = spec['TeqFw_Core_Logger$']; // singleton
         /** @type {TeqFw_Core_Logger_Transport_Console} */
-        const logToConsole = spec['TeqFw_Core_Logger_Transport_Console$'];  // singleton
+        const logToConsole = spec['TeqFw_Core_Logger_Transport_Console$']; // singleton
         /** @type {TeqFw_Core_Plugin_Scan} */
         const pluginScan = spec['TeqFw_Core_Plugin_Scan$']; // singleton
 
