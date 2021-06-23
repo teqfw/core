@@ -26,9 +26,7 @@ class TeqFw_Core_Plugin_Scan_Item {
 
 class TeqFw_Core_Plugin_Scan {
     constructor(spec) {
-        // CONSTRUCTOR INJECTED DEPS
-        /** @type {TeqFw_Core_Defaults} */
-        const DEF = spec['TeqFw_Core_Defaults$'];
+        // EXTRACT DEPS
         /** @type {TeqFw_Di_Util_PluginScanner} */
         const scanner = spec['TeqFw_Di_Util_PluginScanner$']; // singleton
         /** @type {TeqFw_Core_Logger} */

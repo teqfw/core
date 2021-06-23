@@ -16,9 +16,9 @@ const NS = 'TeqFw_Core_Back_Cli_Version';
 function Factory(spec) {
     // PARSE INPUT & DEFINE WORKING VARS
     /** @type {TeqFw_Core_Defaults} */
-    const DEF = spec['TeqFw_Core_Defaults$'];   // singleton
+    const DEF = spec['TeqFw_Core_Defaults$']; // singleton
     /** @type {TeqFw_Core_Back_App.Bootstrap} */
-    const bootCfg = spec[DEF.DI_BOOTSTRAP]; // singleton
+    const cfg = spec['TeqFw_Core_Back_App#Bootstrap$']; // singleton
     /** @type {typeof TeqFw_Core_Back_Cli_Command_Data} */
     const DCommand = spec['TeqFw_Core_Back_Cli_Command#Data']; // class
 
@@ -29,7 +29,7 @@ function Factory(spec) {
      * @memberOf TeqFw_Core_Back_Cli_Version
      */
     const action = async function () {
-        console.log(`Application version: ${bootCfg.version}.`);
+        console.log(`Application version: ${cfg.version}.`);
     };
 
     // MAIN FUNCTIONALITY
@@ -45,7 +45,7 @@ function Factory(spec) {
 }
 
 // MODULE'S FUNCTIONALITY
-Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.name}`});
+Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.constructor.name}`});
 
 // MODULE'S EXPORT
 export default Factory;

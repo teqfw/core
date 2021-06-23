@@ -39,7 +39,7 @@ class Factory {
 
 // freeze class to deny attributes changes then export class
 Object.freeze(TeqFw_Core_Front_Data_Config);
-Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.name}`});
+Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.constructor.name}`});
 export {
     TeqFw_Core_Front_Data_Config as default,
     Factory
