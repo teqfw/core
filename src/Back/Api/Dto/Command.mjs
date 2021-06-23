@@ -2,64 +2,58 @@
  * Data structure to add command to commander (@see TeqFw_Core_Back_App.init.initCommander.addCommand).
  */
 // MODULE'S VARS
-const NS = 'TeqFw_Core_Back_Api_Dto_Command_Data';
+const NS = 'TeqFw_Core_Back_Api_Dto_Command';
 
 // MODULE'S CLASSES
-class TeqFw_Core_Back_Api_Dto_Command_Data {
+class TeqFw_Core_Back_Api_Dto_Command {
     /**
      * Commander action (@see https://www.npmjs.com/package/commander#commands).
      *
      *  @type {Function}
      */
     action;
-    /** @type {string} */
+    /**
+     * Command description: 'Get version of the application.'
+     * @type {string}
+     */
     desc;
-    /** @type {string} */
+    /**
+     * Command name: 'version'
+     * @type {string}
+     */
     name;
-    /** @type {string} */
-    ns;
+    /**
+     * Plugin's realm to compose full name for the command: 'core' => 'core-version'
+     * @type {string}
+     */
+    realm;
 }
 
 /**
  * Factory to create new DTO instances.
- * @memberOf TeqFw_Core_Back_Api_Dto_Command_Data
+ * @memberOf TeqFw_Core_Back_Api_Dto_Command
  */
 class Factory {
-    constructor(spec) {
-        // EXTRACT DEPS
-        /** @type {typeof TeqFw_Core_Back_Api_Dto_Command_Data_Item} */
-        const DItem = spec['TeqFw_Core_Back_Api_Dto_Command_Data_Item#']; // class
-        /** @type {TeqFw_Core_Back_Api_Dto_Command_Data_Item.Factory} */
-        const fItem = spec['TeqFw_Core_Back_Api_Dto_Command_Data_Item#Factory$']; // singleton
-
+    constructor() {
         /**
-         * @param {TeqFw_Core_Back_Api_Dto_Command_Data|null} data
-         * @return {TeqFw_Core_Back_Api_Dto_Command_Data}
+         * @param {TeqFw_Core_Back_Api_Dto_Command|null} data
+         * @return {TeqFw_Core_Back_Api_Dto_Command}
          */
         this.create = function (data = null) {
-            const res = new TeqFw_Core_Back_Api_Dto_Command_Data();
-            res.amount = data?.amount ?? 0;
-            res.success = data?.success ?? false;
-            res.currency = data?.currency;
-            res.item = (data?.item instanceof DItem) ? data.item : fItem.create(data?.item);
-            res.date = data?.date
-                ? (data.date instanceof Date) ? data.date : new Date(data?.date)
-                : null;
-            res.id = data?.id;
-            res.items = Array.isArray(data?.items)
-                ? data.items.map((one) => (one instanceof DItem) ? one : fItem.create(one))
-                : [];
-            res.state = data?.state;
-            res.userId = data?.userId;
+            const res = new TeqFw_Core_Back_Api_Dto_Command();
+            res.action = data?.action;
+            res.desc = data?.desc;
+            res.name = data?.name;
+            res.realm = data?.realm;
             return res;
         }
     }
 }
 
 // freeze class to deny attributes changes then export class
-Object.freeze(TeqFw_Core_Back_Api_Dto_Command_Data);
+Object.freeze(TeqFw_Core_Back_Api_Dto_Command);
 Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.constructor.name}`});
 export {
-    TeqFw_Core_Back_Api_Dto_Command_Data as default,
+    TeqFw_Core_Back_Api_Dto_Command as default,
     Factory
 } ;
