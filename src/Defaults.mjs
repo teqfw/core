@@ -3,11 +3,6 @@
  */
 export default class TeqFw_Core_App_Defaults {
     API_LOAD_CFG = '/load/config';
-    API_LOAD_NS = '/load/namespaces';
-
-    AREA_API = 'api';    // URL prefix for API requests: https://.../realm/api/...
-    AREA_SRC = 'src';    // URL prefix for ES6/JS sources: https://.../realm/src/...
-    AREA_WEB = 'web';    // URL prefix for static files: https://.../realm/web/...
 
     BACK_REALM = 'core';  // realm for API services ('/api/core/...') and CLI commands ('core-...')
 
@@ -15,10 +10,7 @@ export default class TeqFw_Core_App_Defaults {
     DI_CONFIG = 'coreConfig'; // TODO: should we use singleton or instance 'TeqFw_Di_Container$'?
     DI_CONTAINER = 'container'; // DI container label for container itself (see TeqFw_Di_Container.constructor).
     DI_I18N = 'coreI18n';
-    DI_STORE = 'coreStore'; // TODO: move it to http2/vue plugin (see TeqFw_Core_App_Front_Gate_Load_Config.gate).
-
-    FS_SRC = 'src'; // default folder for plugin's static resources in filesystem
-    FS_WEB = 'web'; // default folder for plugin's static resources in filesystem
+    DI_STORE = 'coreStore'; // TODO: move it to http2/vue plugin (see TeqFw_Http2_Front_Gate_Load_Config.gate).
 
     I18N_BACK = 'back'; // i18n realm for backend resources in plugin initializer
     I18N_FRONT = 'front'; // i18n realm for frontend resources in plugin initializer

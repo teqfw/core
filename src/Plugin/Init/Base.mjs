@@ -34,7 +34,7 @@ export default class TeqFw_Core_App_Plugin_Init_Base {
 
         this.getServicesList = function () {
             return [
-                'TeqFw_Core_App_Back_Service_Load_Config$',
+                'TeqFw_Http2_Back_Service_Load_Config$',
             ];
         };
 
