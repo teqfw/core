@@ -1,10 +1,10 @@
 /**
  * Relational DB utilities.
  *
- * @namespace TeqFw_Core_App_Back_Util_RDb
+ * @namespace TeqFw_Core_Back_Util_RDb
  */
 // MODULE'S VARS
-const NS = 'TeqFw_Core_App_Back_Util_RDb';
+const NS = 'TeqFw_Core_Back_Util_RDb';
 
 // MODULE'S FUNCTIONS
 
@@ -12,7 +12,7 @@ const NS = 'TeqFw_Core_App_Back_Util_RDb';
  * Get list of available tables.
  * @param trx
  * @return {Promise<*[]>}
- * @memberOf TeqFw_Core_App_Back_Util_RDb
+ * @memberOf TeqFw_Core_Back_Util_RDb
  */
 async function getTables(trx) {
     const result = [];
@@ -38,7 +38,7 @@ async function getTables(trx) {
  * Return 'true' if knex client is connected to Postgres DB.
  * @param client
  * @return {boolean}
- * @memberOf TeqFw_Core_App_Back_Util_RDb
+ * @memberOf TeqFw_Core_Back_Util_RDb
  */
 function isPostgres(client) {
     return client.constructor.name === 'Client_PG';
@@ -50,7 +50,7 @@ function isPostgres(client) {
  * @param dump
  * @param entity
  * @return {Promise<void>}
- * @memberOf TeqFw_Core_App_Back_Util_RDb
+ * @memberOf TeqFw_Core_Back_Util_RDb
  */
 async function itemsInsert(trx, dump, entity) {
     if (Array.isArray(dump[entity]) && dump[entity].length > 0) {
@@ -65,7 +65,7 @@ async function itemsInsert(trx, dump, entity) {
  * @param {string} entity
  * @param {string[]|null} cols
  * @returns {Promise<*|null>}
- * @memberOf TeqFw_Core_App_Back_Util_RDb
+ * @memberOf TeqFw_Core_Back_Util_RDb
  */
 async function itemsSelect(trx, tables, entity, cols = null) {
     if (tables.includes(entity)) {
@@ -87,7 +87,7 @@ async function itemsSelect(trx, tables, entity, cols = null) {
  * @param {String} tblTrg
  * @param {String|String[]} fldTrg
  * @returns {String}
- * @memberOf TeqFw_Core_App_Back_Util_RDb
+ * @memberOf TeqFw_Core_Back_Util_RDb
  */
 function nameFK(tblSrc, fldSrc, tblTrg, fldTrg) {
     let result = `FK_${tblSrc}_`;
@@ -108,7 +108,7 @@ function nameFK(tblSrc, fldSrc, tblTrg, fldTrg) {
  * @param {String} tbl
  * @param {String|String[]} fld
  * @returns {String}
- * @memberOf TeqFw_Core_App_Back_Util_RDb
+ * @memberOf TeqFw_Core_Back_Util_RDb
  */
 function nameNX(tbl, fld) {
     let result = `IK_${tbl}_`;
@@ -126,7 +126,7 @@ function nameNX(tbl, fld) {
  * @param {String} tbl
  * @param {String|String[]} fld
  * @returns {String}
- * @memberOf TeqFw_Core_App_Back_Util_RDb
+ * @memberOf TeqFw_Core_Back_Util_RDb
  */
 function nameUQ(tbl, fld) {
     let result = `UK_${tbl}_`;
@@ -143,7 +143,7 @@ function nameUQ(tbl, fld) {
  * @param schema
  * @param {String[]} serials
  * @returns {Promise<Object>}
- * @memberOf TeqFw_Core_App_Back_Util_RDb
+ * @memberOf TeqFw_Core_Back_Util_RDb
  */
 async function serialsGet(schema, serials) {
     const result = {};
@@ -163,7 +163,7 @@ async function serialsGet(schema, serials) {
  * @param schema
  * @param {Object} serials
  * @returns {Promise<void>}
- * @memberOf TeqFw_Core_App_Back_Util_RDb
+ * @memberOf TeqFw_Core_Back_Util_RDb
  */
 async function serialsSet(schema, serials) {
     for (const one of Object.keys(serials)) {

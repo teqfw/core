@@ -1,32 +1,32 @@
 /**
- * @namespace TeqFw_Core_App_Back_Cli_Version
+ * @namespace TeqFw_Core_Back_Cli_Version
  */
 // DEFINE WORKING VARS
-const NS = 'TeqFw_Core_App_Back_Cli_Version';
+const NS = 'TeqFw_Core_Back_Cli_Version';
 
 // DEFINE MODULE'S FUNCTIONS
 /**
  * Factory to create CLI command to get application version.
  *
  * @param {TeqFw_Di_SpecProxy} spec
- * @returns {TeqFw_Core_App_Back_Cli_Command_Data}
+ * @returns {TeqFw_Core_Back_Cli_Command_Data}
  * @constructor
- * @memberOf TeqFw_Core_App_Back_Cli_Version
+ * @memberOf TeqFw_Core_Back_Cli_Version
  */
 function Factory(spec) {
     // PARSE INPUT & DEFINE WORKING VARS
-    /** @type {TeqFw_Core_App_Defaults} */
-    const DEF = spec['TeqFw_Core_App_Defaults$'];   // singleton
-    /** @type {TeqFw_Core_App_Back_App.Bootstrap} */
+    /** @type {TeqFw_Core_Defaults} */
+    const DEF = spec['TeqFw_Core_Defaults$'];   // singleton
+    /** @type {TeqFw_Core_Back_App.Bootstrap} */
     const bootCfg = spec[DEF.DI_BOOTSTRAP]; // singleton
-    /** @type {typeof TeqFw_Core_App_Back_Cli_Command_Data} */
-    const DCommand = spec['TeqFw_Core_App_Back_Cli_Command#Data']; // class
+    /** @type {typeof TeqFw_Core_Back_Cli_Command_Data} */
+    const DCommand = spec['TeqFw_Core_Back_Cli_Command#Data']; // class
 
     // DEFINE INNER FUNCTIONS
     /**
      * Print out current version of the application.
      * @returns {Promise<void>}
-     * @memberOf TeqFw_Core_App_Back_Cli_Version
+     * @memberOf TeqFw_Core_Back_Cli_Version
      */
     const action = async function () {
         console.log(`Application version: ${bootCfg.version}.`);

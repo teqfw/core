@@ -1,16 +1,16 @@
 /**
  * Class to integrate plugin into TeqFW application.
- * @extends TeqFw_Core_App_Plugin_Init_Base
+ * @extends TeqFw_Core_Plugin_Init_Base
  */
-export default class TeqFw_Core_App_Plugin_Init {
+export default class TeqFw_Core_Plugin_Init {
 
     constructor(spec) {
-        /** @type {TeqFw_Core_App_Defaults} */
-        const DEF = spec['TeqFw_Core_App_Defaults$'];    // singleton
+        /** @type {TeqFw_Core_Defaults} */
+        const DEF = spec['TeqFw_Core_Defaults$'];    // singleton
 
         this.getCommands = function () {
             return [
-                'TeqFw_Core_App_Back_Cli_Version$',
+                'TeqFw_Core_Back_Cli_Version$',
             ];
         };
 

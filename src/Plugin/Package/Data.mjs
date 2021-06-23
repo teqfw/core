@@ -2,7 +2,7 @@
  * Structures to describe TeqFW plugin data in 'package.json' file of the npm package.
  */
 
-class TeqFw_Core_App_Plugin_Package_Data_Autoload {
+class TeqFw_Core_Plugin_Package_Data_Autoload {
     /**
      * Extensions for ES6 sources (default: 'mjs').
      * @type {String}
@@ -20,13 +20,13 @@ class TeqFw_Core_App_Plugin_Package_Data_Autoload {
     path;
 }
 
-class TeqFw_Core_App_Plugin_Package_Data {
-    /** @type {TeqFw_Core_App_Plugin_Package_Data_Autoload} */
+class TeqFw_Core_Plugin_Package_Data {
+    /** @type {TeqFw_Core_Plugin_Package_Data_Autoload} */
     autoload;
 }
 
 
 export {
-    TeqFw_Core_App_Plugin_Package_Data as default,
-    TeqFw_Core_App_Plugin_Package_Data_Autoload as Autoload,
+    TeqFw_Core_Plugin_Package_Data as default,
+    TeqFw_Core_Plugin_Package_Data_Autoload as Autoload,
 };

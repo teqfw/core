@@ -7,7 +7,7 @@ const LEVEL_WARN = 3;
 const LEVEL_ERROR = 4;
 const TEQ_FW_LOG_MARKERS = 'teqFwLogMarkers';
 
-export default class TeqFw_Core_App_Logger {
+export default class TeqFw_Core_Logger {
 
     constructor() {
 

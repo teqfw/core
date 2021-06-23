@@ -3,13 +3,13 @@ import $knex from 'knex';
 /**
  * 'knex' based connector to relational database.
  */
-export default class TeqFw_Core_App_Db_Connector {
+export default class TeqFw_Core_Db_Connector {
 
     constructor(spec) {
-        /** @type {TeqFw_Core_App_Back_Config} */
-        const config = spec['TeqFw_Core_App_Back_Config$'];
-        /** @type {TeqFw_Core_App_Logger} */
-        const logger = spec['TeqFw_Core_App_Logger$'];
+        /** @type {TeqFw_Core_Back_Config} */
+        const config = spec['TeqFw_Core_Back_Config$'];
+        /** @type {TeqFw_Core_Logger} */
+        const logger = spec['TeqFw_Core_Logger$'];
 
         let knex;
 

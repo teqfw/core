@@ -1,45 +1,57 @@
 /**
  * Backend application itself.
- * @namespace TeqFw_Core_App_Back_App
+ * @namespace TeqFw_Core_Back_App
  */
 // MODULE'S IMPORT
 import $commander from 'commander';
 import $path from 'path';
 
+// MODULE'S VARS
+const NS = 'TeqFw_Core_Back_App';
+
 // MODULE'S CLASSES
 /**
  * Define data structure for backend app bootstrap config.
  *
- * @memberOf TeqFw_Core_App_Back_App
+ * CREATE INSTANCES WITH 'new' OPERATOR, NOT WITH DI CONTAINER.
+ *
+ * @memberOf TeqFw_Core_Back_App
  */
 class Bootstrap {
     /** @type {string} absolute path to the root folder of the project */
     root;
     /** @type {string} current version of the application (`0.1.0`) */
     version;
+
+    constructor(data) {
+        this.root = data.root;
+        this.version = data.version;
+    }
 }
+
+Object.defineProperty(Bootstrap, 'name', {value: `${NS}.${Bootstrap.name}`});
 
 /**
  * Main class to launch application: read modules meta data, initialize parts of app, start the app.
  */
-class TeqFw_Core_App_Back_App {
+class TeqFw_Core_Back_App {
 
     constructor(spec) {
         // EXTRACT DEPS
-        /** @type {TeqFw_Core_App_Defaults} */
-        const DEF = spec['TeqFw_Core_App_Defaults$'];
-        /** @type {TeqFw_Core_App_Back_App.Bootstrap} */
+        /** @type {TeqFw_Core_Defaults} */
+        const DEF = spec['TeqFw_Core_Defaults$'];
+        /** @type {TeqFw_Core_Back_App.Bootstrap} */
         const bootCfg = spec[DEF.DI_BOOTSTRAP]; // singleton
         /** @type {TeqFw_Di_Container} */
         const container = spec[DEF.DI_CONTAINER];   // singleton
-        /** @type {TeqFw_Core_App_Back_Config} */
-        const config = spec['TeqFw_Core_App_Back_Config$'];  // singleton
-        /** @type {TeqFw_Core_App_Logger} */
-        const logger = spec['TeqFw_Core_App_Logger$'];  // singleton
-        /** @type {TeqFw_Core_App_Logger_Transport_Console} */
-        const logToConsole = spec['TeqFw_Core_App_Logger_Transport_Console$'];  // singleton
-        /** @type {TeqFw_Core_App_Plugin_Scan} */
-        const pluginScan = spec['TeqFw_Core_App_Plugin_Scan$']; // singleton
+        /** @type {TeqFw_Core_Back_Config} */
+        const config = spec['TeqFw_Core_Back_Config$'];  // singleton
+        /** @type {TeqFw_Core_Logger} */
+        const logger = spec['TeqFw_Core_Logger$'];  // singleton
+        /** @type {TeqFw_Core_Logger_Transport_Console} */
+        const logToConsole = spec['TeqFw_Core_Logger_Transport_Console$'];  // singleton
+        /** @type {TeqFw_Core_Plugin_Scan} */
+        const pluginScan = spec['TeqFw_Core_Plugin_Scan$']; // singleton
 
         // INIT OWN PROPERTIES AND DEFINE WORKING VARS
         const commander = new $commander.Command();
@@ -55,9 +67,9 @@ class TeqFw_Core_App_Back_App {
             /**
              * Run 'commander' initialization code for all plugins.
              *
-             * @param {TeqFw_Core_App_Plugin_Registry} plugins
+             * @param {TeqFw_Core_Plugin_Registry} plugins
              * @returns {Promise<void>}
-             * @memberOf TeqFw_Core_App_Back_App.init
+             * @memberOf TeqFw_Core_Back_App.init
              */
             async function initCommander(plugins) {
                 // DEFINE INNER FUNCTIONS
@@ -66,7 +78,7 @@ class TeqFw_Core_App_Back_App {
                  *
                  * @param {string} factoryName 'Vendor_Module_Cli_Command$'
                  * @returns {Promise<void>}
-                 * @memberOf TeqFw_Core_App_Back_App.init.initCommander
+                 * @memberOf TeqFw_Core_Back_App.init.initCommander
                  */
                 async function addCommand(factoryName) {
                     try {
@@ -85,7 +97,7 @@ class TeqFw_Core_App_Back_App {
                 logger.info('Integrate plugins to the Commander.');
                 for (const item of plugins.items()) {
                     if (item.initClass) {
-                        /** @type {TeqFw_Core_App_Plugin_Init} */
+                        /** @type {TeqFw_Core_Plugin_Init} */
                         const init = await container.get(item.initClass);
                         if (typeof init.getCommands === 'function') {
                             const commandIds = init.getCommands();
@@ -100,11 +112,11 @@ class TeqFw_Core_App_Back_App {
 
             /**
              * Run through all plugins and register namespaces in DI container.
-             * @param {TeqFw_Core_App_Plugin_Registry} plugins
+             * @param {TeqFw_Core_Plugin_Registry} plugins
              */
             function initDiContainer(plugins) {
                 for (const item of plugins.items()) {
-                    /** @type {TeqFw_Core_App_Plugin_Package_Data_Autoload} */
+                    /** @type {TeqFw_Core_Plugin_Package_Data_Autoload} */
                     const auto = item.teqfw.autoload;
                     const ns = auto.ns;
                     const path = $path.join(item.path, auto.path);
@@ -114,12 +126,16 @@ class TeqFw_Core_App_Back_App {
             }
 
             // MAIN FUNCTIONALITY
+
+            // init backend logger
             logger.addTransport(logToConsole);  // setup default logger transport as console
             logger.info(`Teq-application is started in '${bootCfg.root}' (ver. ${bootCfg.version}).`);
-            config.load({rootPath: bootCfg.root});  // load local configuration
+            // load local configuration
+            config.load({rootPath: bootCfg.root});
+            // scan node modules for teq-plugins
             const plugins = await pluginScan.exec(bootCfg.root);
+            //
             initDiContainer(plugins);
-            container.set(DEF.DI_CONFIG, config.get());
             await initCommander(plugins);
         };
 
@@ -152,6 +168,6 @@ class TeqFw_Core_App_Back_App {
 }
 
 export {
-    TeqFw_Core_App_Back_App as default,
+    TeqFw_Core_Back_App as default,
     Bootstrap
 }

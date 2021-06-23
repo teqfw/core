@@ -1,7 +1,7 @@
 /**
  * Plugin level constants (hardcoded configuration).
  */
-export default class TeqFw_Core_App_Defaults {
+export default class TeqFw_Core_Defaults {
     API_LOAD_CFG = '/load/config';
 
     BACK_REALM = 'core';  // realm for API services ('/api/core/...') and CLI commands ('core-...')

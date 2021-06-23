@@ -1,5 +1,5 @@
 /**
- * @namespace TeqFw_Core_App_Shared_Util
+ * @namespace TeqFw_Core_Shared_Util
  */
 
 /**
@@ -9,7 +9,7 @@
  * @param {Object} target
  * @param {Object} source
  * @returns {Object}
- * @memberOf TeqFw_Core_App_Shared_Util
+ * @memberOf TeqFw_Core_Shared_Util
  */
 function deepMerge(target, source) {
     const isObject = (obj) => obj && typeof obj === 'object';
@@ -38,7 +38,7 @@ function deepMerge(target, source) {
  * Convert local date to YYYY/MM/DD.
  * @param {Date|string|null} dateIn
  * @return {string}
- * @memberOf TeqFw_Core_App_Shared_Util
+ * @memberOf TeqFw_Core_Shared_Util
  */
 function formatDate(dateIn = null) {
     /** @type {Date} */
@@ -56,7 +56,7 @@ function formatDate(dateIn = null) {
  * @param {Date|string|null} dateIn
  * @param {boolean} withSeconds
  * @return {string}
- * @memberOf TeqFw_Core_App_Shared_Util
+ * @memberOf TeqFw_Core_Shared_Util
  */
 function formatDateTime(dateIn = null, withSeconds = true) {
     /** @type {Date} */
@@ -78,7 +78,7 @@ function formatDateTime(dateIn = null, withSeconds = true) {
  * @param {Date|string|null} dateIn
  * @param {boolean} withSeconds
  * @return {string}
- * @memberOf TeqFw_Core_App_Shared_Util
+ * @memberOf TeqFw_Core_Shared_Util
  */
 function formatTime(dateIn = null, withSeconds = true) {
     /** @type {Date} */
@@ -95,7 +95,7 @@ function formatTime(dateIn = null, withSeconds = true) {
  * Convert UTC date to YYYY/MM/DD.
  * @param {Date|string|null} dateIn
  * @return {string}
- * @memberOf TeqFw_Core_App_Shared_Util
+ * @memberOf TeqFw_Core_Shared_Util
  */
 function formatUtcDate(dateIn = null) {
     /** @type {Date} */
@@ -116,7 +116,7 @@ function formatUtcDate(dateIn = null) {
  * @param {number} num
  * @param {number} places (integer)
  * @return {number}
- * @memberOf TeqFw_Core_App_Shared_Util
+ * @memberOf TeqFw_Core_Shared_Util
  */
 function round(num, places = 2) {
     const norm = (typeof num === 'number') ? num : Number.parseFloat(num);
@@ -129,7 +129,7 @@ function round(num, places = 2) {
  * @param {number} amount
  * @param {string|null} cur
  * @return {string}
- * @memberOf TeqFw_Core_App_Shared_Util
+ * @memberOf TeqFw_Core_Shared_Util
  */
 function formatAmount(amount, cur = null) {
     const normAmnt = round(amount);
@@ -141,7 +141,7 @@ function formatAmount(amount, cur = null) {
  * Convert UTC date to YYYY/MM/DD HH:MM:SS.
  * @param {Date|string|null} dateIn
  * @return {string}
- * @memberOf TeqFw_Core_App_Shared_Util
+ * @memberOf TeqFw_Core_Shared_Util
  */
 function formatUtcDateTime(dateIn = null) {
     /** @type {Date} */
@@ -161,7 +161,7 @@ function formatUtcDateTime(dateIn = null) {
  * Convert UTC time to HH:MM:SS.
  * @param {Date|string|null} dateIn
  * @return {string}
- * @memberOf TeqFw_Core_App_Shared_Util
+ * @memberOf TeqFw_Core_Shared_Util
  */
 function formatUtcTime(dateIn = null) {
     /** @type {Date} */
@@ -179,7 +179,7 @@ function formatUtcTime(dateIn = null) {
  * Return 'true' if `val` is empty.
  * @param {*} val
  * @returns {boolean}
- * @memberOf TeqFw_Core_App_Shared_Util
+ * @memberOf TeqFw_Core_Shared_Util
  */
 function isEmpty(val) {
     return (val === undefined) || (val === null) || (val === '');

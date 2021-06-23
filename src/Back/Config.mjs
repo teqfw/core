@@ -5,7 +5,7 @@ import $path from 'path';
  * TODO:
  *  - add ACL to configuration (is it possible? we should prevent access to certain configuration nodes for some modules)
  */
-export default class TeqFw_Core_App_Back_Config {
+export default class TeqFw_Core_Back_Config {
 
     constructor() {
         /** @type {null|Object} storage for configuration options */
@@ -41,10 +41,10 @@ export default class TeqFw_Core_App_Back_Config {
         /**
          * Get configuration value by path (`path/to/the/node`).
          *
-         * @param {string} cfgPath - Path to the node of the configuration tree (`path/to/the/node`).
+         * @param {string|null} cfgPath - Path to the node of the configuration tree (`path/to/the/node`).
          * @returns {null|string|boolean|number|Object} - Configuration value.
          */
-        this.get = function (cfgPath) {
+        this.get = function (cfgPath = null) {
             let result = store;
             if (typeof cfgPath === 'string') {
                 const parts = cfgPath.split('/');

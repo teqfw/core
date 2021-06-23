@@ -1,9 +1,9 @@
 /**
  * Connector to IndexedDb to use with async/await in TeqFW apps.
  */
-const NS = 'TeqFw_Core_App_Front_Idb_Connect';
+const NS = 'TeqFw_Core_Front_Idb_Connect';
 
-class TeqFw_Core_App_Front_Idb_Connect {
+class TeqFw_Core_Front_Idb_Connect {
     constructor() {
         let /** @type {function} */
             fnUpgrade,
@@ -63,7 +63,7 @@ class TeqFw_Core_App_Front_Idb_Connect {
  *
  * https://stackoverflow.com/a/61373664/4073821
  *
- * @memberOf TeqFw_Core_App_Front_Idb_Connect
+ * @memberOf TeqFw_Core_Front_Idb_Connect
  */
 class Store {
     constructor($name, $db) {
@@ -104,4 +104,4 @@ class Store {
 }
 
 Object.defineProperty(Store, 'name', {value: `${NS}.${Store.name}`});
-export default TeqFw_Core_App_Front_Idb_Connect;
+export default TeqFw_Core_Front_Idb_Connect;
