@@ -1,3 +1,3 @@
-# teqfw-core-app
+# @teqfw/core
 
 TeqFW: core application functionality.

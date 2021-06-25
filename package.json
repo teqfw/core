@@ -1,5 +1,5 @@
 {
-  "name": "@teqfw/core-app",
+  "name": "@teqfw/core",
   "version": "0.2.0",
   "description": "TeqFW: core application functionality.",
   "main": "./src/Instance.mjs",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/teqfw/core-app.git"
+    "url": "git+https://github.com/teqfw/core.git"
   },
   "keywords": [
     "pet",
@@ -20,9 +20,9 @@
   "author": "Alex Gusev <alex@flancer64.com>",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/teqfw/core-app/issues"
+    "url": "https://github.com/teqfw/core/issues"
   },
-  "homepage": "https://github.com/teqfw/core-app#readme",
+  "homepage": "https://github.com/teqfw/core#readme",
   "dependencies": {
     "@teqfw/di": "*",
     "commander": "*",
