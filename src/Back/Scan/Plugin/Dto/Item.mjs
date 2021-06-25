@@ -42,7 +42,6 @@ class Factory {
          */
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Scan_Plugin_Dto_Item();
-            res.initClass = data?.initClass;
             res.name = data?.name;
             res.path = data?.path;
             res.teqfw = data?.teqfw;
