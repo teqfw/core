@@ -41,7 +41,7 @@ class TeqFw_Core_Back_App {
         /** @type {TeqFw_Core_Defaults} */
         const DEF = spec['TeqFw_Core_Defaults$'];
         /** @type {TeqFw_Core_Back_App.Bootstrap} */
-        const bootCfg = spec[DEF.DI_BOOTSTRAP]; // singleton
+        const bootCfg = spec['TeqFw_Core_Back_App#Bootstrap$']; // singleton
         /** @type {TeqFw_Di_Container} */
         const container = spec['TeqFw_Di_Container$']; // singleton
         /** @type {TeqFw_Core_Back_Config} */
@@ -50,8 +50,8 @@ class TeqFw_Core_Back_App {
         const logger = spec['TeqFw_Core_Logger$']; // singleton
         /** @type {TeqFw_Core_Logger_Transport_Console} */
         const logToConsole = spec['TeqFw_Core_Logger_Transport_Console$']; // singleton
-        /** @type {TeqFw_Core_Plugin_Scan} */
-        const pluginScan = spec['TeqFw_Core_Plugin_Scan$']; // singleton
+        /** @type {TeqFw_Core_Back_Scan_Plugin} */
+        const pluginScan = spec['TeqFw_Core_Back_Scan_Plugin$']; // singleton
 
         // INIT OWN PROPERTIES AND DEFINE WORKING VARS
         const commander = new $commander.Command();
@@ -67,7 +67,7 @@ class TeqFw_Core_Back_App {
             /**
              * Run 'commander' initialization code for all plugins.
              *
-             * @param {TeqFw_Core_Plugin_Registry} plugins
+             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} plugins
              * @returns {Promise<void>}
              * @memberOf TeqFw_Core_Back_App.init
              */
@@ -82,11 +82,12 @@ class TeqFw_Core_Back_App {
                  */
                 async function addCommand(factoryName) {
                     try {
-                        const {ns, name, desc, action} = await container.get(factoryName, me.constructor.name);
-                        const fullName = (ns) ? `${ns}-${name}` : name;
+                        /** @type {TeqFw_Core_Back_Api_Dto_Command} */
+                        const cmd = await container.get(`${factoryName}$`); // get as instance singleton
+                        const fullName = (cmd.realm) ? `${cmd.realm}-${cmd.name}` : cmd.name;
                         commander.command(fullName)
-                            .description(desc)
-                            .action(action);
+                            .description(cmd.desc)
+                            .action(cmd.action);
                         logger.info(`'${fullName}' command is added.`);
                     } catch (e) {
                         logger.error(`Cannot create command using '${factoryName}' factory. Error: ${e.message}`);
@@ -96,15 +97,9 @@ class TeqFw_Core_Back_App {
                 // MAIN FUNCTIONALITY
                 logger.info('Integrate plugins to the Commander.');
                 for (const item of plugins.items()) {
-                    if (item.initClass) {
-                        /** @type {TeqFw_Core_Plugin_Init} */
-                        const init = await container.get(item.initClass);
-                        if (typeof init.getCommands === 'function') {
-                            const commandIds = init.getCommands();
-                            logger.info(`Add commands for '${item.name}' plugin.`);
-                            for (const id of commandIds) {
-                                await addCommand(id);
-                            }
+                    if (Array.isArray(item.teqfw?.commands)) {
+                        for (const id of item.teqfw.commands) {
+                            await addCommand(id);
                         }
                     }
                 }
@@ -112,11 +107,11 @@ class TeqFw_Core_Back_App {
 
             /**
              * Run through all plugins and register namespaces in DI container.
-             * @param {TeqFw_Core_Plugin_Registry} plugins
+             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} plugins
              */
             function initDiContainer(plugins) {
                 for (const item of plugins.items()) {
-                    /** @type {TeqFw_Core_Plugin_Package_Data_Autoload} */
+                    /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload} */
                     const auto = item.teqfw.autoload;
                     const ns = auto.ns;
                     const path = $path.join(item.path, auto.path);

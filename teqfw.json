@@ -2,5 +2,8 @@
   "autoload": {
     "ns": "TeqFw_Core",
     "path": "./src"
-  }
+  },
+  "commands": [
+    "TeqFw_Core_Back_Cli_Version"
+  ]
 }

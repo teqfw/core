@@ -37,7 +37,7 @@ function Factory(spec) {
 
     // COMPOSE RESULT
     const res = fCommand.create();
-    res.ns = DEF.BACK_REALM;
+    res.realm = DEF.BACK_REALM;
     res.name = 'version';
     res.desc = 'Get version of the application.';
     res.action = action;

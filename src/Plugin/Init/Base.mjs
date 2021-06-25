@@ -1,6 +1,7 @@
 /**
  * Base class for plugins integration into TeqFW application.
  * @interface
+ * @deprecated use 'teqfw.json' instead
  */
 export default class TeqFw_Core_Plugin_Init_Base {
 

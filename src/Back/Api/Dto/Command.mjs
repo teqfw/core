@@ -8,7 +8,6 @@ const NS = 'TeqFw_Core_Back_Api_Dto_Command';
 class TeqFw_Core_Back_Api_Dto_Command {
     /**
      * Commander action (@see https://www.npmjs.com/package/commander#commands).
-     *
      *  @type {Function}
      */
     action;
