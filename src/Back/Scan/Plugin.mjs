@@ -10,10 +10,8 @@ export default class TeqFw_Core_Back_Scan_Plugin {
         const logger = spec['TeqFw_Core_Logger$']; // singleton
         /** @type {TeqFw_Core_Back_Scan_Plugin_Registry} */
         const registry = spec['TeqFw_Core_Back_Scan_Plugin_Registry$']; // singleton
-        /** @type {TeqFw_Core_Back_Scan_Plugin_Dto_Item.Factory} */
-        const fItem = spec['TeqFw_Core_Back_Scan_Plugin_Dto_Item#Factory$']; // singleton
-        /** @type {typeof TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload} */
-        const DAutoload = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload#']; // class
+        /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory} */
+        const fItem = spec['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item#Factory$']; // singleton
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload.Factory} */
         const fAutoload = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload#Factory$']; // singleton
 
@@ -30,7 +28,7 @@ export default class TeqFw_Core_Back_Scan_Plugin {
 
             /**
              * @param {Object.<string, TeqFw_Di_Api_ScanData>} scanItems
-             * @returns {Promise<TeqFw_Core_Back_Scan_Plugin_Dto_Item[]>}
+             * @returns {Promise<TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]>}
              */
             async function getPlugins(scanItems) {
                 // DEFINE INNER FUNCTIONS
@@ -38,7 +36,7 @@ export default class TeqFw_Core_Back_Scan_Plugin {
                 /**
                  * Check does 'package.json' exist, read content, parse and return data if 'yes'.
                  * @param {TeqFw_Di_Api_ScanData} scanItem
-                 * @returns {TeqFw_Core_Back_Scan_Plugin_Dto_Item}
+                 * @returns {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item}
                  */
                 function extractPluginItem(scanItem) {
                     const res = fItem.create();

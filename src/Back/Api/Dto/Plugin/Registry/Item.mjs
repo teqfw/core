@@ -2,15 +2,10 @@
  * Plugin registry item DTO.
  */
 // MODULE'S VARS
-const NS = 'TeqFw_Core_Back_Scan_Plugin_Dto_Item';
+const NS = 'TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item';
 
 // MODULE'S CLASSES
-class TeqFw_Core_Back_Scan_Plugin_Dto_Item {
-    /**
-     * Name of the plugin init class.
-     * @type {string}
-     */
-    initClass;
+class TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item {
     /**
      * Name of the package.
      * @type {string}
@@ -32,16 +27,16 @@ class TeqFw_Core_Back_Scan_Plugin_Dto_Item {
 
 /**
  * Factory to create new DTO instances.
- * @memberOf TeqFw_Core_Back_Scan_Plugin_Dto_Item
+ * @memberOf TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item
  */
 class Factory {
     constructor() {
         /**
-         * @param {TeqFw_Core_Back_Scan_Plugin_Dto_Item|null} data
-         * @return {TeqFw_Core_Back_Scan_Plugin_Dto_Item}
+         * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item|null} data
+         * @return {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item}
          */
         this.create = function (data = null) {
-            const res = new TeqFw_Core_Back_Scan_Plugin_Dto_Item();
+            const res = new TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item();
             res.name = data?.name;
             res.path = data?.path;
             res.teqfw = data?.teqfw;
@@ -51,9 +46,9 @@ class Factory {
 }
 
 // freeze class to deny attributes changes then export class
-Object.freeze(TeqFw_Core_Back_Scan_Plugin_Dto_Item);
+Object.freeze(TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item);
 Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.constructor.name}`});
 export {
-    TeqFw_Core_Back_Scan_Plugin_Dto_Item as default,
+    TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item as default,
     Factory
 } ;
