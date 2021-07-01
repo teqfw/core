@@ -17,8 +17,8 @@ const NS = 'TeqFw_Core_Back_Cli_Version';
  */
 function Factory(spec) {
     // EXTRACT DEPS
-    /** @type {TeqFw_Core_Defaults} */
-    const DEF = spec['TeqFw_Core_Defaults$']; // singleton
+    /** @type {TeqFw_Core_Back_Defaults} */
+    const DEF = spec['TeqFw_Core_Back_Defaults$']; // singleton
     /** @type {TeqFw_Core_Back_App.Bootstrap} */
     const cfg = spec['TeqFw_Core_Back_App#Bootstrap$']; // singleton
     /** @type {Function|TeqFw_Core_Back_Api_Dto_Command.Factory} */
@@ -37,7 +37,7 @@ function Factory(spec) {
 
     // COMPOSE RESULT
     const res = fCommand.create();
-    res.realm = DEF.BACK_REALM;
+    res.realm = DEF.REALM;
     res.name = 'version';
     res.desc = 'Get version of the application.';
     res.action = action;
