@@ -10,7 +10,7 @@ class TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload {
      * Extensions for ES6 sources (default: 'mjs').
      * @type {string}
      */
-    ext = 'mjs';
+    ext;
     /**
      * Plugin's namespace ('Vendor_Project_Module').
      * @type {string}
@@ -35,7 +35,7 @@ class Factory {
          */
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload();
-            res.ext = data?.ext;
+            res.ext = data?.ext || 'mjs';
             res.ns = data?.ns;
             res.path = data?.path;
             return res;

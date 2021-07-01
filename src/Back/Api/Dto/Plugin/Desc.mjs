@@ -1,3 +1,5 @@
+import TeqFw_Web_Back_Api_Dto_Plugin_Desc from '@teqfw/web/src/Back/Api/Dto/Plugin/Desc.mjs';
+
 /**
  * DTO to represent plugin descriptor (teqfw.json) structure that is related to 'core' plugin.
  */
@@ -11,6 +13,10 @@ class TeqFw_Core_Back_Api_Dto_Plugin_Desc {
     /** @type {string[]} */
     commands;
 }
+
+// attributes names to use as aliases in queries to object props
+TeqFw_Core_Back_Api_Dto_Plugin_Desc.AUTOLOAD = 'autoload';
+TeqFw_Core_Back_Api_Dto_Plugin_Desc.COMMANDS = 'commands';
 
 /**
  * Factory to create new DTO instances.
