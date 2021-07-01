@@ -5,7 +5,7 @@ class TeqFw_Core_Shared_Service_Route_Load_Config_Request {
 }
 
 /**
- * @extends TeqFw_Core_Front_Data_Config
+ * @extends TeqFw_Web_Front_Api_Dto_Config
  */
 class TeqFw_Core_Shared_Service_Route_Load_Config_Response {
 }
