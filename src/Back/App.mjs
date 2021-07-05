@@ -122,7 +122,7 @@ class TeqFw_Core_Back_App {
              * @return {Promise<void>}
              */
             async function initDiMapping() {
-                const theContext = await container.get('TeqFw_Web_Back_Http1_Request_Context#Factory$');
+                const theContext = await container.get('TeqFw_Web_Back_Server_Request_Context#Factory$');
                 container.set('TeqFw_Web_Back_Api_Request_IContext#Factory$', theContext);
                 const theServContext = await container.get('TeqFw_Web_Plugin_Web_Handler_Service_Context#Factory$');
                 container.set('TeqFw_Web_Back_Api_Service_IContext#Factory$', theServContext);
