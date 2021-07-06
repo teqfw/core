@@ -1,5 +1,3 @@
-import TeqFw_Web_Back_Api_Dto_Plugin_Desc from '@teqfw/web/src/Back/Api/Dto/Plugin/Desc.mjs';
-
 /**
  * DTO to represent plugin descriptor (teqfw.json) structure that is related to 'core' plugin.
  */
@@ -26,7 +24,7 @@ class Factory {
     constructor(spec) {
         // EXTRACT DEPS
         /** @type {typeof TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload} */
-        const DAutoload = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload#']; // class
+        const DAutoload = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload#'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload.Factory} */
         const fAutoload = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload#Factory$']; // singleton
 
