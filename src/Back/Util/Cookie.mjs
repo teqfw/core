@@ -1,6 +1,6 @@
 /**
  * Cookie related utilities.
- * @deprecated use TeqFw_Http2_Back_Util instead, should be removed after 2021/10/21
+ * @deprecated use TeqFw_Web_Back_Util instead, should be removed after 2021/10/21
  */
 export default class TeqFw_Core_Back_Util_Cookie {
 
@@ -10,7 +10,7 @@ export default class TeqFw_Core_Back_Util_Cookie {
      * @param {String} name
      * @param {String} realm
      * @returns {String}
-     * @deprecated use TeqFw_Http2_Back_Util instead, should be removed after 2021/10/21
+     * @deprecated use TeqFw_Web_Back_Util instead, should be removed after 2021/10/21
      */
     clear(name, realm = '') {
         // MAIN FUNCTIONALITY
@@ -25,7 +25,7 @@ export default class TeqFw_Core_Back_Util_Cookie {
      *
      * @param {String} name
      * @returns {String}
-     * @deprecated use TeqFw_Http2_Back_Util instead, should be removed after 2021/10/21
+     * @deprecated use TeqFw_Web_Back_Util instead, should be removed after 2021/10/21
      */
     compose(name) {
         // DEFINE INNER FUNCTIONS
