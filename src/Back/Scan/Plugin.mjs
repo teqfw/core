@@ -5,15 +5,15 @@ export default class TeqFw_Core_Back_Scan_Plugin {
     constructor(spec) {
         // EXTRACT DEPS
         /** @type {TeqFw_Di_Util_PluginScanner} */
-        const scanner = spec['TeqFw_Di_Util_PluginScanner$']; // singleton
+        const scanner = spec['TeqFw_Di_Util_PluginScanner$']; 
         /** @type {TeqFw_Core_Logger} */
-        const logger = spec['TeqFw_Core_Logger$']; // singleton
+        const logger = spec['TeqFw_Core_Logger$']; 
         /** @type {TeqFw_Core_Back_Scan_Plugin_Registry} */
-        const registry = spec['TeqFw_Core_Back_Scan_Plugin_Registry$']; // singleton
+        const registry = spec['TeqFw_Core_Back_Scan_Plugin_Registry$']; 
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory} */
-        const fItem = spec['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item#Factory$']; // singleton
+        const fItem = spec['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item#Factory$']; 
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload.Factory} */
-        const fAutoload = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload#Factory$']; // singleton
+        const fAutoload = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload#Factory$']; 
 
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)

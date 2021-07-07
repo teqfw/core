@@ -26,7 +26,7 @@ class Factory {
         /** @type {typeof TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload} */
         const DAutoload = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload#'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload.Factory} */
-        const fAutoload = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload#Factory$']; // singleton
+        const fAutoload = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload#Factory$']; 
 
         /**
          * @param {TeqFw_Core_Back_Api_Dto_Plugin_Desc|null} data

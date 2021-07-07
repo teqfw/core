@@ -39,17 +39,17 @@ class TeqFw_Core_Back_App {
     constructor(spec) {
         // EXTRACT DEPS
         /** @type {TeqFw_Core_Back_App.Bootstrap} */
-        const bootCfg = spec['TeqFw_Core_Back_App#Bootstrap$']; // singleton
+        const bootCfg = spec['TeqFw_Core_Back_App#Bootstrap$']; 
         /** @type {TeqFw_Di_Container} */
-        const container = spec['TeqFw_Di_Container$']; // singleton
+        const container = spec['TeqFw_Di_Container$']; 
         /** @type {TeqFw_Core_Back_Config} */
-        const config = spec['TeqFw_Core_Back_Config$']; // singleton
+        const config = spec['TeqFw_Core_Back_Config$']; 
         /** @type {TeqFw_Core_Logger} */
-        const logger = spec['TeqFw_Core_Logger$']; // singleton
+        const logger = spec['TeqFw_Core_Logger$']; 
         /** @type {TeqFw_Core_Logger_Transport_Console} */
-        const logToConsole = spec['TeqFw_Core_Logger_Transport_Console$']; // singleton
+        const logToConsole = spec['TeqFw_Core_Logger_Transport_Console$']; 
         /** @type {TeqFw_Core_Back_Scan_Plugin} */
-        const pluginScan = spec['TeqFw_Core_Back_Scan_Plugin$']; // singleton
+        const pluginScan = spec['TeqFw_Core_Back_Scan_Plugin$']; 
 
         // INIT OWN PROPERTIES AND DEFINE WORKING VARS
         const commander = new $commander.Command();
