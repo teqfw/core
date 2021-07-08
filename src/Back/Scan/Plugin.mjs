@@ -42,6 +42,8 @@ export default class TeqFw_Core_Back_Scan_Plugin {
                 function extractPluginItem(scanItem) {
                     const res = fItem.create();
                     let msg = `Teq-module is found in '${scanItem.path}'`;
+                    res.deps = (typeof scanItem.package?.dependencies === 'object')
+                        ? Object.keys(scanItem.package.dependencies) : [];
                     res.name = scanItem.package.name;
                     res.path = scanItem.path;
                     res.teqfw = scanItem.teqfw;
@@ -59,11 +61,80 @@ export default class TeqFw_Core_Back_Scan_Plugin {
                 return result;
             }
 
+            /**
+             * Sort plugins by level according to dependencies.
+             *
+             * @param {string[]} names
+             * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]} items
+             */
+            function composeLevels(names, items) {
+                // PARSE INPUT & DEFINE WORKING VARS
+                const successors = {}; // {core => [web, i18n, vue, ...]}
+                const weights = {};
+
+                // DEFINE INNER FUNCTIONS
+                /**
+                 * Recursive function to update plugins weights in hierarchy.
+                 * 1 - plugin has no deps, 2 - plugin has one dep's level below, ...
+                 *
+                 * Circular dependencies should be resolved on NPM level.
+                 *
+                 * @param {string} name
+                 * @param {number} weight
+                 */
+                function setWeights(name, weight) {
+                    if (weights[name]) weight = weights[name] + 1;
+                    if (successors[name])
+                        for (const one of successors[name]) {
+                            if (weights[one]) {
+                                setWeights(one, weights[one] + 1);
+                            } else {
+                                setWeights(one, 1);
+                            }
+                        }
+                    weights[name] = weight;
+                }
+
+                // MAIN FUNCTIONALITY
+                // collect package successors
+                for (const one of items) {
+                    const name = one.name;
+                    for (const dep of one.deps) {
+                        if (!successors[dep]) successors[dep] = [];
+                        successors[dep].push(name);
+                    }
+                }
+                for (const one of items) setWeights(one.name, 1);
+                // convert weights to levels
+                const result = {};
+                for (const name of Object.keys(weights)) {
+                    const weight = weights[name];
+                    if (!result[weight]) result[weight] = [];
+                    result[weight].push(name);
+                }
+                return result;
+            }
+
             // MAIN FUNCTIONALITY
             logger.info(`Scan '${root}' for teq-modules.`);
             const scanData = await scanner.scanFilesystem(root);
             const items = await getPlugins(scanData);
-            for (const item of items) registry.set(item.name, item);
+            const names = [];
+            for (const item of items) {
+                registry.set(item.name, item);
+                names.push(item.name);
+            }
+            // remove extra deps (not teq-plugins)
+            for (const item of items) {
+                const all = item.deps;
+                const plugins = [];
+                for (const one of all)
+                    if (names.includes(one)) plugins.push(one);
+                item.deps = plugins;
+            }
+            const levels = composeLevels(names, items);
+            registry.setLevels(levels);
+            //
             logger.info(`Total '${items.length}' teq-modules are found.`);
             return registry;
         };

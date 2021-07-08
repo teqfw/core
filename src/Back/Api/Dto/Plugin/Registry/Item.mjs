@@ -7,6 +7,11 @@ const NS = 'TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item';
 // MODULE'S CLASSES
 class TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item {
     /**
+     * Names of the dependencies (npm packages).
+     * @type {string[]}
+     */
+    deps;
+    /**
      * Name of the package.
      * @type {string}
      */
@@ -37,6 +42,7 @@ class Factory {
          */
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item();
+            res.deps = Array.isArray(data?.deps) ? data.deps : [];
             res.name = data?.name;
             res.path = data?.path;
             res.teqfw = data?.teqfw;

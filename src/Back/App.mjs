@@ -106,10 +106,10 @@ class TeqFw_Core_Back_App {
 
             /**
              * Run through all plugins and register namespaces in DI container.
-             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} plugins
+             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} registry
              */
-            function initDiContainer(plugins) {
-                for (const item of plugins.items()) {
+            function initDiContainer(registry) {
+                for (const item of registry.items()) {
                     /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc} */
                     const desc = item.teqfw[DEF.MOD_DI.DESC_NODE];
                     /** @type {TeqFw_Di_Shared_Api_Dto_Plugin_Desc_Autoload} */
@@ -119,17 +119,21 @@ class TeqFw_Core_Back_App {
                     container.addSourceMapping(ns, path, true);
                     logger.info(`'${ns}' namespace is mapped to '${path}'.`);
                 }
-            }
-
-            /**
-             * TODO: tmp method to setup DI container to use implementations instead of interfaces.
-             * @return {Promise<void>}
-             */
-            async function initDiMapping() {
-                const theContext = await container.get('TeqFw_Web_Back_Server_Request_Context#Factory$');
-                container.set('TeqFw_Web_Back_Api_Request_IContext#Factory$', theContext);
-                const theServContext = await container.get('TeqFw_Web_Plugin_Web_Handler_Service_Context#Factory$');
-                container.set('TeqFw_Web_Back_Api_Service_IContext#Factory$', theServContext);
+                const levels = registry.getLevels();
+                const keys = Object.keys(levels).sort();
+                for (const key of keys) {
+                    const plugins = levels[key];
+                    for (const name of plugins) {
+                        const item = registry.get(name);
+                        /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc} */
+                        const desc = item.teqfw[DEF.MOD_DI.DESC_NODE];
+                        if (Array.isArray(desc?.replace)) {
+                            for (const one of desc.replace) {
+                                container.addModuleReplacement(one.orig, one.alter);
+                            }
+                        }
+                    }
+                }
             }
 
             // MAIN FUNCTIONALITY
@@ -140,11 +144,10 @@ class TeqFw_Core_Back_App {
             // load local configuration
             config.load({rootPath: bootCfg.root});
             // scan node modules for teq-plugins
-            const plugins = await pluginScan.exec(bootCfg.root);
+            const registry = await pluginScan.exec(bootCfg.root);
             //
-            initDiContainer(plugins);
-            await initDiMapping();
-            await initCommander(plugins);
+            initDiContainer(registry);
+            await initCommander(registry);
         };
 
         /**
