@@ -38,18 +38,20 @@ class TeqFw_Core_Back_App {
 
     constructor(spec) {
         // EXTRACT DEPS
+        /** @type {TeqFw_Core_Back_Defaults} */
+        const DEF = spec['TeqFw_Core_Back_Defaults$'];
         /** @type {TeqFw_Core_Back_App.Bootstrap} */
-        const bootCfg = spec['TeqFw_Core_Back_App#Bootstrap$']; 
-        /** @type {TeqFw_Di_Container} */
-        const container = spec['TeqFw_Di_Container$']; 
+        const bootCfg = spec['TeqFw_Core_Back_App#Bootstrap$'];
+        /** @type {TeqFw_Di_Shared_Container} */
+        const container = spec['TeqFw_Di_Shared_Container$'];
         /** @type {TeqFw_Core_Back_Config} */
-        const config = spec['TeqFw_Core_Back_Config$']; 
+        const config = spec['TeqFw_Core_Back_Config$'];
         /** @type {TeqFw_Core_Logger} */
-        const logger = spec['TeqFw_Core_Logger$']; 
+        const logger = spec['TeqFw_Core_Logger$'];
         /** @type {TeqFw_Core_Logger_Transport_Console} */
-        const logToConsole = spec['TeqFw_Core_Logger_Transport_Console$']; 
+        const logToConsole = spec['TeqFw_Core_Logger_Transport_Console$'];
         /** @type {TeqFw_Core_Back_Scan_Plugin} */
-        const pluginScan = spec['TeqFw_Core_Back_Scan_Plugin$']; 
+        const pluginScan = spec['TeqFw_Core_Back_Scan_Plugin$'];
 
         // INIT OWN PROPERTIES AND DEFINE WORKING VARS
         const commander = new $commander.Command();
@@ -108,8 +110,10 @@ class TeqFw_Core_Back_App {
              */
             function initDiContainer(plugins) {
                 for (const item of plugins.items()) {
-                    /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload} */
-                    const auto = item.teqfw.autoload;
+                    /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc} */
+                    const desc = item.teqfw[DEF.MOD_DI.DESC_NODE];
+                    /** @type {TeqFw_Di_Shared_Api_Dto_Plugin_Desc_Autoload} */
+                    const auto = desc.autoload;
                     const ns = auto.ns;
                     const path = $path.join(item.path, auto.path);
                     container.addSourceMapping(ns, path, true);

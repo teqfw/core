@@ -4,17 +4,18 @@
 export default class TeqFw_Core_Back_Scan_Plugin {
     constructor(spec) {
         // EXTRACT DEPS
-        /** @type {TeqFw_Di_Util_PluginScanner} */
-        const scanner = spec['TeqFw_Di_Util_PluginScanner$']; 
+        /** @type {TeqFw_Core_Back_Defaults} */
+        const DEF = spec['TeqFw_Core_Back_Defaults$'];
+        /** @type {TeqFw_Di_Back_Plugin_Scanner} */
+        const scanner = spec['TeqFw_Di_Back_Plugin_Scanner$'];
         /** @type {TeqFw_Core_Logger} */
-        const logger = spec['TeqFw_Core_Logger$']; 
+        const logger = spec['TeqFw_Core_Logger$'];
         /** @type {TeqFw_Core_Back_Scan_Plugin_Registry} */
-        const registry = spec['TeqFw_Core_Back_Scan_Plugin_Registry$']; 
+        const registry = spec['TeqFw_Core_Back_Scan_Plugin_Registry$'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory} */
-        const fItem = spec['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item#Factory$']; 
-        /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload.Factory} */
-        const fAutoload = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc_Autoload#Factory$']; 
-
+        const fItem = spec['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item#Factory$'];
+        /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc.Factory} */
+        const fDiDesc = spec['TeqFw_Di_Back_Api_Dto_Plugin_Desc#Factory$'];
 
         // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
 
@@ -27,7 +28,7 @@ export default class TeqFw_Core_Back_Scan_Plugin {
             // DEFINE INNER FUNCTIONS
 
             /**
-             * @param {Object.<string, TeqFw_Di_Api_ScanData>} scanItems
+             * @param {Object.<string, TeqFw_Di_Back_Api_Dto_Scanned>} scanItems
              * @returns {Promise<TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]>}
              */
             async function getPlugins(scanItems) {
@@ -35,7 +36,7 @@ export default class TeqFw_Core_Back_Scan_Plugin {
 
                 /**
                  * Check does 'package.json' exist, read content, parse and return data if 'yes'.
-                 * @param {TeqFw_Di_Api_ScanData} scanItem
+                 * @param {TeqFw_Di_Back_Api_Dto_Scanned} scanItem
                  * @returns {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item}
                  */
                 function extractPluginItem(scanItem) {
@@ -44,7 +45,7 @@ export default class TeqFw_Core_Back_Scan_Plugin {
                     res.name = scanItem.package.name;
                     res.path = scanItem.path;
                     res.teqfw = scanItem.teqfw;
-                    res.teqfw.autoload = fAutoload.create(res.teqfw.autoload);
+                    res.teqfw[DEF.MOD_DI.DESC_NODE] = fDiDesc.create(res.teqfw[DEF.MOD_DI.DESC_NODE]);
                     logger.info(`${msg}.`);
                     return res;
                 }
