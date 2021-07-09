@@ -52,6 +52,8 @@ class TeqFw_Core_Back_App {
         const logToConsole = spec['TeqFw_Core_Logger_Transport_Console$'];
         /** @type {TeqFw_Core_Back_Scan_Plugin} */
         const pluginScan = spec['TeqFw_Core_Back_Scan_Plugin$'];
+        /** @type {typeof TeqFw_Di_Shared_Api_Dto_Plugin_Desc_Replace} */
+        const DReplace = spec['TeqFw_Di_Shared_Api_Dto_Plugin_Desc_Replace#'];
 
         // INIT OWN PROPERTIES AND DEFINE WORKING VARS
         const commander = new $commander.Command();
@@ -127,11 +129,10 @@ class TeqFw_Core_Back_App {
                         const item = registry.get(name);
                         /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc} */
                         const desc = item.teqfw[DEF.MOD_DI.DESC_NODE];
-                        if (Array.isArray(desc?.replace)) {
-                            for (const one of desc.replace) {
-                                container.addModuleReplacement(one.orig, one.alter);
-                            }
-                        }
+                        if (Array.isArray(desc?.replace))
+                            for (const one of desc.replace)
+                                if ((one.area === DReplace.DATA_AREA_BACK) || (one.area === DReplace.DATA_AREA_SHARED))
+                                    container.addModuleReplacement(one.orig, one.alter);
                     }
                 }
             }
