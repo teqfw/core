@@ -3,45 +3,21 @@
  * @namespace TeqFw_Core_Back_App
  */
 // MODULE'S IMPORT
-import $commander from 'commander';
-import $path from 'path';
-
-// MODULE'S VARS
-const NS = 'TeqFw_Core_Back_App';
-
-// MODULE'S CLASSES
-/**
- * Define data structure for backend app bootstrap config.
- *
- * CREATE INSTANCES WITH 'new' OPERATOR, NOT WITH DI CONTAINER.
- *
- * @memberOf TeqFw_Core_Back_App
- */
-class Bootstrap {
-    /** @type {string} absolute path to the root folder of the project */
-    root;
-    /** @type {string} current version of the application (`0.1.0`) */
-    version;
-
-    constructor(data) {
-        this.root = data.root;
-        this.version = data.version;
-    }
-}
-
-Object.defineProperty(Bootstrap, 'name', {value: `${NS}.${Bootstrap.name}`});
+import {Command} from 'commander';
+import {join} from 'path';
+import {existsSync, statSync} from 'fs';
 
 /**
  * Main class to launch application: read modules meta data, initialize parts of app, start the app.
  */
-class TeqFw_Core_Back_App {
+export default class TeqFw_Core_Back_App {
 
     constructor(spec) {
         // EXTRACT DEPS
         /** @type {TeqFw_Core_Back_Defaults} */
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
-        /** @type {TeqFw_Core_Back_App.Bootstrap} */
-        const bootCfg = spec['TeqFw_Core_Back_App#Bootstrap$'];
+        /** @type {TeqFw_Core_Back_Api_Dto_App_Boot.Factory} */
+        const fBootCfg = spec['TeqFw_Core_Back_Api_Dto_App_Boot#Factory$'];
         /** @type {TeqFw_Di_Shared_Container} */
         const container = spec['TeqFw_Di_Shared_Container$'];
         /** @type {TeqFw_Core_Back_Config} */
@@ -56,14 +32,38 @@ class TeqFw_Core_Back_App {
         const DReplace = spec['TeqFw_Di_Shared_Api_Dto_Plugin_Desc_Replace#'];
 
         // INIT OWN PROPERTIES AND DEFINE WORKING VARS
-        const commander = new $commander.Command();
+        const commander = new Command();
 
         /**
-         * Initialize TeqFW application (load plugins, register services, etc.).
+         * Initialize TeqFW application (DI, config, plugins, etc.).
+         *
+         * @param {string} path absolute path to the root of the project files (where ./node_modules/ is placed)
+         * @param {string} version version for the application ('0.1.0')
          * @returns {Promise<void>}
          */
-        this.init = async function () {
+        this.init = async function ({path, version}) {
             // DEFINE INNER FUNCTIONS
+
+            /**
+             * Create bootstrap configuration and put it into DI container as singleton.
+             *
+             * @param {string} path
+             * @param {string} version
+             * @param {TeqFw_Di_Shared_Container} container
+             * @return {TeqFw_Core_Back_Api_Dto_App_Boot}
+             */
+            function initBootConfig(path, version, container) {
+                // validate path to './node_modules/'
+                const pathNode = join(path, 'node_modules');
+                if (!existsSync(pathNode) || !statSync(pathNode).isDirectory())
+                    throw new Error(`Cannot find './node_modules/' in '${path}'.`);
+                // create config and put it into DI container
+                const cfg = fBootCfg.create();
+                cfg.projectRoot = path;
+                cfg.version = version;
+                container.set('TeqFw_Core_Back_Api_Dto_App_Boot$', cfg);
+                return cfg;
+            }
 
             /**
              * Run 'commander' initialization code for all plugins.
@@ -117,7 +117,7 @@ class TeqFw_Core_Back_App {
                     /** @type {TeqFw_Di_Shared_Api_Dto_Plugin_Desc_Autoload} */
                     const auto = desc.autoload;
                     const ns = auto.ns;
-                    const path = $path.join(item.path, auto.path);
+                    const path = join(item.path, auto.path);
                     container.addSourceMapping(ns, path, true);
                     logger.info(`'${ns}' namespace is mapped to '${path}'.`);
                 }
@@ -138,14 +138,15 @@ class TeqFw_Core_Back_App {
             }
 
             // MAIN FUNCTIONALITY
+            const bootCfg = initBootConfig(path, version, container);
 
             // init backend logger
             logger.addTransport(logToConsole);  // setup default logger transport as console
-            logger.info(`Teq-application is started in '${bootCfg.root}' (ver. ${bootCfg.version}).`);
+            logger.info(`Teq-application is started in '${bootCfg.projectRoot}' (ver. ${bootCfg.version}).`);
             // load local configuration
-            config.load({rootPath: bootCfg.root});
+            config.load({rootPath: bootCfg.projectRoot});
             // scan node modules for teq-plugins
-            const registry = await pluginScan.exec(bootCfg.root);
+            const registry = await pluginScan.exec(bootCfg.projectRoot);
             //
             initDiContainer(registry);
             await initCommander(registry);
@@ -177,9 +178,4 @@ class TeqFw_Core_Back_App {
     }
 
 
-}
-
-export {
-    TeqFw_Core_Back_App as default,
-    Bootstrap
 }

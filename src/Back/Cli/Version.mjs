@@ -18,11 +18,11 @@ const NS = 'TeqFw_Core_Back_Cli_Version';
 function Factory(spec) {
     // EXTRACT DEPS
     /** @type {TeqFw_Core_Back_Defaults} */
-    const DEF = spec['TeqFw_Core_Back_Defaults$']; 
-    /** @type {TeqFw_Core_Back_App.Bootstrap} */
-    const cfg = spec['TeqFw_Core_Back_App#Bootstrap$']; 
+    const DEF = spec['TeqFw_Core_Back_Defaults$'];
+    /** @type {TeqFw_Core_Back_Api_Dto_App_Boot} */
+    const cfg = spec['TeqFw_Core_Back_Api_Dto_App_Boot$'];
     /** @type {Function|TeqFw_Core_Back_Api_Dto_Command.Factory} */
-    const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command#Factory$']; 
+    const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command#Factory$'];
 
     // DEFINE INNER FUNCTIONS
     /**
