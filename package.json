@@ -2,30 +2,34 @@
   "name": "@teqfw/core",
   "version": "0.2.0",
   "description": "TeqFW: core application functionality.",
-  "main": "./src/Instance.mjs",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "keywords": [
+    "ecmascript 2015",
+    "es6+",
+    "pwa",
+    "spa",
+    "teqfw",
+    "tequila framework",
+    "web applications"
+  ],
+  "homepage": "https://github.com/teqfw/core#readme",
+  "bugs": {
+    "url": "https://github.com/teqfw/core/issues"
+  },
+  "license": "AGPL-3.0-only",
+  "author": {
+    "name": "Alex Gusev",
+    "email": "alex@flancer64.com",
+    "url": "https://github.com/flancer64"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/teqfw/core.git"
   },
-  "keywords": [
-    "pet",
-    "project",
-    "hobby",
-    "web",
-    "applications"
-  ],
-  "author": "Alex Gusev <alex@flancer64.com>",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/teqfw/core/issues"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/teqfw/core#readme",
   "dependencies": {
     "@teqfw/di": "*",
-    "commander": "*",
-    "knex": "*"
+    "commander": "*"
   }
 }
