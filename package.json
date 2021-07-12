@@ -2,6 +2,7 @@
   "name": "@teqfw/core",
   "version": "0.2.0",
   "description": "TeqFW: core application functionality.",
+  "type": "module",
   "keywords": [
     "ecmascript 2015",
     "es6+",
