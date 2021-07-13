@@ -1,5 +1,5 @@
-import $fs from 'fs';
-import $path from 'path';
+import {existsSync, readFileSync, statSync} from 'fs';
+import {join} from 'path';
 
 /**
  * TODO:
@@ -28,14 +28,16 @@ export default class TeqFw_Core_Back_Config {
          * @param {string} cfgPath path to local configuration JSON (by default: './cfg/local.json')
          */
         this.load = function ({rootPath, cfgPath = './cfg/local.json'}) {
-            const pathToLocalCfg = $path.join(rootPath, cfgPath);
-            const data = $fs.readFileSync(pathToLocalCfg);
-            const local = JSON.parse(data.toString());
-            // save local configuration to 'local' node
-            const json = {local};
-            // add path to app root folder
-            json.path = {root: rootPath};
-            this.init(json);
+            const pathToLocalCfg = join(rootPath, cfgPath);
+            if (existsSync(pathToLocalCfg) && statSync(pathToLocalCfg).isFile()) {
+                const data = readFileSync(pathToLocalCfg);
+                const local = JSON.parse(data.toString());
+                // save local configuration to 'local' node
+                const json = {local};
+                // add path to app root folder
+                json.path = {root: rootPath};
+                this.init(json);
+            }
         };
 
         /**

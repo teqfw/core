@@ -9,8 +9,8 @@ export default class TeqFw_Core_Back_RDb_Connector {
     constructor(spec) {
         /** @type {TeqFw_Core_Back_Config} */
         const config = spec['TeqFw_Core_Back_Config$'];
-        /** @type {TeqFw_Core_Logger} */
-        const logger = spec['TeqFw_Core_Logger$'];
+        /** @type {TeqFw_Core_Shared_Logger} */
+        const logger = spec['TeqFw_Core_Shared_Logger$'];
 
         let knex;
 

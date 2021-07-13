@@ -22,10 +22,8 @@ export default class TeqFw_Core_Back_App {
         const container = spec['TeqFw_Di_Shared_Container$'];
         /** @type {TeqFw_Core_Back_Config} */
         const config = spec['TeqFw_Core_Back_Config$'];
-        /** @type {TeqFw_Core_Logger} */
-        const logger = spec['TeqFw_Core_Logger$'];
-        /** @type {TeqFw_Core_Logger_Transport_Console} */
-        const logToConsole = spec['TeqFw_Core_Logger_Transport_Console$'];
+        /** @type {TeqFw_Core_Shared_Logger} */
+        const logger = spec['TeqFw_Core_Shared_Logger$'];
         /** @type {TeqFw_Core_Back_Scan_Plugin} */
         const pluginScan = spec['TeqFw_Core_Back_Scan_Plugin$'];
         /** @type {typeof TeqFw_Di_Shared_Api_Dto_Plugin_Desc_Replace} */
@@ -141,7 +139,6 @@ export default class TeqFw_Core_Back_App {
             const bootCfg = initBootConfig(path, version, container);
 
             // init backend logger
-            logger.addTransport(logToConsole);  // setup default logger transport as console
             logger.info(`Teq-application is started in '${bootCfg.projectRoot}' (ver. ${bootCfg.version}).`);
             // load local configuration
             config.load({rootPath: bootCfg.projectRoot});
@@ -176,6 +173,5 @@ export default class TeqFw_Core_Back_App {
             console.log('stopped');
         };
     }
-
 
 }

@@ -8,8 +8,8 @@ export default class TeqFw_Core_Back_Scan_Plugin {
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
         /** @type {TeqFw_Di_Back_Plugin_Scanner} */
         const scanner = spec['TeqFw_Di_Back_Plugin_Scanner$'];
-        /** @type {TeqFw_Core_Logger} */
-        const logger = spec['TeqFw_Core_Logger$'];
+        /** @type {TeqFw_Core_Shared_Logger} */
+        const logger = spec['TeqFw_Core_Shared_Logger$'];
         /** @type {TeqFw_Core_Back_Scan_Plugin_Registry} */
         const registry = spec['TeqFw_Core_Back_Scan_Plugin_Registry$'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory} */
