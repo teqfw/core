@@ -5,8 +5,10 @@
       "path": "./src"
     }
   },
-  "commands": [
-    "TeqFw_Core_Back_Cli_StartupLog",
-    "TeqFw_Core_Back_Cli_Version"
-  ]
+  "core": {
+    "commands": [
+      "TeqFw_Core_Back_Cli_StartupLog",
+      "TeqFw_Core_Back_Cli_Version"
+    ]
+  }
 }

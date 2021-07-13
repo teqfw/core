@@ -3,7 +3,7 @@
  * @namespace TeqFw_Core_Back_App
  */
 // MODULE'S IMPORT
-import {Command} from 'commander';
+import {Command} from 'commander/esm.mjs';
 import {join} from 'path';
 import {existsSync, statSync} from 'fs';
 
@@ -18,6 +18,8 @@ export default class TeqFw_Core_Back_App {
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
         /** @type {TeqFw_Core_Back_Api_Dto_App_Boot.Factory} */
         const fBootCfg = spec['TeqFw_Core_Back_Api_Dto_App_Boot#Factory$'];
+        /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc.Factory} */
+        const fDesc = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc#Factory$'];
         /** @type {TeqFw_Di_Shared_Container} */
         const container = spec['TeqFw_Di_Shared_Container$'];
         /** @type {TeqFw_Core_Back_Config} */
@@ -30,7 +32,7 @@ export default class TeqFw_Core_Back_App {
         const DReplace = spec['TeqFw_Di_Shared_Api_Dto_Plugin_Desc_Replace#'];
 
         // INIT OWN PROPERTIES AND DEFINE WORKING VARS
-        const commander = new Command();
+        const program = new Command();
 
         /**
          * Initialize TeqFW application (DI, config, plugins, etc.).
@@ -75,32 +77,31 @@ export default class TeqFw_Core_Back_App {
                 /**
                  * Add single command to the app's commander.
                  *
-                 * @param {string} factoryName 'Vendor_Module_Cli_Command$'
+                 * @param {string} moduleId 'Vendor_Plugin_Back_Cli_Command'
                  * @returns {Promise<void>}
                  * @memberOf TeqFw_Core_Back_App.init.initCommander
                  */
-                async function addCommand(factoryName) {
+                async function addCommand(moduleId) {
                     try {
                         /** @type {TeqFw_Core_Back_Api_Dto_Command} */
-                        const cmd = await container.get(`${factoryName}$`); // get as instance singleton
+                        const cmd = await container.get(`${moduleId}$`); // get as instance singleton
                         const fullName = (cmd.realm) ? `${cmd.realm}-${cmd.name}` : cmd.name;
-                        commander.command(fullName)
+                        const act = program.command(fullName)
                             .description(cmd.desc)
                             .action(cmd.action);
+                        for (const one of cmd.args) act.argument(one.name, one.description, one.fn, one.defaultValue);
+                        for (const one of cmd.opts) act.option(one.flags, one.description, one.fn, one.defaultValue);
                         logger.info(`'${fullName}' command is added.`);
                     } catch (e) {
-                        logger.error(`Cannot create command using '${factoryName}' factory. Error: ${e.message}`);
+                        logger.error(`Cannot create command using '${moduleId}' factory. Error: ${e.message}`);
                     }
                 }
 
                 // MAIN FUNCTIONALITY
                 logger.info('Integrate plugins to the Commander.');
                 for (const item of plugins.items()) {
-                    if (Array.isArray(item.teqfw?.commands)) {
-                        for (const id of item.teqfw.commands) {
-                            await addCommand(id);
-                        }
-                    }
+                    const desc = fDesc.create(item.teqfw[DEF.DESC_NODE]);
+                    for (const id of desc.commands) await addCommand(id);
                 }
             }
 
@@ -137,8 +138,6 @@ export default class TeqFw_Core_Back_App {
 
             // MAIN FUNCTIONALITY
             const bootCfg = initBootConfig(path, version, container);
-
-            // init backend logger
             logger.info(`Teq-application is started in '${bootCfg.projectRoot}' (ver. ${bootCfg.version}).`);
             // load local configuration
             config.load({rootPath: bootCfg.projectRoot});
@@ -155,10 +154,10 @@ export default class TeqFw_Core_Back_App {
          * @returns {Promise<void>}
          */
         this.run = async function () {
-            commander.parse(process.argv);
+            program.parse(process.argv);
             // print out help and stop by default
             if (!process.argv.slice(2).length) {
-                commander.outputHelp();
+                program.outputHelp();
                 await this.stop();
             }
         };
