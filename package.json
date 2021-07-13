@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "description": "TeqFW: core application functionality.",
   "type": "module",
+  "main": "src/Back/App.mjs",
   "keywords": [
     "ecmascript 2015",
     "es6+",

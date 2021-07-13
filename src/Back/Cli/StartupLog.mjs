@@ -40,7 +40,7 @@ function Factory(spec) {
     const res = fCommand.create();
     res.realm = DEF.CLI_PREFIX;
     res.name = 'startup-logs';
-    res.desc = 'Print out startup logs from the application core.';
+    res.desc = 'print out startup logs from the application core.';
     res.action = action;
     return res;
 }

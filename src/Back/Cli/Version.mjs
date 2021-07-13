@@ -39,7 +39,7 @@ function Factory(spec) {
     const res = fCommand.create();
     res.realm = DEF.CLI_PREFIX;
     res.name = 'version';
-    res.desc = 'Get version of the application.';
+    res.desc = 'get version of the application.';
     res.action = action;
     return res;
 }
