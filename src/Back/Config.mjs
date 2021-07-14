@@ -1,95 +1,73 @@
+/**
+ * Container for configurations.
+ * Load local configuration from a file (default './cfg/local.json').
+ *
+ * @namespace TeqFw_Core_Back_Config
+ */
+// MODULE'S IMPORT
 import {existsSync, readFileSync, statSync} from 'fs';
 import {join} from 'path';
 
-/**
- * TODO:
- *  - add ACL to configuration (is it possible? we should prevent access to certain configuration nodes for some modules)
- */
 export default class TeqFw_Core_Back_Config {
 
-    constructor() {
-        /** @type {null|Object} storage for configuration options */
-        let store = {};
+    constructor(spec) {
+        // EXTRACT DEPS
+        /** @type {TeqFw_Core_Back_Defaults} */
+        const DEF = spec['TeqFw_Core_Back_Defaults$'];
+        /** @type {TeqFw_Core_Back_Api_Dto_Config_Local.Factory} */
+        const fConfig = spec['TeqFw_Core_Back_Api_Dto_Config_Local#Factory$'];
+        /** @type {typeof TeqFw_Core_Back_Api_Dto_App_Boot} */
+        const Boot = spec['TeqFw_Core_Back_Api_Dto_App_Boot#'];
+
+        // DEFINE WORKING VARS / PROPS
+        /** @type {TeqFw_Core_Back_Api_Dto_App_Boot} */
+        const boot = new Boot();
+        /** @type {TeqFw_Core_Back_Api_Dto_Config_Local} storage for local configuration */
+        let local = fConfig.create();
+
+
+        // DEFINE INSTANCE METHODS
+        /**
+         * Get boot configuration.
+         *
+         * @return {TeqFw_Core_Back_Api_Dto_App_Boot}
+         */
+        this.getBoot = function () {
+            return boot;
+        };
 
         /**
-         * Place given configuration into internal storage and replace old values if exist.
-         * Perhaps can be used in tests.
+         * Get local configuration options (all or for given 'node' only).
          *
-         * @param {Object} cfg
+         * @param {string|null} node
+         * @return {*}
          */
-        this.init = function (cfg) {
-            store = cfg;
+        this.getLocal = function (node = null) {
+            return (node === null) ? local : local[node];
         };
 
         /**
          * Load local configuration and init internal storage.
          *
-         * @param {string} rootPath absolute path to application root folder ('/home/alex/work/pwa/')
-         * @param {string} cfgPath path to local configuration JSON (by default: './cfg/local.json')
+         * @param {string} root absolute path to application root folder ('/home/alex/work/pwa/')
+         * @param {string} cfg relative path to local configuration JSON (by default: './cfg/local.json')
          */
-        this.load = function ({rootPath, cfgPath = './cfg/local.json'}) {
-            const pathToLocalCfg = join(rootPath, cfgPath);
-            if (existsSync(pathToLocalCfg) && statSync(pathToLocalCfg).isFile()) {
-                const data = readFileSync(pathToLocalCfg);
-                const local = JSON.parse(data.toString());
-                // save local configuration to 'local' node
-                const json = {local};
-                // add path to app root folder
-                json.path = {root: rootPath};
-                this.init(json);
+        this.loadLocal = function (root, cfg = DEF.PATH_CFG_LOCAL) {
+            const full = join(root, cfg);
+            if (existsSync(full) && statSync(full).isFile()) {
+                const data = readFileSync(full);
+                local = fConfig.create(JSON.parse(data.toString()));
             }
         };
 
         /**
-         * Get configuration value by path (`path/to/the/node`).
-         *
-         * @param {string|null} cfgPath - Path to the node of the configuration tree (`path/to/the/node`).
-         * @returns {null|string|boolean|number|Object} - Configuration value.
+         * Set boot options to config.
+         * @param {string} path absolute path to application root
+         * @param {string} version application version
          */
-        this.get = function (cfgPath = null) {
-            let result = store;
-            if (typeof cfgPath === 'string') {
-                const parts = cfgPath.split('/');
-                for (const one of parts) {
-                    if (one) {
-                        if (result[one]) {
-                            result = result[one];
-                        } else {
-                            result = null;
-                            break;
-                        }
-                    }
-                }
-                // We can analyze stack trace and apply ACL rules to caller
-                // const stack = new Error().stack;
-            }
-            // TODO: clone data if result is not primitive
-            return result;
-        };
-
-        /**
-         * Set configuration value by path (`path/to/the/node`).
-         *
-         * @param {string} cfgPath - Path to the node of the configuration tree (`path/to/the/node`).
-         * @param {string|boolean|number|Object} data - Value to save into configuration tree.
-         */
-        this.set = function (cfgPath, data) {
-            const parts = cfgPath.split('/');
-            let current = store;
-            let ndx = 1;
-            for (const one of parts) {
-                if (one) {
-                    if (!current[one]) {
-                        current[one] = {};
-                    }
-                    if (ndx < parts.length) {
-                        current = current[one];
-                    } else {
-                        current[one] = data;
-                    }
-                }
-                ndx += 1;
-            }
-        };
+        this.setBoot = function (path, version) {
+            boot.projectRoot = path;
+            boot.version = version;
+        }
     }
 }

@@ -16,8 +16,6 @@ export default class TeqFw_Core_Back_App {
         // EXTRACT DEPS
         /** @type {TeqFw_Core_Back_Defaults} */
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
-        /** @type {TeqFw_Core_Back_Api_Dto_App_Boot.Factory} */
-        const fBootCfg = spec['TeqFw_Core_Back_Api_Dto_App_Boot#Factory$'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc.Factory} */
         const fDesc = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc#Factory$'];
         /** @type {TeqFw_Di_Shared_Container} */
@@ -45,24 +43,18 @@ export default class TeqFw_Core_Back_App {
             // DEFINE INNER FUNCTIONS
 
             /**
-             * Create bootstrap configuration and put it into DI container as singleton.
+             * Save bootstrap configuration into configuration container.
              *
+             * @param {TeqFw_Core_Back_Config} config
              * @param {string} path
              * @param {string} version
-             * @param {TeqFw_Di_Shared_Container} container
-             * @return {TeqFw_Core_Back_Api_Dto_App_Boot}
              */
-            function initBootConfig(path, version, container) {
+            function initBootConfig(config, path, version) {
                 // validate path to './node_modules/'
                 const pathNode = join(path, 'node_modules');
                 if (!existsSync(pathNode) || !statSync(pathNode).isDirectory())
                     throw new Error(`Cannot find './node_modules/' in '${path}'.`);
-                // create config and put it into DI container
-                const cfg = fBootCfg.create();
-                cfg.projectRoot = path;
-                cfg.version = version;
-                container.set('TeqFw_Core_Back_Api_Dto_App_Boot$', cfg);
-                return cfg;
+                config.setBoot(path, version);
             }
 
             /**
@@ -137,12 +129,12 @@ export default class TeqFw_Core_Back_App {
             }
 
             // MAIN FUNCTIONALITY
-            const bootCfg = initBootConfig(path, version, container);
-            logger.info(`Teq-application is started in '${bootCfg.projectRoot}' (ver. ${bootCfg.version}).`);
+            initBootConfig(config, path, version);
+            logger.info(`Teq-application is started in '${path}' (ver. ${version}).`);
             // load local configuration
-            config.load({rootPath: bootCfg.projectRoot});
+            config.loadLocal(path);
             // scan node modules for teq-plugins
-            const registry = await pluginScan.exec(bootCfg.projectRoot);
+            const registry = await pluginScan.exec(path);
             //
             initDiContainer(registry);
             await initCommander(registry);

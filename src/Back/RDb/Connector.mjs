@@ -20,7 +20,9 @@ export default class TeqFw_Core_Back_RDb_Connector {
          * @returns {Promise<void>}
          */
         this.init = async function () {
-            const dbSpec = config.get('/local/db/main');
+            // const dbSpec = config.get('/local/db/main');
+            const cfg = config.getLocal('db');
+            const dbSpec = cfg.main;
             const db = dbSpec.connection.database + '@' + dbSpec.connection.host;
             const user = dbSpec.connection.user;
             try {
