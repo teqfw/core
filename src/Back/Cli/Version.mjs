@@ -20,7 +20,7 @@ function Factory(spec) {
     /** @type {TeqFw_Core_Back_Defaults} */
     const DEF = spec['TeqFw_Core_Back_Defaults$'];
     /** @type {TeqFw_Core_Back_Config} */
-    const cfg = spec['TeqFw_Core_Back_Config'];
+    const cfg = spec['TeqFw_Core_Back_Config$'];
     /** @type {TeqFw_Core_Back_Api_Dto_Command.Factory} */
     const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command#Factory$'];
 
