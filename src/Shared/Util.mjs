@@ -1,6 +1,8 @@
 /**
  * @namespace TeqFw_Core_Shared_Util
  */
+// DEFINE WORKING VARS
+const NS = 'TeqFw_Core_Shared_Util';
 
 /**
  * Deep merge of the 2 objects.
