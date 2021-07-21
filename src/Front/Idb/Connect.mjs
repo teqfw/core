@@ -3,7 +3,7 @@
  */
 const NS = 'TeqFw_Core_Front_Idb_Connect';
 
-class TeqFw_Core_Front_Idb_Connect {
+export default class TeqFw_Core_Front_Idb_Connect {
     constructor() {
         let /** @type {function} */
             fnUpgrade,
@@ -103,5 +103,4 @@ class Store {
     }
 }
 
-Object.defineProperty(Store, 'name', {value: `${NS}.${Store.name}`});
-export default TeqFw_Core_Front_Idb_Connect;
+Object.defineProperty(Store, 'name', {value: `${NS}.${Store.constructor.name}`});

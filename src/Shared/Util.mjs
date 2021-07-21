@@ -185,6 +185,18 @@ function isEmpty(val) {
     return (val === undefined) || (val === null) || (val === '');
 }
 
+// finalize code components for this es6-module
+Object.defineProperty(deepMerge, 'name', {value: `${NS}.${deepMerge.name}`});
+Object.defineProperty(formatAmount, 'name', {value: `${NS}.${formatAmount.name}`});
+Object.defineProperty(formatDate, 'name', {value: `${NS}.${formatDate.name}`});
+Object.defineProperty(formatDateTime, 'name', {value: `${NS}.${formatDateTime.name}`});
+Object.defineProperty(formatTime, 'name', {value: `${NS}.${formatTime.name}`});
+Object.defineProperty(formatUtcDate, 'name', {value: `${NS}.${formatUtcDate.name}`});
+Object.defineProperty(formatUtcDateTime, 'name', {value: `${NS}.${formatUtcDateTime.name}`});
+Object.defineProperty(formatUtcTime, 'name', {value: `${NS}.${formatUtcTime.name}`});
+Object.defineProperty(isEmpty, 'name', {value: `${NS}.${isEmpty.name}`});
+Object.defineProperty(round, 'name', {value: `${NS}.${round.name}`});
+
 export {
     deepMerge,
     formatAmount,

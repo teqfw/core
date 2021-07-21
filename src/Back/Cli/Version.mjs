@@ -15,7 +15,7 @@ const NS = 'TeqFw_Core_Back_Cli_Version';
  * @constructor
  * @memberOf TeqFw_Core_Back_Cli_Version
  */
-function Factory(spec) {
+export default function Factory(spec) {
     // EXTRACT DEPS
     /** @type {TeqFw_Core_Back_Defaults} */
     const DEF = spec['TeqFw_Core_Back_Defaults$'];
@@ -44,6 +44,5 @@ function Factory(spec) {
     return res;
 }
 
-// MODULE'S EXPORT
-Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.constructor.name}`});
-export default Factory;
+// finalize code components for this es6-module
+Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.name}`});

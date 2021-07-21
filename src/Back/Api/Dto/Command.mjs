@@ -5,7 +5,7 @@
 const NS = 'TeqFw_Core_Back_Api_Dto_Command';
 
 // MODULE'S CLASSES
-class TeqFw_Core_Back_Api_Dto_Command {
+export default class TeqFw_Core_Back_Api_Dto_Command {
     /**
      * Commander action (@see https://www.npmjs.com/package/commander#commands).
      *  @type {Function}
@@ -40,7 +40,7 @@ class TeqFw_Core_Back_Api_Dto_Command {
  * Factory to create new DTO instances.
  * @memberOf TeqFw_Core_Back_Api_Dto_Command
  */
-class Factory {
+export class Factory {
     constructor(spec) {
         /** @type {typeof TeqFw_Core_Back_Api_Dto_Command_Argument} */
         const DArg = spec['TeqFw_Core_Back_Api_Dto_Command_Argument#'];
@@ -73,9 +73,4 @@ class Factory {
 }
 
 // finalize code components for this es6-module
-Object.freeze(TeqFw_Core_Back_Api_Dto_Command);
 Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.constructor.name}`});
-export {
-    TeqFw_Core_Back_Api_Dto_Command as default,
-    Factory
-} ;

@@ -1,6 +1,8 @@
 /**
  * Relational DB utilities.
  *
+ * TODO: move into separate plugin.
+ *
  * @namespace TeqFw_Core_Back_Util_RDb
  */
 // MODULE'S VARS
@@ -174,11 +176,16 @@ async function serialsSet(schema, serials) {
 }
 
 
-// MODULE'S EXPORT
+// finalize code components for this es6-module
+Object.defineProperty(getTables, 'name', {value: `${NS}.${getTables.name}`});
 Object.defineProperty(isPostgres, 'name', {value: `${NS}.${isPostgres.name}`});
+Object.defineProperty(itemsInsert, 'name', {value: `${NS}.${itemsInsert.name}`});
+Object.defineProperty(itemsSelect, 'name', {value: `${NS}.${itemsSelect.name}`});
 Object.defineProperty(nameFK, 'name', {value: `${NS}.${nameFK.name}`});
 Object.defineProperty(nameNX, 'name', {value: `${NS}.${nameNX.name}`});
 Object.defineProperty(nameUQ, 'name', {value: `${NS}.${nameUQ.name}`});
+Object.defineProperty(serialsGet, 'name', {value: `${NS}.${serialsGet.name}`});
+Object.defineProperty(serialsSet, 'name', {value: `${NS}.${serialsSet.name}`});
 
 export {
     getTables,

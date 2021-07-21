@@ -8,12 +8,12 @@ const template = `
 
 /**
  * Simple centered layout.
+ *
+ * TODO: move into vue-plugin
  */
-function TeqFw_Core_Front_Widget_Layout_Centered() {
+export default function TeqFw_Core_Front_Widget_Layout_Centered() {
     return {
         name: 'LayoutCentered',
         template,
     };
 }
-
-export default TeqFw_Core_Front_Widget_Layout_Centered;
