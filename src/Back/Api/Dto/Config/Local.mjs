@@ -1,12 +1,18 @@
 /**
- * DTO for local configuration object loaded from './cfg/local.json'.
- * This DTO has no permanent structure.
+ * Local configuration DTO for the plugin.
+ * @see TeqFw_Core_Back_Config
  */
 // MODULE'S VARS
 const NS = 'TeqFw_Core_Back_Api_Dto_Config_Local';
 
 // MODULE'S CLASSES
-export default class TeqFw_Core_Back_Api_Dto_Config_Local {}
+export default class TeqFw_Core_Back_Api_Dto_Config_Local {
+    /**
+     * 'true' - application is in development mode.
+     * @type {Boolean}
+     */
+    devMode = false;
+}
 
 /**
  * Factory to create new DTO instances.
@@ -19,10 +25,9 @@ export class Factory {
          * @return {TeqFw_Core_Back_Api_Dto_Config_Local}
          */
         this.create = function (data = null) {
-            const obj = (typeof data === 'object')
-                ? JSON.parse(JSON.stringify(data)) // make a copy
-                : {};
-            return Object.assign(new TeqFw_Core_Back_Api_Dto_Config_Local(), obj);
+            const res = new TeqFw_Core_Back_Api_Dto_Config_Local();
+            res.devMode = data?.devMode;
+            return res;
         }
     }
 }

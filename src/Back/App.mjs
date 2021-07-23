@@ -60,11 +60,11 @@ export default class TeqFw_Core_Back_App {
             /**
              * Run 'commander' initialization code for all plugins.
              *
-             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} plugins
+             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} registry
              * @returns {Promise<void>}
              * @memberOf TeqFw_Core_Back_App.init
              */
-            async function initCommander(plugins) {
+            async function initCommander(registry) {
                 // DEFINE INNER FUNCTIONS
                 /**
                  * Add single command to the app's commander.
@@ -91,14 +91,14 @@ export default class TeqFw_Core_Back_App {
 
                 // MAIN FUNCTIONALITY
                 logger.info('Integrate plugins to the Commander.');
-                for (const item of plugins.items()) {
+                for (const item of registry.items()) {
                     const desc = fDesc.create(item.teqfw[DEF.DESC_NODE]);
                     for (const id of desc.commands) await addCommand(id);
                 }
             }
 
             /**
-             * Run through all plugins and register namespaces in DI container.
+             * Go through all plugins hierarchy (down to top) and register namespaces in DI container.
              * @param {TeqFw_Core_Back_Scan_Plugin_Registry} registry
              */
             function initDiContainer(registry) {
@@ -112,18 +112,37 @@ export default class TeqFw_Core_Back_App {
                     container.addSourceMapping(ns, path, true);
                     logger.info(`'${ns}' namespace is mapped to '${path}'.`);
                 }
-                const levels = registry.getLevels();
-                const keys = Object.keys(levels).sort();
-                for (const key of keys) {
-                    const plugins = levels[key];
-                    for (const name of plugins) {
-                        const item = registry.get(name);
-                        /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc} */
-                        const desc = item.teqfw[DEF.MOD_DI.DESC_NODE];
-                        if (Array.isArray(desc?.replace))
-                            for (const one of desc.replace)
-                                if ((one.area === DReplace.DATA_AREA_BACK) || (one.area === DReplace.DATA_AREA_SHARED))
-                                    container.addModuleReplacement(one.orig, one.alter);
+                for (const item of registry.getItemsByLevels()) {
+                    /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc} */
+                    const desc = item.teqfw[DEF.MOD_DI.DESC_NODE];
+                    if (Array.isArray(desc?.replace))
+                        for (const one of desc.replace)
+                            if ((one.area === DReplace.DATA_AREA_BACK) || (one.area === DReplace.DATA_AREA_SHARED))
+                                container.addModuleReplacement(one.orig, one.alter);
+                }
+            }
+
+            /**
+             * Go through plugins hierarchy (down to top) and run init functions.
+             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} registry
+             * @return {Promise<void>}
+             */
+            async function initPlugins(registry) {
+                // MAIN FUNCTIONALITY
+                logger.info('Initialize plugins.');
+                const plugins = registry.getItemsByLevels();
+                for (const item of plugins) {
+                    /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc} */
+                    const desc = item.teqfw[DEF.DESC_NODE];
+                    if (desc?.onInit) {
+                        try {
+                            /** @type {Function} */
+                            const fn = await container.get(`${desc.onInit}$$`); // as new instance
+                            await fn();
+                        } catch (e) {
+                            logger.error(`Cannot create plugin init function using '${desc.onInit}' factory`
+                                + ` or run it. Error: ${e.message}`);
+                        }
                     }
                 }
             }
@@ -135,8 +154,10 @@ export default class TeqFw_Core_Back_App {
             config.loadLocal(path);
             // scan node modules for teq-plugins
             const registry = await pluginScan.exec(path);
-            //
+            // init container before do something else
             initDiContainer(registry);
+            // ... then do something else
+            await initPlugins(registry);
             await initCommander(registry);
         };
 

@@ -19,8 +19,22 @@ export default class TeqFw_Core_Back_Scan_Plugin_Registry {
          *
          * @return {Object<number, string[]>}
          */
-        this.getLevels=function () {
+        this.getLevels = function () {
             return storeByLevel;
+        }
+
+        /**
+         * Return plugin items ordered by hierarchy from down (base) to top
+         * @returns {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]}
+         */
+        this.getItemsByLevels = function (downUp = true) {
+            const res = [];
+            const keys = Object.keys(storeByLevel).map(key => parseInt(key)); // get keys as integers
+            keys.sort((a, b) => a - b); // sort as numbers
+            for (const key of keys)
+                for (const name of storeByLevel[key]) res.push(store[name]);
+            if (!downUp) res.reverse();
+            return res;
         }
 
         /**

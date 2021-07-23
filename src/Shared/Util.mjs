@@ -111,21 +111,6 @@ function formatUtcDate(dateIn = null) {
 }
 
 /**
- * Round number to 'places' decimals.
- *
- * (https://stackoverflow.com/a/19722641/4073821)
- *
- * @param {number} num
- * @param {number} places (integer)
- * @return {number}
- * @memberOf TeqFw_Core_Shared_Util
- */
-function round(num, places = 2) {
-    const norm = (typeof num === 'number') ? num : Number.parseFloat(num);
-    return +(Math.round(norm + "e+" + places) + "e-" + places);
-}
-
-/**
  * Convert input to 'X.XX CUR'.
  *
  * @param {number} amount
@@ -176,7 +161,6 @@ function formatUtcTime(dateIn = null) {
     return `${h}:${i}:${s}`;
 }
 
-
 /**
  * Return 'true' if `val` is empty.
  * @param {*} val
@@ -185,6 +169,56 @@ function formatUtcTime(dateIn = null) {
  */
 function isEmpty(val) {
     return (val === undefined) || (val === null) || (val === '');
+}
+
+/**
+ * Parse some data as boolean or use default value.
+ * @param {*} data
+ * @param def
+ * @return {boolean}
+ * @memberOf TeqFw_Core_Shared_Util
+ */
+function parseBoolean(data, def = false) {
+    let result = def;
+    if (
+        (data === true) ||
+        ((typeof data === 'string') && (
+            (data.toLowerCase() === 'true') ||
+            (data.toLowerCase() === 'yes')
+        )) ||
+        ((typeof data === 'number') && (
+            (data !== 0)
+        ))
+    ) {
+        result = true;
+    } else if (
+        (data === false) ||
+        ((typeof data === 'string') && (
+            (data.toLowerCase() === 'false') ||
+            (data.toLowerCase() === 'no')
+        )) ||
+        ((typeof data === 'number') && (
+            (data === 0)
+        ))
+    ) {
+        result = false;
+    }
+    return result;
+}
+
+/**
+ * Round number to 'places' decimals.
+ *
+ * (https://stackoverflow.com/a/19722641/4073821)
+ *
+ * @param {number} num
+ * @param {number} places (integer)
+ * @return {number}
+ * @memberOf TeqFw_Core_Shared_Util
+ */
+function round(num, places = 2) {
+    const norm = (typeof num === 'number') ? num : Number.parseFloat(num);
+    return +(Math.round(norm + "e+" + places) + "e-" + places);
 }
 
 // finalize code components for this es6-module
@@ -197,6 +231,7 @@ Object.defineProperty(formatUtcDate, 'name', {value: `${NS}.${formatUtcDate.name
 Object.defineProperty(formatUtcDateTime, 'name', {value: `${NS}.${formatUtcDateTime.name}`});
 Object.defineProperty(formatUtcTime, 'name', {value: `${NS}.${formatUtcTime.name}`});
 Object.defineProperty(isEmpty, 'name', {value: `${NS}.${isEmpty.name}`});
+Object.defineProperty(parseBoolean, 'name', {value: `${NS}.${parseBoolean.name}`});
 Object.defineProperty(round, 'name', {value: `${NS}.${round.name}`});
 
 export {
@@ -209,5 +244,6 @@ export {
     formatUtcDateTime,
     formatUtcTime,
     isEmpty,
+    parseBoolean,
     round,
 };
