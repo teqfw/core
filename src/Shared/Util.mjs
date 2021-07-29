@@ -1,4 +1,5 @@
 /**
+ * Set of utilities to use on front and back.
  * @namespace TeqFw_Core_Shared_Util
  */
 // DEFINE WORKING VARS
