@@ -11,6 +11,27 @@ const NS = 'TeqFw_Core_Back_Util_RDb';
 // MODULE'S FUNCTIONS
 
 /**
+ * Format input data to be used as MySQL datetime compatible string (UTC).
+ *
+ * @param {Date|string|null} dateIn
+ * @return {string}
+ * @memberOf TeqFw_Core_Back_Util_RDb
+ */
+function formatAsDateTime(dateIn) {
+    /** @type {Date} */
+    const date = (dateIn) ?
+        (dateIn instanceof Date) ? dateIn : new Date(dateIn)
+        : new Date();
+    const y = date.getUTCFullYear();
+    const m = `${date.getUTCMonth() + 1}`.padStart(2, '0');
+    const d = `${date.getUTCDate()}`.padStart(2, '0');
+    const h = `${date.getUTCHours()}`.padStart(2, '0');
+    const i = `${date.getUTCMinutes()}`.padStart(2, '0');
+    const s = `${date.getUTCSeconds()}`.padStart(2, '0');
+    return `${y}/${m}/${d} ${h}:${i}:${s}`;
+}
+
+/**
  * Get list of available tables.
  * @param trx
  * @return {Promise<*[]>}
@@ -188,6 +209,7 @@ Object.defineProperty(serialsGet, 'name', {value: `${NS}.${serialsGet.name}`});
 Object.defineProperty(serialsSet, 'name', {value: `${NS}.${serialsSet.name}`});
 
 export {
+    formatAsDateTime,
     getTables,
     isPostgres,
     itemsInsert,
