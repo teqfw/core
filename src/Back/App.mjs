@@ -136,15 +136,17 @@ export default class TeqFw_Core_Back_App {
                 for (const item of plugins) {
                     /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc} */
                     const desc = item.teqfw[DEF.DESC_NODE];
-                    if (desc?.back?.onInit) {
+                    if (desc?.plugin?.onInit) {
+                        /** @type {Function} */
+                        let fn;
                         try {
-                            /** @type {Function} */
-                            const fn = await container.get(`${desc.back.onInit}$$`); // as new instance
+                            fn = await container.get(`${desc.plugin.onInit}$$`); // as new instance
                             await fn();
                         } catch (e) {
-                            logger.error(`Cannot create plugin init function using '${desc.back.onInit}' factory`
+                            logger.error(`Cannot create plugin init function using '${desc.plugin.onInit}' factory`
                                 + ` or run it. Error: ${e.message}`);
                         }
+                        if (typeof fn === 'function') await fn();
                     }
                 }
             }
@@ -201,9 +203,6 @@ export default class TeqFw_Core_Back_App {
          * @returns {Promise<void>}
          */
         this.stop = async function () {
-            // DEFINE WORKING VARS / PROPS
-            const me = this;
-
             // DEFINE INNER FUNCTIONS
             /**
              * Go through plugins hierarchy (down to top) and run finalization functions.
@@ -217,21 +216,21 @@ export default class TeqFw_Core_Back_App {
                 for (const item of plugins) {
                     /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc} */
                     const desc = item.teqfw[DEF.DESC_NODE];
-                    if (desc?.back?.onStop) {
+                    if (desc?.plugin?.onStop) {
+                        /** @type {Function} */
+                        let fn;
                         try {
-                            /** @type {Function} */
-                            const fn = await container.get(`${desc.back.onStop}$$`); // as new instance
-                            await fn();
+                            fn = await container.get(`${desc.plugin.onStop}$$`); // as new instance
                         } catch (e) {
-                            logger.error(`Cannot create plugin init function using '${desc.back.onStop}' factory`
+                            logger.error(`Cannot create plugin init function using '${desc.plugin.onStop}' factory`
                                 + ` or run it. Error: ${e.message}`);
                         }
+                        if (typeof fn === 'function') await fn();
                     }
                 }
             }
 
             // MAIN FUNCTIONALITY
-            // await connector.disconnect();
             logger.info('Stop the application.');
             await stopPlugins(pluginsRegistry);
             logger.info('The application is stopped.');
