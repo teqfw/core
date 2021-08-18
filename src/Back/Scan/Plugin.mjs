@@ -47,7 +47,7 @@ export default class TeqFw_Core_Back_Scan_Plugin {
                     res.name = scanItem.package.name;
                     res.path = scanItem.path;
                     res.teqfw = scanItem.teqfw;
-                    res.teqfw[DEF.MOD_DI.DESC_NODE] = fDiDesc.create(res.teqfw[DEF.MOD_DI.DESC_NODE]);
+                    res.teqfw[DEF.MOD_DI.NAME] = fDiDesc.create(res.teqfw[DEF.MOD_DI.NAME]);
                     logger.info(`${msg}.`);
                     return res;
                 }

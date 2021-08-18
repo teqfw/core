@@ -132,7 +132,7 @@ Register this command in project's `./teqfw.json`:
 
 ```json
 {
-  "core": {
+  "@teqfw/core": {
     "commands": [
       "Vendor_Plugin_Back_Cli_Cmd"
     ]

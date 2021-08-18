@@ -94,7 +94,7 @@ export default class TeqFw_Core_Back_App {
                 // MAIN FUNCTIONALITY
                 logger.info('Integrate plugins to the Commander.');
                 for (const item of registry.items()) {
-                    const desc = fDesc.create(item.teqfw[DEF.DESC_NODE]);
+                    const desc = fDesc.create(item.teqfw[DEF.NAME]);
                     for (const id of desc.commands) await addCommand(id);
                 }
             }
@@ -106,7 +106,7 @@ export default class TeqFw_Core_Back_App {
             function initDiContainer(registry) {
                 for (const item of registry.items()) {
                     /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc} */
-                    const desc = item.teqfw[DEF.MOD_DI.DESC_NODE];
+                    const desc = item.teqfw[DEF.MOD_DI.NAME];
                     /** @type {TeqFw_Di_Shared_Api_Dto_Plugin_Desc_Autoload} */
                     const auto = desc.autoload;
                     const ns = auto.ns;
@@ -116,7 +116,7 @@ export default class TeqFw_Core_Back_App {
                 }
                 for (const item of registry.getItemsByLevels()) {
                     /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc} */
-                    const desc = item.teqfw[DEF.MOD_DI.DESC_NODE];
+                    const desc = item.teqfw[DEF.MOD_DI.NAME];
                     if (Array.isArray(desc?.replace))
                         for (const one of desc.replace)
                             if ((one.area === DReplace.DATA_AREA_BACK) || (one.area === DReplace.DATA_AREA_SHARED))
@@ -135,7 +135,7 @@ export default class TeqFw_Core_Back_App {
                 const plugins = registry.getItemsByLevels();
                 for (const item of plugins) {
                     /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc} */
-                    const desc = item.teqfw[DEF.DESC_NODE];
+                    const desc = item.teqfw[DEF.NAME];
                     if (desc?.plugin?.onInit) {
                         /** @type {Function} */
                         let fn;
@@ -215,7 +215,7 @@ export default class TeqFw_Core_Back_App {
                 const plugins = registry.getItemsByLevels();
                 for (const item of plugins) {
                     /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc} */
-                    const desc = item.teqfw[DEF.DESC_NODE];
+                    const desc = item.teqfw[DEF.NAME];
                     if (desc?.plugin?.onStop) {
                         /** @type {Function} */
                         let fn;
