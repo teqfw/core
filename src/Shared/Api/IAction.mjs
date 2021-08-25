@@ -3,7 +3,7 @@
  *
  * @interface
  */
-export default class TeqFw_Core_Shared_Api_IProcess {
+export default class TeqFw_Core_Shared_Api_IAction {
     /**
      *
      * @param {Object} opts
