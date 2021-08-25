@@ -87,7 +87,9 @@ export default class TeqFw_Core_Back_App {
                         for (const one of cmd.opts) act.option(one.flags, one.description, one.fn, one.defaultValue);
                         logger.info(`'${fullName}' command is added.`);
                     } catch (e) {
+                        // may be we can stealth errors for dev mode and re-throw its to live mode
                         logger.error(`Cannot create command using '${moduleId}' factory. Error: ${e.message}`);
+                        throw  e;
                     }
                 }
 
