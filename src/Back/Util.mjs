@@ -29,6 +29,7 @@ function readJson(filename) {
         // stealth exception if JSON file does not exist.
         if (e.code !== 'ENOENT' && e.code !== 'ENOTDIR') {
             // re-throw other exceptions (wrong format or something else)
+            e.message = `${e.message} (file: ${filename})`;
             throw e;
         }
     }

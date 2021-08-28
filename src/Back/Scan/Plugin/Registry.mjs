@@ -36,6 +36,20 @@ export default class TeqFw_Core_Back_Scan_Plugin_Registry {
             if (!downUp) res.reverse();
             return res;
         }
+        /**
+         * Get mapping for plugin's root paths to plugin names.
+         * ('/home/prj/app/node_modules/@scope/plugin' => '@scope/plugin')
+         * @return {Object<string, string>}
+         */
+        this.getMapPath2Name = function () {
+            const res = {};
+            for (const key of Object.keys(store)) {
+                /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item} */
+                const item = store[key];
+                res[item.path] = item.name;
+            }
+            return res;
+        }
 
         /**
          * @returns {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]}
