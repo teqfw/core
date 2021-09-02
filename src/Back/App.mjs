@@ -143,7 +143,6 @@ export default class TeqFw_Core_Back_App {
                         let fn;
                         try {
                             fn = await container.get(`${desc.plugin.onInit}$$`); // as new instance
-                            await fn();
                         } catch (e) {
                             logger.error(`Cannot create plugin init function using '${desc.plugin.onInit}' factory`
                                 + ` or run it. Error: ${e.message}`);
