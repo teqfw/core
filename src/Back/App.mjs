@@ -119,10 +119,12 @@ export default class TeqFw_Core_Back_App {
                 for (const item of registry.getItemsByLevels()) {
                     /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc} */
                     const desc = item.teqfw[DEF.MOD_DI.NAME];
-                    if (Array.isArray(desc?.replace))
-                        for (const one of desc.replace)
+                    if (Array.isArray(Object.keys(desc?.replace)))
+                        for (const orig of Object.keys(desc.replace)) {
+                            const one = desc.replace[orig];
                             if ((one.area === DReplace.DATA_AREA_BACK) || (one.area === DReplace.DATA_AREA_SHARED))
-                                container.addModuleReplacement(one.orig, one.alter);
+                                container.addModuleReplacement(orig, one.ns);
+                        }
                 }
             }
 
