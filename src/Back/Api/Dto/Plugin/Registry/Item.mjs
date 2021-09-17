@@ -35,17 +35,18 @@ export default class TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item {
  * @memberOf TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item
  */
 export class Factory {
-    constructor() {
+    constructor(spec) {
+        const {castArray, castString} = spec['TeqFw_Core_Shared_Util_Cast'];
         /**
          * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item|null} data
          * @return {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item}
          */
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item();
-            res.deps = Array.isArray(data?.deps) ? data.deps : [];
-            res.name = data?.name;
-            res.path = data?.path;
-            res.teqfw = data?.teqfw;
+            res.deps = castArray(data?.deps);
+            res.name = castString(data?.name);
+            res.path = castString(data?.path);
+            res.teqfw = Object.assign({}, data?.teqfw); // make a copy
             return res;
         }
     }

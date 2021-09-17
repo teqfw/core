@@ -22,17 +22,20 @@ export default class TeqFw_Core_Back_Api_Dto_Command_Argument {
  * @memberOf TeqFw_Core_Back_Api_Dto_Command_Argument
  */
 export class Factory {
-    constructor() {
+    constructor(spec) {
+        const {castFunction, castString} = spec['TeqFw_Core_Shared_Util_Cast'];
         /**
          * @param {TeqFw_Core_Back_Api_Dto_Command_Argument|null} data
          * @return {TeqFw_Core_Back_Api_Dto_Command_Argument}
          */
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Api_Dto_Command_Argument();
-            res.defaultValue = data?.defaultValue;
-            res.description = data?.description;
-            res.fn = data?.fn;
-            res.name = data?.name;
+            res.defaultValue = (typeof data?.defaultValue === 'object')
+                ? JSON.parse(JSON.stringify(data.defaultValue)) // make a copy
+                : castString(data.defaultValue);
+            res.description = castString(data?.description);
+            res.fn = castFunction(data?.fn);
+            res.name = castString(data?.name);
             return res;
         }
     }

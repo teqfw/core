@@ -42,12 +42,9 @@ export default class TeqFw_Core_Back_Api_Dto_Command {
  */
 export class Factory {
     constructor(spec) {
-        /** @type {typeof TeqFw_Core_Back_Api_Dto_Command_Argument} */
-        const DArg = spec['TeqFw_Core_Back_Api_Dto_Command_Argument#'];
+        const {castArrayOfObj, castFunction, castString} = spec['TeqFw_Core_Shared_Util_Cast'];
         /** @type {TeqFw_Core_Back_Api_Dto_Command_Argument.Factory} */
         const fArg = spec['TeqFw_Core_Back_Api_Dto_Command_Argument#Factory$'];
-        /** @type {typeof TeqFw_Core_Back_Api_Dto_Command_Option} */
-        const DOpt = spec['TeqFw_Core_Back_Api_Dto_Command_Option#'];
         /** @type {TeqFw_Core_Back_Api_Dto_Command_Option.Factory} */
         const fOpt = spec['TeqFw_Core_Back_Api_Dto_Command_Option#Factory$'];
 
@@ -57,16 +54,12 @@ export class Factory {
          */
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Api_Dto_Command();
-            res.action = data?.action;
-            res.args = Array.isArray(data?.args)
-                ? data.args.map((one) => (one instanceof DArg) ? one : fArg.create(one))
-                : [];
-            res.desc = data?.desc;
-            res.name = data?.name;
-            res.opts = Array.isArray(data?.opts)
-                ? data.opts.map((one) => (one instanceof DOpt) ? one : fOpt.create(one))
-                : [];
-            res.realm = data?.realm;
+            res.action = castFunction(data?.action);
+            res.args = castArrayOfObj(data?.args, fArg.create);
+            res.desc = castString(data?.desc);
+            res.name = castString(data?.name);
+            res.opts = castArrayOfObj(data?.opts, fOpt.create);
+            res.realm = castString(data?.realm);
             return res;
         }
     }

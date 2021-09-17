@@ -25,8 +25,7 @@ TeqFw_Core_Back_Api_Dto_Plugin_Desc.PLUGIN = 'plugin';
  */
 export class Factory {
     constructor(spec) {
-        /** @type {typeof TeqFw_Core_Back_Api_Dto_Plugin_Desc_Plugin} */
-        const TPlugin = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc_Plugin#'];
+        const {castArray} = spec['TeqFw_Core_Shared_Util_Cast'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc_Plugin.Factory} */
         const fPlugin = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc_Plugin#Factory$'];
         /**
@@ -35,9 +34,8 @@ export class Factory {
          */
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Api_Dto_Plugin_Desc();
-            res.plugin = (data?.plugin instanceof TPlugin)
-                ? data.plugin : fPlugin.create(data?.plugin);
-            res.commands = Array.isArray(data?.commands) ? data.commands : [];
+            res.plugin = fPlugin.create(data?.plugin);
+            res.commands = castArray(data?.commands);
             return res;
         }
     }

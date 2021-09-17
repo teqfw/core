@@ -11,7 +11,7 @@ export default class TeqFw_Core_Back_Api_Dto_Config_Local {
      * 'true' - application is in development mode.
      * @type {Boolean}
      */
-    devMode = false;
+    devMode;
 }
 
 /**
@@ -19,14 +19,15 @@ export default class TeqFw_Core_Back_Api_Dto_Config_Local {
  * @memberOf TeqFw_Core_Back_Api_Dto_Config_Local
  */
 export class Factory {
-    constructor() {
+    constructor(spec) {
+        const {castBoolean} = spec['TeqFw_Core_Shared_Util_Cast'];
         /**
          * @param {TeqFw_Core_Back_Api_Dto_Config_Local|null} data
          * @return {TeqFw_Core_Back_Api_Dto_Config_Local}
          */
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Api_Dto_Config_Local();
-            res.devMode = data?.devMode;
+            res.devMode = castBoolean(data?.devMode);
             return res;
         }
     }

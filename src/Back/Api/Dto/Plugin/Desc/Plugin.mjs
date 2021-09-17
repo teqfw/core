@@ -7,12 +7,12 @@ const NS = 'TeqFw_Core_Back_Api_Dto_Plugin_Desc_Plugin';
 // MODULE'S CLASSES
 export default class TeqFw_Core_Back_Api_Dto_Plugin_Desc_Plugin {
     /**
-     * Es6-module with plugin initialization function to launch it on app init.
+     * Identifier of es6-module with plugin initialization function to launch it on app init.
      * @type {string}
      */
     onInit;
     /**
-     * ES6-module with plugin finalization function to launch it on app stop.
+     * Identifier of es6-module with plugin finalization function to launch it on app stop.
      * @type {string}
      */
     onStop;
@@ -27,15 +27,16 @@ TeqFw_Core_Back_Api_Dto_Plugin_Desc_Plugin.ON_STOP = 'onStop';
  * @memberOf TeqFw_Core_Back_Api_Dto_Plugin_Desc_Plugin
  */
 export class Factory {
-    constructor() {
+    constructor(spec) {
+        const {castString} = spec['TeqFw_Core_Shared_Util_Cast'];
         /**
          * @param {TeqFw_Core_Back_Api_Dto_Plugin_Desc_Plugin|null} data
          * @return {TeqFw_Core_Back_Api_Dto_Plugin_Desc_Plugin}
          */
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Api_Dto_Plugin_Desc_Plugin();
-            res.onInit = data?.onInit;
-            res.onStop = data?.onStop;
+            res.onInit = castString(data?.onInit);
+            res.onStop = castString(data?.onStop);
             return res;
         }
     }

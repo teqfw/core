@@ -19,7 +19,7 @@ export class Factory {
          */
         this.create = function (data = null) {
             const obj = (typeof data === 'object')
-                ? JSON.parse(JSON.stringify(data)) // make a copy
+                ? data
                 : (typeof data === 'string') ? JSON.parse(data) : {};
             return Object.assign(new TeqFw_Core_Back_Api_Dto_Formless(), obj);
         }

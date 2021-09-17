@@ -16,6 +16,8 @@ export default class TeqFw_Core_Back_App {
         // EXTRACT DEPS
         /** @type {TeqFw_Core_Back_Defaults} */
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
+        /** @type {typeof TeqFw_Di_Shared_Api_Enum_Area} */
+        const AREA = spec['TeqFw_Di_Shared_Api_Enum_Area#'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc.Factory} */
         const fDesc = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc#Factory$'];
         /** @type {TeqFw_Di_Shared_Container} */
@@ -26,8 +28,6 @@ export default class TeqFw_Core_Back_App {
         const logger = spec['TeqFw_Core_Shared_Logger$'];
         /** @type {TeqFw_Core_Back_Scan_Plugin} */
         const pluginScan = spec['TeqFw_Core_Back_Scan_Plugin$'];
-        /** @type {typeof TeqFw_Di_Shared_Api_Dto_Plugin_Desc_Replace} */
-        const DReplace = spec['TeqFw_Di_Shared_Api_Dto_Plugin_Desc_Replace#'];
 
         // INIT OWN PROPERTIES AND DEFINE WORKING VARS
         const program = new Command();
@@ -122,7 +122,7 @@ export default class TeqFw_Core_Back_App {
                     if (Array.isArray(Object.keys(desc?.replace)))
                         for (const orig of Object.keys(desc.replace)) {
                             const one = desc.replace[orig];
-                            if ((one.area === DReplace.DATA_AREA_BACK) || (one.area === DReplace.DATA_AREA_SHARED))
+                            if ((one.area === AREA.BACK) || (one.area === AREA.SHARED))
                                 container.addModuleReplacement(orig, one.ns);
                         }
                 }
