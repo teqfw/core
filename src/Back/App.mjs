@@ -96,7 +96,7 @@ export default class TeqFw_Core_Back_App {
                 // MAIN FUNCTIONALITY
                 logger.info('Integrate plugins to the Commander.');
                 for (const item of registry.items()) {
-                    const desc = fDesc.create(item.teqfw[DEF.NAME]);
+                    const desc = fDesc.create(item.teqfw[DEF.SHARED.NAME]);
                     for (const id of desc.commands) await addCommand(id);
                 }
             }
@@ -139,7 +139,7 @@ export default class TeqFw_Core_Back_App {
                 const plugins = registry.getItemsByLevels();
                 for (const item of plugins) {
                     /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc} */
-                    const desc = item.teqfw[DEF.NAME];
+                    const desc = item.teqfw[DEF.SHARED.NAME];
                     if (desc?.plugin?.onInit) {
                         /** @type {Function} */
                         let fn;
@@ -218,7 +218,7 @@ export default class TeqFw_Core_Back_App {
                 const plugins = registry.getItemsByLevels();
                 for (const item of plugins) {
                     /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc} */
-                    const desc = item.teqfw[DEF.NAME];
+                    const desc = item.teqfw[DEF.SHARED.NAME];
                     if (desc?.plugin?.onStop) {
                         /** @type {Function} */
                         let fn;
