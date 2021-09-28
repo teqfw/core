@@ -4,23 +4,31 @@
 export default class TeqFw_Core_Back_Scan_Plugin_Registry {
     constructor() {
         /** @type {Object.<string, TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item>} */
-        const store = {};
+        const _store = {};
         /** @type {Object<number, string[]>} */
-        let storeByLevel = {};
+        let _storeByLevel = {};
+        let _appName;
         /**
          * @param {string} packageName
          * @returns {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item|null}
          */
         this.get = function (packageName) {
-            return store[packageName] ?? null;
+            return _store[packageName] ?? null;
         };
+
+        /**
+         * Get root plugin name as application name.
+         * @return {string}
+         */
+        this.getAppName = () => _appName;
+
         /**
          * Get plugin names ordered by weights (from base plugins to dependent).
          *
          * @return {Object<number, string[]>}
          */
         this.getLevels = function () {
-            return storeByLevel;
+            return _storeByLevel;
         }
 
         /**
@@ -29,10 +37,10 @@ export default class TeqFw_Core_Back_Scan_Plugin_Registry {
          */
         this.getItemsByLevels = function (downUp = true) {
             const res = [];
-            const keys = Object.keys(storeByLevel).map(key => parseInt(key)); // get keys as integers
+            const keys = Object.keys(_storeByLevel).map(key => parseInt(key)); // get keys as integers
             keys.sort((a, b) => a - b); // sort as numbers
             for (const key of keys)
-                for (const name of storeByLevel[key]) res.push(store[name]);
+                for (const name of _storeByLevel[key]) res.push(_store[name]);
             if (!downUp) res.reverse();
             return res;
         }
@@ -43,9 +51,9 @@ export default class TeqFw_Core_Back_Scan_Plugin_Registry {
          */
         this.getMapPath2Name = function () {
             const res = {};
-            for (const key of Object.keys(store)) {
+            for (const key of Object.keys(_store)) {
                 /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item} */
-                const item = store[key];
+                const item = _store[key];
                 res[item.path] = item.name;
             }
             return res;
@@ -55,7 +63,7 @@ export default class TeqFw_Core_Back_Scan_Plugin_Registry {
          * @returns {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]}
          */
         this.items = function () {
-            return Object.values(store);
+            return Object.values(_store);
         };
 
         /**
@@ -63,14 +71,22 @@ export default class TeqFw_Core_Back_Scan_Plugin_Registry {
          * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item} item
          */
         this.set = function (packageName, item) {
-            store[packageName] = item;
+            _store[packageName] = item;
+        };
+
+        /**
+         * Set root plugin name as application name.
+         * @param {string} name
+         */
+        this.setAppName = function (name) {
+            _appName = name;
         };
 
         /**
          * @param {Object<number, string[]>} data
          */
         this.setLevels = function (data) {
-            storeByLevel = data;
+            _storeByLevel = data;
         };
 
     }

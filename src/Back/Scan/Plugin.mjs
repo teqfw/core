@@ -120,10 +120,14 @@ export default class TeqFw_Core_Back_Scan_Plugin {
             const scanData = await scanner.scanFilesystem(root);
             const items = await getPlugins(scanData);
             const names = [];
+            let appName;
             for (const item of items) {
                 registry.set(item.name, item);
                 names.push(item.name);
+                if (item.path === root) appName = item.name;
             }
+            // set root plugin name as application name
+            registry.setAppName(appName)
             // remove extra deps (not teq-plugins)
             for (const item of items) {
                 const all = item.deps;
