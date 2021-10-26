@@ -30,6 +30,18 @@ function castArrayOfObj(data, fact) {
 }
 
 /**
+ * Cast input data into array of strings.
+ * @param {*} data
+ * @return {Array}
+ * @memberOf TeqFw_Core_Shared_Util_Cast
+ */
+function castArrayOfStr(data) {
+    return Array.isArray(data)
+        ? data.map((one) => castString(one))
+        : [];
+}
+
+/**
  * Cast input data into 'boolean' data type.
  * @param {*} data
  * @return {boolean}
@@ -144,6 +156,7 @@ Object.defineProperty(castString, 'name', {value: `${NS}.${castString.name}`});
 export {
     castArray,
     castArrayOfObj,
+    castArrayOfStr,
     castBoolean,
     castBooleanIfExists,
     castEnum,
