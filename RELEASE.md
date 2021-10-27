@@ -1,5 +1,13 @@
 # @teqfw/core: releases
 
+# 0.6.0
+
+* Cast functions to use in DTOs.
+* Bind to di-plugin areas.
+* `./Shared/` area is added.
+* Test units for cast functions.
+* Recursive files scanner.
+
 # 0.5.0
 
 * docs for plugin's teq-descriptor;
