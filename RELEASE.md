@@ -1,5 +1,8 @@
 # @teqfw/core: releases
 
+# x.x.x
+* Date cast function.
+
 # 0.6.0
 
 * Cast functions to use in DTOs.

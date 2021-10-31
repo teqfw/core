@@ -72,6 +72,17 @@ function castBooleanIfExists(data) {
 }
 
 /**
+ * Cast input data into 'boolean' data type if input defined.
+ * @param {Date|string|number} data
+ * @return {Date|undefined}
+ * @memberOf TeqFw_Core_Shared_Util_Cast
+ */
+function castDate(data) {
+    return ((typeof data === 'object') && (data instanceof Date)) ? data :
+        ((typeof data === 'string') || (typeof data === 'number')) ? new Date(data) : undefined;
+}
+
+/**
  * Cast input data into object value (enumerations).
  * @param {*} data
  * @param {Object} enu constant with allowable values
@@ -159,6 +170,7 @@ export {
     castArrayOfStr,
     castBoolean,
     castBooleanIfExists,
+    castDate,
     castEnum,
     castFunction,
     castInt,
