@@ -5,6 +5,19 @@
 // DEFINE WORKING VARS
 const NS = 'TeqFw_Core_Shared_Util';
 
+
+/**
+ * Convert ArrayBuffer to HEX-string.
+ * @param {ArrayBuffer} buffer
+ * @return {string}
+ * @memberOf TeqFw_Core_Shared_Util
+ */
+function buf2hex(buffer) {
+    return [...new Uint8Array(buffer)]
+        .map(x => x.toString(16).padStart(2, '0'))
+        .join('');
+}
+
 /**
  * Deep merge of the 2 objects.
  * Source: https://gist.github.com/ahtcx/0cd94e62691f539160b32ecda18af3d6#gistcomment-2930530
@@ -222,6 +235,7 @@ function round(num, places = 2) {
     return +(Math.round(norm + "e+" + places) + "e-" + places);
 }
 
+
 // finalize code components for this es6-module
 Object.defineProperty(deepMerge, 'name', {value: `${NS}.${deepMerge.name}`});
 Object.defineProperty(formatAmount, 'name', {value: `${NS}.${formatAmount.name}`});
@@ -236,6 +250,7 @@ Object.defineProperty(parseBoolean, 'name', {value: `${NS}.${parseBoolean.name}`
 Object.defineProperty(round, 'name', {value: `${NS}.${round.name}`});
 
 export {
+    buf2hex,
     deepMerge,
     formatAmount,
     formatDate,
