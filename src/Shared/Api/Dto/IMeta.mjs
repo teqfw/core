@@ -12,7 +12,7 @@ export default class TeqFw_Core_Shared_Api_Dto_IMeta {
 
     /**
      * Get codifier for entity attributes.
-     * @return {Object}
+     * @return {*}
      */
     getAttributes() {}
 
