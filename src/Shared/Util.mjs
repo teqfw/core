@@ -186,6 +186,20 @@ function isEmpty(val) {
 }
 
 /**
+ * Return 'true' if `val` is Object (not array, function, null).
+ * @param {*} val
+ * @returns {boolean}
+ * @memberOf TeqFw_Core_Shared_Util
+ */
+function isObject(val) {
+    return (
+        (typeof val === 'object') &&
+        (!Array.isArray(val)) &&
+        (val !== null)
+    );
+}
+
+/**
  * Parse some data as boolean or use default value.
  * @param {*} data
  * @param def
@@ -237,6 +251,7 @@ function round(num, places = 2) {
 
 
 // finalize code components for this es6-module
+Object.defineProperty(buf2hex, 'name', {value: `${NS}.${buf2hex.name}`});
 Object.defineProperty(deepMerge, 'name', {value: `${NS}.${deepMerge.name}`});
 Object.defineProperty(formatAmount, 'name', {value: `${NS}.${formatAmount.name}`});
 Object.defineProperty(formatDate, 'name', {value: `${NS}.${formatDate.name}`});
@@ -246,6 +261,7 @@ Object.defineProperty(formatUtcDate, 'name', {value: `${NS}.${formatUtcDate.name
 Object.defineProperty(formatUtcDateTime, 'name', {value: `${NS}.${formatUtcDateTime.name}`});
 Object.defineProperty(formatUtcTime, 'name', {value: `${NS}.${formatUtcTime.name}`});
 Object.defineProperty(isEmpty, 'name', {value: `${NS}.${isEmpty.name}`});
+Object.defineProperty(isObject, 'name', {value: `${NS}.${isObject.name}`});
 Object.defineProperty(parseBoolean, 'name', {value: `${NS}.${parseBoolean.name}`});
 Object.defineProperty(round, 'name', {value: `${NS}.${round.name}`});
 
@@ -260,6 +276,7 @@ export {
     formatUtcDateTime,
     formatUtcTime,
     isEmpty,
+    isObject,
     parseBoolean,
     round,
 };

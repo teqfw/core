@@ -122,6 +122,7 @@ function castInt(data) {
  * Cast input data into some primitive type.
  * @param data
  * @return {undefined|string|number|boolean|symbol|bigint}
+ * @memberOf TeqFw_Core_Shared_Util_Cast
  */
 function castPrimitive(data) {
     if (
