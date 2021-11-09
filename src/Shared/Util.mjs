@@ -7,15 +7,46 @@ const NS = 'TeqFw_Core_Shared_Util';
 
 
 /**
- * Convert ArrayBuffer to HEX-string.
- * @param {ArrayBuffer} buffer
+ * Convert ArrayBuffer to Base64 encoded string.
+ * @param {ArrayBuffer} buf
  * @return {string}
  * @memberOf TeqFw_Core_Shared_Util
  */
-function buf2hex(buffer) {
-    return [...new Uint8Array(buffer)]
+function ab2b64(buf) {
+    return self.btoa(ab2str(buf));
+}
+
+
+/**
+ * Convert ArrayBuffer to HEX-string.
+ * @param {ArrayBuffer} buf
+ * @return {string}
+ * @memberOf TeqFw_Core_Shared_Util
+ */
+function ab2hex(buf) {
+    return [...new Uint8Array(buf)]
         .map(x => x.toString(16).padStart(2, '0'))
         .join('');
+}
+
+/**
+ * Convert ArrayBuffer to string.
+ * @param {ArrayBuffer} buf
+ * @return {string}
+ * @memberOf TeqFw_Core_Shared_Util
+ */
+function ab2str(buf) {
+    return String.fromCharCode(...new Uint8Array(buf));
+}
+
+/**
+ * Convert Base64 string to ArrayBuffer.
+ * @param {string} base64
+ * @return {ArrayBuffer}
+ * @memberOf TeqFw_Core_Shared_Util
+ */
+function b642ab(base64) {
+    return str2ab(self.atob(base64));
 }
 
 /**
@@ -249,9 +280,25 @@ function round(num, places = 2) {
     return +(Math.round(norm + "e+" + places) + "e-" + places);
 }
 
+/**
+ * Convert string to array buffer.
+ * @param {string} str
+ * @return {ArrayBuffer}
+ * @memberOf TeqFw_Core_Shared_Util
+ */
+function str2ab(str) {
+    const buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
+    const bufView = new Uint16Array(buf);
+    for (let i = 0, strLen = str.length; i < strLen; i++) bufView[i] = str.charCodeAt(i);
+    return buf;
+}
+
 
 // finalize code components for this es6-module
-Object.defineProperty(buf2hex, 'name', {value: `${NS}.${buf2hex.name}`});
+Object.defineProperty(ab2b64, 'name', {value: `${NS}.${ab2b64.name}`});
+Object.defineProperty(ab2hex, 'name', {value: `${NS}.${ab2hex.name}`});
+Object.defineProperty(ab2str, 'name', {value: `${NS}.${ab2str.name}`});
+Object.defineProperty(b642ab, 'name', {value: `${NS}.${b642ab.name}`});
 Object.defineProperty(deepMerge, 'name', {value: `${NS}.${deepMerge.name}`});
 Object.defineProperty(formatAmount, 'name', {value: `${NS}.${formatAmount.name}`});
 Object.defineProperty(formatDate, 'name', {value: `${NS}.${formatDate.name}`});
@@ -264,9 +311,13 @@ Object.defineProperty(isEmpty, 'name', {value: `${NS}.${isEmpty.name}`});
 Object.defineProperty(isObject, 'name', {value: `${NS}.${isObject.name}`});
 Object.defineProperty(parseBoolean, 'name', {value: `${NS}.${parseBoolean.name}`});
 Object.defineProperty(round, 'name', {value: `${NS}.${round.name}`});
+Object.defineProperty(str2ab, 'name', {value: `${NS}.${str2ab.name}`});
 
 export {
-    buf2hex,
+    ab2b64,
+    ab2hex,
+    ab2str,
+    b642ab,
     deepMerge,
     formatAmount,
     formatDate,
@@ -279,4 +330,5 @@ export {
     isObject,
     parseBoolean,
     round,
+    str2ab,
 };
