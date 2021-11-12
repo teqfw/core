@@ -86,12 +86,14 @@ function castDate(data) {
  * Cast input data into object value (enumerations).
  * @param {*} data
  * @param {Object} enu constant with allowable values
+ * @param {boolean} capitalize 'true' - capitalize data before comparison
  * @return {string|undefined}
  * @memberOf TeqFw_Core_Shared_Util_Cast
  */
-function castEnum(data, enu) {
+function castEnum(data, enu, capitalize = true) {
     const values = Object.values(enu);
-    return values.includes(data) ? data : undefined;
+    const norm = (capitalize && (typeof data === 'string')) ? data.toUpperCase() : data;
+    return values.includes(norm) ? norm : undefined;
 }
 
 /**
