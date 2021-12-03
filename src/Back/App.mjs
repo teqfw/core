@@ -16,8 +16,6 @@ export default class TeqFw_Core_Back_App {
         // EXTRACT DEPS
         /** @type {TeqFw_Core_Back_Defaults} */
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
-        /** @type {typeof TeqFw_Di_Shared_Api_Enum_Area} */
-        const AREA = spec['TeqFw_Di_Shared_Api_Enum_Area#'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc.Factory} */
         const fDesc = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc#Factory$'];
         /** @type {TeqFw_Di_Shared_Container} */
@@ -122,8 +120,13 @@ export default class TeqFw_Core_Back_App {
                     if (Array.isArray(Object.keys(desc?.replace)))
                         for (const orig of Object.keys(desc.replace)) {
                             const one = desc.replace[orig];
-                            if ((one.area === AREA.BACK) || (one.area === AREA.SHARED))
-                                container.addModuleReplacement(orig, one.ns);
+                            if (typeof one === 'string') {
+                                container.addModuleReplacement(orig, one);
+                            } else if (typeof one === 'object') {
+                                if (typeof one[DEF.AREA] === 'string') {
+                                    container.addModuleReplacement(orig, one[DEF.AREA]);
+                                }
+                            }
                         }
                 }
             }

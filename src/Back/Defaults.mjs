@@ -3,6 +3,7 @@
  */
 export default class TeqFw_Core_Back_Defaults {
 
+    AREA = 'back'; // DI area for backend
     CLI_PREFIX = 'core'; // prefix in CLI commands
     /** @type {TeqFw_Di_Back_Defaults} */
     MOD_DI;
