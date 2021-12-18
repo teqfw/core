@@ -110,9 +110,11 @@ export default class TeqFw_Core_Back_App {
                     /** @type {TeqFw_Di_Shared_Api_Dto_Plugin_Desc_Autoload} */
                     const auto = desc.autoload;
                     const ns = auto.ns;
-                    const path = join(item.path, auto.path);
-                    container.addSourceMapping(ns, path, true);
-                    logger.info(`'${ns}' namespace is mapped to '${path}'.`);
+                    if (ns) {
+                        const path = join(item.path, auto.path);
+                        container.addSourceMapping(ns, path, true);
+                        logger.info(`'${ns}' namespace is mapped to '${path}'.`);
+                    }
                 }
                 for (const item of registry.getItemsByLevels()) {
                     /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc} */
