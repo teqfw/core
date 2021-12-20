@@ -103,11 +103,13 @@ export default class TeqFw_Core_Shared_Logger {
 
         /**
          * Return all stored logs and clean up internal store.
+         * @param {boolean} [pause] pause logging output or unfreeze it
          * @return {Array}
          */
-        this.reset = function () {
+        this.reset = function (pause) {
             const res = JSON.parse(JSON.stringify(queue));
             queue = [];
+            if (typeof pause === 'boolean') this.pause(pause);
             return res;
         }
     }

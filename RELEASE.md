@@ -1,5 +1,14 @@
 # @teqfw/core: releases
 
+# 0.7.0
+
+* Move source code areas in the core from `@teqfw/di`.
+* Fix namespaces scanning when namespace is omitted in `teqfw.json`.
+* DTO module interface (`TeqFw_Core_Shared_Api_Dto_IMeta`).
+* New util `TeqFw_Core_Shared_Util_BeforeAfter`.
+* Date cast function.
+* Pause/unfreeze logs output on reset.
+
 # 0.6.0
 
 * Cast functions to use in DTOs.
