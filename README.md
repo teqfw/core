@@ -1,8 +1,11 @@
 # @teqfw/core
 
-This package contains backend application to scan and registry teq-plugins and is used in Tequila Framework based
-projects. Core-plugin contains CLI [commander](https://github.com/tj/commander.js) and adds plugin's commands to the
-application. Also, core-plugin loads local configuration from `./cfg/local.json` (if file exist).
+|CAUTION: TeqFW is an unstable, fast-growing project w/o backward compatibility. Use it at your own risk.|
+|---|
+
+This `teq`-plugin contains backend application to scan and registry other `teq`-plugins and is used in Tequila Framework
+based projects. `core`-plugin contains CLI [commander](https://github.com/tj/commander.js) and adds plugin's commands to
+the application. Also, core-plugin loads local configuration from `./cfg/local.json` (if file exist).
 
 ## Install
 
@@ -10,9 +13,60 @@ application. Also, core-plugin loads local configuration from `./cfg/local.json`
 $ npm i @teqfw/core --save 
 ```
 
-## Bootstrap
+## Namespace
 
-Create script `./bin/tequila.mjs` in your project and place this code inside:
+This plugin uses `TeqFw_Core` namespace.
+
+## CLI commands
+
+These command are in the core-plugin:
+
+```shell
+$ node ./bin/tequila.mjs help
+Usage: tequila [options] [command]
+
+Options:
+  -h, --help                   display help for command
+
+Commands:
+  core-startup-logs            print out startup logs from the application core.
+  core-version                 get version of the application.
+  help [command]               display help for command
+```
+
+## `./cfg/local.json`
+
+[DTO](src/Back/Api/Dto/Config/Local.mjs) for `@teqfw/web` node.
+
+```json
+{
+  "@teqfw/core": {
+    "devMode": false
+  }
+}
+```
+
+## `teqfw.json`
+
+[DTO](src/Back/Api/Dto/Plugin/Desc.mjs) for `@teqfw/core` nodes in `teq`-plugins descriptors.
+
+```json
+{
+  "@teqfw/core": {
+    "commands": ["Ns_Mod"],
+    "plugin": {
+      "onInit": "Ns_Mod",
+      "onStop": "Ns_Mod"
+    }
+  }
+}
+```
+
+## Usage
+
+### bootstrap
+
+Create script `./bin/tequila.mjs` to make TeqFW app from your project. Place this code inside:
 
 ```ecmascript 6
 #!/usr/bin/env node
@@ -46,30 +100,11 @@ try {
 }
 ```
 
-## Core commands
-
-These command are in the core-plugin:
-
-```shell
-$ node ./bin/tequila.mjs help
-Usage: tequila [options] [command]
-
-Options:
-  -h, --help                   display help for command
-
-Commands:
-  core-startup-logs            print out startup logs from the application core.
-  core-version                 get version of the application.
-  help [command]               display help for command
-
-```
-
-
-
-## Add `./teqfw.json`
+### add `./teqfw.json`
 
 You need to add `./teqfw.json` to your project (near `./package.json`) with "namespace-to-filesystem" mapping to use
-dependency injection (@teqfw/di):
+dependency injection (`@teqfw/di`). Choose namespace for your sources (`Vendor_Plugin`) and map it to the folder with
+sources (`./src'):
 
 ```json
 {
@@ -82,14 +117,14 @@ dependency injection (@teqfw/di):
 }
 ```
 
+### add command
 
-
-## Add command
-
-Create es6-module `./src/Back/Cli/Cmd.mjs` with factory that creates command data (see `TeqFw_Core_Back_Api_Dto_Command`):
+Create es6-module `./src/Back/Cli/Cmd.mjs` with factory that creates command data (
+see `TeqFw_Core_Back_Api_Dto_Command`):
 
 ```ecmascript 6
 const NS = 'Vendor_Plugin_Back_Cli_Cmd';
+
 /**
  * Factory to create CLI command.
  *
