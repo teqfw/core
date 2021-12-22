@@ -1,5 +1,9 @@
 # @teqfw/core: releases
 
+# 0.8.0.new
+
+* Separate interfaces to sync and async in `./Shared/Api/`.
+
 # 0.7.0
 
 * Move source code areas in the core from `@teqfw/di`.
