@@ -1,8 +1,9 @@
 # @teqfw/core: releases
 
-# 0.8.0.new
+# 0.7.1
 
 * Separate interfaces to sync and async in `./Shared/Api/`.
+* New model `TeqFw_Core_Shared_Mod_Map`.
 
 # 0.7.0
 
