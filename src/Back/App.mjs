@@ -7,6 +7,7 @@ import process from 'process';
 import {Command} from 'commander/esm.mjs';
 import {existsSync, statSync} from 'fs';
 import {join} from 'path';
+import {v4} from 'uuid';
 
 /**
  * Main class to launch application: read modules meta data, initialize parts of app, start the app.
@@ -24,6 +25,8 @@ export default class TeqFw_Core_Back_App {
         const config = spec['TeqFw_Core_Back_Config$'];
         /** @type {TeqFw_Core_Shared_Logger} */
         const logger = spec['TeqFw_Core_Shared_Logger$'];
+        /** @type {TeqFw_Core_Back_App_UUID} */
+        const mUuid = spec['TeqFw_Core_Back_App_UUID$'];
         /** @type {TeqFw_Core_Back_Scan_Plugin} */
         const pluginScan = spec['TeqFw_Core_Back_Scan_Plugin$'];
 
@@ -55,6 +58,7 @@ export default class TeqFw_Core_Back_App {
                 if (!existsSync(pathNode) || !statSync(pathNode).isDirectory())
                     throw new Error(`Cannot find './node_modules/' in '${path}'.`);
                 config.setBoot(path, version);
+                logger.info(`Teq-application is started in '${path}' (ver. ${version}).`);
             }
 
             /**
@@ -159,11 +163,23 @@ export default class TeqFw_Core_Back_App {
                 }
             }
 
+            /**
+             * Load UUID from local config or generate new one.
+             * @param {TeqFw_Core_Back_Config} config
+             */
+            function initUUID(config) {
+                /** @type {TeqFw_Core_Back_Api_Dto_Config_Local} */
+                const cfg = config.getLocal(DEF.SHARED.NAME);
+                const uuid = (cfg?.uuid) ? cfg.uuid : v4();
+                mUuid.set(uuid);
+                logger.info(`Backend application UUID: ${mUuid.get()}.`);
+            }
+
             // MAIN FUNCTIONALITY
             initBootConfig(config, path, version);
-            logger.info(`Teq-application is started in '${path}' (ver. ${version}).`);
             // load local configuration
             config.loadLocal(path);
+            initUUID(config);
             // scan node modules for teq-plugins
             pluginsRegistry = await pluginScan.exec(path);
             // init container before do something else

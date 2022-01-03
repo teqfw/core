@@ -12,6 +12,11 @@ export default class TeqFw_Core_Back_Api_Dto_Config_Local {
      * @type {Boolean}
      */
     devMode;
+    /**
+     * Backend instance identifier. Random ID will be generated if omitted.
+     * @type {string}
+     */
+    uuid;
 }
 
 /**
@@ -20,7 +25,10 @@ export default class TeqFw_Core_Back_Api_Dto_Config_Local {
  */
 export class Factory {
     constructor(spec) {
-        const {castBoolean} = spec['TeqFw_Core_Shared_Util_Cast'];
+        /** @type {TeqFw_Core_Shared_Util_Cast.castBoolean|function} */
+        const castBoolean = spec['TeqFw_Core_Shared_Util_Cast.castBoolean'];
+        /** @type {TeqFw_Core_Shared_Util_Cast.castString|function} */
+        const castString = spec['TeqFw_Core_Shared_Util_Cast.castString'];
         /**
          * @param {TeqFw_Core_Back_Api_Dto_Config_Local|null} data
          * @return {TeqFw_Core_Back_Api_Dto_Config_Local}
@@ -28,6 +36,7 @@ export class Factory {
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Api_Dto_Config_Local();
             res.devMode = castBoolean(data?.devMode);
+            res.uuid = castString(data?.uuid);
             return res;
         }
     }

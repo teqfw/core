@@ -5,11 +5,15 @@
 const NS = 'TeqFw_Core_Back_Api_Dto_Formless';
 
 // MODULE'S CLASSES
+/**
+ * @deprecated use 'TeqFw_Core_Shared_Dto_Formless'
+ */
 export default class TeqFw_Core_Back_Api_Dto_Formless {}
 
 /**
  * Factory to create new DTO instances.
  * @memberOf TeqFw_Core_Back_Api_Dto_Formless
+ * @deprecated use 'TeqFw_Core_Shared_Dto_Formless'
  */
 export class Factory {
     constructor() {

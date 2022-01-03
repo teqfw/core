@@ -6,6 +6,7 @@
  * troubles with 'Find Usages' operation in IDEA for 'function' notation.
  *
  * @interface
+ * @deprecated we should not separate by sync/async on top level (./Action/IAsync is better than ./Async/IAction)
  */
 export default class TeqFw_Core_Shared_Api_Async_IAction {
     /**

@@ -1,5 +1,10 @@
 # @teqfw/core: releases
 
+# 0.8.0
+
+* Events related interfaces.
+* Backend application UUID.
+
 # 0.7.1
 
 * Separate interfaces to sync and async in `./Shared/Api/`.
