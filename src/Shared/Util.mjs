@@ -22,6 +22,7 @@ function ab2b64(buf) {
  * @param {ArrayBuffer} buf
  * @return {string}
  * @memberOf TeqFw_Core_Shared_Util
+ * @deprecated use TeqFw_Core_Shared_Util_Codec.ab2hex
  */
 function ab2hex(buf) {
     return [...new Uint8Array(buf)]
@@ -34,6 +35,7 @@ function ab2hex(buf) {
  * @param {ArrayBuffer} buf
  * @return {string}
  * @memberOf TeqFw_Core_Shared_Util
+ * @deprecated use TeqFw_Core_Shared_Util_Codec.ab2str
  */
 function ab2str(buf) {
     return String.fromCharCode(...new Uint8Array(buf));
