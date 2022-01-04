@@ -27,12 +27,12 @@ export default class TeqFw_Core_Back_App {
         const logger = spec['TeqFw_Core_Shared_Logger$'];
         /** @type {TeqFw_Core_Back_App_UUID} */
         const mUuid = spec['TeqFw_Core_Back_App_UUID$'];
-        /** @type {TeqFw_Core_Back_Scan_Plugin} */
-        const pluginScan = spec['TeqFw_Core_Back_Scan_Plugin$'];
+        /** @type {TeqFw_Core_Back_App_Scan_Plugin} */
+        const pluginScan = spec['TeqFw_Core_Back_App_Scan_Plugin$'];
 
         // INIT OWN PROPERTIES AND DEFINE WORKING VARS
         const program = new Command();
-        /** @type {TeqFw_Core_Back_Scan_Plugin_Registry} */
+        /** @type {TeqFw_Core_Back_App_Scan_Plugin_Registry} */
         let pluginsRegistry;
 
         /**
@@ -64,7 +64,7 @@ export default class TeqFw_Core_Back_App {
             /**
              * Run 'commander' initialization code for all plugins.
              *
-             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_App_Scan_Plugin_Registry} registry
              * @returns {Promise<void>}
              * @memberOf TeqFw_Core_Back_App.init
              */
@@ -105,7 +105,7 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Go through all plugins hierarchy (down to top) and register namespaces in DI container.
-             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_App_Scan_Plugin_Registry} registry
              */
             function initDiContainer(registry) {
                 for (const item of registry.items()) {
@@ -139,7 +139,7 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Go through plugins hierarchy (down to top) and run init functions.
-             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_App_Scan_Plugin_Registry} registry
              * @return {Promise<void>}
              */
             async function initPlugins(registry) {
@@ -230,7 +230,7 @@ export default class TeqFw_Core_Back_App {
             // DEFINE INNER FUNCTIONS
             /**
              * Go through plugins hierarchy (down to top) and run finalization functions.
-             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_App_Scan_Plugin_Registry} registry
              * @return {Promise<void>}
              */
             async function stopPlugins(registry) {
