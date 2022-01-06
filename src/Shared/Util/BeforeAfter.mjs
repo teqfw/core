@@ -11,7 +11,7 @@ const NS = 'TeqFw_Core_Shared_Util_BeforeAfter';
  * @memberOf TeqFw_Core_Shared_Util_BeforeAfter
  */
 class Dto {
-    static name = `${NS}.Dto`;
+    static namespace = `${NS}.Dto`;
     /** @type {string[]} */
     after;
     /** @type {string[]} */

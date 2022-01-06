@@ -15,7 +15,7 @@ const ATTR = {};
  * @memberOf TeqFw_Core_Shared_Dto_Formless
  */
 class Dto {
-    static name = `${NS}.Dto`;
+    static namespace = `${NS}.Dto`;
 }
 
 /**
