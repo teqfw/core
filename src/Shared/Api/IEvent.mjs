@@ -1,6 +1,7 @@
 /**
  * Interface for event message.
  * @interface
+ * @deprecated use TeqFw_Core_Shared_App_Event_Message.Dto
  */
 export default class TeqFw_Core_Shared_Api_IEvent {
     /**

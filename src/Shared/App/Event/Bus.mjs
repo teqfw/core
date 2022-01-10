@@ -1,13 +1,13 @@
 /**
- * Basic functionality for event producers.
+ * Basic functionality for event bus (front or back).
  *
  * Use it as mixins (inject base as instance in child constructor):
- *   const base = spec['TeqFw_Core_Shared_App_Event_Producer$$']; // $$ - instance
+ *   const base = spec['TeqFw_Core_Shared_App_Event_Bus$$']; // $$ - instance
  *   Object.assign(this, base);
  *
- * @implements TeqFw_Core_Shared_Api_Event_IProducer
+ * @implements TeqFw_Core_Shared_Api_Event_IBus
  */
-export default class TeqFw_Core_Shared_App_Event_Producer {
+export default class TeqFw_Core_Shared_App_Event_Bus {
     constructor(spec) {
         // EXTRACT DEPS
         /** @type {typeof TeqFw_Core_Shared_App_Event_Subscription} */
@@ -19,17 +19,18 @@ export default class TeqFw_Core_Shared_App_Event_Producer {
 
         // DEFINE INSTANCE METHODS
 
-        this.emit = function (eventName, payload) {
+        this.publish = function (message) {
+            const eventName = message?.meta?.name;
             if (Array.isArray(_listeners[eventName]))
                 for (const one of _listeners[eventName]) {
-                    one(payload);
+                    one(message);
                 }
         }
 
-        this.subscribe = function (event, handler) {
-            if (!_listeners[event]) _listeners[event] = [];
-            _listeners[event].push(handler);
-            return new Subscription(event, handler);
+        this.subscribe = function (eventName, handler) {
+            if (!_listeners[eventName]) _listeners[eventName] = [];
+            _listeners[eventName].push(handler);
+            return new Subscription(eventName, handler);
         }
 
         this.unsubscribe = function (subscription) {

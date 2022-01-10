@@ -1,19 +1,18 @@
 /**
- * Event generator interface.
+ * Event bus interface.
+ * This is documentation only code (not executable).
  *
  * @interface
  */
-export default class TeqFw_Core_Shared_Api_Event_IProducer {
+export default class TeqFw_Core_Shared_Api_Event_IBus {
     /**
-     * Emit message about event and run all event handlers with given payload.
-     *
-     * @param {string} eventName
-     * @param {Object} payload
+     * Publish message about event and run all event handlers with given payload.
+     * @param {TeqFw_Core_Shared_App_Event_Message.Dto} message
      */
-    emit(eventName, payload) {}
+    publish(message) {}
 
     /**
-     * Add event listener to event generator.
+     * Add event listener to event bus.
      * @param {string} eventName
      * @param {function} handler
      * @return {TeqFw_Core_Shared_Api_Event_ISubscription}

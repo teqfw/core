@@ -20,6 +20,7 @@ const container = new Container();
 // add backend sources to map
 container.addSourceMapping('TeqFw_Core', srcApp, true, 'mjs');
 container.addSourceMapping('TeqFw_Di', srcTeqFwDi, true, 'mjs');
+container.addModuleReplacement('TeqFw_Core_Shared_Lib_Uuid', 'TeqFw_Core_Back_Lib_Uuid');
 
 /**
  * Setup development environment (if not set before) and return DI container.

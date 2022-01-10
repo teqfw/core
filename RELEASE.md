@@ -15,7 +15,7 @@
 
 * Move source code areas in the core from `@teqfw/di`.
 * Fix namespaces scanning when namespace is omitted in `teqfw.json`.
-* DTO module interface (`TeqFw_Core_Shared_Api_Dto_IMeta`).
+* DTO module interface (`TeqFw_Core_Shared_Api_Factory_Dto_IMeta`).
 * New util `TeqFw_Core_Shared_Util_BeforeAfter`.
 * Date cast function.
 * Pause/unfreeze logs output on reset.
