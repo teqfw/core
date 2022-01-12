@@ -11,6 +11,7 @@ const NS = 'TeqFw_Core_Shared_App_Event_Message';
 const ATTR = {
     DATA: 'data',
     META: 'meta',
+    // TODO: add 'name' attr here for easy debug (Network tab in Chrome for efb events)
 };
 
 // MODULE'S CLASSES

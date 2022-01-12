@@ -7,7 +7,7 @@
 export default class TeqFw_Core_Shared_Api_Event_IBus {
     /**
      * Publish message about event and run all event handlers with given payload.
-     * @param {TeqFw_Core_Shared_App_Event_Message.Dto} message
+     * @param {TeqFw_Core_Shared_App_Event_Message.Dto|*} message
      */
     publish(message) {}
 
