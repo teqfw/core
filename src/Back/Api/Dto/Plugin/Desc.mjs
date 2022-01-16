@@ -24,6 +24,8 @@ TeqFw_Core_Back_Api_Dto_Plugin_Desc.PLUGIN = 'plugin';
  * @memberOf TeqFw_Core_Back_Api_Dto_Plugin_Desc
  */
 export class Factory {
+    static namespace = NS;
+
     constructor(spec) {
         const {castArray} = spec['TeqFw_Core_Shared_Util_Cast'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc_Plugin.Factory} */
@@ -43,4 +45,3 @@ export class Factory {
 
 // finalize code components for this es6-module
 Object.freeze(TeqFw_Core_Back_Api_Dto_Plugin_Desc);
-Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.constructor.name}`});

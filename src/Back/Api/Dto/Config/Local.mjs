@@ -24,6 +24,8 @@ export default class TeqFw_Core_Back_Api_Dto_Config_Local {
  * @memberOf TeqFw_Core_Back_Api_Dto_Config_Local
  */
 export class Factory {
+    static namespace = NS;
+
     constructor(spec) {
         /** @type {TeqFw_Core_Shared_Util_Cast.castBoolean|function} */
         const castBoolean = spec['TeqFw_Core_Shared_Util_Cast.castBoolean'];
@@ -41,6 +43,3 @@ export class Factory {
         }
     }
 }
-
-// finalize code components for this es6-module
-Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.constructor.name}`});

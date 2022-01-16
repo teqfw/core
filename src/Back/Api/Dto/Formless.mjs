@@ -16,6 +16,8 @@ export default class TeqFw_Core_Back_Api_Dto_Formless {}
  * @deprecated use 'TeqFw_Core_Shared_Dto_Formless'
  */
 export class Factory {
+    static namespace = NS;
+
     constructor() {
         /**
          * @param {TeqFw_Core_Back_Api_Dto_Formless|string|null} data
@@ -29,6 +31,3 @@ export class Factory {
         }
     }
 }
-
-// finalize code components for this es6-module
-Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.constructor.name}`});
