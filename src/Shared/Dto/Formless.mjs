@@ -9,7 +9,7 @@ const NS = 'TeqFw_Core_Shared_Dto_Formless';
  * @memberOf TeqFw_Core_Shared_Dto_Formless
  */
 class Dto {
-    static namespace = `${NS}.Dto`;
+    static namespace = NS;
 }
 
 /**
