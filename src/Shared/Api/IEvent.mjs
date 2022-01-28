@@ -15,5 +15,12 @@ export default class TeqFw_Core_Shared_Api_IEvent {
      * Get event name (should be unique among all other events names).
      * @return {string}
      */
+    getEventName() {}
+
+    /**
+     * Get event name (should be unique among all other events names).
+     * @return {string}
+     * @deprecated use getEventName
+     */
     getName() {}
 }
