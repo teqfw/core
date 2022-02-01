@@ -20,7 +20,7 @@ export default class TeqFw_Core_Shared_Dto_Formless {
 
         // DEFINE INSTANCE METHODS
         /**
-         * @param {TeqFw_Core_Shared_Dto_Formless.Dto} data
+         * @param {*} data
          * @return {TeqFw_Core_Shared_Dto_Formless.Dto}
          */
         this.createDto = function (data = null) {
