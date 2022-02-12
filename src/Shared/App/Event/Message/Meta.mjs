@@ -20,6 +20,8 @@ const ATTR = {
  */
 class Dto {
     static namespace = NS;
+    /** @type {Date} */
+    expiration;
     /** @type {string} */
     name;
     /** @type {Date} */
@@ -48,6 +50,12 @@ export default class TeqFw_Core_Shared_App_Event_Message_Meta {
          */
         this.createDto = function (data = null) {
             const res = new Dto();
+            res.expiration = castDate(data?.expiration);
+            if (!res.expiration) {
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                res.expiration = tomorrow;
+            }
             res.name = castString(data?.name);
             res.published = castDate(data?.published) ?? new Date();
             res.uuid = castString(data?.uuid) ?? v4();
