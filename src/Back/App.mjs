@@ -14,7 +14,7 @@ import {v4} from 'uuid';
  */
 export default class TeqFw_Core_Back_App {
     constructor(spec) {
-        // EXTRACT DEPS
+        // DEPS
         /** @type {TeqFw_Core_Back_Defaults} */
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc.Factory} */
@@ -23,17 +23,19 @@ export default class TeqFw_Core_Back_App {
         const container = spec['TeqFw_Di_Shared_Container$'];
         /** @type {TeqFw_Core_Back_Config} */
         const config = spec['TeqFw_Core_Back_Config$'];
-        /** @type {TeqFw_Core_Shared_Logger} */
-        const logger = spec['TeqFw_Core_Shared_Logger$'];
+        /** @type {TeqFw_Core_Back_App_Init_Logger} */
+        const logger = spec['TeqFw_Core_Back_App_Init_Logger$'];
         /** @type {TeqFw_Core_Back_App_UUID} */
         const mUuid = spec['TeqFw_Core_Back_App_UUID$'];
-        /** @type {TeqFw_Core_Back_App_Scan_Plugin} */
-        const pluginScan = spec['TeqFw_Core_Back_App_Scan_Plugin$'];
+        /** @type {TeqFw_Core_Back_App_Init_Plugin} */
+        const pluginScan = spec['TeqFw_Core_Back_App_Init_Plugin$'];
 
-        // INIT OWN PROPERTIES AND DEFINE WORKING VARS
+        // ENCLOSED VARS
         const program = new Command();
-        /** @type {TeqFw_Core_Back_App_Scan_Plugin_Registry} */
+        /** @type {TeqFw_Core_Back_App_Init_Plugin_Registry} */
         let pluginsRegistry;
+
+        // INSTANCE METHODS
 
         /**
          * Initialize TeqFW application (DI, config, plugins, etc.).
@@ -43,7 +45,7 @@ export default class TeqFw_Core_Back_App {
          * @returns {Promise<void>}
          */
         this.init = async function ({path, version}) {
-            // DEFINE INNER FUNCTIONS
+            // ENCLOSED FUNCS
 
             /**
              * Save bootstrap configuration into configuration container.
@@ -64,12 +66,12 @@ export default class TeqFw_Core_Back_App {
             /**
              * Run 'commander' initialization code for all plugins.
              *
-             * @param {TeqFw_Core_Back_App_Scan_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_App_Init_Plugin_Registry} registry
              * @returns {Promise<void>}
              * @memberOf TeqFw_Core_Back_App.init
              */
             async function initCommander(registry) {
-                // DEFINE INNER FUNCTIONS
+                // ENCLOSED FUNCS
                 /**
                  * Add single command to the app's commander.
                  *
@@ -95,7 +97,7 @@ export default class TeqFw_Core_Back_App {
                     }
                 }
 
-                // MAIN FUNCTIONALITY
+                // MAIN
                 logger.info('Integrate plugins to the Commander.');
                 for (const item of registry.items()) {
                     const desc = fDesc.create(item.teqfw[DEF.SHARED.NAME]);
@@ -105,7 +107,7 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Go through all plugins hierarchy (down to top) and register namespaces in DI container.
-             * @param {TeqFw_Core_Back_App_Scan_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_App_Init_Plugin_Registry} registry
              */
             function initDiContainer(registry) {
                 for (const item of registry.items()) {
@@ -139,11 +141,11 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Go through plugins hierarchy (down to top) and run init functions.
-             * @param {TeqFw_Core_Back_App_Scan_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_App_Init_Plugin_Registry} registry
              * @return {Promise<void>}
              */
             async function initPlugins(registry) {
-                // MAIN FUNCTIONALITY
+                // MAIN
                 logger.info('Initialize plugins.');
                 const plugins = registry.getItemsByLevels();
                 for (const item of plugins) {
@@ -175,7 +177,7 @@ export default class TeqFw_Core_Back_App {
                 logger.info(`Backend application UUID: ${mUuid.get()}.`);
             }
 
-            // MAIN FUNCTIONALITY
+            // MAIN
             initBootConfig(config, path, version);
             // load local configuration
             config.loadLocal(path);
@@ -198,7 +200,7 @@ export default class TeqFw_Core_Back_App {
             // DEFINE WORKING VARS / PROPS
             const me = this;
 
-            // DEFINE INNER FUNCTIONS
+            // ENCLOSED FUNCS
             /**
              * Event handler to run application finalization on stop events.
              * @return {Promise<void>}
@@ -208,7 +210,7 @@ export default class TeqFw_Core_Back_App {
                 process.exit();
             }
 
-            // MAIN FUNCTIONALITY
+            // MAIN
             process.on('SIGINT', onStop);
             process.on('SIGTERM', onStop);
             process.on('SIGQUIT', onStop);
@@ -227,14 +229,14 @@ export default class TeqFw_Core_Back_App {
          * @returns {Promise<void>}
          */
         this.stop = async function () {
-            // DEFINE INNER FUNCTIONS
+            // ENCLOSED FUNCS
             /**
              * Go through plugins hierarchy (down to top) and run finalization functions.
-             * @param {TeqFw_Core_Back_App_Scan_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_App_Init_Plugin_Registry} registry
              * @return {Promise<void>}
              */
             async function stopPlugins(registry) {
-                // MAIN FUNCTIONALITY
+                // MAIN
                 logger.info('Stop plugins.');
                 const plugins = registry.getItemsByLevels();
                 for (const item of plugins) {
@@ -254,7 +256,7 @@ export default class TeqFw_Core_Back_App {
                 }
             }
 
-            // MAIN FUNCTIONALITY
+            // MAIN
             logger.info('Stop the application.');
             await stopPlugins(pluginsRegistry);
             logger.info('The application is stopped.');

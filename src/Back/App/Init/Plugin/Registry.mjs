@@ -1,7 +1,7 @@
 /**
  * Registry to store data about TeqFW plugins.
  */
-export default class TeqFw_Core_Back_App_Scan_Plugin_Registry {
+export default class TeqFw_Core_Back_App_Init_Plugin_Registry {
     constructor() {
         /** @type {Object.<string, TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item>} */
         const _store = {};
