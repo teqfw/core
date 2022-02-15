@@ -16,7 +16,7 @@ const NS = 'TeqFw_Core_Back_Cli_Version';
  * @memberOf TeqFw_Core_Back_Cli_Version
  */
 export default function Factory(spec) {
-    // EXTRACT DEPS
+    // DEPS
     /** @type {TeqFw_Core_Back_Defaults} */
     const DEF = spec['TeqFw_Core_Back_Defaults$'];
     /** @type {TeqFw_Core_Back_Config} */
@@ -24,7 +24,7 @@ export default function Factory(spec) {
     /** @type {TeqFw_Core_Back_Api_Dto_Command.Factory} */
     const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command#Factory$'];
 
-    // DEFINE INNER FUNCTIONS
+    // ENCLOSED FUNCS
     /**
      * Command action.
      * @returns {Promise<void>}

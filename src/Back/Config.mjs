@@ -11,7 +11,7 @@ import {join} from 'path';
 export default class TeqFw_Core_Back_Config {
 
     constructor(spec) {
-        // EXTRACT DEPS
+        // DEPS
         /** @type {TeqFw_Core_Back_Defaults} */
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
         /** @type {typeof TeqFw_Core_Back_Api_Dto_App_Boot} */

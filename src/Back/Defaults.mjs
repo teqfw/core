@@ -14,11 +14,11 @@ export default class TeqFw_Core_Back_Defaults {
     SHARED;
 
     constructor(spec) {
-        // EXTRACT DEPS
+        // DEPS
         this.MOD_DI = spec['TeqFw_Di_Back_Defaults$'];
         this.SHARED = spec['TeqFw_Core_Shared_Defaults$'];
 
-        // MAIN FUNCTIONALITY
+        // MAIN
         Object.freeze(this);
     }
 }

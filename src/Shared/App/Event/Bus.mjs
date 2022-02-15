@@ -9,7 +9,7 @@
  */
 export default class TeqFw_Core_Shared_App_Event_Bus {
     constructor(spec) {
-        // EXTRACT DEPS
+        // DEPS
         /** @type {typeof TeqFw_Core_Shared_App_Event_Subscription} */
         const Subscription = spec['TeqFw_Core_Shared_App_Event_Subscription#'];
 

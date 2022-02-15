@@ -76,13 +76,13 @@ function scanNodeModules(path, filename) {
  * @memberOf TeqFw_Core_Back_Util
  */
 function scanRecursively(path) {
-    // DEFINE INNER FUNCTIONS
+    // ENCLOSED FUNCS
     const getDirectories = path => readdirSync(path).map(name => join(path, name)).filter(isDirectory);
     const getFiles = path => readdirSync(path).map(name => join(path, name)).filter(isFile);
     const isDirectory = path => statSync(path).isDirectory();
     const isFile = path => statSync(path).isFile();
 
-    // MAIN FUNCTIONALITY
+    // MAIN
     const dirs = getDirectories(path);
     const files = dirs
         .map(dir => scanRecursively(dir))  // go through each directory

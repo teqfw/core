@@ -22,16 +22,16 @@ class Dto {
 
 export default class TeqFw_Core_Shared_Util_BeforeAfter {
     constructor(spec) {
-        // EXTRACT DEPS
+        // DEPS
         // DEFINE WORKING VARS / PROPS
         let _needReorder = false;
         /** @type {Object<string, Dto>} */
         let _items = {};
         let _ordered = [];
 
-        // DEFINE INNER FUNCTIONS
+        // ENCLOSED FUNCS
         function reorder() {
-            // DEFINE INNER FUNCTIONS
+            // ENCLOSED FUNCS
             /**
              * Convert 'before/after' notation to 'dependent' notation and compose successors list.
              * @return Object<string, string[]>
@@ -81,7 +81,7 @@ export default class TeqFw_Core_Shared_Util_BeforeAfter {
             }
 
 
-            // MAIN FUNCTIONALITY
+            // MAIN
             _ordered = [];
             /** @type {Object<string, string[]>} {root => [node, ...]} */
             const successors = initSuccessors();
