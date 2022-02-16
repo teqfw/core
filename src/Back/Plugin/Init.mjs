@@ -37,7 +37,6 @@ export default function (spec) {
         }
 
         // MAIN
-        debugger
         initAppBackUuid(config);
     }
 
