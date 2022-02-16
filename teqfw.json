@@ -13,6 +13,9 @@
   "@teqfw/core": {
     "commands": [
       "TeqFw_Core_Back_Cli_Version"
-    ]
+    ],
+    "plugin": {
+      "onInit": "TeqFw_Core_Back_Plugin_Init"
+    }
   }
 }
