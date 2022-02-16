@@ -6,8 +6,8 @@
 export default class TeqFw_Core_Shared_Mod_Logger_Transport_Console {
     constructor(spec) {
         // DEPS
-        /** @type {TeqFw_Core_Shared_Util_Format.formatDateTimeForLog|function} */
-        const formatTime = spec['TeqFw_Core_Shared_Util_Format.formatDateTimeForLog'];
+        /** @type {TeqFw_Core_Shared_Util_Format.dateTimeForLog|function} */
+        const formatTime = spec['TeqFw_Core_Shared_Util_Format.dateTimeForLog'];
 
         // INSTANCE METHODS
         this.log = (dto) => {

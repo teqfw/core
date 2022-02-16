@@ -88,6 +88,7 @@ function deepMerge(target, source) {
  * @param {Date|string|null} dateIn
  * @return {string}
  * @memberOf TeqFw_Core_Shared_Util
+ * @deprecated use TeqFw_Core_Shared_Util_Format.date
  */
 function formatDate(dateIn = null) {
     /** @type {Date} */
@@ -106,6 +107,7 @@ function formatDate(dateIn = null) {
  * @param {boolean} withSeconds
  * @return {string}
  * @memberOf TeqFw_Core_Shared_Util
+ * @deprecated TeqFw_Core_Shared_Util_Format.dateTime
  */
 function formatDateTime(dateIn = null, withSeconds = true) {
     /** @type {Date} */
@@ -128,6 +130,7 @@ function formatDateTime(dateIn = null, withSeconds = true) {
  * @param {boolean} withSeconds
  * @return {string}
  * @memberOf TeqFw_Core_Shared_Util
+ * @deprecated use TeqFw_Core_Shared_Util_Format.time
  */
 function formatTime(dateIn = null, withSeconds = true) {
     /** @type {Date} */
@@ -145,6 +148,7 @@ function formatTime(dateIn = null, withSeconds = true) {
  * @param {Date|string|null} dateIn
  * @return {string}
  * @memberOf TeqFw_Core_Shared_Util
+ * @deprecated don't use it at all
  */
 function formatUtcDate(dateIn = null) {
     /** @type {Date} */
@@ -164,6 +168,7 @@ function formatUtcDate(dateIn = null) {
  * @param {string|null} cur
  * @return {string}
  * @memberOf TeqFw_Core_Shared_Util
+ * @deprecated don't use it at all
  */
 function formatAmount(amount, cur = null) {
     const normAmnt = round(amount);
@@ -176,6 +181,7 @@ function formatAmount(amount, cur = null) {
  * @param {Date|string|null} dateIn
  * @return {string}
  * @memberOf TeqFw_Core_Shared_Util
+ * @deprecated don't use it at all
  */
 function formatUtcDateTime(dateIn = null) {
     /** @type {Date} */
@@ -196,6 +202,7 @@ function formatUtcDateTime(dateIn = null) {
  * @param {Date|string|null} dateIn
  * @return {string}
  * @memberOf TeqFw_Core_Shared_Util
+ * @deprecated don't use it at all
  */
 function formatUtcTime(dateIn = null) {
     /** @type {Date} */
@@ -238,6 +245,7 @@ function isObject(val) {
  * @param def
  * @return {boolean}
  * @memberOf TeqFw_Core_Shared_Util
+ * @deprecated use TeqFw_Core_Shared_Util_Cast.castBoolean
  */
 function parseBoolean(data, def = false) {
     let result = def;
