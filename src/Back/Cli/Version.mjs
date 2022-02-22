@@ -24,7 +24,7 @@ export default function Factory(spec) {
     /** @type {TeqFw_Core_Back_Api_Dto_Command.Factory} */
     const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command#Factory$'];
 
-    // ENCLOSED FUNCS
+    // FUNCS
     /**
      * Command action.
      * @returns {Promise<void>}

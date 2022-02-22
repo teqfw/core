@@ -27,7 +27,7 @@ export default class TeqFw_Core_Back_App {
         /** @type {TeqFw_Core_Back_App_Init_Plugin} */
         const pluginScan = spec['TeqFw_Core_Back_App_Init_Plugin$'];
 
-        // ENCLOSED VARS
+        // VARS
         const program = new Command();
         /** @type {TeqFw_Core_Back_App_Init_Plugin_Registry} */
         let pluginsRegistry;
@@ -42,7 +42,7 @@ export default class TeqFw_Core_Back_App {
          * @returns {Promise<void>}
          */
         this.init = async function ({path, version}) {
-            // ENCLOSED FUNCS
+            // FUNCS
 
             /**
              * Save bootstrap configuration into configuration container.
@@ -68,7 +68,7 @@ export default class TeqFw_Core_Back_App {
              * @memberOf TeqFw_Core_Back_App.init
              */
             async function initCommander(registry) {
-                // ENCLOSED FUNCS
+                // FUNCS
                 /**
                  * Add single command to the app's commander.
                  *
@@ -184,7 +184,7 @@ export default class TeqFw_Core_Back_App {
             // DEFINE WORKING VARS / PROPS
             const me = this;
 
-            // ENCLOSED FUNCS
+            // FUNCS
             /**
              * Event handler to run application finalization on stop events.
              * @return {Promise<void>}
@@ -213,7 +213,7 @@ export default class TeqFw_Core_Back_App {
          * @returns {Promise<void>}
          */
         this.stop = async function () {
-            // ENCLOSED FUNCS
+            // FUNCS
             /**
              * Go through plugins hierarchy (down to top) and run finalization functions.
              * @param {TeqFw_Core_Back_App_Init_Plugin_Registry} registry

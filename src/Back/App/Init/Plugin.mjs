@@ -25,14 +25,14 @@ export default class TeqFw_Core_Back_App_Init_Plugin {
          * @returns {Promise<TeqFw_Core_Back_App_Init_Plugin_Registry>}
          */
         this.exec = async function (root) {
-            // ENCLOSED FUNCS
+            // FUNCS
 
             /**
              * @param {Object.<string, TeqFw_Di_Back_Api_Dto_Scanned>} scanItems
              * @returns {Promise<TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]>}
              */
             async function getPlugins(scanItems) {
-                // ENCLOSED FUNCS
+                // FUNCS
 
                 /**
                  * Check does 'package.json' exist, read content, parse and return data if 'yes'.
@@ -68,11 +68,11 @@ export default class TeqFw_Core_Back_App_Init_Plugin {
              * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]} items
              */
             function composeLevels(names, items) {
-                // ENCLOSED VARS
+                // VARS
                 const successors = {}; // {core => [web, i18n, vue, ...]}
                 const weights = {};
 
-                // ENCLOSED FUNCS
+                // FUNCS
                 /**
                  * Recursive function to update plugins weights in hierarchy.
                  * 1 - plugin has no deps, 2 - plugin has one dep's level below, ...

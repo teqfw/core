@@ -21,9 +21,9 @@ export default function (spec) {
     // MAIN
     logger.setNamespace(NS);
 
-    // ENCLOSED FUNCS
+    // FUNCS
     async function action() {
-        // ENCLOSED FUNCS
+        // FUNCS
         /**
          * Load UUID from local config or generate new one.
          * @param {TeqFw_Core_Back_Config} config

@@ -29,9 +29,9 @@ export default class TeqFw_Core_Shared_Util_BeforeAfter {
         let _items = {};
         let _ordered = [];
 
-        // ENCLOSED FUNCS
+        // FUNCS
         function reorder() {
-            // ENCLOSED FUNCS
+            // FUNCS
             /**
              * Convert 'before/after' notation to 'dependent' notation and compose successors list.
              * @return Object<string, string[]>

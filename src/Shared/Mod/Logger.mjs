@@ -12,7 +12,7 @@ export default class TeqFw_Core_Shared_Mod_Logger {
         /** @type {TeqFw_Core_Shared_Api_Logger_ITransport} */
         const transport = spec['TeqFw_Core_Shared_Api_Logger_ITransport$'];
 
-        // ENCLOSED VARS
+        // VARS
         /** @type {TeqFw_Core_Shared_Dto_Log.Dto[]} */
         const _queue = [];
         /** @type {string} */
@@ -20,7 +20,7 @@ export default class TeqFw_Core_Shared_Mod_Logger {
         /** @type {TeqFw_Core_Shared_Api_Logger_ITransport} */
         let _transport = transport;
 
-        // ENCLOSED FUNCS
+        // FUNCS
         function log(msg, isError, meta) {
             const entry = dtoLog.createDto();
             entry.date = new Date();

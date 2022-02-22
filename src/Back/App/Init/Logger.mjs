@@ -13,13 +13,13 @@ export default class TeqFw_Core_Back_App_Init_Logger {
         /** @type {TeqFw_Core_Shared_Dto_Log} */
         const dtoLog = spec['TeqFw_Core_Shared_Dto_Log$'];
 
-        // ENCLOSED VARS
+        // VARS
         /** @type {TeqFw_Core_Shared_Dto_Log.Dto[]} */
         const _queue = [];
         /** @type {TeqFw_Core_Shared_Api_Logger_ITransport} */
         let _transport;
 
-        // ENCLOSED FUNCS
+        // FUNCS
 
         function log(msg, isError) {
             const entry = dtoLog.createDto();
