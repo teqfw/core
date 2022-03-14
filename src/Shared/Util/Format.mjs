@@ -79,16 +79,36 @@ function time(dateIn = null, withSeconds = true) {
     return (withSeconds) ? `${h}:${i}:${s}` : `${h}:${i}`;
 }
 
+/**
+ * Convert UTC time to HH:MM:SS.
+ * @param {Date|string|null} dateIn
+ * @param {boolean} withSeconds
+ * @return {string}
+ * @memberOf TeqFw_Core_Shared_Util_Format
+ */
+function timeUtc(dateIn = null, withSeconds = true) {
+    /** @type {Date} */
+    const date = (dateIn) ?
+        (dateIn instanceof Date) ? dateIn : new Date(dateIn) :
+        new Date();
+    const h = `${date.getUTCHours()}`.padStart(2, '0');
+    const i = `${date.getUTCMinutes()}`.padStart(2, '0');
+    const s = `${date.getUTCSeconds()}`.padStart(2, '0');
+    return (withSeconds) ? `${h}:${i}:${s}` : `${h}:${i}`;
+}
+
 
 // finalize code components for this es6-module
-Object.defineProperty(date, 'name', {value: `${NS}.${date.name}`});
-Object.defineProperty(dateTime, 'name', {value: `${NS}.${dateTime.name}`});
-Object.defineProperty(dateTimeForLog, 'name', {value: `${NS}.${dateTimeForLog.name}`});
-Object.defineProperty(time, 'name', {value: `${NS}.${time.name}`});
+Object.defineProperty(date, 'namespace', {value: NS});
+Object.defineProperty(dateTime, 'namespace', {value: NS});
+Object.defineProperty(dateTimeForLog, 'namespace', {value: NS});
+Object.defineProperty(time, 'namespace', {value: NS});
+Object.defineProperty(timeUtc, 'namespace', {value: NS});
 
 export {
     date,
     dateTime,
     dateTimeForLog,
     time,
+    timeUtc,
 }
