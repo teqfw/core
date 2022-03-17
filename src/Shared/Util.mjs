@@ -136,15 +136,15 @@ function str2ab(str) {
 }
 
 // finalize code components for this es6-module
-Object.defineProperty(ab2b64, 'name', {value: `${NS}.${ab2b64.name}`});
-Object.defineProperty(ab2hex, 'name', {value: `${NS}.${ab2hex.name}`});
-Object.defineProperty(ab2str, 'name', {value: `${NS}.${ab2str.name}`});
-Object.defineProperty(b642ab, 'name', {value: `${NS}.${b642ab.name}`});
-Object.defineProperty(deepMerge, 'name', {value: `${NS}.${deepMerge.name}`});
-Object.defineProperty(isEmpty, 'name', {value: `${NS}.${isEmpty.name}`});
-Object.defineProperty(isObject, 'name', {value: `${NS}.${isObject.name}`});
-Object.defineProperty(round, 'name', {value: `${NS}.${round.name}`});
-Object.defineProperty(str2ab, 'name', {value: `${NS}.${str2ab.name}`});
+Object.defineProperty(ab2b64, 'namespace', {value: NS});
+Object.defineProperty(ab2hex, 'namespace', {value: NS});
+Object.defineProperty(ab2str, 'namespace', {value: NS});
+Object.defineProperty(b642ab, 'namespace', {value: NS});
+Object.defineProperty(deepMerge, 'namespace', {value: NS});
+Object.defineProperty(isEmpty, 'namespace', {value: NS});
+Object.defineProperty(isObject, 'namespace', {value: NS});
+Object.defineProperty(round, 'namespace', {value: NS});
+Object.defineProperty(str2ab, 'namespace', {value: NS});
 
 export {
     ab2b64,

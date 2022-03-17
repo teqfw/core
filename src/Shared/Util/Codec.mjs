@@ -28,8 +28,8 @@ function ab2str(buf) {
 }
 
 // finalize code components for this es6-module
-Object.defineProperty(ab2hex, 'name', {value: `${NS}.${ab2hex.name}`});
-Object.defineProperty(ab2str, 'name', {value: `${NS}.${ab2str.name}`});
+Object.defineProperty(ab2hex, 'namespace', {value: NS});
+Object.defineProperty(ab2str, 'namespace', {value: NS});
 
 export {
     ab2hex,

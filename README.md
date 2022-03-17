@@ -147,7 +147,7 @@ function Factory(spec) {
     const action = async function () {
         console.log('Command is executed.');
     };
-    Object.defineProperty(action, 'name', {value: `${NS}.${action.name}`});
+    Object.defineProperty(action, 'namespace', {value: NS});
 
     // COMPOSE RESULT
     const res = fCommand.create();
@@ -159,7 +159,7 @@ function Factory(spec) {
 }
 
 // MODULE'S EXPORT
-Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.name}`});
+Object.defineProperty(Factory, 'namespace', {value: NS});
 export default Factory;
 ```
 

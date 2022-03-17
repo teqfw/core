@@ -19,7 +19,7 @@ function addMinutes(minutes, date) {
 }
 
 // finalize code components for this es6-module
-Object.defineProperty(addMinutes, 'name', {value: `${NS}.${addMinutes.name}`});
+Object.defineProperty(addMinutes, 'namespace', {value: NS});
 
 export {
     addMinutes,

@@ -157,15 +157,15 @@ function castString(data) {
 
 // MODULE'S FUNCTIONALITY
 // finalize code components for this es6-module
-Object.defineProperty(castArray, 'name', {value: `${NS}.${castArray.name}`});
-Object.defineProperty(castArrayOfObj, 'name', {value: `${NS}.${castArrayOfObj.name}`});
-Object.defineProperty(castBoolean, 'name', {value: `${NS}.${castBoolean.name}`});
-Object.defineProperty(castBooleanIfExists, 'name', {value: `${NS}.${castBooleanIfExists.name}`});
-Object.defineProperty(castEnum, 'name', {value: `${NS}.${castEnum.name}`});
-Object.defineProperty(castFunction, 'name', {value: `${NS}.${castFunction.name}`});
-Object.defineProperty(castInt, 'name', {value: `${NS}.${castInt.name}`});
-Object.defineProperty(castPrimitive, 'name', {value: `${NS}.${castPrimitive.name}`});
-Object.defineProperty(castString, 'name', {value: `${NS}.${castString.name}`});
+Object.defineProperty(castArray, 'namespace', {value: NS});
+Object.defineProperty(castArrayOfObj, 'namespace', {value: NS});
+Object.defineProperty(castBoolean, 'namespace', {value: NS});
+Object.defineProperty(castBooleanIfExists, 'namespace', {value: NS});
+Object.defineProperty(castEnum, 'namespace', {value: NS});
+Object.defineProperty(castFunction, 'namespace', {value: NS});
+Object.defineProperty(castInt, 'namespace', {value: NS});
+Object.defineProperty(castPrimitive, 'namespace', {value: NS});
+Object.defineProperty(castString, 'namespace', {value: NS});
 
 export {
     castArray,
