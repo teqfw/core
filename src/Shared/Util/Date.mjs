@@ -6,10 +6,23 @@
 const NS = 'TeqFw_Core_Shared_Util_Date';
 
 /**
+ * Add days to given date or to now.
+ * @param {number} days
+ * @param {Date} [date]
+ * @return {Date}
+ * @memberOf TeqFw_Core_Shared_Util_Date
+ */
+function addDays(days, date) {
+    const res = (date instanceof Date) ? date : new Date();
+    res.setDate(res.getDate() + days);
+    return res;
+}
+
+/**
  * Add minutes to given date or to now.
  * @param {number} minutes
  * @param {Date} [date]
- * @return {Date|Date}
+ * @return {Date}
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function addMinutes(minutes, date) {
@@ -19,8 +32,10 @@ function addMinutes(minutes, date) {
 }
 
 // finalize code components for this es6-module
+Object.defineProperty(addDays(), 'namespace', {value: NS});
 Object.defineProperty(addMinutes, 'namespace', {value: NS});
 
 export {
+    addDays,
     addMinutes,
 }
