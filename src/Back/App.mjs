@@ -181,7 +181,7 @@ export default class TeqFw_Core_Back_App {
          * @returns {Promise<void>}
          */
         this.run = async function () {
-            // DEFINE WORKING VARS / PROPS
+            // VARS
             const me = this;
 
             // FUNCS

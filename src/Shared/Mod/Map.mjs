@@ -7,10 +7,10 @@
 export default class TeqFw_Core_Shared_Mod_Map {
 
     constructor() {
-        // DEFINE WORKING VARS / PROPS
+        // VARS
         const store = {}; // don't use privates, they are invisible in IDEA debugger
 
-        // DEFINE INSTANCE METHODS
+        // INSTANCE METHODS
         /**
          * Get some data by filepath-like key.
          * @param {Object} key

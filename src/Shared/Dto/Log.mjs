@@ -37,7 +37,7 @@ export default class TeqFw_Core_Shared_Dto_Log {
         /** @type {TeqFw_Core_Shared_Dto_Formless} */
         const dtoFormless = spec['TeqFw_Core_Shared_Dto_Formless$'];
 
-        // DEFINE INSTANCE METHODS
+        // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Shared_Dto_Log.Dto} [data]
          * @return {TeqFw_Core_Shared_Dto_Log.Dto}

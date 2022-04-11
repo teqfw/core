@@ -18,7 +18,7 @@ class Dto {
 export default class TeqFw_Core_Shared_Dto_Formless {
     constructor() {
 
-        // DEFINE INSTANCE METHODS
+        // INSTANCE METHODS
         /**
          * @param {*} data
          * @return {TeqFw_Core_Shared_Dto_Formless.Dto}

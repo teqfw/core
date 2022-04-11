@@ -21,9 +21,8 @@ class Dto {
 }
 
 export default class TeqFw_Core_Shared_Util_BeforeAfter {
-    constructor(spec) {
-        // DEPS
-        // DEFINE WORKING VARS / PROPS
+    constructor() {
+        // VARS
         let _needReorder = false;
         /** @type {Object<string, Dto>} */
         let _items = {};
@@ -106,7 +105,7 @@ export default class TeqFw_Core_Shared_Util_BeforeAfter {
             return _ordered;
         }
 
-        // DEFINE INSTANCE METHODS
+        // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Shared_Util_BeforeAfter.Dto} item
          */

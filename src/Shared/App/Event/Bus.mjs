@@ -13,11 +13,11 @@ export default class TeqFw_Core_Shared_App_Event_Bus {
         /** @type {typeof TeqFw_Core_Shared_App_Event_Subscription} */
         const Subscription = spec['TeqFw_Core_Shared_App_Event_Subscription#'];
 
-        // DEFINE WORKING VARS / PROPS
+        // VARS
         /** @type {Object<string, function[]>} */
         const _listeners = {};
 
-        // DEFINE INSTANCE METHODS
+        // INSTANCE METHODS
 
         this.publish = function (message) {
             const eventName = message?.meta?.name;

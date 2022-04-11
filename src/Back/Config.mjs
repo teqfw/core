@@ -19,14 +19,14 @@ export default class TeqFw_Core_Back_Config {
         /** @type {TeqFw_Core_Shared_Dto_Formless} */
         const dtoFormless = spec['TeqFw_Core_Shared_Dto_Formless$'];
 
-        // DEFINE WORKING VARS / PROPS
+        // VARS
         /** @type {TeqFw_Core_Back_Api_Dto_App_Boot} */
         const boot = new Boot();
         /** @type {TeqFw_Core_Shared_Dto_Formless.Dto} storage for local configuration */
         let local = dtoFormless.createDto();
 
 
-        // DEFINE INSTANCE METHODS
+        // INSTANCE METHODS
         /**
          * Get boot configuration.
          *
