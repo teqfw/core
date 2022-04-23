@@ -22,14 +22,14 @@ export default class TeqFw_Core_Back_App {
         const container = spec['TeqFw_Di_Shared_Container$'];
         /** @type {TeqFw_Core_Back_Config} */
         const config = spec['TeqFw_Core_Back_Config$'];
-        /** @type {TeqFw_Core_Back_App_Init_Logger} */
-        const logger = spec['TeqFw_Core_Back_App_Init_Logger$'];
-        /** @type {TeqFw_Core_Back_App_Init_Plugin} */
-        const pluginScan = spec['TeqFw_Core_Back_App_Init_Plugin$'];
+        /** @type {TeqFw_Core_Back_Mod_Init_Logger} */
+        const logger = spec['TeqFw_Core_Back_Mod_Init_Logger$'];
+        /** @type {TeqFw_Core_Back_Mod_Init_Plugin} */
+        const pluginScan = spec['TeqFw_Core_Back_Mod_Init_Plugin$'];
 
         // VARS
         const program = new Command();
-        /** @type {TeqFw_Core_Back_App_Init_Plugin_Registry} */
+        /** @type {TeqFw_Core_Back_Mod_Init_Plugin_Registry} */
         let pluginsRegistry;
 
         // INSTANCE METHODS
@@ -63,7 +63,7 @@ export default class TeqFw_Core_Back_App {
             /**
              * Run 'commander' initialization code for all plugins.
              *
-             * @param {TeqFw_Core_Back_App_Init_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
              * @returns {Promise<void>}
              * @memberOf TeqFw_Core_Back_App.init
              */
@@ -104,7 +104,7 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Go through all plugins hierarchy (down to top) and register namespaces in DI container.
-             * @param {TeqFw_Core_Back_App_Init_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
              */
             function initDiContainer(registry) {
                 for (const item of registry.items()) {
@@ -138,7 +138,7 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Go through plugins hierarchy (down to top) and run init functions.
-             * @param {TeqFw_Core_Back_App_Init_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
              * @return {Promise<void>}
              */
             async function initPlugins(registry) {
@@ -216,7 +216,7 @@ export default class TeqFw_Core_Back_App {
             // FUNCS
             /**
              * Go through plugins hierarchy (down to top) and run finalization functions.
-             * @param {TeqFw_Core_Back_App_Init_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
              * @return {Promise<void>}
              */
             async function stopPlugins(registry) {

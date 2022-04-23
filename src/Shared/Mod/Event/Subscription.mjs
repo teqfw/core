@@ -2,7 +2,7 @@
  * Default implementation for event subscription.
  * @implements TeqFw_Core_Shared_Api_Event_ISubscription
  */
-export default class TeqFw_Core_Shared_App_Event_Subscription {
+export default class TeqFw_Core_Shared_Mod_Event_Subscription {
     /**
      * Use this constructor with `new` operator.
      * @param {string} eventName

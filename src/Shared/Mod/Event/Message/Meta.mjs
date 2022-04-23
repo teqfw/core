@@ -2,10 +2,10 @@
  * Factory to create 'Meta-data for Event Message' DTO.
  */
 // MODULE'S VARS
-const NS = 'TeqFw_Core_Shared_App_Event_Message_Meta';
+const NS = 'TeqFw_Core_Shared_Mod_Event_Message_Meta';
 
 /**
- * @memberOf TeqFw_Core_Shared_App_Event_Message_Meta
+ * @memberOf TeqFw_Core_Shared_Mod_Event_Message_Meta
  * @type {Object}
  */
 const ATTR = {
@@ -16,7 +16,7 @@ const ATTR = {
 
 // MODULE'S CLASSES
 /**
- * @memberOf TeqFw_Core_Shared_App_Event_Message_Meta
+ * @memberOf TeqFw_Core_Shared_Mod_Event_Message_Meta
  */
 class Dto {
     static namespace = NS;
@@ -33,7 +33,7 @@ class Dto {
 /**
  * @implements TeqFw_Core_Shared_Api_Factory_Dto_IMeta
  */
-export default class TeqFw_Core_Shared_App_Event_Message_Meta {
+export default class TeqFw_Core_Shared_Mod_Event_Message_Meta {
 
     constructor(spec) {
         /** @type {TeqFw_Core_Shared_Util_Cast.castDate|function} */
@@ -45,8 +45,8 @@ export default class TeqFw_Core_Shared_App_Event_Message_Meta {
 
         // INSTANCE METHODS
         /**
-         * @param {TeqFw_Core_Shared_App_Event_Message_Meta.Dto} data
-         * @return {TeqFw_Core_Shared_App_Event_Message_Meta.Dto}
+         * @param {TeqFw_Core_Shared_Mod_Event_Message_Meta.Dto} data
+         * @return {TeqFw_Core_Shared_Mod_Event_Message_Meta.Dto}
          */
         this.createDto = function (data = null) {
             const res = new Dto();

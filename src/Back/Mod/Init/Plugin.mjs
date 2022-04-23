@@ -1,17 +1,17 @@
 /**
  * Plugin scanner.
  */
-export default class TeqFw_Core_Back_App_Init_Plugin {
+export default class TeqFw_Core_Back_Mod_Init_Plugin {
     constructor(spec) {
         // DEPS
         /** @type {TeqFw_Core_Back_Defaults} */
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
         /** @type {TeqFw_Di_Back_Plugin_Scanner} */
         const scanner = spec['TeqFw_Di_Back_Plugin_Scanner$'];
-        /** @type {TeqFw_Core_Back_App_Init_Logger} */
-        const logger = spec['TeqFw_Core_Back_App_Init_Logger$'];
-        /** @type {TeqFw_Core_Back_App_Init_Plugin_Registry} */
-        const registry = spec['TeqFw_Core_Back_App_Init_Plugin_Registry$'];
+        /** @type {TeqFw_Core_Back_Mod_Init_Logger} */
+        const logger = spec['TeqFw_Core_Back_Mod_Init_Logger$'];
+        /** @type {TeqFw_Core_Back_Mod_Init_Plugin_Registry} */
+        const registry = spec['TeqFw_Core_Back_Mod_Init_Plugin_Registry$'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory} */
         const fItem = spec['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item#Factory$'];
         /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc.Factory} */
@@ -22,7 +22,7 @@ export default class TeqFw_Core_Back_App_Init_Plugin {
         /**
          * Scan packages and register TeqFW plugins into the registry.
          * @param {String} root
-         * @returns {Promise<TeqFw_Core_Back_App_Init_Plugin_Registry>}
+         * @returns {Promise<TeqFw_Core_Back_Mod_Init_Plugin_Registry>}
          */
         this.exec = async function (root) {
             // FUNCS

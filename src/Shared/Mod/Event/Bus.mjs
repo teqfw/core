@@ -2,16 +2,16 @@
  * Basic functionality for event bus (front or back).
  *
  * Use it as mixins (inject base as instance in child constructor):
- *   const base = spec['TeqFw_Core_Shared_App_Event_Bus$$']; // $$ - instance
+ *   const base = spec['TeqFw_Core_Shared_Mod_Event_Bus$$']; // $$ - instance
  *   Object.assign(this, base);
  *
  * @implements TeqFw_Core_Shared_Api_Event_IBus
  */
-export default class TeqFw_Core_Shared_App_Event_Bus {
+export default class TeqFw_Core_Shared_Mod_Event_Bus {
     constructor(spec) {
         // DEPS
-        /** @type {typeof TeqFw_Core_Shared_App_Event_Subscription} */
-        const Subscription = spec['TeqFw_Core_Shared_App_Event_Subscription#'];
+        /** @type {typeof TeqFw_Core_Shared_Mod_Event_Subscription} */
+        const Subscription = spec['TeqFw_Core_Shared_Mod_Event_Subscription#'];
 
         // VARS
         /** @type {Object<string, function[]>} */

@@ -4,10 +4,10 @@
  * Init logger just collect logs inside and process it after transport will be set manually.
  */
 // MODULE'S VARS
-const NS = 'TeqFw_Core_Back_App_Init_Logger';
+const NS = 'TeqFw_Core_Back_Mod_Init_Logger';
 
 // MODULE'S CLASSES
-export default class TeqFw_Core_Back_App_Init_Logger {
+export default class TeqFw_Core_Back_Mod_Init_Logger {
     constructor(spec) {
         // DEPS
         /** @type {TeqFw_Core_Shared_Dto_Log} */
