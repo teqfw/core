@@ -1,5 +1,6 @@
 /**
  * Backend application UUID.
+ * TODO: read UUID from file
  *
  * @namespace TeqFw_Core_Back_Mod_App_Uuid
  */
