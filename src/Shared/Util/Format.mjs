@@ -80,6 +80,22 @@ function time(dateIn = null, withSeconds = true) {
 }
 
 /**
+ * Convert seconds (integer) into 'mm:ss' format
+ * @param {number|string} seconds
+ * @return {string}
+ * @memberOf TeqFw_Core_Shared_Util_Format
+ */
+function timeInSec(seconds) {
+    const norm = Number.parseInt(seconds);
+    const sec = norm % 60;
+    const minWoSec = Math.floor(norm % 60);
+    const min = minWoSec % 60;
+    const m = `${min}`.padStart(2, '0');
+    const s = `${sec}`.padStart(2, '0');
+    return `${m}:${s}`;
+}
+
+/**
  * Convert UTC time to HH:MM:SS.
  * @param {Date|string|null} dateIn
  * @param {boolean} withSeconds
@@ -103,6 +119,7 @@ Object.defineProperty(date, 'namespace', {value: NS});
 Object.defineProperty(dateTime, 'namespace', {value: NS});
 Object.defineProperty(dateTimeForLog, 'namespace', {value: NS});
 Object.defineProperty(time, 'namespace', {value: NS});
+Object.defineProperty(timeInSec, 'namespace', {value: NS});
 Object.defineProperty(timeUtc, 'namespace', {value: NS});
 
 export {
@@ -110,5 +127,6 @@ export {
     dateTime,
     dateTimeForLog,
     time,
+    timeInSec,
     timeUtc,
 }
