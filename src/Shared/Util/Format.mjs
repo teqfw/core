@@ -88,7 +88,7 @@ function time(dateIn = null, withSeconds = true) {
 function timeInSec(seconds) {
     const norm = Number.parseInt(seconds);
     const sec = norm % 60;
-    const minWoSec = Math.floor(norm % 60);
+    const minWoSec = Math.floor(norm / 60);
     const min = minWoSec % 60;
     const m = `${min}`.padStart(2, '0');
     const s = `${sec}`.padStart(2, '0');
