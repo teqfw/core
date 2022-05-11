@@ -9,7 +9,7 @@
  *
  * @interface
  */
-export default class TeqFw_Core_Shared_Api_Action_IAsync {
+export default class TeqFw_Core_Shared_Api_IAction {
     /**
      * @param {Object} [opts]
      * @return {Promise<Object>}
