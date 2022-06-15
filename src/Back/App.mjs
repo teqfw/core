@@ -3,10 +3,10 @@
  * @namespace TeqFw_Core_Back_App
  */
 // MODULE'S IMPORT
-import process from 'process';
+import process from 'node:process';
 import {Command} from 'commander/esm.mjs';
-import {existsSync, statSync} from 'fs';
-import {join} from 'path';
+import {existsSync, statSync} from 'node:fs';
+import {join} from 'node:path';
 
 /**
  * Main class to launch application: read modules meta data, initialize parts of app, start the app.
@@ -171,8 +171,14 @@ export default class TeqFw_Core_Back_App {
             // init container before do something else
             initDiContainer(pluginsRegistry);
             // ... then do something else
-            await initPlugins(pluginsRegistry);
-            await initCommander(pluginsRegistry);
+            try {
+                await initPlugins(pluginsRegistry);
+                await initCommander(pluginsRegistry);
+            } catch (e) {
+                console.error(e);
+                // noinspection ES6MissingAwait
+                this.stop();
+            }
         };
 
         /**
