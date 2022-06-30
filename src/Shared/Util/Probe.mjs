@@ -18,6 +18,7 @@ const NS = 'TeqFw_Core_Shared_Util_Probe';
 function deepEqual(obj1, obj2) {
     if (obj1 === obj2) return true;
     else if (isPrimitive(obj1) && isPrimitive(obj2)) return (obj1 === obj2);
+    else if ((obj1 === undefined) || (obj2 === undefined)) return false;
     else if (Object.keys(obj1).length !== Object.keys(obj2).length) return false;
     // compare objects with same number of keys
     for (let key in obj1) {
