@@ -116,7 +116,8 @@ function castFunction(data) {
  * @memberOf TeqFw_Core_Shared_Util_Cast
  */
 function castInt(data) {
-    const res = Number.parseInt(data);
+    const norm = (typeof data === 'string') ? data.trim() : data;
+    const res = Number.parseInt(norm);
     return ((typeof res === 'number') && (!isNaN(res))) ? res : undefined;
 }
 

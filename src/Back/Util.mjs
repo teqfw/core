@@ -3,8 +3,11 @@
  * @namespace TeqFw_Core_Back_Util
  */
 // MODULE'S IMPORT
-import {readFileSync, statSync, existsSync, readdirSync} from 'fs';
-import {join} from 'path';
+import {readFileSync, statSync, existsSync, readdirSync} from 'node:fs';
+import {join} from 'node:path';
+
+// MODULE'S VARS
+const NS = 'TeqFw_Core_Back_Util';
 
 /**
  * Check existence of JSON file, read content, parse JSON and return data.
@@ -24,6 +27,32 @@ function readJson(filename) {
             if (typeof json === 'object') {
                 result = json;
             }
+        }
+    } catch (e) {
+        // stealth exception if JSON file does not exist.
+        if (e.code !== 'ENOENT' && e.code !== 'ENOTDIR') {
+            // re-throw other exceptions (wrong format or something else)
+            e.message = `${e.message} (file: ${filename})`;
+            throw e;
+        }
+    }
+    return result;
+}
+
+/**
+ * Check existence of file, read content and return data as string.
+ *
+ * @param {String} filename
+ * @returns {string|null}
+ * @memberOf TeqFw_Core_Back_Util
+ */
+function readString(filename) {
+    let result = null;
+    try {
+        const stat = statSync(filename);
+        if (stat.isFile()) {
+            const buffer = readFileSync(filename);
+            result = buffer.toString();
         }
     } catch (e) {
         // stealth exception if JSON file does not exist.
@@ -91,8 +120,15 @@ function scanRecursively(path) {
     return files.concat(getFiles(path));
 }
 
+// finalize code components for this es6-module
+Object.defineProperty(readJson, 'namespace', {value: NS});
+Object.defineProperty(readString, 'namespace', {value: NS});
+Object.defineProperty(scanNodeModules, 'namespace', {value: NS});
+Object.defineProperty(scanRecursively, 'namespace', {value: NS});
+
 export {
     readJson,
+    readString,
     scanNodeModules,
     scanRecursively,
 }
