@@ -49,7 +49,9 @@ export default class TeqFw_Core_Shared_Mod_Event_Message_Meta {
          * @return {TeqFw_Core_Shared_Mod_Event_Message_Meta.Dto}
          */
         this.createDto = function (data = null) {
-            const res = new Dto();
+            // create DTO and copy input data to this DTO
+            const res = Object.assign(new Dto(), data);
+            // then init this DTO props
             res.expiration = castDate(data?.expiration);
             if (!res.expiration) {
                 const tomorrow = new Date();
