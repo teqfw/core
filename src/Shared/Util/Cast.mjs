@@ -19,13 +19,15 @@ function castArray(data) {
 /**
  * Cast input data into array of object using factory function.
  * @param {*} data
- * @param {function} fact
+ * @param {function} [fact]
  * @return {Array}
  * @memberOf TeqFw_Core_Shared_Util_Cast
  */
 function castArrayOfObj(data, fact) {
+    const defFunc = (a) => a ?? {}; // return input itself or empty Object
+    const norm = (typeof fact === 'function') ? fact : defFunc;
     return Array.isArray(data)
-        ? data.map((one) => fact(one))
+        ? data.map((one) => norm(one))
         : [];
 }
 
