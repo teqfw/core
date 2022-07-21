@@ -124,6 +124,23 @@ function castInt(data) {
 }
 
 /**
+ * Cast input data as a map (objects inside object).
+ * @param {Object} data
+ * @param {function} fact
+ * @returns {Object<number|string, Object>}
+ * @memberOf TeqFw_Core_Shared_Util_Cast
+ */
+function castObjectsMap(data, fact) {
+    const defFunc = (a) => a ?? {}; // return input itself or empty Object
+    const norm = (typeof fact === 'function') ? fact : defFunc;
+    const res = {};
+    if ((typeof data === 'object') && (data !== null)) {
+        for (const key of Object.keys(data)) res[key] = norm(data[key]);
+    }
+    return res;
+}
+
+/**
  * Cast input data into some primitive type.
  * @param data
  * @return {undefined|string|number|boolean|symbol|bigint}
@@ -167,6 +184,7 @@ Object.defineProperty(castBooleanIfExists, 'namespace', {value: NS});
 Object.defineProperty(castEnum, 'namespace', {value: NS});
 Object.defineProperty(castFunction, 'namespace', {value: NS});
 Object.defineProperty(castInt, 'namespace', {value: NS});
+Object.defineProperty(castObjectsMap, 'namespace', {value: NS});
 Object.defineProperty(castPrimitive, 'namespace', {value: NS});
 Object.defineProperty(castString, 'namespace', {value: NS});
 
@@ -180,6 +198,7 @@ export {
     castEnum,
     castFunction,
     castInt,
+    castObjectsMap,
     castPrimitive,
     castString,
 };
