@@ -123,6 +123,16 @@ function round(num, places = 2) {
 }
 
 /**
+ * Make object serializable (convert Proxy to clear Object).
+ * @param {Object} obj
+ * @return {Object}
+ * @memberOf TeqFw_Core_Shared_Util
+ */
+function serializable(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+
+/**
  * Convert string to array buffer.
  * @param {string} str
  * @return {ArrayBuffer}
@@ -144,6 +154,7 @@ Object.defineProperty(deepMerge, 'namespace', {value: NS});
 Object.defineProperty(isEmpty, 'namespace', {value: NS});
 Object.defineProperty(isObject, 'namespace', {value: NS});
 Object.defineProperty(round, 'namespace', {value: NS});
+Object.defineProperty(serializable, 'namespace', {value: NS});
 Object.defineProperty(str2ab, 'namespace', {value: NS});
 
 export {
@@ -155,5 +166,6 @@ export {
     isEmpty,
     isObject,
     round,
+    serializable,
     str2ab,
 };
