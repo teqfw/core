@@ -85,6 +85,17 @@ function castDate(data) {
 }
 
 /**
+ * Cast input data into decimal 'number' data type.
+ * @param {*} data
+ * @return {number|undefined}
+ * @memberOf TeqFw_Core_Shared_Util_Cast
+ */
+function castDecimal(data) {
+    const res = Number.parseFloat(data);
+    return ((typeof res === 'number') && (!isNaN(res))) ? res : undefined;
+}
+
+/**
  * Cast input data into object value (enumerations).
  * @param {*} data
  * @param {Object} enu constant with allowable values
@@ -181,6 +192,7 @@ Object.defineProperty(castArray, 'namespace', {value: NS});
 Object.defineProperty(castArrayOfObj, 'namespace', {value: NS});
 Object.defineProperty(castBoolean, 'namespace', {value: NS});
 Object.defineProperty(castBooleanIfExists, 'namespace', {value: NS});
+Object.defineProperty(castDecimal, 'namespace', {value: NS});
 Object.defineProperty(castEnum, 'namespace', {value: NS});
 Object.defineProperty(castFunction, 'namespace', {value: NS});
 Object.defineProperty(castInt, 'namespace', {value: NS});
@@ -195,6 +207,7 @@ export {
     castBoolean,
     castBooleanIfExists,
     castDate,
+    castDecimal,
     castEnum,
     castFunction,
     castInt,
