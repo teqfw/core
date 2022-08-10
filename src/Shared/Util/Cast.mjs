@@ -70,7 +70,7 @@ function castBoolean(data) {
  * @memberOf TeqFw_Core_Shared_Util_Cast
  */
 function castBooleanIfExists(data) {
-    return (data === undefined) ? data : castBoolean(data);
+    return ((data === undefined) || (data === null)) ? data : castBoolean(data);
 }
 
 /**
