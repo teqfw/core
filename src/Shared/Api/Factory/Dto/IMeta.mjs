@@ -12,11 +12,4 @@ export default class TeqFw_Core_Shared_Api_Factory_Dto_IMeta {
      * @return {Object}
      */
     getAttributes() {}
-
-    /**
-     * Return array with names of entity attributes.
-     * @return {string[]}
-     * @deprecated this method is not used often, use 'getAttributes' and convert to names
-     */
-    getAttrNames() {}
 }
