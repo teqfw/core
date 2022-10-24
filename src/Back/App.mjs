@@ -238,10 +238,18 @@ export default class TeqFw_Core_Back_App {
                         try {
                             fn = await container.get(`${desc.plugin.onStop}$$`); // as new instance
                         } catch (e) {
-                            logger.error(`Cannot create plugin init function using '${desc.plugin.onStop}' factory`
-                                + ` or run it. Error: ${e.message}`);
+                            logger.error(`Cannot create plugin init function using '${desc.plugin.onStop}' factory. `
+                                + `Error: ${e.message}`);
                         }
-                        if (typeof fn === 'function') await fn();
+                        if (typeof fn === 'function') {
+                            try {
+                                await fn();
+                            } catch (e) {
+                                logger.error(`Cannot run plugin init function'${fn?.namespace}'. `
+                                    + `Error: ${e.message}`);
+                                throw e;
+                            }
+                        }
                     }
                 }
             }
