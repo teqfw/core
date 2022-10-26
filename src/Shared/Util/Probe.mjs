@@ -20,6 +20,7 @@ function deepEqual(obj1, obj2) {
     if (obj1 === obj2) res = true;
     else if (isPrimitive(obj1) && isPrimitive(obj2)) res = (obj1 === obj2);
     else if ((obj1 === undefined) || (obj2 === undefined)) res = false;
+    else if ((obj1 === null) || (obj2 === null)) res = false;
     else if (Object.keys(obj1).length !== Object.keys(obj2).length) res = false;
     else if (Array.isArray(obj1) && Array.isArray(obj2)) {
         res = true;
