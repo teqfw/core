@@ -2,6 +2,9 @@
  * Date manipulation functions.
  * @namespace TeqFw_Core_Shared_Util_Date
  */
+// MODULE'S IMPORT
+import {castDate} from './Cast.mjs';
+
 // DEFINE WORKING VARS
 const NS = 'TeqFw_Core_Shared_Util_Date';
 
@@ -45,6 +48,36 @@ function addMonths(months, date) {
 }
 
 /**
+ * Get first date of the month (UTC). Time is 00:00:00.
+ * @param {Date|string|number} [date]
+ * @return {Date}
+ * @memberOf TeqFw_Core_Shared_Util_Date
+ */
+function monthDayFirst(date) {
+    const d = castDate(date ?? new Date());
+    const res = new Date(0);
+    res.setUTCFullYear(d.getUTCFullYear());
+    res.setUTCMonth(d.getUTCMonth());
+    res.setUTCDate(1);
+    return res;
+}
+
+/**
+ * Get the last date of the month (UTC). Time is 00:00:00.
+ * @param {Date|string|number} [date]
+ * @return {Date}
+ * @memberOf TeqFw_Core_Shared_Util_Date
+ */
+function monthDayLast(date) {
+    const d = castDate(date ?? new Date());
+    const res = new Date(0);
+    res.setUTCFullYear(d.getUTCFullYear());
+    res.setUTCMonth(d.getUTCMonth() + 1);
+    res.setUTCDate(0);
+    return res;
+}
+
+/**
  * Subtract days from given date or from now.
  * @param {number} days
  * @param {Date} [date]
@@ -74,6 +107,8 @@ function subtractMinutes(minutes, date) {
 Object.defineProperty(addDays(), 'namespace', {value: NS});
 Object.defineProperty(addMinutes, 'namespace', {value: NS});
 Object.defineProperty(addMonths, 'namespace', {value: NS});
+Object.defineProperty(monthDayFirst, 'namespace', {value: NS});
+Object.defineProperty(monthDayLast, 'namespace', {value: NS});
 Object.defineProperty(subtractDays, 'namespace', {value: NS});
 Object.defineProperty(subtractMinutes, 'namespace', {value: NS});
 
@@ -81,6 +116,8 @@ export {
     addDays,
     addMinutes,
     addMonths,
+    monthDayFirst,
+    monthDayLast,
     subtractDays,
     subtractMinutes,
 }
