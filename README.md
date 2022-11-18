@@ -1,6 +1,6 @@
 # @teqfw/core
 
-|CAUTION: TeqFW is an unstable, fast-growing project w/o backward compatibility. Use it at your own risk.|
+|CAUTION: TeqFW is an unstable project w/o backward compatibility. Use it at your own risk.|
 |---|
 
 This `teq`-plugin contains backend application to scan and registry other `teq`-plugins and is used in Tequila Framework
