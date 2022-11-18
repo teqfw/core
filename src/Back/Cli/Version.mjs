@@ -16,7 +16,7 @@ const NS = 'TeqFw_Core_Back_Cli_Version';
  * @memberOf TeqFw_Core_Back_Cli_Version
  */
 export default function Factory(spec) {
-    // EXTRACT DEPS
+    // DEPS
     /** @type {TeqFw_Core_Back_Defaults} */
     const DEF = spec['TeqFw_Core_Back_Defaults$'];
     /** @type {TeqFw_Core_Back_Config} */
@@ -24,7 +24,7 @@ export default function Factory(spec) {
     /** @type {TeqFw_Core_Back_Api_Dto_Command.Factory} */
     const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command#Factory$'];
 
-    // DEFINE INNER FUNCTIONS
+    // FUNCS
     /**
      * Command action.
      * @returns {Promise<void>}
@@ -33,7 +33,7 @@ export default function Factory(spec) {
     const action = async function () {
         console.log(`Application version: ${cfg.getBoot().version}.`);
     };
-    Object.defineProperty(action, 'name', {value: `${NS}.${action.name}`});
+    Object.defineProperty(action, 'namespace', {value: NS});
 
     // COMPOSE RESULT
     const res = fCommand.create();
@@ -45,4 +45,4 @@ export default function Factory(spec) {
 }
 
 // finalize code components for this es6-module
-Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.name}`});
+Object.defineProperty(Factory, 'namespace', {value: NS});

@@ -19,13 +19,15 @@ function castArray(data) {
 /**
  * Cast input data into array of object using factory function.
  * @param {*} data
- * @param {function} fact
+ * @param {function} [fact]
  * @return {Array}
  * @memberOf TeqFw_Core_Shared_Util_Cast
  */
 function castArrayOfObj(data, fact) {
+    const defFunc = (a) => a ?? {}; // return input itself or empty Object
+    const norm = (typeof fact === 'function') ? fact : defFunc;
     return Array.isArray(data)
-        ? data.map((one) => fact(one))
+        ? data.map((one) => norm(one))
         : [];
 }
 
@@ -68,7 +70,7 @@ function castBoolean(data) {
  * @memberOf TeqFw_Core_Shared_Util_Cast
  */
 function castBooleanIfExists(data) {
-    return (data === undefined) ? data : castBoolean(data);
+    return ((data === undefined) || (data === null)) ? data : castBoolean(data);
 }
 
 /**
@@ -80,6 +82,17 @@ function castBooleanIfExists(data) {
 function castDate(data) {
     return ((typeof data === 'object') && (data instanceof Date)) ? data :
         ((typeof data === 'string') || (typeof data === 'number')) ? new Date(data) : undefined;
+}
+
+/**
+ * Cast input data into decimal 'number' data type.
+ * @param {*} data
+ * @return {number|undefined}
+ * @memberOf TeqFw_Core_Shared_Util_Cast
+ */
+function castDecimal(data) {
+    const res = Number.parseFloat(data);
+    return ((typeof res === 'number') && (!isNaN(res))) ? res : undefined;
 }
 
 /**
@@ -116,8 +129,26 @@ function castFunction(data) {
  * @memberOf TeqFw_Core_Shared_Util_Cast
  */
 function castInt(data) {
-    const res = Number.parseInt(data);
+    const norm = (typeof data === 'string') ? data.trim() : data;
+    const res = Number.parseInt(norm);
     return ((typeof res === 'number') && (!isNaN(res))) ? res : undefined;
+}
+
+/**
+ * Cast input data as a map (objects inside object).
+ * @param {Object} data
+ * @param {function} fact
+ * @returns {Object<number|string, Object>}
+ * @memberOf TeqFw_Core_Shared_Util_Cast
+ */
+function castObjectsMap(data, fact) {
+    const defFunc = (a) => a ?? {}; // return input itself or empty Object
+    const norm = (typeof fact === 'function') ? fact : defFunc;
+    const res = {};
+    if ((typeof data === 'object') && (data !== null)) {
+        for (const key of Object.keys(data)) res[key] = norm(data[key]);
+    }
+    return res;
 }
 
 /**
@@ -157,15 +188,17 @@ function castString(data) {
 
 // MODULE'S FUNCTIONALITY
 // finalize code components for this es6-module
-Object.defineProperty(castArray, 'name', {value: `${NS}.${castArray.name}`});
-Object.defineProperty(castArrayOfObj, 'name', {value: `${NS}.${castArrayOfObj.name}`});
-Object.defineProperty(castBoolean, 'name', {value: `${NS}.${castBoolean.name}`});
-Object.defineProperty(castBooleanIfExists, 'name', {value: `${NS}.${castBooleanIfExists.name}`});
-Object.defineProperty(castEnum, 'name', {value: `${NS}.${castEnum.name}`});
-Object.defineProperty(castFunction, 'name', {value: `${NS}.${castFunction.name}`});
-Object.defineProperty(castInt, 'name', {value: `${NS}.${castInt.name}`});
-Object.defineProperty(castPrimitive, 'name', {value: `${NS}.${castPrimitive.name}`});
-Object.defineProperty(castString, 'name', {value: `${NS}.${castString.name}`});
+Object.defineProperty(castArray, 'namespace', {value: NS});
+Object.defineProperty(castArrayOfObj, 'namespace', {value: NS});
+Object.defineProperty(castBoolean, 'namespace', {value: NS});
+Object.defineProperty(castBooleanIfExists, 'namespace', {value: NS});
+Object.defineProperty(castDecimal, 'namespace', {value: NS});
+Object.defineProperty(castEnum, 'namespace', {value: NS});
+Object.defineProperty(castFunction, 'namespace', {value: NS});
+Object.defineProperty(castInt, 'namespace', {value: NS});
+Object.defineProperty(castObjectsMap, 'namespace', {value: NS});
+Object.defineProperty(castPrimitive, 'namespace', {value: NS});
+Object.defineProperty(castString, 'namespace', {value: NS});
 
 export {
     castArray,
@@ -174,9 +207,11 @@ export {
     castBoolean,
     castBooleanIfExists,
     castDate,
+    castDecimal,
     castEnum,
     castFunction,
     castInt,
+    castObjectsMap,
     castPrimitive,
     castString,
 };

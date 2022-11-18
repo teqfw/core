@@ -134,11 +134,11 @@ const NS = 'Vendor_Plugin_Back_Cli_Cmd';
  * @memberOf Vendor_Plugin_Back_Cli_Cmd
  */
 function Factory(spec) {
-    // EXTRACT DEPS
+    // DEPS
     /** @type {TeqFw_Core_Back_Api_Dto_Command.Factory} */
     const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command#Factory$'];
 
-    // DEFINE INNER FUNCTIONS
+    // FUNCS
     /**
      * Command action.
      * @returns {Promise<void>}
@@ -147,7 +147,7 @@ function Factory(spec) {
     const action = async function () {
         console.log('Command is executed.');
     };
-    Object.defineProperty(action, 'name', {value: `${NS}.${action.name}`});
+    Object.defineProperty(action, 'namespace', {value: NS});
 
     // COMPOSE RESULT
     const res = fCommand.create();
@@ -159,7 +159,7 @@ function Factory(spec) {
 }
 
 // MODULE'S EXPORT
-Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.name}`});
+Object.defineProperty(Factory, 'namespace', {value: NS});
 export default Factory;
 ```
 

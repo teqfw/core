@@ -3,12 +3,20 @@
     "autoload": {
       "ns": "TeqFw_Core",
       "path": "./src"
+    },
+    "replace": {
+      "TeqFw_Core_Shared_Api_ILogger": "TeqFw_Core_Shared_Mod_Logger",
+      "TeqFw_Core_Shared_Api_Logger_ITransport": "TeqFw_Core_Shared_Mod_Logger_Transport_Console",
+      "TeqFw_Core_Shared_Lib_Uuid": {"back": "TeqFw_Core_Back_Lib_Uuid"},
+      "TeqFw_Core_Shared_Api_Util_ICodec": {"back": "TeqFw_Core_Back_Util_Codec"}
     }
   },
   "@teqfw/core": {
     "commands": [
-      "TeqFw_Core_Back_Cli_StartupLog",
       "TeqFw_Core_Back_Cli_Version"
-    ]
+    ],
+    "plugin": {
+      "onInit": "TeqFw_Core_Back_Plugin_Init"
+    }
   }
 }

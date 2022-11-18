@@ -35,6 +35,8 @@ export default class TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item {
  * @memberOf TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item
  */
 export class Factory {
+    static namespace = NS;
+
     constructor(spec) {
         const {castArray, castString} = spec['TeqFw_Core_Shared_Util_Cast'];
         /**
@@ -51,6 +53,3 @@ export class Factory {
         }
     }
 }
-
-// finalize code components for this es6-module
-Object.defineProperty(Factory, 'name', {value: `${NS}.${Factory.constructor.name}`});

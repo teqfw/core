@@ -1,38 +1,38 @@
 /**
  * Plugin scanner.
  */
-export default class TeqFw_Core_Back_Scan_Plugin {
+export default class TeqFw_Core_Back_Mod_Init_Plugin {
     constructor(spec) {
-        // EXTRACT DEPS
+        // DEPS
         /** @type {TeqFw_Core_Back_Defaults} */
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
         /** @type {TeqFw_Di_Back_Plugin_Scanner} */
         const scanner = spec['TeqFw_Di_Back_Plugin_Scanner$'];
-        /** @type {TeqFw_Core_Shared_Logger} */
-        const logger = spec['TeqFw_Core_Shared_Logger$'];
-        /** @type {TeqFw_Core_Back_Scan_Plugin_Registry} */
-        const registry = spec['TeqFw_Core_Back_Scan_Plugin_Registry$'];
+        /** @type {TeqFw_Core_Back_Mod_Init_Logger} */
+        const logger = spec['TeqFw_Core_Back_Mod_Init_Logger$'];
+        /** @type {TeqFw_Core_Back_Mod_Init_Plugin_Registry} */
+        const registry = spec['TeqFw_Core_Back_Mod_Init_Plugin_Registry$'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory} */
         const fItem = spec['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item#Factory$'];
         /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc.Factory} */
         const fDiDesc = spec['TeqFw_Di_Back_Api_Dto_Plugin_Desc#Factory$'];
 
-        // DEFINE THIS INSTANCE METHODS (NOT IN PROTOTYPE)
+        // INSTANCE METHODS
 
         /**
          * Scan packages and register TeqFW plugins into the registry.
          * @param {String} root
-         * @returns {Promise<TeqFw_Core_Back_Scan_Plugin_Registry>}
+         * @returns {Promise<TeqFw_Core_Back_Mod_Init_Plugin_Registry>}
          */
         this.exec = async function (root) {
-            // DEFINE INNER FUNCTIONS
+            // FUNCS
 
             /**
              * @param {Object.<string, TeqFw_Di_Back_Api_Dto_Scanned>} scanItems
              * @returns {Promise<TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]>}
              */
             async function getPlugins(scanItems) {
-                // DEFINE INNER FUNCTIONS
+                // FUNCS
 
                 /**
                  * Check does 'package.json' exist, read content, parse and return data if 'yes'.
@@ -52,7 +52,7 @@ export default class TeqFw_Core_Back_Scan_Plugin {
                     return res;
                 }
 
-                // MAIN FUNCTIONALITY
+                // MAIN
                 const result = [];
                 for (const scanItem of Object.values(scanItems)) {
                     const pluginItem = extractPluginItem(scanItem);
@@ -68,11 +68,11 @@ export default class TeqFw_Core_Back_Scan_Plugin {
              * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]} items
              */
             function composeLevels(names, items) {
-                // PARSE INPUT & DEFINE WORKING VARS
+                // VARS
                 const successors = {}; // {core => [web, i18n, vue, ...]}
                 const weights = {};
 
-                // DEFINE INNER FUNCTIONS
+                // FUNCS
                 /**
                  * Recursive function to update plugins weights in hierarchy.
                  * 1 - plugin has no deps, 2 - plugin has one dep's level below, ...
@@ -95,7 +95,7 @@ export default class TeqFw_Core_Back_Scan_Plugin {
                     weights[name] = weight;
                 }
 
-                // MAIN FUNCTIONALITY
+                // MAIN
                 // collect package successors
                 for (const one of items) {
                     const name = one.name;
@@ -115,7 +115,7 @@ export default class TeqFw_Core_Back_Scan_Plugin {
                 return result;
             }
 
-            // MAIN FUNCTIONALITY
+            // MAIN
             logger.info(`Scan '${root}' for teq-modules.`);
             const scanData = await scanner.scanFilesystem(root);
             const items = await getPlugins(scanData);
@@ -143,5 +143,4 @@ export default class TeqFw_Core_Back_Scan_Plugin {
             return registry;
         };
     }
-
 }

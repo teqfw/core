@@ -11,22 +11,22 @@ import {join} from 'path';
 export default class TeqFw_Core_Back_Config {
 
     constructor(spec) {
-        // EXTRACT DEPS
+        // DEPS
         /** @type {TeqFw_Core_Back_Defaults} */
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
-        /** @type {TeqFw_Core_Back_Api_Dto_Formless.Factory} */
-        const fConfig = spec['TeqFw_Core_Back_Api_Dto_Formless#Factory$'];
         /** @type {typeof TeqFw_Core_Back_Api_Dto_App_Boot} */
         const Boot = spec['TeqFw_Core_Back_Api_Dto_App_Boot#'];
+        /** @type {TeqFw_Core_Shared_Dto_Formless} */
+        const dtoFormless = spec['TeqFw_Core_Shared_Dto_Formless$'];
 
-        // DEFINE WORKING VARS / PROPS
+        // VARS
         /** @type {TeqFw_Core_Back_Api_Dto_App_Boot} */
         const boot = new Boot();
-        /** @type {TeqFw_Core_Back_Api_Dto_Formless} storage for local configuration */
-        let local = fConfig.create();
+        /** @type {TeqFw_Core_Shared_Dto_Formless.Dto} storage for local configuration */
+        let local = dtoFormless.createDto();
 
 
-        // DEFINE INSTANCE METHODS
+        // INSTANCE METHODS
         /**
          * Get boot configuration.
          *
@@ -56,7 +56,8 @@ export default class TeqFw_Core_Back_Config {
             const full = join(root, cfg);
             if (existsSync(full) && statSync(full).isFile()) {
                 const data = readFileSync(full);
-                local = fConfig.create(data.toString());
+                const obj = JSON.parse(data.toString());
+                local = dtoFormless.createDto(obj);
             }
         };
 

@@ -4,6 +4,7 @@
  * output to console without delay.
  *
  * This logger saves log messages into internal queue
+ * @deprecated use TeqFw_Core_Shared_Api_ILogger
  */
 // MODULE'S VARS
 const LEVEL_INFO = 'info';

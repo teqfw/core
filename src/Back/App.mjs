@@ -3,17 +3,17 @@
  * @namespace TeqFw_Core_Back_App
  */
 // MODULE'S IMPORT
-import process from 'process';
+import process from 'node:process';
 import {Command} from 'commander/esm.mjs';
-import {existsSync, statSync} from 'fs';
-import {join} from 'path';
+import {existsSync, statSync} from 'node:fs';
+import {join} from 'node:path';
 
 /**
  * Main class to launch application: read modules meta data, initialize parts of app, start the app.
  */
 export default class TeqFw_Core_Back_App {
     constructor(spec) {
-        // EXTRACT DEPS
+        // DEPS
         /** @type {TeqFw_Core_Back_Defaults} */
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc.Factory} */
@@ -22,15 +22,17 @@ export default class TeqFw_Core_Back_App {
         const container = spec['TeqFw_Di_Shared_Container$'];
         /** @type {TeqFw_Core_Back_Config} */
         const config = spec['TeqFw_Core_Back_Config$'];
-        /** @type {TeqFw_Core_Shared_Logger} */
-        const logger = spec['TeqFw_Core_Shared_Logger$'];
-        /** @type {TeqFw_Core_Back_Scan_Plugin} */
-        const pluginScan = spec['TeqFw_Core_Back_Scan_Plugin$'];
+        /** @type {TeqFw_Core_Back_Mod_Init_Logger} */
+        const logger = spec['TeqFw_Core_Back_Mod_Init_Logger$'];
+        /** @type {TeqFw_Core_Back_Mod_Init_Plugin} */
+        const pluginScan = spec['TeqFw_Core_Back_Mod_Init_Plugin$'];
 
-        // INIT OWN PROPERTIES AND DEFINE WORKING VARS
+        // VARS
         const program = new Command();
-        /** @type {TeqFw_Core_Back_Scan_Plugin_Registry} */
+        /** @type {TeqFw_Core_Back_Mod_Init_Plugin_Registry} */
         let pluginsRegistry;
+
+        // INSTANCE METHODS
 
         /**
          * Initialize TeqFW application (DI, config, plugins, etc.).
@@ -40,7 +42,7 @@ export default class TeqFw_Core_Back_App {
          * @returns {Promise<void>}
          */
         this.init = async function ({path, version}) {
-            // DEFINE INNER FUNCTIONS
+            // FUNCS
 
             /**
              * Save bootstrap configuration into configuration container.
@@ -55,17 +57,18 @@ export default class TeqFw_Core_Back_App {
                 if (!existsSync(pathNode) || !statSync(pathNode).isDirectory())
                     throw new Error(`Cannot find './node_modules/' in '${path}'.`);
                 config.setBoot(path, version);
+                logger.info(`Teq-application is started in '${path}' (ver. ${version}).`);
             }
 
             /**
              * Run 'commander' initialization code for all plugins.
              *
-             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
              * @returns {Promise<void>}
              * @memberOf TeqFw_Core_Back_App.init
              */
             async function initCommander(registry) {
-                // DEFINE INNER FUNCTIONS
+                // FUNCS
                 /**
                  * Add single command to the app's commander.
                  *
@@ -91,7 +94,7 @@ export default class TeqFw_Core_Back_App {
                     }
                 }
 
-                // MAIN FUNCTIONALITY
+                // MAIN
                 logger.info('Integrate plugins to the Commander.');
                 for (const item of registry.items()) {
                     const desc = fDesc.create(item.teqfw[DEF.SHARED.NAME]);
@@ -101,7 +104,7 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Go through all plugins hierarchy (down to top) and register namespaces in DI container.
-             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
              */
             function initDiContainer(registry) {
                 for (const item of registry.items()) {
@@ -135,11 +138,11 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Go through plugins hierarchy (down to top) and run init functions.
-             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
              * @return {Promise<void>}
              */
             async function initPlugins(registry) {
-                // MAIN FUNCTIONALITY
+                // MAIN
                 logger.info('Initialize plugins.');
                 const plugins = registry.getItemsByLevels();
                 for (const item of plugins) {
@@ -159,9 +162,8 @@ export default class TeqFw_Core_Back_App {
                 }
             }
 
-            // MAIN FUNCTIONALITY
+            // MAIN
             initBootConfig(config, path, version);
-            logger.info(`Teq-application is started in '${path}' (ver. ${version}).`);
             // load local configuration
             config.loadLocal(path);
             // scan node modules for teq-plugins
@@ -169,8 +171,14 @@ export default class TeqFw_Core_Back_App {
             // init container before do something else
             initDiContainer(pluginsRegistry);
             // ... then do something else
-            await initPlugins(pluginsRegistry);
-            await initCommander(pluginsRegistry);
+            try {
+                await initPlugins(pluginsRegistry);
+                await initCommander(pluginsRegistry);
+            } catch (e) {
+                console.error(e);
+                // noinspection ES6MissingAwait
+                this.stop();
+            }
         };
 
         /**
@@ -179,10 +187,10 @@ export default class TeqFw_Core_Back_App {
          * @returns {Promise<void>}
          */
         this.run = async function () {
-            // DEFINE WORKING VARS / PROPS
+            // VARS
             const me = this;
 
-            // DEFINE INNER FUNCTIONS
+            // FUNCS
             /**
              * Event handler to run application finalization on stop events.
              * @return {Promise<void>}
@@ -192,7 +200,7 @@ export default class TeqFw_Core_Back_App {
                 process.exit();
             }
 
-            // MAIN FUNCTIONALITY
+            // MAIN
             process.on('SIGINT', onStop);
             process.on('SIGTERM', onStop);
             process.on('SIGQUIT', onStop);
@@ -211,14 +219,14 @@ export default class TeqFw_Core_Back_App {
          * @returns {Promise<void>}
          */
         this.stop = async function () {
-            // DEFINE INNER FUNCTIONS
+            // FUNCS
             /**
              * Go through plugins hierarchy (down to top) and run finalization functions.
-             * @param {TeqFw_Core_Back_Scan_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
              * @return {Promise<void>}
              */
             async function stopPlugins(registry) {
-                // MAIN FUNCTIONALITY
+                // MAIN
                 logger.info('Stop plugins.');
                 const plugins = registry.getItemsByLevels();
                 for (const item of plugins) {
@@ -230,15 +238,23 @@ export default class TeqFw_Core_Back_App {
                         try {
                             fn = await container.get(`${desc.plugin.onStop}$$`); // as new instance
                         } catch (e) {
-                            logger.error(`Cannot create plugin init function using '${desc.plugin.onStop}' factory`
-                                + ` or run it. Error: ${e.message}`);
+                            logger.error(`Cannot create plugin init function using '${desc.plugin.onStop}' factory. `
+                                + `Error: ${e.message}`);
                         }
-                        if (typeof fn === 'function') await fn();
+                        if (typeof fn === 'function') {
+                            try {
+                                await fn();
+                            } catch (e) {
+                                logger.error(`Cannot run plugin init function'${fn?.namespace}'. `
+                                    + `Error: ${e.message}`);
+                                throw e;
+                            }
+                        }
                     }
                 }
             }
 
-            // MAIN FUNCTIONALITY
+            // MAIN
             logger.info('Stop the application.');
             await stopPlugins(pluginsRegistry);
             logger.info('The application is stopped.');

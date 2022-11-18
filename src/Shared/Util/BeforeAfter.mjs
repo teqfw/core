@@ -11,7 +11,7 @@ const NS = 'TeqFw_Core_Shared_Util_BeforeAfter';
  * @memberOf TeqFw_Core_Shared_Util_BeforeAfter
  */
 class Dto {
-    static name = `${NS}.Dto`;
+    static namespace = NS;
     /** @type {string[]} */
     after;
     /** @type {string[]} */
@@ -21,17 +21,16 @@ class Dto {
 }
 
 export default class TeqFw_Core_Shared_Util_BeforeAfter {
-    constructor(spec) {
-        // EXTRACT DEPS
-        // DEFINE WORKING VARS / PROPS
+    constructor() {
+        // VARS
         let _needReorder = false;
         /** @type {Object<string, Dto>} */
         let _items = {};
         let _ordered = [];
 
-        // DEFINE INNER FUNCTIONS
+        // FUNCS
         function reorder() {
-            // DEFINE INNER FUNCTIONS
+            // FUNCS
             /**
              * Convert 'before/after' notation to 'dependent' notation and compose successors list.
              * @return Object<string, string[]>
@@ -81,7 +80,7 @@ export default class TeqFw_Core_Shared_Util_BeforeAfter {
             }
 
 
-            // MAIN FUNCTIONALITY
+            // MAIN
             _ordered = [];
             /** @type {Object<string, string[]>} {root => [node, ...]} */
             const successors = initSuccessors();
@@ -106,7 +105,7 @@ export default class TeqFw_Core_Shared_Util_BeforeAfter {
             return _ordered;
         }
 
-        // DEFINE INSTANCE METHODS
+        // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Shared_Util_BeforeAfter.Dto} item
          */

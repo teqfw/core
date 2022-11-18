@@ -4,13 +4,15 @@
  * 'function' notation is better than 'class' notation for an actions but there were some
  * troubles with 'Find Usages' operation in IDEA for 'function' notation.
  *
+ * This is documentation only code (not executable).
+ *
  * @interface
  */
-export default class TeqFw_Core_Shared_Api_Sync_IFactory {
+export default class TeqFw_Core_Shared_Api_IFactory {
     /**
      *
-     * @param {Object} opts
-     * @return {Object}
+     * @param {*} [opts]
+     * @return {*}
      */
-    create(opts = {}) {}
+    create(opts) {}
 }
