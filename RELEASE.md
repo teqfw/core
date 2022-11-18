@@ -1,6 +1,6 @@
 # @teqfw/core: releases
 
-# 0.8.0 - new
+# 0.8.0
 
 * Events related interfaces.
 * Backend application UUID.
