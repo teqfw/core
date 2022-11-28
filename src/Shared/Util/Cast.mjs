@@ -80,7 +80,7 @@ function castBooleanIfExists(data) {
  * @memberOf TeqFw_Core_Shared_Util_Cast
  */
 function castDate(data) {
-    return ((typeof data === 'object') && (data instanceof Date)) ? data :
+    return ((typeof data === 'object') && (data instanceof Date)) ? new Date(data) :
         ((typeof data === 'string') || (typeof data === 'number')) ? new Date(data) : undefined;
 }
 

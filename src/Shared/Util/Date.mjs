@@ -16,7 +16,7 @@ const NS = 'TeqFw_Core_Shared_Util_Date';
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function addDays(days, date) {
-    const res = (date instanceof Date) ? date : new Date();
+    const res = (date instanceof Date) ? new Date(date) : new Date();
     res.setDate(res.getDate() + Math.abs(days));
     return res;
 }
@@ -29,7 +29,7 @@ function addDays(days, date) {
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function addMinutes(minutes, date) {
-    const res = (date instanceof Date) ? date : new Date();
+    const res = (date instanceof Date) ? new Date(date) : new Date();
     res.setMinutes(res.getMinutes() + Math.abs(minutes));
     return res;
 }
@@ -42,7 +42,7 @@ function addMinutes(minutes, date) {
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function addMonths(months, date) {
-    const res = (date instanceof Date) ? date : new Date();
+    const res = (date instanceof Date) ? new Date(date) : new Date();
     res.setMonth(res.getMonth() + Math.abs(months));
     return res;
 }
@@ -97,7 +97,7 @@ function nextMonthDayFirst(date) {
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function subtractDays(days, date) {
-    const res = (date instanceof Date) ? date : new Date();
+    const res = (date instanceof Date) ? new Date(date) : new Date();
     res.setDate(res.getDate() - Math.abs(days));
     return res;
 }
@@ -110,13 +110,13 @@ function subtractDays(days, date) {
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function subtractMinutes(minutes, date) {
-    const res = (date instanceof Date) ? date : new Date();
+    const res = (date instanceof Date) ? new Date(date) : new Date();
     res.setMinutes(res.getMinutes() - Math.abs(minutes));
     return res;
 }
 
 // finalize code components for this es6-module
-Object.defineProperty(addDays(), 'namespace', {value: NS});
+Object.defineProperty(addDays, 'namespace', {value: NS});
 Object.defineProperty(addMinutes, 'namespace', {value: NS});
 Object.defineProperty(addMonths, 'namespace', {value: NS});
 Object.defineProperty(monthDayFirst, 'namespace', {value: NS});
