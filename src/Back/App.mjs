@@ -9,7 +9,7 @@ import {existsSync, statSync} from 'node:fs';
 import {join} from 'node:path';
 
 /**
- * Main class to launch application: read modules meta data, initialize parts of app, start the app.
+ * Main class to launch application: read modules metadata, initialize parts of app, start the app.
  */
 export default class TeqFw_Core_Back_App {
     constructor(spec) {
