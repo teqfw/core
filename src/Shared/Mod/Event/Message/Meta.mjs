@@ -9,6 +9,7 @@ const NS = 'TeqFw_Core_Shared_Mod_Event_Message_Meta';
  * @type {Object}
  */
 const ATTR = {
+    EXPIRATION: 'expiration',
     NAME: 'name',
     PUBLISHED: 'published',
     UUID: 'uuid',
@@ -40,8 +41,8 @@ export default class TeqFw_Core_Shared_Mod_Event_Message_Meta {
         const castDate = spec['TeqFw_Core_Shared_Util_Cast.castDate'];
         /** @type {TeqFw_Core_Shared_Util_Cast.castString|function} */
         const castString = spec['TeqFw_Core_Shared_Util_Cast.castString'];
-        /** @type {TeqFw_Core_Shared_Lib_Uuid.v4|function} */
-        const v4 = spec['TeqFw_Core_Shared_Lib_Uuid.v4'];
+        /** @type {TeqFw_Core_Shared_Api_Util_ICrypto.randomUUID|function} */
+        const randomUUID = spec['TeqFw_Core_Shared_Api_Util_ICrypto.randomUUID'];
 
         // INSTANCE METHODS
         /**
@@ -60,13 +61,12 @@ export default class TeqFw_Core_Shared_Mod_Event_Message_Meta {
             }
             res.name = castString(data?.name);
             res.published = castDate(data?.published) ?? new Date();
-            res.uuid = castString(data?.uuid) ?? v4();
+            res.uuid = castString(data?.uuid) ?? randomUUID();
             return res;
         }
 
         this.getAttributes = () => ATTR;
 
-        this.getAttrNames = () => Object.values(ATTR);
     }
 
 }

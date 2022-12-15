@@ -7,8 +7,8 @@
     "replace": {
       "TeqFw_Core_Shared_Api_ILogger": "TeqFw_Core_Shared_Mod_Logger",
       "TeqFw_Core_Shared_Api_Logger_ITransport": "TeqFw_Core_Shared_Mod_Logger_Transport_Console",
-      "TeqFw_Core_Shared_Lib_Uuid": {"back": "TeqFw_Core_Back_Lib_Uuid"},
-      "TeqFw_Core_Shared_Api_Util_ICodec": {"back": "TeqFw_Core_Back_Util_Codec"}
+      "TeqFw_Core_Shared_Api_Util_ICodec": {"back": "TeqFw_Core_Back_Util_Codec"},
+      "TeqFw_Core_Shared_Api_Util_ICrypto": {"back": "TeqFw_Core_Back_Util_Crypto"}
     }
   },
   "@teqfw/core": {

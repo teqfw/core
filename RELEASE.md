@@ -2,6 +2,9 @@
 
 # 0.9.0 - new
 
+* Load backend UUID from a file.
+* Use `node:crypto` instead of `uuid` package.
+
 # 0.8.0
 
 * Events related interfaces.

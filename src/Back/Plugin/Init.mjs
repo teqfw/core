@@ -16,7 +16,7 @@ export default function (spec) {
     /** @type {TeqFw_Core_Shared_Api_ILogger} */
     const logger = spec['TeqFw_Core_Shared_Api_ILogger$$']; // instance
     /** @type {TeqFw_Core_Back_Mod_App_Uuid} */
-    const mUuid = spec['TeqFw_Core_Back_Mod_App_Uuid$'];
+    const modUuid = spec['TeqFw_Core_Back_Mod_App_Uuid$'];
 
     // MAIN
     logger.setNamespace(NS);
@@ -32,12 +32,12 @@ export default function (spec) {
             /** @type {TeqFw_Core_Back_Api_Dto_Config_Local} */
             const cfg = config.getLocal(DEF.SHARED.NAME);
             const uuid = (cfg?.uuid) ? cfg.uuid : v4();
-            mUuid.set(uuid);
-            logger.info(`Backend application UUID: ${mUuid.get()}.`);
+            modUuid.set(uuid);
+            logger.info(`Backend application UUID: ${modUuid.get()}.`);
         }
 
         // MAIN
-        initAppBackUuid(config);
+        await modUuid.init();
     }
 
     // MAIN
