@@ -1,5 +1,5 @@
 /**
- * Backend implementation of TeqFw_Core_Shared_Api_Util_ICrypto.
+ * Backend implementation of TeqFw_Core_Shared_Api_Util_Crypto.
  *
  * @namespace TeqFw_Core_Back_Util_Crypto
  */

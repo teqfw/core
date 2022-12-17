@@ -20,7 +20,7 @@ const container = new Container();
 // add backend sources to map
 container.addSourceMapping('TeqFw_Core', srcApp, true, 'mjs');
 container.addSourceMapping('TeqFw_Di', srcTeqFwDi, true, 'mjs');
-container.addModuleReplacement('TeqFw_Core_Shared_Api_Util_ICrypto', 'TeqFw_Core_Back_Util_Crypto');
+container.addModuleReplacement('TeqFw_Core_Shared_Api_Util_Crypto', 'TeqFw_Core_Back_Util_Crypto');
 
 /**
  * Setup development environment (if not set before) and return DI container.

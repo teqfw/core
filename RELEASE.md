@@ -4,6 +4,7 @@
 
 * Load backend UUID from a file.
 * Use `node:crypto` instead of `uuid` package.
+* Move away events from the `core`.
 
 # 0.8.0
 

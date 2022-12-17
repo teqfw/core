@@ -7,6 +7,7 @@ const NS = 'TeqFw_Core_Shared_Dto_Formless';
 // MODULE'S CLASSES
 /**
  * @memberOf TeqFw_Core_Shared_Dto_Formless
+ * @deprecated use TeqFw_Core_Shared_Dto_Any
  */
 class Dto {
     static namespace = NS;
@@ -14,6 +15,7 @@ class Dto {
 
 /**
  * @implements TeqFw_Core_Shared_Api_Factory_IDto
+ * @deprecated use TeqFw_Core_Shared_Dto_Any
  */
 export default class TeqFw_Core_Shared_Dto_Formless {
     constructor() {

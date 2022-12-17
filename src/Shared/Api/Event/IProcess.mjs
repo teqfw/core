@@ -5,6 +5,7 @@
  *
  * @interface
  * TODO: we need subscription to events in 'teqfw.json' or move this code to '../' as general purpose code
+ * TODO: use ..._Dto instead of ..._IDto (we have _Api_ in classname)
  */
 export default class TeqFw_Core_Shared_Api_Event_IProcess {
     /**

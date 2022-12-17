@@ -41,8 +41,8 @@ export default class TeqFw_Core_Shared_Mod_Event_Message_Meta {
         const castDate = spec['TeqFw_Core_Shared_Util_Cast.castDate'];
         /** @type {TeqFw_Core_Shared_Util_Cast.castString|function} */
         const castString = spec['TeqFw_Core_Shared_Util_Cast.castString'];
-        /** @type {TeqFw_Core_Shared_Api_Util_ICrypto.randomUUID|function} */
-        const randomUUID = spec['TeqFw_Core_Shared_Api_Util_ICrypto.randomUUID'];
+        /** @type {TeqFw_Core_Shared_Api_Util_Crypto.randomUUID|function} */
+        const randomUUID = spec['TeqFw_Core_Shared_Api_Util_Crypto.randomUUID'];
 
         // INSTANCE METHODS
         /**

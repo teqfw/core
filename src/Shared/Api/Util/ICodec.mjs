@@ -7,6 +7,7 @@
  * This is documentation only code (not executable).
  *
  * @interface
+ * TODO: use ..._Dto instead of ..._IDto (we have _Api_ in classname)
  */
 export default class TeqFw_Core_Shared_Api_Util_ICodec {
 
