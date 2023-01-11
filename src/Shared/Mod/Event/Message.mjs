@@ -50,7 +50,6 @@ export default class TeqFw_Core_Shared_Mod_Event_Message {
 
         this.getAttributes = () => ATTR;
 
-        this.getAttrNames = () => Object.values(ATTR);
     }
 
 }
