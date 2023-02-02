@@ -16,7 +16,7 @@ export default class TeqFw_Core_Back_Mod_Init_Logger {
         // VARS
         /** @type {TeqFw_Core_Shared_Dto_Log.Dto[]} */
         const _queue = [];
-        /** @type {TeqFw_Core_Shared_Api_Logger_ITransport} */
+        /** @type {TeqFw_Core_Shared_Api_Logger_Transport} */
         let _transport;
 
         // FUNCS

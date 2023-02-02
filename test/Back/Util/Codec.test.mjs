@@ -9,7 +9,7 @@ import {describe, it} from 'mocha';
 /** @type {TeqFw_Di_Shared_Container} */
 const container = await testEnv();
 // use implementation here, not interface
-/** @type {TeqFw_Core_Shared_Api_Util_ICodec} */
+/** @type {TeqFw_Core_Shared_Api_Util_Codec} */
 const util = await container.get('TeqFw_Core_Back_Util_Codec$');
 
 describe('TeqFw_Core_Back_Util_Codec', function () {

@@ -14,7 +14,7 @@ class Dto {
 }
 
 /**
- * @implements TeqFw_Core_Shared_Api_Factory_IDto
+ * @implements TeqFw_Core_Shared_Api_Factory_Dto
  * @deprecated use TeqFw_Core_Shared_Dto_Any
  */
 export default class TeqFw_Core_Shared_Dto_Formless {

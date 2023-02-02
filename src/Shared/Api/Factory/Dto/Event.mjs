@@ -4,11 +4,10 @@
  * This is documentation only code (not executable).
  *
  * @interface
- * @extends TeqFw_Core_Shared_Api_Factory_IDto
+ * @extends TeqFw_Core_Shared_Api_Factory_Dto
  * @deprecated define events in other plugin
- * TODO: use ..._Dto instead of ..._IDto (we have _Api_ in classname)
  */
-export default class TeqFw_Core_Shared_Api_Factory_Dto_IEvent {
+export default class TeqFw_Core_Shared_Api_Factory_Dto_Event {
     /**
      * Return event name.
      * @return {string}

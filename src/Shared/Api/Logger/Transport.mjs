@@ -2,9 +2,8 @@
  * Logger transport interface.
  *
  * @interface
- * TODO: use ..._Dto instead of ..._IDto (we have _Api_ in classname)
  */
-export default class TeqFw_Core_Shared_Api_Logger_ITransport {
+export default class TeqFw_Core_Shared_Api_Logger_Transport {
 
     /**
      * Log entry to some media (console, file, DB, service, ...).

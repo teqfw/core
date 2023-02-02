@@ -5,9 +5,8 @@
  * This is documentation only code (not executable).
  *
  * @interface
- * TODO: use ..._Dto instead of ..._IDto (we have _Api_ in classname)
  */
-export default class TeqFw_Core_Shared_Api_ILogger {
+export default class TeqFw_Core_Shared_Api_Logger {
 
     /**
      * @param {string} msg
@@ -17,7 +16,7 @@ export default class TeqFw_Core_Shared_Api_ILogger {
 
     /**
      * Return current logging transport.
-     * @return TeqFw_Core_Shared_Api_Logger_ITransport
+     * @return TeqFw_Core_Shared_Api_Logger_Transport
      */
     getTransport() {}
 
@@ -34,7 +33,7 @@ export default class TeqFw_Core_Shared_Api_ILogger {
     setNamespace(namespace) {}
 
     /**
-     * @param {TeqFw_Core_Shared_Api_Logger_ITransport} transport
+     * @param {TeqFw_Core_Shared_Api_Logger_Transport} transport
      * @deprecated transport should be injected in DI container
      */
     setTransport(transport) {}

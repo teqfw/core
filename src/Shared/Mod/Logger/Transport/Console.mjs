@@ -1,7 +1,7 @@
 /**
  * Transport to redirect logs to console. Default transport for Tequila Framework.
  *
- * @implements TeqFw_Core_Shared_Api_Logger_ITransport
+ * @implements TeqFw_Core_Shared_Api_Logger_Transport
  */
 export default class TeqFw_Core_Shared_Mod_Logger_Transport_Console {
     constructor(spec) {

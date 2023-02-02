@@ -1,7 +1,7 @@
 /**
  * Core logger.
 
- * @implements TeqFw_Core_Shared_Api_ILogger
+ * @implements TeqFw_Core_Shared_Api_Logger
  */
 export default class TeqFw_Core_Shared_Mod_Logger {
 
@@ -9,15 +9,15 @@ export default class TeqFw_Core_Shared_Mod_Logger {
         // DEPS
         /** @type {TeqFw_Core_Shared_Dto_Log} */
         const dtoLog = spec['TeqFw_Core_Shared_Dto_Log$'];
-        /** @type {TeqFw_Core_Shared_Api_Logger_ITransport} */
-        const transport = spec['TeqFw_Core_Shared_Api_Logger_ITransport$'];
+        /** @type {TeqFw_Core_Shared_Api_Logger_Transport} */
+        const transport = spec['TeqFw_Core_Shared_Api_Logger_Transport$'];
 
         // VARS
         /** @type {TeqFw_Core_Shared_Dto_Log.Dto[]} */
         const _queue = [];
         /** @type {string} */
         let _namespace;
-        /** @type {TeqFw_Core_Shared_Api_Logger_ITransport} */
+        /** @type {TeqFw_Core_Shared_Api_Logger_Transport} */
         let _transport = transport;
 
         // FUNCS

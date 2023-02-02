@@ -25,7 +25,7 @@
 
 * Move source code areas in the core from `@teqfw/di`.
 * Fix namespaces scanning when namespace is omitted in `teqfw.json`.
-* DTO module interface (`TeqFw_Core_Shared_Api_Factory_Dto_IMeta`).
+* DTO module interface (`TeqFw_Core_Shared_Api_Factory_Dto_Meta`).
 * New util `TeqFw_Core_Shared_Util_BeforeAfter`.
 * Date cast function.
 * Pause/unfreeze logs output on reset.
@@ -46,4 +46,4 @@
 * fix double initialization for plugins;
 * add path-to-name function to plugin registry (`TeqFw_Core_Back_Mod_Init_Plugin_Registry`);
 * add backend only utils (`TeqFw_Core_Back_Util`);
-* interface for actions (`TeqFw_Core_Shared_Api_IAction`);
+* interface for actions (`TeqFw_Core_Shared_Api_Action`);
