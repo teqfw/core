@@ -90,6 +90,21 @@ function nextMonthDayFirst(date) {
 }
 
 /**
+ * Parse string representation of a date (2023/01/31) as UTC date (Tue Jan 31 2023 00:00:00 GMT+0000).
+ * @param {string} date
+ * @return {Date} UTC date
+ * @memberOf TeqFw_Core_Shared_Util_Date
+ */
+function parseAsUtc(date) {
+    const loc = new Date(date); // Tue Jan 31 2023 00:00:00 GMT+0200
+    const utc = new Date(0);
+    utc.setUTCFullYear(loc.getFullYear(), loc.getMonth(), loc.getDate());
+    utc.setUTCHours(loc.getHours(), loc.getMinutes(), loc.getSeconds());
+    utc.setUTCMilliseconds(loc.getMilliseconds());
+    return utc; // Tue Jan 31 2023 00:00:00 GMT+0000
+}
+
+/**
  * Subtract days from given date or from now.
  * @param {number} days
  * @param {Date} [date]
@@ -122,6 +137,7 @@ Object.defineProperty(addMonths, 'namespace', {value: NS});
 Object.defineProperty(monthDayFirst, 'namespace', {value: NS});
 Object.defineProperty(monthDayLast, 'namespace', {value: NS});
 Object.defineProperty(nextMonthDayFirst, 'namespace', {value: NS});
+Object.defineProperty(parseAsUtc, 'namespace', {value: NS});
 Object.defineProperty(subtractDays, 'namespace', {value: NS});
 Object.defineProperty(subtractMinutes, 'namespace', {value: NS});
 
@@ -132,6 +148,7 @@ export {
     monthDayFirst,
     monthDayLast,
     nextMonthDayFirst,
+    parseAsUtc,
     subtractDays,
     subtractMinutes,
 }
