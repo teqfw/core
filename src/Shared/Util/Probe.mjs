@@ -48,6 +48,21 @@ function deepEqual(obj1, obj2) {
 }
 
 /**
+ * Example from MDN.
+ * @param {Object} obj
+ * @return {Object}
+ * @memberOf TeqFw_Core_Shared_Util_Probe
+ */
+function deepFreeze(obj) {
+    const propNames = Reflect.ownKeys(obj);
+    for (const name of propNames) {
+        const value = obj[name];
+        if ((value && typeof value === "object") || typeof value === "function") deepFreeze(value);
+    }
+    return Object.freeze(obj);
+}
+
+/**
  * Return 'true' if `val` is empty.
  * @param {*} val
  * @returns {boolean}
@@ -93,6 +108,7 @@ function serializable(obj) {
 
 // finalize code components for this es6-module
 Object.defineProperty(deepEqual, 'namespace', {value: NS});
+Object.defineProperty(deepFreeze, 'namespace', {value: NS});
 Object.defineProperty(isEmpty, 'namespace', {value: NS});
 Object.defineProperty(isObject, 'namespace', {value: NS});
 Object.defineProperty(isPrimitive, 'namespace', {value: NS});
@@ -100,6 +116,7 @@ Object.defineProperty(serializable, 'namespace', {value: NS});
 
 export {
     deepEqual,
+    deepFreeze,
     isEmpty,
     isObject,
     isPrimitive,

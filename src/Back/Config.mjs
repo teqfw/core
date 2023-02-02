@@ -1,12 +1,12 @@
 /**
- * Container for configurations.
+ * Container for application configuration.
  * Load local configuration from a file (default './cfg/local.json').
  *
  * @namespace TeqFw_Core_Back_Config
  */
 // MODULE'S IMPORT
-import {existsSync, readFileSync, statSync} from 'fs';
-import {join} from 'path';
+import {existsSync, readFileSync, statSync} from 'node:fs';
+import {join} from 'node:path';
 
 export default class TeqFw_Core_Back_Config {
 
@@ -14,27 +14,24 @@ export default class TeqFw_Core_Back_Config {
         // DEPS
         /** @type {TeqFw_Core_Back_Defaults} */
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
-        /** @type {typeof TeqFw_Core_Back_Api_Dto_App_Boot} */
-        const Boot = spec['TeqFw_Core_Back_Api_Dto_App_Boot#'];
-        /** @type {TeqFw_Core_Shared_Dto_Formless} */
-        const dtoFormless = spec['TeqFw_Core_Shared_Dto_Formless$'];
+        /** @type {TeqFw_Core_Shared_Util_Probe.deepFreeze|function} */
+        const deepFreeze = spec['TeqFw_Core_Shared_Util_Probe.deepFreeze'];
 
         // VARS
-        /** @type {TeqFw_Core_Back_Api_Dto_App_Boot} */
-        const boot = new Boot();
-        /** @type {TeqFw_Core_Shared_Dto_Formless.Dto} storage for local configuration */
-        let local = dtoFormless.createDto();
-
+        /** @type {Object} storage for local configuration */
+        let _local;
+        /**
+         * Absolute path to the root folder of the project.
+         * @type {string}
+         */
+        let _projectRoot;
+        /**
+         * Current version of the application (`0.1.0`).
+         * @type {string}
+         */
+        let _version;
 
         // INSTANCE METHODS
-        /**
-         * Get boot configuration.
-         *
-         * @return {TeqFw_Core_Back_Api_Dto_App_Boot}
-         */
-        this.getBoot = function () {
-            return boot;
-        };
 
         /**
          * Get local configuration options (all or for given 'node' only).
@@ -42,9 +39,32 @@ export default class TeqFw_Core_Back_Config {
          * @param {string|null} node
          * @return {*}
          */
-        this.getLocal = function (node = null) {
-            return (node === null) ? local : local[node];
-        };
+        this.getLocal = (node = null) => (node === null) ? _local : _local[node];
+
+        /**
+         * Get absolute path to application's root folder (contains 'mode_modules').
+         * @return {string}
+         */
+        this.getPathToRoot = () => _projectRoot;
+
+        /**
+         * Get application version.
+         * @return {string}
+         */
+        this.getVersion = () => _version;
+
+        /**
+         * Store path to application root and application version.
+         * Load local configuration from default location (./cfg/local.json).
+         *
+         * @param {string} path absolute path to application root
+         * @param {string} version application version
+         */
+        this.init = function (path, version) {
+            _projectRoot = path;
+            _version = version;
+            this.loadLocal(path);
+        }
 
         /**
          * Load local configuration and init internal storage.
@@ -56,19 +76,10 @@ export default class TeqFw_Core_Back_Config {
             const full = join(root, cfg);
             if (existsSync(full) && statSync(full).isFile()) {
                 const data = readFileSync(full);
-                const obj = JSON.parse(data.toString());
-                local = dtoFormless.createDto(obj);
-            }
+                _local = JSON.parse(data.toString());
+            } else _local = {}; // reset storage if local configuration does not exist
+            deepFreeze(_local); // freeze local store
         };
 
-        /**
-         * Set boot options to config.
-         * @param {string} path absolute path to application root
-         * @param {string} version application version
-         */
-        this.setBoot = function (path, version) {
-            boot.projectRoot = path;
-            boot.version = version;
-        }
     }
 }

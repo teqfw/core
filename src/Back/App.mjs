@@ -8,8 +8,39 @@ import {Command} from 'commander/esm.mjs';
 import {existsSync, statSync} from 'node:fs';
 import {join} from 'node:path';
 
+// MODULE'S INTERFACES
+/**
+ * @interface
+ * @memberOf TeqFw_Core_Back_App
+ */
+class IApp {
+    /**
+     * Initialize backend application (load configuration and plugins, init DI container & CLI commander).
+     *
+     * @param {string} path absolute path to the root of the project files (where ./node_modules/ is placed)
+     * @param {string} version version for the application ('0.1.0')
+     * @return {Promise<void>}
+     */
+    async init({path, version}) {}
+
+    /**
+     * Run application (perform requested CLI command).
+     *
+     * @return {Promise<void>}
+     */
+    async run() {}
+
+    /**
+     * Stop processes in all plugins.
+     * @returns {Promise<void>}
+     */
+    async stop() {}
+}
+
+// MODULE'S CLASSES
 /**
  * Main class to launch application: read modules metadata, initialize parts of app, start the app.
+ * @implements TeqFw_Core_Back_App.IApp
  */
 export default class TeqFw_Core_Back_App {
     constructor(spec) {
@@ -34,30 +65,18 @@ export default class TeqFw_Core_Back_App {
 
         // INSTANCE METHODS
 
-        /**
-         * Initialize TeqFW application (DI, config, plugins, etc.).
-         *
-         * @param {string} path absolute path to the root of the project files (where ./node_modules/ is placed)
-         * @param {string} version version for the application ('0.1.0')
-         * @returns {Promise<void>}
-         */
         this.init = async function ({path, version}) {
             // FUNCS
 
             /**
-             * Save bootstrap configuration into configuration container.
+             * Validate existence of the './node_modules/' directory.
              *
-             * @param {TeqFw_Core_Back_Config} config
              * @param {string} path
-             * @param {string} version
              */
-            function initBootConfig(config, path, version) {
-                // validate path to './node_modules/'
+            function checkNodeModules(path) {
                 const pathNode = join(path, 'node_modules');
                 if (!existsSync(pathNode) || !statSync(pathNode).isDirectory())
                     throw new Error(`Cannot find './node_modules/' in '${path}'.`);
-                config.setBoot(path, version);
-                logger.info(`Teq-application is started in '${path}' (ver. ${version}).`);
             }
 
             /**
@@ -163,9 +182,9 @@ export default class TeqFw_Core_Back_App {
             }
 
             // MAIN
-            initBootConfig(config, path, version);
-            // load local configuration
-            config.loadLocal(path);
+            checkNodeModules(path);
+            config.init(path, version);
+            logger.info(`Teq-application is started in '${path}' (ver. ${version}).`);
             // scan node modules for teq-plugins
             pluginsRegistry = await pluginScan.exec(path);
             // init container before do something else
@@ -176,16 +195,10 @@ export default class TeqFw_Core_Back_App {
                 await initCommander(pluginsRegistry);
             } catch (e) {
                 console.error(e);
-                // noinspection ES6MissingAwait
-                this.stop();
+                this.stop().then();
             }
         };
 
-        /**
-         * Run application (perform requested command).
-         *
-         * @returns {Promise<void>}
-         */
         this.run = async function () {
             // VARS
             const me = this;
@@ -214,10 +227,6 @@ export default class TeqFw_Core_Back_App {
             }
         };
 
-        /**
-         * Close all connections and stop processes in all plugins.
-         * @returns {Promise<void>}
-         */
         this.stop = async function () {
             // FUNCS
             /**

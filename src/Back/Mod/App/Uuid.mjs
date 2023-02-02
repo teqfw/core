@@ -27,7 +27,7 @@ export default class TeqFw_Core_Back_Mod_App_Uuid {
          * Load backend UUID from the file or generate new one.
          */
         this.init = async function () {
-            const root = config.getBoot().projectRoot;
+            const root = config.getPathToRoot();
             const path = join(root, DEF.FILE_UUID);
             if (!(existsSync(path))) {
                 writeFileSync(path, randomUUID());

@@ -31,7 +31,7 @@ export default function Factory(spec) {
      * @memberOf TeqFw_Core_Back_Cli_Version
      */
     const action = async function () {
-        console.log(`Application version: ${cfg.getBoot().version}.`);
+        console.log(`Application version: ${cfg.getVersion()}.`);
     };
     Object.defineProperty(action, 'namespace', {value: NS});
 
