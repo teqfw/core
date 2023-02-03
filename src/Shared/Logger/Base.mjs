@@ -1,0 +1,46 @@
+/**
+ * Base logger contains logs queue and transport to send logs to logs store (console, DB, web service).
+ * It should be a singleton for an application.
+ */
+export default class TeqFw_Core_Shared_Logger_Base {
+
+    constructor(spec) {
+        // DEPS
+        /** @type {TeqFw_Core_Shared_Dto_Log} */
+        const dtoLog = spec['TeqFw_Core_Shared_Dto_Log$'];
+
+        // VARS
+        /** @type {TeqFw_Core_Shared_Dto_Log.Dto[]} */
+        const _queue = [];
+        /** @type {TeqFw_Core_Shared_Api_Logger_Transport} */
+        let _transport;
+
+        // FUNCS
+        /**
+         * Compose DTO and transport or save message.
+         * @param {string} message
+         * @param {boolean} isError
+         * @param {string} source namespace
+         * @param {Object} meta additional data for log message
+         */
+        function log(message, isError, source, meta) {
+            // noinspection JSCheckFunctionSignatures
+            const entry = dtoLog.createDto({isError, message, meta, source});
+            entry.date = new Date();
+            if (_transport) _transport.log(entry);
+            else _queue.push(entry);
+        }
+
+        // INSTANCE METHODS
+        this.error = (source, msg, meta) => log(msg, true, source, meta);
+        this.info = (source, msg, meta) => log(msg, false, source, meta);
+        this.setTransport = function (transport) {
+            _transport = transport;
+            if (_transport) {
+                _queue.forEach(_transport.log);
+                _queue.length = 0;
+            }
+        }
+    }
+
+}

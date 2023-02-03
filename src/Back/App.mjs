@@ -53,8 +53,6 @@ export default class TeqFw_Core_Back_App {
         const container = spec['TeqFw_Di_Shared_Container$'];
         /** @type {TeqFw_Core_Back_Config} */
         const config = spec['TeqFw_Core_Back_Config$'];
-        /** @type {TeqFw_Core_Back_Mod_Init_Logger} */
-        const logger = spec['TeqFw_Core_Back_Mod_Init_Logger$'];
         /** @type {TeqFw_Core_Back_Mod_Init_Plugin} */
         const pluginScan = spec['TeqFw_Core_Back_Mod_Init_Plugin$'];
 
@@ -62,6 +60,8 @@ export default class TeqFw_Core_Back_App {
         const program = new Command();
         /** @type {TeqFw_Core_Back_Mod_Init_Plugin_Registry} */
         let pluginsRegistry;
+        /** @type {TeqFw_Core_Shared_Api_Logger} */
+        let logger;
 
         // INSTANCE METHODS
 
@@ -156,6 +156,21 @@ export default class TeqFw_Core_Back_App {
             }
 
             /**
+             * Set console transport for base logger and create own logger.
+             * @param {TeqFw_Di_Shared_Container} container
+             * @return {Promise<TeqFw_Core_Shared_Api_Logger>}
+             */
+            async function initLogger(container) {
+                /** @type {TeqFw_Core_Shared_Logger_Base} */
+                const loggerBase = await container.get('TeqFw_Core_Shared_Logger_Base$');
+                /** @type {TeqFw_Core_Shared_Logger_Transport_Console} */
+                const toConsole = await container.get('TeqFw_Core_Shared_Logger_Transport_Console$');
+                loggerBase.setTransport(toConsole);
+                /** @type {TeqFw_Core_Shared_Logger} */
+                return await container.get('TeqFw_Core_Shared_Logger$$');
+            }
+
+            /**
              * Go through plugins hierarchy (down to top) and run init functions.
              * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
              * @return {Promise<void>}
@@ -176,12 +191,18 @@ export default class TeqFw_Core_Back_App {
                             logger.error(`Cannot create plugin init function using '${desc.plugin.onInit}' factory`
                                 + ` or run it. Error: ${e.message}`);
                         }
-                        if (typeof fn === 'function') await fn();
+                        if (typeof fn === 'function') {
+                            await fn();
+                            logger.info(`Plugin '${item.name}' is initialized.`);
+                        }
                     }
                 }
             }
 
             // MAIN
+            logger = await initLogger(container);
+            logger.setNamespace(this.constructor.name);
+            // check installation and load local configuration
             checkNodeModules(path);
             config.init(path, version);
             logger.info(`Teq-application is started in '${path}' (ver. ${version}).`);
