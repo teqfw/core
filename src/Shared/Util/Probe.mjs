@@ -63,6 +63,38 @@ function deepFreeze(obj) {
 }
 
 /**
+ * Deep merge of the 2 objects.
+ * Source: https://gist.github.com/ahtcx/0cd94e62691f539160b32ecda18af3d6#gistcomment-2930530
+ *
+ * @param {Object} target
+ * @param {Object} source
+ * @returns {Object}
+ * @memberOf TeqFw_Core_Shared_Util_Probe
+ */
+function deepMerge(target, source) {
+    const isObject = (obj) => obj && typeof obj === 'object';
+
+    if (!isObject(target) || !isObject(source)) {
+        return source;
+    }
+
+    Object.keys(source).forEach(key => {
+        const targetValue = target[key];
+        const sourceValue = source[key];
+
+        if (Array.isArray(targetValue) && Array.isArray(sourceValue)) {
+            target[key] = targetValue.concat(sourceValue);
+        } else if (isObject(targetValue) && isObject(sourceValue)) {
+            target[key] = deepMerge(Object.assign({}, targetValue), sourceValue);
+        } else {
+            target[key] = sourceValue;
+        }
+    });
+
+    return target;
+}
+
+/**
  * Return 'true' if `val` is empty.
  * @param {*} val
  * @returns {boolean}
@@ -109,6 +141,7 @@ function serializable(obj) {
 // finalize code components for this es6-module
 Object.defineProperty(deepEqual, 'namespace', {value: NS});
 Object.defineProperty(deepFreeze, 'namespace', {value: NS});
+Object.defineProperty(deepMerge, 'namespace', {value: NS});
 Object.defineProperty(isEmpty, 'namespace', {value: NS});
 Object.defineProperty(isObject, 'namespace', {value: NS});
 Object.defineProperty(isPrimitive, 'namespace', {value: NS});
@@ -117,6 +150,7 @@ Object.defineProperty(serializable, 'namespace', {value: NS});
 export {
     deepEqual,
     deepFreeze,
+    deepMerge,
     isEmpty,
     isObject,
     isPrimitive,

@@ -5,6 +5,12 @@
 * Load backend UUID from a file.
 * Use `node:crypto` instead of `uuid` package.
 * Move away events from the `core`.
+* Rename `..._Api_IName` interfaces to `..._Api_Name`.
+* Add `TeqFw_Core_Shared_Util_Probe.deepFreeze`.
+* Remove `TeqFw_Core_Shared_Util`.
+* Change `TeqFw_Core_Back_Config` object.
+* Change logging principles.
+* Clean up events.
 
 # 0.8.0
 
