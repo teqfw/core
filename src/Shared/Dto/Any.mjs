@@ -23,7 +23,7 @@ export default class TeqFw_Core_Shared_Dto_Any {
          * @param {*} [data]
          * @return {TeqFw_Core_Shared_Dto_Any.Dto}
          */
-        this.createDto = function (data = null) {
+        this.createDto = function (data) {
             return Object.assign(new Dto(), data);
         }
     }
