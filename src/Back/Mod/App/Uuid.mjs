@@ -5,6 +5,7 @@
 // MODULE'S IMPORT
 import {join} from "node:path";
 import {existsSync, readFileSync, writeFileSync} from 'node:fs';
+import {mkdir} from 'node:fs/promises';
 import {randomUUID} from 'node:crypto';
 
 export default class TeqFw_Core_Back_Mod_App_Uuid {
@@ -30,6 +31,8 @@ export default class TeqFw_Core_Back_Mod_App_Uuid {
             const root = config.getPathToRoot();
             const path = join(root, DEF.FILE_UUID);
             if (!(existsSync(path))) {
+                const cfgDir = join(path, '..');
+                if (!(existsSync(path))) await mkdir(cfgDir, {recursive: true});
                 writeFileSync(path, randomUUID());
                 logger.info(`New backend UUID is generated and stored in '${path}'.`);
             }
