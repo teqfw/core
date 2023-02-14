@@ -19,6 +19,7 @@ export default class TeqFw_Core_Back_Mod_App_Uuid {
         const config = spec['TeqFw_Core_Back_Config$'];
 
         // VARS
+        logger.setNamespace(this.constructor.name);
         let _uuid;
 
         // INSTANCE METHODS
@@ -31,8 +32,8 @@ export default class TeqFw_Core_Back_Mod_App_Uuid {
             const root = config.getPathToRoot();
             const path = join(root, DEF.FILE_UUID);
             if (!(existsSync(path))) {
-                const cfgDir = join(path, '..');
-                if (!(existsSync(path))) await mkdir(cfgDir, {recursive: true});
+                const dirUp = join(path, '..');
+                if (!(existsSync(path))) await mkdir(dirUp, {recursive: true});
                 writeFileSync(path, randomUUID());
                 logger.info(`New backend UUID is generated and stored in '${path}'.`);
             }

@@ -136,7 +136,7 @@ const NS = 'Vendor_Plugin_Back_Cli_Cmd';
 function Factory(spec) {
     // DEPS
     /** @type {TeqFw_Core_Back_Api_Dto_Command.Factory} */
-    const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command#Factory$'];
+    const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command.Factory$'];
 
     // FUNCS
     /**

@@ -11,6 +11,7 @@
 * Change `TeqFw_Core_Back_Config` object.
 * Change logging principles.
 * Clean up events.
+* Move PID file processing from `web` to `core`.
 
 # 0.8.0
 

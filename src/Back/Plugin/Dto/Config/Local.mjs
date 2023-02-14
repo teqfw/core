@@ -48,11 +48,3 @@ export default class TeqFw_Core_Back_Plugin_Dto_Config_Local {
         }
     }
 }
-
-/**
- * Factory to create new DTO instances.
- * @memberOf TeqFw_Core_Back_Plugin_Dto_Config_Local
- */
-export class Factory {
-    static namespace = NS;
-}
