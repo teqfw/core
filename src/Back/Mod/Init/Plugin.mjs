@@ -13,9 +13,9 @@ export default class TeqFw_Core_Back_Mod_Init_Plugin {
         /** @type {TeqFw_Core_Back_Mod_Init_Plugin_Registry} */
         const registry = spec['TeqFw_Core_Back_Mod_Init_Plugin_Registry$'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory} */
-        const fItem = spec['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item#Factory$'];
+        const fItem = spec['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory$'];
         /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc.Factory} */
-        const fDiDesc = spec['TeqFw_Di_Back_Api_Dto_Plugin_Desc#Factory$'];
+        const fDiDesc = spec['TeqFw_Di_Back_Api_Dto_Plugin_Desc.Factory$'];
 
         // MAIN
         logger.setNamespace(this.constructor.name);

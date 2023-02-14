@@ -12,6 +12,7 @@
 * Change logging principles.
 * Clean up events.
 * Move PID file processing from `web` to `core`.
+* Change old-styled DTOs.
 
 # 0.8.0
 

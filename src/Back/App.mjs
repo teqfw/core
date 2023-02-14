@@ -47,8 +47,8 @@ export default class TeqFw_Core_Back_App {
         // DEPS
         /** @type {TeqFw_Core_Back_Defaults} */
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
-        /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc.Factory} */
-        const fDesc = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc#Factory$'];
+        /** @type {TeqFw_Core_Back_Plugin_Dto_Desc} */
+        const dtoDesc = spec['TeqFw_Core_Back_Plugin_Dto_Desc$'];
         /** @type {TeqFw_Di_Shared_Container} */
         const container = spec['TeqFw_Di_Shared_Container$'];
         /** @type {TeqFw_Core_Back_Config} */
@@ -116,7 +116,7 @@ export default class TeqFw_Core_Back_App {
                 // MAIN
                 logger.info('Integrate plugins to the Commander.');
                 for (const item of registry.items()) {
-                    const desc = fDesc.create(item.teqfw[DEF.SHARED.NAME]);
+                    const desc = dtoDesc.createDto(item.teqfw[DEF.SHARED.NAME]);
                     for (const id of desc.commands) await addCommand(id);
                 }
             }
@@ -180,7 +180,7 @@ export default class TeqFw_Core_Back_App {
                 logger.info('Initialize plugins.');
                 const plugins = registry.getItemsByLevels();
                 for (const item of plugins) {
-                    /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc} */
+                    /** @type {TeqFw_Core_Back_Plugin_Dto_Desc.Dto} */
                     const desc = item.teqfw[DEF.SHARED.NAME];
                     if (desc?.plugin?.onInit) {
                         /** @type {Function} */
@@ -260,7 +260,7 @@ export default class TeqFw_Core_Back_App {
                 logger.info('Stop plugins.');
                 const plugins = registry.getItemsByLevels();
                 for (const item of plugins) {
-                    /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc} */
+                    /** @type {TeqFw_Core_Back_Plugin_Dto_Desc.Dto} */
                     const desc = item.teqfw[DEF.SHARED.NAME];
                     if (desc?.plugin?.onStop) {
                         /** @type {Function} */
