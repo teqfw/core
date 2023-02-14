@@ -32,8 +32,7 @@
   },
   "dependencies": {
     "@teqfw/di": "*",
-    "commander": "*",
-    "uuid": "*"
+    "commander": "*"
   },
   "devDependencies": {
     "mocha": "*"
