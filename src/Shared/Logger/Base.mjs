@@ -32,7 +32,12 @@ export default class TeqFw_Core_Shared_Logger_Base {
         }
 
         // INSTANCE METHODS
-        this.error = (source, msg, meta) => log(msg, true, source, meta);
+        this.error = (source, msg, meta) => {
+            let txt;
+            if (typeof msg === 'string') txt = msg;
+            else if (typeof msg === 'object') txt = msg.toString();
+            log(txt, true, source, meta);
+        }
         this.info = (source, msg, meta) => log(msg, false, source, meta);
         this.setTransport = function (transport) {
             _transport = transport;
