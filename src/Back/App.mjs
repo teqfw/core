@@ -285,9 +285,9 @@ export default class TeqFw_Core_Back_App {
             }
 
             // MAIN
-            logger.info('Stop the application.');
+            logger.info('Stop the platform app.');
             await stopPlugins(pluginsRegistry);
-            logger.info('The application is stopped.');
+            logger.info('The platform app is stopped.');
         };
     }
 }
