@@ -16,7 +16,7 @@ const NS = 'TeqFw_Core_Shared_Util_Date';
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function addDays(days, date) {
-    const res = (date instanceof Date) ? date : new Date();
+    const res = (date instanceof Date) ? new Date(date) : new Date();
     res.setDate(res.getDate() + Math.abs(days));
     return res;
 }
@@ -29,7 +29,7 @@ function addDays(days, date) {
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function addMinutes(minutes, date) {
-    const res = (date instanceof Date) ? date : new Date();
+    const res = (date instanceof Date) ? new Date(date) : new Date();
     res.setMinutes(res.getMinutes() + Math.abs(minutes));
     return res;
 }
@@ -42,7 +42,7 @@ function addMinutes(minutes, date) {
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function addMonths(months, date) {
-    const res = (date instanceof Date) ? date : new Date();
+    const res = (date instanceof Date) ? new Date(date) : new Date();
     res.setMonth(res.getMonth() + Math.abs(months));
     return res;
 }
@@ -90,6 +90,21 @@ function nextMonthDayFirst(date) {
 }
 
 /**
+ * Parse string representation of a date (2023/01/31) as UTC date (Tue Jan 31 2023 00:00:00 GMT+0000).
+ * @param {string} date
+ * @return {Date} UTC date
+ * @memberOf TeqFw_Core_Shared_Util_Date
+ */
+function parseAsUtc(date) {
+    const loc = new Date(date); // Tue Jan 31 2023 00:00:00 GMT+0200
+    const utc = new Date(0);
+    utc.setUTCFullYear(loc.getFullYear(), loc.getMonth(), loc.getDate());
+    utc.setUTCHours(loc.getHours(), loc.getMinutes(), loc.getSeconds());
+    utc.setUTCMilliseconds(loc.getMilliseconds());
+    return utc; // Tue Jan 31 2023 00:00:00 GMT+0000
+}
+
+/**
  * Subtract days from given date or from now.
  * @param {number} days
  * @param {Date} [date]
@@ -97,7 +112,7 @@ function nextMonthDayFirst(date) {
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function subtractDays(days, date) {
-    const res = (date instanceof Date) ? date : new Date();
+    const res = (date instanceof Date) ? new Date(date) : new Date();
     res.setDate(res.getDate() - Math.abs(days));
     return res;
 }
@@ -110,18 +125,19 @@ function subtractDays(days, date) {
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function subtractMinutes(minutes, date) {
-    const res = (date instanceof Date) ? date : new Date();
+    const res = (date instanceof Date) ? new Date(date) : new Date();
     res.setMinutes(res.getMinutes() - Math.abs(minutes));
     return res;
 }
 
 // finalize code components for this es6-module
-Object.defineProperty(addDays(), 'namespace', {value: NS});
+Object.defineProperty(addDays, 'namespace', {value: NS});
 Object.defineProperty(addMinutes, 'namespace', {value: NS});
 Object.defineProperty(addMonths, 'namespace', {value: NS});
 Object.defineProperty(monthDayFirst, 'namespace', {value: NS});
 Object.defineProperty(monthDayLast, 'namespace', {value: NS});
 Object.defineProperty(nextMonthDayFirst, 'namespace', {value: NS});
+Object.defineProperty(parseAsUtc, 'namespace', {value: NS});
 Object.defineProperty(subtractDays, 'namespace', {value: NS});
 Object.defineProperty(subtractMinutes, 'namespace', {value: NS});
 
@@ -132,6 +148,7 @@ export {
     monthDayFirst,
     monthDayLast,
     nextMonthDayFirst,
+    parseAsUtc,
     subtractDays,
     subtractMinutes,
 }

@@ -1,6 +1,6 @@
 # @teqfw/core
 
-|CAUTION: TeqFW is an unstable, fast-growing project w/o backward compatibility. Use it at your own risk.|
+|CAUTION: TeqFW is an unstable project w/o backward compatibility. Use it at your own risk.|
 |---|
 
 This `teq`-plugin contains backend application to scan and registry other `teq`-plugins and is used in Tequila Framework
@@ -36,7 +36,7 @@ Commands:
 
 ## `./cfg/local.json`
 
-[DTO](src/Back/Api/Dto/Config/Local.mjs) for `@teqfw/web` node.
+[DTO](src/Back/Plugin/Dto/Config/Local.mjs) for `@teqfw/web` node.
 
 ```json
 {
@@ -48,7 +48,7 @@ Commands:
 
 ## `teqfw.json`
 
-[DTO](src/Back/Api/Dto/Plugin/Desc.mjs) for `@teqfw/core` nodes in `teq`-plugins descriptors.
+[DTO](src/Back/Plugin/Dto/Desc.mjs) for `@teqfw/core` nodes in `teq`-plugins descriptors.
 
 ```json
 {
@@ -136,7 +136,7 @@ const NS = 'Vendor_Plugin_Back_Cli_Cmd';
 function Factory(spec) {
     // DEPS
     /** @type {TeqFw_Core_Back_Api_Dto_Command.Factory} */
-    const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command#Factory$'];
+    const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command.Factory$'];
 
     // FUNCS
     /**

@@ -18,12 +18,15 @@ class Dto {
     message;
     /** @type {Object} */
     meta;
-    /** @type {string} */
+    /**
+     * Namespace for message source.
+     * @type {string}
+     */
     source;
 }
 
 /**
- * @implements TeqFw_Core_Shared_Api_Factory_IDto
+ * @implements TeqFw_Core_Shared_Api_Factory_Dto
  */
 export default class TeqFw_Core_Shared_Dto_Log {
     constructor(spec) {
@@ -34,8 +37,6 @@ export default class TeqFw_Core_Shared_Dto_Log {
         const castBoolean = spec['TeqFw_Core_Shared_Util_Cast.castBoolean'];
         /** @type {TeqFw_Core_Shared_Util_Cast.castString|function} */
         const castString = spec['TeqFw_Core_Shared_Util_Cast.castString'];
-        /** @type {TeqFw_Core_Shared_Dto_Formless} */
-        const dtoFormless = spec['TeqFw_Core_Shared_Dto_Formless$'];
 
         // INSTANCE METHODS
         /**
@@ -47,7 +48,7 @@ export default class TeqFw_Core_Shared_Dto_Log {
             res.date = castDate(data?.date);
             res.isError = castBoolean(data?.isError);
             res.message = castString(data?.message);
-            res.meta = dtoFormless.createDto(data?.meta);
+            res.meta = structuredClone(data?.meta);
             res.source = castString(data?.source);
             return res;
         }

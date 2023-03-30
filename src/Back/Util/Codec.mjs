@@ -1,7 +1,7 @@
 /**
  * Backend encoding/decoding utilities.
  *
- * @implements TeqFw_Core_Shared_Api_Util_ICodec
+ * @implements TeqFw_Core_Shared_Api_Util_Codec
  */
 export default class TeqFw_Core_Back_Util_Codec {
 

@@ -8,22 +8,51 @@ import {Command} from 'commander/esm.mjs';
 import {existsSync, statSync} from 'node:fs';
 import {join} from 'node:path';
 
+// MODULE'S INTERFACES
 /**
- * Main class to launch application: read modules meta data, initialize parts of app, start the app.
+ * @interface
+ * @memberOf TeqFw_Core_Back_App
+ */
+class IApp {
+    /**
+     * Initialize backend application (load configuration and plugins, init DI container & CLI commander).
+     *
+     * @param {string} path absolute path to the root of the project files (where ./node_modules/ is placed)
+     * @param {string} version version for the application ('0.1.0')
+     * @return {Promise<void>}
+     */
+    async init({path, version}) {}
+
+    /**
+     * Run application (perform requested CLI command).
+     *
+     * @return {Promise<void>}
+     */
+    async run() {}
+
+    /**
+     * Stop processes in all plugins.
+     * @returns {Promise<void>}
+     */
+    async stop() {}
+}
+
+// MODULE'S CLASSES
+/**
+ * Main class to launch application: read modules metadata, initialize parts of app, start the app.
+ * @implements TeqFw_Core_Back_App.IApp
  */
 export default class TeqFw_Core_Back_App {
     constructor(spec) {
         // DEPS
         /** @type {TeqFw_Core_Back_Defaults} */
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
-        /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc.Factory} */
-        const fDesc = spec['TeqFw_Core_Back_Api_Dto_Plugin_Desc#Factory$'];
+        /** @type {TeqFw_Core_Back_Plugin_Dto_Desc} */
+        const dtoDesc = spec['TeqFw_Core_Back_Plugin_Dto_Desc$'];
         /** @type {TeqFw_Di_Shared_Container} */
         const container = spec['TeqFw_Di_Shared_Container$'];
         /** @type {TeqFw_Core_Back_Config} */
         const config = spec['TeqFw_Core_Back_Config$'];
-        /** @type {TeqFw_Core_Back_Mod_Init_Logger} */
-        const logger = spec['TeqFw_Core_Back_Mod_Init_Logger$'];
         /** @type {TeqFw_Core_Back_Mod_Init_Plugin} */
         const pluginScan = spec['TeqFw_Core_Back_Mod_Init_Plugin$'];
 
@@ -31,33 +60,23 @@ export default class TeqFw_Core_Back_App {
         const program = new Command();
         /** @type {TeqFw_Core_Back_Mod_Init_Plugin_Registry} */
         let pluginsRegistry;
+        /** @type {TeqFw_Core_Shared_Api_Logger} */
+        let logger;
 
         // INSTANCE METHODS
 
-        /**
-         * Initialize TeqFW application (DI, config, plugins, etc.).
-         *
-         * @param {string} path absolute path to the root of the project files (where ./node_modules/ is placed)
-         * @param {string} version version for the application ('0.1.0')
-         * @returns {Promise<void>}
-         */
         this.init = async function ({path, version}) {
             // FUNCS
 
             /**
-             * Save bootstrap configuration into configuration container.
+             * Validate existence of the './node_modules/' directory.
              *
-             * @param {TeqFw_Core_Back_Config} config
              * @param {string} path
-             * @param {string} version
              */
-            function initBootConfig(config, path, version) {
-                // validate path to './node_modules/'
+            function checkNodeModules(path) {
                 const pathNode = join(path, 'node_modules');
                 if (!existsSync(pathNode) || !statSync(pathNode).isDirectory())
                     throw new Error(`Cannot find './node_modules/' in '${path}'.`);
-                config.setBoot(path, version);
-                logger.info(`Teq-application is started in '${path}' (ver. ${version}).`);
             }
 
             /**
@@ -88,7 +107,7 @@ export default class TeqFw_Core_Back_App {
                         for (const one of cmd.opts) act.option(one.flags, one.description, one.fn, one.defaultValue);
                         logger.info(`'${fullName}' command is added.`);
                     } catch (e) {
-                        // may be we can stealth errors for dev mode and re-throw its to live mode
+                        // maybe we can stealth errors for dev mode and re-throw its to live mode
                         logger.error(`Cannot create command using '${moduleId}' factory. Error: ${e.message}`);
                         throw  e;
                     }
@@ -97,7 +116,7 @@ export default class TeqFw_Core_Back_App {
                 // MAIN
                 logger.info('Integrate plugins to the Commander.');
                 for (const item of registry.items()) {
-                    const desc = fDesc.create(item.teqfw[DEF.SHARED.NAME]);
+                    const desc = dtoDesc.createDto(item.teqfw[DEF.SHARED.NAME]);
                     for (const id of desc.commands) await addCommand(id);
                 }
             }
@@ -137,6 +156,21 @@ export default class TeqFw_Core_Back_App {
             }
 
             /**
+             * Set console transport for base logger and create own logger.
+             * @param {TeqFw_Di_Shared_Container} container
+             * @return {Promise<TeqFw_Core_Shared_Api_Logger>}
+             */
+            async function initLogger(container) {
+                /** @type {TeqFw_Core_Shared_Logger_Base} */
+                const loggerBase = await container.get('TeqFw_Core_Shared_Logger_Base$');
+                /** @type {TeqFw_Core_Shared_Logger_Transport_Console} */
+                const toConsole = await container.get('TeqFw_Core_Shared_Logger_Transport_Console$');
+                loggerBase.setTransport(toConsole);
+                /** @type {TeqFw_Core_Shared_Logger} */
+                return await container.get('TeqFw_Core_Shared_Logger$$');
+            }
+
+            /**
              * Go through plugins hierarchy (down to top) and run init functions.
              * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
              * @return {Promise<void>}
@@ -146,7 +180,7 @@ export default class TeqFw_Core_Back_App {
                 logger.info('Initialize plugins.');
                 const plugins = registry.getItemsByLevels();
                 for (const item of plugins) {
-                    /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc} */
+                    /** @type {TeqFw_Core_Back_Plugin_Dto_Desc.Dto} */
                     const desc = item.teqfw[DEF.SHARED.NAME];
                     if (desc?.plugin?.onInit) {
                         /** @type {Function} */
@@ -157,15 +191,21 @@ export default class TeqFw_Core_Back_App {
                             logger.error(`Cannot create plugin init function using '${desc.plugin.onInit}' factory`
                                 + ` or run it. Error: ${e.message}`);
                         }
-                        if (typeof fn === 'function') await fn();
+                        if (typeof fn === 'function') {
+                            await fn();
+                            logger.info(`Plugin '${item.name}' is initialized.`);
+                        }
                     }
                 }
             }
 
             // MAIN
-            initBootConfig(config, path, version);
-            // load local configuration
-            config.loadLocal(path);
+            logger = await initLogger(container);
+            logger.setNamespace(this.constructor.name);
+            // check installation and load local configuration
+            checkNodeModules(path);
+            config.init(path, version);
+            logger.info(`Teq-application is started in '${path}' (ver. ${version}).`);
             // scan node modules for teq-plugins
             pluginsRegistry = await pluginScan.exec(path);
             // init container before do something else
@@ -176,16 +216,10 @@ export default class TeqFw_Core_Back_App {
                 await initCommander(pluginsRegistry);
             } catch (e) {
                 console.error(e);
-                // noinspection ES6MissingAwait
-                this.stop();
+                this.stop().then();
             }
         };
 
-        /**
-         * Run application (perform requested command).
-         *
-         * @returns {Promise<void>}
-         */
         this.run = async function () {
             // VARS
             const me = this;
@@ -214,10 +248,6 @@ export default class TeqFw_Core_Back_App {
             }
         };
 
-        /**
-         * Close all connections and stop processes in all plugins.
-         * @returns {Promise<void>}
-         */
         this.stop = async function () {
             // FUNCS
             /**
@@ -230,7 +260,7 @@ export default class TeqFw_Core_Back_App {
                 logger.info('Stop plugins.');
                 const plugins = registry.getItemsByLevels();
                 for (const item of plugins) {
-                    /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Desc} */
+                    /** @type {TeqFw_Core_Back_Plugin_Dto_Desc.Dto} */
                     const desc = item.teqfw[DEF.SHARED.NAME];
                     if (desc?.plugin?.onStop) {
                         /** @type {Function} */
@@ -255,9 +285,9 @@ export default class TeqFw_Core_Back_App {
             }
 
             // MAIN
-            logger.info('Stop the application.');
+            logger.info('Stop the platform app.');
             await stopPlugins(pluginsRegistry);
-            logger.info('The application is stopped.');
+            logger.info('The platform app is stopped.');
         };
     }
 }

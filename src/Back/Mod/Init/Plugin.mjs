@@ -8,14 +8,17 @@ export default class TeqFw_Core_Back_Mod_Init_Plugin {
         const DEF = spec['TeqFw_Core_Back_Defaults$'];
         /** @type {TeqFw_Di_Back_Plugin_Scanner} */
         const scanner = spec['TeqFw_Di_Back_Plugin_Scanner$'];
-        /** @type {TeqFw_Core_Back_Mod_Init_Logger} */
-        const logger = spec['TeqFw_Core_Back_Mod_Init_Logger$'];
+        /** @type {TeqFw_Core_Shared_Logger} */
+        const logger = spec['TeqFw_Core_Shared_Logger$$']; // instance, not interface!
         /** @type {TeqFw_Core_Back_Mod_Init_Plugin_Registry} */
         const registry = spec['TeqFw_Core_Back_Mod_Init_Plugin_Registry$'];
         /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory} */
-        const fItem = spec['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item#Factory$'];
+        const fItem = spec['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory$'];
         /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc.Factory} */
-        const fDiDesc = spec['TeqFw_Di_Back_Api_Dto_Plugin_Desc#Factory$'];
+        const fDiDesc = spec['TeqFw_Di_Back_Api_Dto_Plugin_Desc.Factory$'];
+
+        // MAIN
+        logger.setNamespace(this.constructor.name);
 
         // INSTANCE METHODS
 

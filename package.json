@@ -1,6 +1,6 @@
 {
   "name": "@teqfw/core",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "TeqFW: plugins scanner, local configuration, commander.",
   "type": "module",
   "main": "src/Back/App.mjs",
@@ -28,14 +28,16 @@
     "url": "git+https://github.com/teqfw/core.git"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --recursive './test/**/*.test.mjs'"
+    "test": "./node_modules/mocha/bin/_mocha --recursive './test/**/*.test.mjs'"
   },
   "dependencies": {
     "@teqfw/di": "*",
-    "commander": "*",
-    "uuid": "*"
+    "commander": "*"
   },
   "devDependencies": {
     "mocha": "*"
+  },
+  "engines": {
+    "node": ">=17"
   }
 }

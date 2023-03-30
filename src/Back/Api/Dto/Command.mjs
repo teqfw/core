@@ -46,9 +46,9 @@ export class Factory {
     constructor(spec) {
         const {castArrayOfObj, castFunction, castString} = spec['TeqFw_Core_Shared_Util_Cast'];
         /** @type {TeqFw_Core_Back_Api_Dto_Command_Argument.Factory} */
-        const fArg = spec['TeqFw_Core_Back_Api_Dto_Command_Argument#Factory$'];
+        const fArg = spec['TeqFw_Core_Back_Api_Dto_Command_Argument.Factory$'];
         /** @type {TeqFw_Core_Back_Api_Dto_Command_Option.Factory} */
-        const fOpt = spec['TeqFw_Core_Back_Api_Dto_Command_Option#Factory$'];
+        const fOpt = spec['TeqFw_Core_Back_Api_Dto_Command_Option.Factory$'];
 
         /**
          * @param {TeqFw_Core_Back_Api_Dto_Command|null} data

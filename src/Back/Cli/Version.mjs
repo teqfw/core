@@ -20,9 +20,9 @@ export default function Factory(spec) {
     /** @type {TeqFw_Core_Back_Defaults} */
     const DEF = spec['TeqFw_Core_Back_Defaults$'];
     /** @type {TeqFw_Core_Back_Config} */
-    const cfg = spec['TeqFw_Core_Back_Config$'];
+    const config = spec['TeqFw_Core_Back_Config$'];
     /** @type {TeqFw_Core_Back_Api_Dto_Command.Factory} */
-    const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command#Factory$'];
+    const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command.Factory$'];
 
     // FUNCS
     /**
@@ -31,7 +31,7 @@ export default function Factory(spec) {
      * @memberOf TeqFw_Core_Back_Cli_Version
      */
     const action = async function () {
-        console.log(`Application version: ${cfg.getBoot().version}.`);
+        console.log(`Application version: ${config.getVersion()}.`);
     };
     Object.defineProperty(action, 'namespace', {value: NS});
 

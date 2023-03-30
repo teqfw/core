@@ -1,5 +1,19 @@
 # @teqfw/core: releases
 
+# 0.9.0
+
+* Load backend UUID from a file.
+* Use `node:crypto` instead of `uuid` package.
+* Move away events from the `core`.
+* Rename `..._Api_IName` interfaces to `..._Api_Name`.
+* Add `TeqFw_Core_Shared_Util_Probe.deepFreeze`.
+* Remove `TeqFw_Core_Shared_Util`.
+* Change `TeqFw_Core_Back_Config` object.
+* Change logging principles.
+* Clean up events.
+* Move PID file processing from `web` to `core`.
+* Change old-styled DTOs.
+
 # 0.8.0
 
 * Events related interfaces.
@@ -19,7 +33,7 @@
 
 * Move source code areas in the core from `@teqfw/di`.
 * Fix namespaces scanning when namespace is omitted in `teqfw.json`.
-* DTO module interface (`TeqFw_Core_Shared_Api_Factory_Dto_IMeta`).
+* DTO module interface (`TeqFw_Core_Shared_Api_Factory_Dto_Meta`).
 * New util `TeqFw_Core_Shared_Util_BeforeAfter`.
 * Date cast function.
 * Pause/unfreeze logs output on reset.
@@ -40,4 +54,4 @@
 * fix double initialization for plugins;
 * add path-to-name function to plugin registry (`TeqFw_Core_Back_Mod_Init_Plugin_Registry`);
 * add backend only utils (`TeqFw_Core_Back_Util`);
-* interface for actions (`TeqFw_Core_Shared_Api_IAction`);
+* interface for actions (`TeqFw_Core_Shared_Api_Action`);
