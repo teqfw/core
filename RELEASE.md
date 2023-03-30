@@ -1,5 +1,7 @@
 # @teqfw/core: releases
 
+# 0.10.0 - NEW
+
 # 0.9.0
 
 * Load backend UUID from a file.
