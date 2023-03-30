@@ -1,6 +1,6 @@
 # @teqfw/core: releases
 
-# 0.9.0 - new
+# 0.9.0
 
 * Load backend UUID from a file.
 * Use `node:crypto` instead of `uuid` package.

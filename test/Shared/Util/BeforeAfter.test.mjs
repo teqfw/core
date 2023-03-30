@@ -1,12 +1,29 @@
+// MODULE'S IMPORTS
 import testEnv from '../../TestEnv.mjs';
-import assert from 'assert';
+import assert from 'node:assert';
 import {describe, it} from 'mocha';
-import {isClass} from "@teqfw/di/test/lib/util.mjs";
 
+// MODULE'S VARS
 /** @type {TeqFw_Di_Shared_Container} */
 const container = await testEnv();
 const util = await container.get('TeqFw_Core_Shared_Util_BeforeAfter');
 
+// MODULE'S FUNCS
+/**
+ * 'true' if 'obj' is a class definition (can be used as 'new obj()').
+ * @param {*} obj
+ * @return {boolean}
+ */
+function isClass(obj) {
+    let result = false;
+    if (typeof obj === 'function') {
+        const proto = Object.getOwnPropertyDescriptor(obj, 'prototype');
+        result = (proto && !proto.writable);
+    }
+    return result;
+}
+
+// MODULE'S MAIN
 describe('TeqFw_Core_Shared_Util_BeforeAfter', function () {
 
     it('has right export', async () => {

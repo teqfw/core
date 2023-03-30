@@ -1,5 +1,5 @@
 import testEnv from '../../TestEnv.mjs';
-import assert from 'assert';
+import assert from 'node:assert';
 import {describe, it} from 'mocha';
 
 /** @type {TeqFw_Di_Shared_Container} */
@@ -13,8 +13,8 @@ describe('TeqFw_Core_Shared_Util_Cast', function () {
 
     describe('castArray', function () {
         const fn = util.castArray;
-        it('has right classname', async () => {
-            assert.strictEqual(fn.name, 'TeqFw_Core_Shared_Util_Cast.castArray');
+        it('has right namespace', async () => {
+            assert.strictEqual(fn.namespace, 'TeqFw_Core_Shared_Util_Cast');
         });
         it('returns empty array for wrong input', async () => {
             const res = fn(null);
@@ -30,8 +30,8 @@ describe('TeqFw_Core_Shared_Util_Cast', function () {
 
     describe('castBoolean', function () {
         const fn = util.castBoolean;
-        it('has right classname', async () => {
-            assert.strictEqual(fn.name, 'TeqFw_Core_Shared_Util_Cast.castBoolean');
+        it('has right namespace', async () => {
+            assert.strictEqual(fn.namespace, 'TeqFw_Core_Shared_Util_Cast');
         });
         it('returns true', async () => {
             const r1 = fn('true');
@@ -61,8 +61,8 @@ describe('TeqFw_Core_Shared_Util_Cast', function () {
 
     describe('castBooleanIfExists', function () {
         const fn = util.castBooleanIfExists;
-        it('has right classname', async () => {
-            assert.strictEqual(fn.name, 'TeqFw_Core_Shared_Util_Cast.castBooleanIfExists');
+        it('has right namespace', async () => {
+            assert.strictEqual(fn.namespace, 'TeqFw_Core_Shared_Util_Cast');
         });
         it('returns true', async () => {
             const r1 = fn('true');
@@ -83,7 +83,7 @@ describe('TeqFw_Core_Shared_Util_Cast', function () {
             const r2 = fn(null);
             assert(
                 (r1 === false)
-                && (r2 === false)
+                && (r2 === null)
             );
         });
         it('returns undefined', async () => {
@@ -94,13 +94,13 @@ describe('TeqFw_Core_Shared_Util_Cast', function () {
 
     describe('castEnum', function () {
         const fn = util.castEnum;
-        it('has right classname', async () => {
-            assert.strictEqual(fn.name, 'TeqFw_Core_Shared_Util_Cast.castEnum');
+        it('has right namespace', async () => {
+            assert.strictEqual(fn.namespace, 'TeqFw_Core_Shared_Util_Cast');
         });
         it('returns value', async () => {
             const data = 'value';
             const enu = {KEY: 'value', OTHER: 'other'};
-            const res = fn(data, enu);
+            const res = fn(data, enu, false);
             assert(res === data);
         });
         it('returns undefined', async () => {
