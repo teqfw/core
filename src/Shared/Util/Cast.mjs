@@ -2,8 +2,9 @@
  * Set of utilities for type casting of input data.
  * @namespace TeqFw_Core_Shared_Util_Cast
  */
-// DEFINE WORKING VARS
+// MODULE'S VARS
 const NS = 'TeqFw_Core_Shared_Util_Cast';
+const ENCODER = new TextEncoder();
 
 // MODULE'S FUNCTIONS
 /**
@@ -41,6 +42,23 @@ function castArrayOfStr(data) {
     return Array.isArray(data)
         ? data.map((one) => castString(one))
         : [];
+}
+
+/**
+ * Cast input data into 'Uint8Array' data type.
+ * @param {*} data
+ * @return {Uint8Array}
+ * @memberOf TeqFw_Core_Shared_Util_Cast
+ */
+function castBin(data) {
+    if (typeof data === 'string') {
+        return ENCODER.encode(data);
+    } else if (data instanceof Uint8Array) {
+        const res = new Uint8Array(data.length);
+        res.set(data);
+        return res;
+    }
+    return data;
 }
 
 /**
@@ -190,6 +208,7 @@ function castString(data) {
 // finalize code components for this es6-module
 Object.defineProperty(castArray, 'namespace', {value: NS});
 Object.defineProperty(castArrayOfObj, 'namespace', {value: NS});
+Object.defineProperty(castBin, 'namespace', {value: NS});
 Object.defineProperty(castBoolean, 'namespace', {value: NS});
 Object.defineProperty(castBooleanIfExists, 'namespace', {value: NS});
 Object.defineProperty(castDecimal, 'namespace', {value: NS});
@@ -204,6 +223,7 @@ export {
     castArray,
     castArrayOfObj,
     castArrayOfStr,
+    castBin,
     castBoolean,
     castBooleanIfExists,
     castDate,
