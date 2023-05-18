@@ -1,5 +1,11 @@
 # @teqfw/core: releases
 
+# 0.10.0
+
+* `TeqFw_Core_Back_Util_Cast` is added.
+* `TeqFw_Core_Shared_Util_Cast.castBin` is added.
+* `binToHex` and `hexToBin` are added to `TeqFw_Core_Shared_Util_Codec`
+
 # 0.9.0
 
 * Load backend UUID from a file.
