@@ -1,10 +1,16 @@
 # @teqfw/core: releases
 
+# 0.11.0
+
+* Allow to `TeqFw_Core_Shared_Util_Format.dateTimeForLog` be called w/o parameters.
+* Improve logging format.
+
 # 0.10.0
 
 * `TeqFw_Core_Back_Util_Cast` is added.
 * `TeqFw_Core_Shared_Util_Cast.castBin` is added.
-* `binToHex` and `hexToBin` are added to `TeqFw_Core_Shared_Util_Codec`
+* `binToHex` and `hexToBin` are added to `TeqFw_Core_Shared_Util_Codec`.
+* Formatting is improved in `TeqFw_Core_Shared_Logger_Transport_Console`.
 
 # 0.9.0
 

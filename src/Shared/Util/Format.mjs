@@ -47,11 +47,12 @@ function dateTime(dateIn = null, withSeconds = true) {
 
 /**
  * Convert date as UTC to MM/DD HH:MM:SS.
- * @param {Date} date
+ * @param {Date} [date]
  * @return {string}
  * @memberOf TeqFw_Core_Shared_Util_Format
  */
 function dateTimeForLog(date) {
+    if ((date === undefined) || (date === null)) date = new Date();
     const m = `${date.getUTCMonth() + 1}`.padStart(2, '0');
     const d = `${date.getUTCDate()}`.padStart(2, '0');
     const h = `${date.getUTCHours()}`.padStart(2, '0');
@@ -129,4 +130,4 @@ export {
     time,
     timeInSec,
     timeUtc,
-}
+};
