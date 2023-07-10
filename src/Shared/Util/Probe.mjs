@@ -6,6 +6,16 @@
 const NS = 'TeqFw_Core_Shared_Util_Probe';
 
 /**
+ * Deep clone of the original object.
+ * @param {Object} orig
+ * @return {Object}
+ * @memberOf TeqFw_Core_Shared_Util_Probe
+ */
+function deepClone(orig) {
+    return JSON.parse(JSON.stringify(orig));
+}
+
+/**
  * Compare two variables for equivalence.
  *
  * https://stackoverflow.com/a/45683145/4073821
@@ -57,7 +67,7 @@ function deepFreeze(obj) {
     const propNames = Reflect.ownKeys(obj);
     for (const name of propNames) {
         const value = obj[name];
-        if ((value && typeof value === "object") || typeof value === "function") deepFreeze(value);
+        if ((value && typeof value === 'object') || typeof value === 'function') deepFreeze(value);
     }
     return Object.freeze(obj);
 }
@@ -139,6 +149,7 @@ function serializable(obj) {
 }
 
 // finalize code components for this es6-module
+Object.defineProperty(deepClone, 'namespace', {value: NS});
 Object.defineProperty(deepEqual, 'namespace', {value: NS});
 Object.defineProperty(deepFreeze, 'namespace', {value: NS});
 Object.defineProperty(deepMerge, 'namespace', {value: NS});
@@ -148,6 +159,7 @@ Object.defineProperty(isPrimitive, 'namespace', {value: NS});
 Object.defineProperty(serializable, 'namespace', {value: NS});
 
 export {
+    deepClone,
     deepEqual,
     deepFreeze,
     deepMerge,
@@ -155,4 +167,4 @@ export {
     isObject,
     isPrimitive,
     serializable,
-}
+};
