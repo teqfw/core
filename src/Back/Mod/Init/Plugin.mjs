@@ -2,21 +2,23 @@
  * Plugin scanner.
  */
 export default class TeqFw_Core_Back_Mod_Init_Plugin {
-    constructor(spec) {
-        // DEPS
-        /** @type {TeqFw_Core_Back_Defaults} */
-        const DEF = spec['TeqFw_Core_Back_Defaults$'];
-        /** @type {TeqFw_Di_Back_Plugin_Scanner} */
-        const scanner = spec['TeqFw_Di_Back_Plugin_Scanner$'];
-        /** @type {TeqFw_Core_Shared_Logger} */
-        const logger = spec['TeqFw_Core_Shared_Logger$$']; // instance, not interface!
-        /** @type {TeqFw_Core_Back_Mod_Init_Plugin_Registry} */
-        const registry = spec['TeqFw_Core_Back_Mod_Init_Plugin_Registry$'];
-        /** @type {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory} */
-        const fItem = spec['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory$'];
-        /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc.Factory} */
-        const fDiDesc = spec['TeqFw_Di_Back_Api_Dto_Plugin_Desc.Factory$'];
-
+    /**
+     * @param {TeqFw_Core_Back_Defaults} DEF
+     * @param {TeqFw_Di_Back_Plugin_Scanner} scanner
+     * @param {TeqFw_Core_Shared_Logger} logger -  instance, not interface!
+     * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
+     * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory} fItem
+     * @param {TeqFw_Di_Back_Api_Dto_Plugin_Desc.Factory} fDiDesc
+     */
+    constructor(
+        {
+            TeqFw_Core_Back_Defaults$: DEF,
+            TeqFw_Di_Back_Plugin_Scanner$: scanner,
+            TeqFw_Core_Shared_Logger$$: logger,
+            TeqFw_Core_Back_Mod_Init_Plugin_Registry$: registry,
+            ['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory$']: fItem,
+            ['TeqFw_Di_Back_Api_Dto_Plugin_Desc.Factory$']: fDiDesc,
+        }) {
         // MAIN
         logger.setNamespace(this.constructor.name);
 

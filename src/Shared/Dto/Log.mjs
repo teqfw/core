@@ -29,15 +29,17 @@ class Dto {
  * @implements TeqFw_Core_Shared_Api_Factory_Dto
  */
 export default class TeqFw_Core_Shared_Dto_Log {
-    constructor(spec) {
-        // DEPS
-        /** @type {TeqFw_Core_Shared_Util_Cast.castDate|function} */
-        const castDate = spec['TeqFw_Core_Shared_Util_Cast.castDate'];
-        /** @type {TeqFw_Core_Shared_Util_Cast.castBoolean|function} */
-        const castBoolean = spec['TeqFw_Core_Shared_Util_Cast.castBoolean'];
-        /** @type {TeqFw_Core_Shared_Util_Cast.castString|function} */
-        const castString = spec['TeqFw_Core_Shared_Util_Cast.castString'];
-
+    /**
+     * @param {TeqFw_Core_Shared_Util_Cast.castDate|function} castDate
+     * @param {TeqFw_Core_Shared_Util_Cast.castBoolean|function} castBoolean
+     * @param {TeqFw_Core_Shared_Util_Cast.castString|function} castString
+     */
+    constructor(
+        {
+            ['TeqFw_Core_Shared_Util_Cast.castDate']: castDate,
+            ['TeqFw_Core_Shared_Util_Cast.castBoolean']: castBoolean,
+            ['TeqFw_Core_Shared_Util_Cast.castString']: castString,
+        }) {
         // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Shared_Dto_Log.Dto} [data]

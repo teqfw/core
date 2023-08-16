@@ -5,12 +5,14 @@
  * @implements TeqFw_Core_Shared_Api_Logger
  */
 export default class TeqFw_Core_Shared_Logger {
+    /**
+     * @param {TeqFw_Core_Shared_Logger_Base} base
+     */
 
-    constructor(spec) {
-        // DEPS
-        /** @type {TeqFw_Core_Shared_Logger_Base} */
-        const base = spec['TeqFw_Core_Shared_Logger_Base$'];
-
+    constructor(
+        {
+            TeqFw_Core_Shared_Logger_Base$: base,
+        }) {
         // VARS
         let _ns = this.constructor.name; // default namespace should be changed after instantiation
 

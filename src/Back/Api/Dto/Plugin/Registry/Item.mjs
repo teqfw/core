@@ -37,8 +37,17 @@ export default class TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item {
 export class Factory {
     static namespace = NS;
 
-    constructor(spec) {
-        const {castArray, castString} = spec['TeqFw_Core_Shared_Util_Cast'];
+    /**
+     * @param {function} castArray
+     * @param {function} castString
+     */
+    constructor(
+        {
+            ['TeqFw_Core_Shared_Util_Cast.castArray']: castArray,
+            ['TeqFw_Core_Shared_Util_Cast.castString']: castString,
+        }
+    ) {
+        // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item|null} data
          * @return {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item}

@@ -15,15 +15,17 @@ const NS = 'TeqFw_Core_Back_Cli_Version';
  * @constructor
  * @memberOf TeqFw_Core_Back_Cli_Version
  */
-export default function Factory(spec) {
-    // DEPS
-    /** @type {TeqFw_Core_Back_Defaults} */
-    const DEF = spec['TeqFw_Core_Back_Defaults$'];
-    /** @type {TeqFw_Core_Back_Config} */
-    const config = spec['TeqFw_Core_Back_Config$'];
-    /** @type {TeqFw_Core_Back_Api_Dto_Command.Factory} */
-    const fCommand = spec['TeqFw_Core_Back_Api_Dto_Command.Factory$'];
-
+/**
+ * @param {TeqFw_Core_Back_Defaults} DEF
+ * @param {TeqFw_Core_Back_Config} config
+ * @param {TeqFw_Core_Back_Api_Dto_Command.Factory} fCommand
+ */
+export default function Factory(
+    {
+        TeqFw_Core_Back_Defaults$: DEF,
+        TeqFw_Core_Back_Config$: config,
+        ['TeqFw_Core_Back_Api_Dto_Command.Factory$']: fCommand,
+    }) {
     // FUNCS
     /**
      * Command action.

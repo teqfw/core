@@ -5,12 +5,14 @@
  * TODO: utilities are functions not a classes in TeqFW. Should migrate to Helper.
  */
 export default class TeqFw_Core_Back_Util_Codec {
+    /**
+     * @param {TeqFw_Core_Shared_Util_Codec} modShared
+     */
 
-    constructor(spec) {
-        // DEPS
-        /** @type {TeqFw_Core_Shared_Util_Codec} */
-        const modShared = spec['TeqFw_Core_Shared_Util_Codec'];
-
+    constructor(
+        {
+            TeqFw_Core_Shared_Util_Codec: modShared,
+        }) {
         // FUNCS
         function validateBase64(s) {
             if (!(/^(?:[A-Za-z0-9+\/]{2}[A-Za-z0-9+\/]{2})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/.test(s))) {
@@ -19,7 +21,7 @@ export default class TeqFw_Core_Back_Util_Codec {
         }
 
         // INSTANCE METHODS
-        this.ab2hex = modShared.ab2hex
+        this.ab2hex = modShared.ab2hex;
         this.ab2str = modShared.ab2str;
 
         this.ab2b64 = function (buf) {

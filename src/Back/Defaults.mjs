@@ -14,10 +14,19 @@ export default class TeqFw_Core_Back_Defaults {
     /** @type {TeqFw_Core_Shared_Defaults} */
     SHARED;
 
-    constructor(spec) {
+    /**
+     * @param {TeqFw_Di_Back_Defaults} MOD_DI
+     * @param {TeqFw_Core_Shared_Defaults} SHARED
+     */
+    constructor(
+        {
+            TeqFw_Di_Back_Defaults$: MOD_DI,
+            TeqFw_Core_Shared_Defaults$: SHARED,
+        }
+    ) {
         // DEPS
-        this.MOD_DI = spec['TeqFw_Di_Back_Defaults$'];
-        this.SHARED = spec['TeqFw_Core_Shared_Defaults$'];
+        this.MOD_DI = MOD_DI;
+        this.SHARED = SHARED;
 
         // MAIN
         Object.freeze(this);

@@ -24,8 +24,17 @@ export default class TeqFw_Core_Back_Api_Dto_Command_Argument {
 export class Factory {
     static namespace = NS;
 
-    constructor(spec) {
-        const {castFunction, castString} = spec['TeqFw_Core_Shared_Util_Cast'];
+    /**
+     * @param {function} castFunction
+     * @param {function} castString
+     */
+    constructor(
+        {
+            ['TeqFw_Core_Shared_Util_Cast.castFunction']: castFunction,
+            ['TeqFw_Core_Shared_Util_Cast.castString']: castString,
+        }
+    ) {
+        // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Back_Api_Dto_Command_Argument|null} data
          * @return {TeqFw_Core_Back_Api_Dto_Command_Argument}

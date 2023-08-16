@@ -4,11 +4,13 @@
  * @implements TeqFw_Core_Shared_Api_Logger_Transport
  */
 export default class TeqFw_Core_Shared_Logger_Transport_Console {
-    constructor(spec) {
-        // DEPS
-        /** @type {TeqFw_Core_Shared_Util_Format.dateTimeForLog|function} */
-        const formatTime = spec['TeqFw_Core_Shared_Util_Format.dateTimeForLog'];
-
+    /**
+     * @param {TeqFw_Core_Shared_Util_Format.dateTimeForLog|function} formatTime
+     */
+    constructor(
+        {
+            ['TeqFw_Core_Shared_Util_Format.dateTimeForLog']: formatTime,
+        }) {
         // INSTANCE METHODS
 
         /**

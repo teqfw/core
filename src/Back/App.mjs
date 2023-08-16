@@ -43,19 +43,21 @@ class IApp {
  * @implements TeqFw_Core_Back_App.IApp
  */
 export default class TeqFw_Core_Back_App {
-    constructor(spec) {
-        // DEPS
-        /** @type {TeqFw_Core_Back_Defaults} */
-        const DEF = spec['TeqFw_Core_Back_Defaults$'];
-        /** @type {TeqFw_Core_Back_Plugin_Dto_Desc} */
-        const dtoDesc = spec['TeqFw_Core_Back_Plugin_Dto_Desc$'];
-        /** @type {TeqFw_Di_Shared_Container} */
-        const container = spec['TeqFw_Di_Shared_Container$'];
-        /** @type {TeqFw_Core_Back_Config} */
-        const config = spec['TeqFw_Core_Back_Config$'];
-        /** @type {TeqFw_Core_Back_Mod_Init_Plugin} */
-        const pluginScan = spec['TeqFw_Core_Back_Mod_Init_Plugin$'];
-
+    /**
+     * @param {TeqFw_Core_Back_Defaults} DEF
+     * @param {TeqFw_Core_Back_Plugin_Dto_Desc} dtoDesc
+     * @param {TeqFw_Di_Shared_Container} container
+     * @param {TeqFw_Core_Back_Config} config
+     * @param {TeqFw_Core_Back_Mod_Init_Plugin} pluginScan
+     */
+    constructor(
+        {
+            TeqFw_Core_Back_Defaults$: DEF,
+            TeqFw_Core_Back_Plugin_Dto_Desc$: dtoDesc,
+            TeqFw_Di_Shared_Container$: container,
+            TeqFw_Core_Back_Config$: config,
+            TeqFw_Core_Back_Mod_Init_Plugin$: pluginScan,
+        }) {
         // VARS
         const program = new Command();
         /** @type {TeqFw_Core_Back_Mod_Init_Plugin_Registry} */

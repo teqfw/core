@@ -9,14 +9,16 @@ import {existsSync, readFileSync, statSync} from 'node:fs';
 import {join} from 'node:path';
 
 export default class TeqFw_Core_Back_Config {
+    /**
+     * @param {TeqFw_Core_Back_Defaults} DEF
+     * @param {TeqFw_Core_Shared_Util_Probe.deepFreeze|function} deepFreeze
+     */
 
-    constructor(spec) {
-        // DEPS
-        /** @type {TeqFw_Core_Back_Defaults} */
-        const DEF = spec['TeqFw_Core_Back_Defaults$'];
-        /** @type {TeqFw_Core_Shared_Util_Probe.deepFreeze|function} */
-        const deepFreeze = spec['TeqFw_Core_Shared_Util_Probe.deepFreeze'];
-
+    constructor(
+        {
+            TeqFw_Core_Back_Defaults$: DEF,
+            ['TeqFw_Core_Shared_Util_Probe.deepFreeze']: deepFreeze,
+        }) {
         // VARS
         /** @type {Object} storage for local configuration */
         let _local;

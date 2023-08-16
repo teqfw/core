@@ -43,13 +43,24 @@ export default class TeqFw_Core_Back_Api_Dto_Command {
 export class Factory {
     static namespace = NS;
 
-    constructor(spec) {
-        const {castArrayOfObj, castFunction, castString} = spec['TeqFw_Core_Shared_Util_Cast'];
-        /** @type {TeqFw_Core_Back_Api_Dto_Command_Argument.Factory} */
-        const fArg = spec['TeqFw_Core_Back_Api_Dto_Command_Argument.Factory$'];
-        /** @type {TeqFw_Core_Back_Api_Dto_Command_Option.Factory} */
-        const fOpt = spec['TeqFw_Core_Back_Api_Dto_Command_Option.Factory$'];
-
+    /**
+     *
+     * @param {function} castArrayOfObj
+     * @param {function} castFunction
+     * @param {function} castString
+     * @param {TeqFw_Core_Back_Api_Dto_Command_Argument.Factory} fArg
+     * @param {TeqFw_Core_Back_Api_Dto_Command_Option.Factory} fOpt
+     */
+    constructor(
+        {
+            ['TeqFw_Core_Shared_Util_Cast.castArrayOfObj']: castArrayOfObj,
+            ['TeqFw_Core_Shared_Util_Cast.castFunction']: castFunction,
+            ['TeqFw_Core_Shared_Util_Cast.castString']: castString,
+            ['TeqFw_Core_Back_Api_Dto_Command_Argument.Factory$']: fArg,
+            ['TeqFw_Core_Back_Api_Dto_Command_Option.Factory$']: fOpt,
+        }
+    ) {
+        // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Back_Api_Dto_Command|null} data
          * @return {TeqFw_Core_Back_Api_Dto_Command}
