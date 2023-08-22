@@ -1,23 +1,29 @@
 /**
- * Plugin scanner.
+ * Scan project files and get all teq-plugins (with `teqfw.json` descriptors).
+ * Load data from `project.json` and `teqfw.json` and arrange plugins by dependencies.
+ * Store plugins descriptors in the Plugins Registry (TeqFw_Core_Back_Api_Plugin_Registry).
  */
-export default class TeqFw_Core_Back_Mod_Init_Plugin {
+export default class TeqFw_Core_Back_App_Plugin_Loader {
     /**
      * @param {TeqFw_Core_Back_Defaults} DEF
-     * @param {TeqFw_Di_Back_Plugin_Scanner} scanner
+     * @param {TeqFw_Core_Back_App_Plugin_Loader_A_Scan|function} scan
      * @param {TeqFw_Core_Shared_Logger} logger -  instance, not interface!
-     * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
+     * @param {TeqFw_Core_Back_Api_Plugin_Registry} registry
      * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory} fItem
-     * @param {TeqFw_Di_Back_Api_Dto_Plugin_Desc.Factory} fDiDesc
+     * @param {TeqFw_Core_Back_Plugin_Dto_Desc_Di} dtoDiDesc
+     * @param {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace} dtoDiReplace
+     * @param {typeof TeqFw_Core_Shared_Enum_Sphere} SPHERE
      */
     constructor(
         {
             TeqFw_Core_Back_Defaults$: DEF,
-            TeqFw_Di_Back_Plugin_Scanner$: scanner,
+            ['TeqFw_Core_Back_App_Plugin_Loader_A_Scan#']: scan,
             TeqFw_Core_Shared_Logger$$: logger,
-            TeqFw_Core_Back_Mod_Init_Plugin_Registry$: registry,
+            TeqFw_Core_Back_Api_Plugin_Registry$: registry,
             ['TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory$']: fItem,
-            ['TeqFw_Di_Back_Api_Dto_Plugin_Desc.Factory$']: fDiDesc,
+            ['TeqFw_Core_Back_Plugin_Dto_Desc_Di$']: dtoDiDesc,
+            ['TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace$']: dtoDiReplace,
+            'TeqFw_Core_Shared_Enum_Sphere$': SPHERE,
         }) {
         // MAIN
         logger.setNamespace(this.constructor.name);
@@ -27,43 +33,55 @@ export default class TeqFw_Core_Back_Mod_Init_Plugin {
         /**
          * Scan packages and register TeqFW plugins into the registry.
          * @param {String} root
-         * @returns {Promise<TeqFw_Core_Back_Mod_Init_Plugin_Registry>}
+         * @returns {Promise<TeqFw_Core_Back_Api_Plugin_Registry>}
          */
         this.exec = async function (root) {
             // FUNCS
 
             /**
-             * @param {Object.<string, TeqFw_Di_Back_Api_Dto_Scanned>} scanItems
+             * Extract TeqFW data from `package.json` & `teqfw.json`.
+             * @param {Object<string, TeqFw_Core_Back_App_Plugin_Loader_A_Scan.Dto>} scanned
              * @returns {Promise<TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]>}
              */
-            async function getPlugins(scanItems) {
-                // FUNCS
+            async function extractPluginData(scanned) {
+                const res = [];
+                for (const one of Object.values(scanned)) {
+                    logger.info(`Teq-module is found in '${one.path}'.`);
+                    const item = fItem.create();
+                    item.deps = (typeof one.package?.dependencies === 'object')
+                        ? Object.keys(one.package.dependencies) : [];
+                    item.name = one.package.name;
+                    item.path = one.path;
+                    item.teqfw = one.teqfw;
+                    const desc = dtoDiDesc.createDto(item.teqfw[DEF.SHARED.NAME_DI]);
+                    // TODO: streamline this code
+                    const replaces = item.teqfw[DEF.SHARED.NAME_DI]['replaces'];
+                    if (replaces && Array.isArray(Object.keys(replaces)))
+                        for (const orig of Object.keys(replaces)) {
+                            const one = replaces[orig];
 
-                /**
-                 * Check does 'package.json' exist, read content, parse and return data if 'yes'.
-                 * @param {TeqFw_Di_Back_Api_Dto_Scanned} scanItem
-                 * @returns {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item}
-                 */
-                function extractPluginItem(scanItem) {
-                    const res = fItem.create();
-                    let msg = `Teq-module is found in '${scanItem.path}'`;
-                    res.deps = (typeof scanItem.package?.dependencies === 'object')
-                        ? Object.keys(scanItem.package.dependencies) : [];
-                    res.name = scanItem.package.name;
-                    res.path = scanItem.path;
-                    res.teqfw = scanItem.teqfw;
-                    res.teqfw[DEF.MOD_DI.NAME] = fDiDesc.create(res.teqfw[DEF.MOD_DI.NAME]);
-                    logger.info(`${msg}.`);
-                    return res;
+                            if (typeof one === 'string') {
+                                // {from: to}
+                                const dto = dtoDiReplace.createDto();
+                                dto.from = orig;
+                                dto.sphere = SPHERE.SHARED;
+                                dto.to = one;
+                                desc.replaces.push(dto);
+                            } else if (typeof one === 'object') {
+                                // {from: {back: to, front: to}}
+                                for (const key of Object.keys(one)) {
+                                    const dto = dtoDiReplace.createDto();
+                                    dto.from = orig;
+                                    dto.sphere = SPHERE[key.toUpperCase()];
+                                    dto.to = one[key];
+                                    desc.replaces.push(dto);
+                                }
+                            }
+                        }
+                    item.teqfw[DEF.SHARED.NAME_DI] = desc;
+                    res.push(item);
                 }
-
-                // MAIN
-                const result = [];
-                for (const scanItem of Object.values(scanItems)) {
-                    const pluginItem = extractPluginItem(scanItem);
-                    result.push(pluginItem);
-                }
-                return result;
+                return res;
             }
 
             /**
@@ -122,8 +140,8 @@ export default class TeqFw_Core_Back_Mod_Init_Plugin {
 
             // MAIN
             logger.info(`Scan '${root}' for teq-modules.`);
-            const scanData = await scanner.scanFilesystem(root);
-            const items = await getPlugins(scanData);
+            const scanData = await scan(root);
+            const items = await extractPluginData(scanData);
             const names = [];
             let appName;
             for (const item of items) {
@@ -132,7 +150,7 @@ export default class TeqFw_Core_Back_Mod_Init_Plugin {
                 if (item.path === root) appName = item.name;
             }
             // set root plugin name as application name
-            registry.setAppName(appName)
+            registry.setAppName(appName);
             // remove extra deps (not teq-plugins)
             for (const item of items) {
                 const all = item.deps;

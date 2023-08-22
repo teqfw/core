@@ -1,5 +1,5 @@
 /**
- * Write/read process ID (PID) to stop previously started instance of teq-app.
+ * Model to write/read the process ID (PID) to stop previously started instance of teq-app.
  */
 // MODULE'S IMPORT
 import {existsSync, readFileSync, writeFileSync} from 'node:fs';

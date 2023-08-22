@@ -1,0 +1,8 @@
+{
+  "@teqfw/di": {
+    "autoload": {
+      "ns": "Vnd_App",
+      "path": "./src"
+    }
+  }
+}

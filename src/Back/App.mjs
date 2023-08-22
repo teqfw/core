@@ -46,21 +46,23 @@ export default class TeqFw_Core_Back_App {
     /**
      * @param {TeqFw_Core_Back_Defaults} DEF
      * @param {TeqFw_Core_Back_Plugin_Dto_Desc} dtoDesc
-     * @param {TeqFw_Di_Shared_Container} container
+     * @param {TeqFw_Di_Container} container
      * @param {TeqFw_Core_Back_Config} config
-     * @param {TeqFw_Core_Back_Mod_Init_Plugin} pluginScan
+     * @param {TeqFw_Core_Back_App_Plugin_Loader} pluginScan
+     * @param {typeof TeqFw_Core_Shared_Enum_Sphere} SPHERE
      */
     constructor(
         {
             TeqFw_Core_Back_Defaults$: DEF,
             TeqFw_Core_Back_Plugin_Dto_Desc$: dtoDesc,
-            TeqFw_Di_Shared_Container$: container,
+            container: container,
             TeqFw_Core_Back_Config$: config,
-            TeqFw_Core_Back_Mod_Init_Plugin$: pluginScan,
+            TeqFw_Core_Back_App_Plugin_Loader$: pluginScan,
+            TeqFw_Core_Shared_Enum_Sphere$: SPHERE,
         }) {
         // VARS
         const program = new Command();
-        /** @type {TeqFw_Core_Back_Mod_Init_Plugin_Registry} */
+        /** @type {TeqFw_Core_Back_Api_Plugin_Registry} */
         let pluginsRegistry;
         /** @type {TeqFw_Core_Shared_Api_Logger} */
         let logger;
@@ -84,7 +86,7 @@ export default class TeqFw_Core_Back_App {
             /**
              * Run 'commander' initialization code for all plugins.
              *
-             * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_Api_Plugin_Registry} registry
              * @returns {Promise<void>}
              * @memberOf TeqFw_Core_Back_App.init
              */
@@ -124,42 +126,67 @@ export default class TeqFw_Core_Back_App {
             }
 
             /**
-             * Go through all plugins hierarchy (down to top) and register namespaces in DI container.
-             * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
+             * Go through all plugins hierarchy (down to top) and init DI container (router & parser).
+             * @param {TeqFw_Di_Container} container
+             * @param {TeqFw_Core_Back_Api_Plugin_Registry} registry
              */
-            function initDiContainer(registry) {
-                for (const item of registry.items()) {
-                    /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc} */
-                    const desc = item.teqfw[DEF.MOD_DI.NAME];
-                    /** @type {TeqFw_Di_Shared_Api_Dto_Plugin_Desc_Autoload} */
-                    const auto = desc.autoload;
-                    const ns = auto.ns;
-                    if (ns) {
-                        const path = join(item.path, auto.path);
-                        container.addSourceMapping(ns, path, true);
-                        logger.info(`'${ns}' namespace is mapped to '${path}'.`);
+            function initDiContainer(container, registry) {
+                // FUNCS
+                /**
+                 * Extract autoload data from `@teqfw/di` nodes of descriptors and initialize resolver.
+                 * @param {TeqFw_Di_Container} container
+                 * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]} items
+                 */
+                function initAutoload(container, items) {
+                    const resolver = container.getResolver();
+                    for (const item of items) {
+                        /** @type {TeqFw_Core_Back_Plugin_Dto_Desc_Di.Dto} */
+                        const desc = item.teqfw[DEF.SHARED.NAME_DI];
+                        /** @type {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Autoload.Dto} */
+                        const auto = desc.autoload;
+                        const ext = auto.ext ?? 'js';
+                        const ns = auto.ns;
+                        if (ns) {
+                            const path = join(item.path, auto.path);
+                            resolver.addNamespaceRoot(ns, path, ext);
+                            logger.info(`'${ns}' namespace with default '${ext}' ext is mapped to '${path}'.`);
+                        }
                     }
                 }
-                for (const item of registry.getItemsByLevels()) {
-                    /** @type {TeqFw_Di_Back_Api_Dto_Plugin_Desc} */
-                    const desc = item.teqfw[DEF.MOD_DI.NAME];
-                    if (Array.isArray(Object.keys(desc?.replace)))
-                        for (const orig of Object.keys(desc.replace)) {
-                            const one = desc.replace[orig];
-                            if (typeof one === 'string') {
-                                container.addModuleReplacement(orig, one);
-                            } else if (typeof one === 'object') {
-                                if (typeof one[DEF.AREA] === 'string') {
-                                    container.addModuleReplacement(orig, one[DEF.AREA]);
-                                }
+
+                /**
+                 * Extract data from ordered `@teqfw/di` nodes and initialize replacement for objectKeys.
+                 * @param {TeqFw_Di_Container} container
+                 * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]} items - ordered items
+                 */
+                function initReplaces(container, items) {
+                    const preProcessor = container.getPreProcessor();
+                    const handlers = preProcessor.getHandlers();
+                    // TODO: WF-662
+                    /** @type {TeqFw_Di_PreProcessor_Replace|function} */
+                    const replace = handlers.find((one) => one.name === 'TeqFw_Di_PreProcessor_Replace');
+                    for (const item of items) {
+                        /** @type {TeqFw_Core_Back_Plugin_Dto_Desc_Di.Dto} */
+                        const desc = item.teqfw[DEF.SHARED.NAME_DI];
+                        if (Array.isArray(desc?.replaces))
+                            for (const one of desc.replaces) {
+                                if (
+                                    (one.sphere === SPHERE.BACK) ||
+                                    (one.sphere === SPHERE.SHARED)
+                                )
+                                    replace.add(one.from, one.to);
                             }
-                        }
+                    }
                 }
+
+                // MAIN
+                initAutoload(container, registry.items());
+                initReplaces(container, registry.getItemsByLevels());
             }
 
             /**
              * Set console transport for base logger and create own logger.
-             * @param {TeqFw_Di_Shared_Container} container
+             * @param {TeqFw_Di_Container} container
              * @return {Promise<TeqFw_Core_Shared_Api_Logger>}
              */
             async function initLogger(container) {
@@ -174,7 +201,7 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Go through plugins hierarchy (down to top) and run init functions.
-             * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_Api_Plugin_Registry} registry
              * @return {Promise<void>}
              */
             async function initPlugins(registry) {
@@ -210,8 +237,8 @@ export default class TeqFw_Core_Back_App {
             logger.info(`Teq-application is started in '${path}' (ver. ${version}).`);
             // scan node modules for teq-plugins
             pluginsRegistry = await pluginScan.exec(path);
-            // init container before do something else
-            initDiContainer(pluginsRegistry);
+            // init container (autoload & replacements) before do something else
+            initDiContainer(container, pluginsRegistry);
             // ... then do something else
             try {
                 await initPlugins(pluginsRegistry);
@@ -254,7 +281,7 @@ export default class TeqFw_Core_Back_App {
             // FUNCS
             /**
              * Go through plugins hierarchy (down to top) and run finalization functions.
-             * @param {TeqFw_Core_Back_Mod_Init_Plugin_Registry} registry
+             * @param {TeqFw_Core_Back_Api_Plugin_Registry} registry
              * @return {Promise<void>}
              */
             async function stopPlugins(registry) {
