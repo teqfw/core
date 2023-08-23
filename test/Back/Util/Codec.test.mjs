@@ -6,7 +6,7 @@ import testEnv from '../../TestEnv.mjs';
 import assert from 'assert';
 import {describe, it} from 'mocha';
 
-/** @type {TeqFw_Di_Shared_Container} */
+/** @type {TeqFw_Di_Container} */
 const container = await testEnv();
 // use implementation here, not interface
 /** @type {TeqFw_Core_Shared_Api_Util_Codec} */

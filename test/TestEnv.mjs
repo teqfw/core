@@ -15,7 +15,7 @@ const srcTeqFwDi = $path.join(pathNode, '@teqfw/di/src');
 
 /* Create and setup DI container (once per all imports) */
 
-/** @type {TeqFw_Di_Shared_Container} */
+/** @type {TeqFw_Di_Container} */
 const container = new Container();
 // add backend sources to map
 container.addSourceMapping('TeqFw_Core', srcApp, true, 'mjs');
@@ -25,7 +25,7 @@ container.addModuleReplacement('TeqFw_Core_Shared_Api_Util_Crypto', 'TeqFw_Core_
 /**
  * Setup development environment (if not set before) and return DI container.
  *
- * @returns {Promise<TeqFw_Di_Shared_Container>}
+ * @returns {Promise<TeqFw_Di_Container>}
  */
 export default async function () {
     return container;
