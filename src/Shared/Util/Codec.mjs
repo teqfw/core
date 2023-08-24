@@ -10,6 +10,7 @@ const NS = 'TeqFw_Core_Shared_Util_Codec';
  * @param {ArrayBuffer} buf
  * @return {string}
  * @memberOf TeqFw_Core_Shared_Util_Codec
+ * TODO: remove expired code and use one common algorithm (see binToHex)
  */
 function ab2hex(buf) {
     return [...new Uint8Array(buf)]

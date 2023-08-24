@@ -1,5 +1,9 @@
 # @teqfw/core: releases
 
+# 0.20.0
+
+* These changes are related to the new architecture of the `@teqfw/di` package.
+
 # 0.11.0
 
 * Allow to `TeqFw_Core_Shared_Util_Format.dateTimeForLog` be called w/o parameters.
@@ -64,6 +68,6 @@
 * fix errors stealing in `TeqFw_Core_Back_App`;
 * use `@teqfw/di.replace` in `./teqfw.json` as an object and not as an array;
 * fix double initialization for plugins;
-* add path-to-name function to plugin registry (`TeqFw_Core_Back_Mod_Init_Plugin_Registry`);
+* add path-to-name function to plugin registry (`TeqFw_Core_Back_Api_Plugin_Registry`);
 * add backend only utils (`TeqFw_Core_Back_Util`);
 * interface for actions (`TeqFw_Core_Shared_Api_Action`);

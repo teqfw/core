@@ -3,21 +3,23 @@
  * @namespace TeqFw_Core_Back_Mod_App_Uuid
  */
 // MODULE'S IMPORT
-import {join} from "node:path";
+import {join} from 'node:path';
 import {existsSync, readFileSync, writeFileSync} from 'node:fs';
 import {mkdir} from 'node:fs/promises';
 import {randomUUID} from 'node:crypto';
 
 export default class TeqFw_Core_Back_Mod_App_Uuid {
-    constructor(spec) {
-        // DEPS
-        /** @type {TeqFw_Core_Back_Defaults} */
-        const DEF = spec['TeqFw_Core_Back_Defaults$'];
-        /** @type {TeqFw_Core_Shared_Api_Logger} */
-        const logger = spec['TeqFw_Core_Shared_Api_Logger$$']; // instance
-        /** @type {TeqFw_Core_Back_Config} */
-        const config = spec['TeqFw_Core_Back_Config$'];
-
+    /**
+     * @param {TeqFw_Core_Back_Defaults} DEF
+     * @param {TeqFw_Core_Shared_Api_Logger} logger -  instance
+     * @param {TeqFw_Core_Back_Config} config
+     */
+    constructor(
+        {
+            TeqFw_Core_Back_Defaults$: DEF,
+            TeqFw_Core_Shared_Api_Logger$$: logger,
+            TeqFw_Core_Back_Config$: config,
+        }) {
         // VARS
         logger.setNamespace(this.constructor.name);
         let _uuid;

@@ -1,21 +1,23 @@
 /**
- * Write/read process ID (PID) to stop previously started instance of teq-app.
+ * Model to write/read the process ID (PID) to stop previously started instance of teq-app.
  */
 // MODULE'S IMPORT
 import {existsSync, readFileSync, writeFileSync} from 'node:fs';
-import {join} from "node:path";
+import {join} from 'node:path';
 import {mkdir} from 'node:fs/promises';
 
 export default class TeqFw_Core_Back_Mod_App_Pid {
-    constructor(spec) {
-        // DEPS
-        /** @type {TeqFw_Core_Shared_Api_Logger} */
-        const logger = spec['TeqFw_Core_Shared_Api_Logger$$']; // instance
-        /** @type {TeqFw_Core_Back_Config} */
-        const config = spec['TeqFw_Core_Back_Config$'];
-        /** @type {TeqFw_Core_Shared_Util_Cast.castInt|function} */
-        const castInt = spec['TeqFw_Core_Shared_Util_Cast.castInt'];
-
+    /**
+     * @param {TeqFw_Core_Shared_Api_Logger} logger -  instance
+     * @param {TeqFw_Core_Back_Config} config
+     * @param {TeqFw_Core_Shared_Util_Cast.castInt|function} castInt
+     */
+    constructor(
+        {
+            TeqFw_Core_Shared_Api_Logger$$: logger,
+            TeqFw_Core_Back_Config$: config,
+            ['TeqFw_Core_Shared_Util_Cast.castInt']: castInt,
+        }) {
         // VARS
         logger.setNamespace(this.constructor.name);
 

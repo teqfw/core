@@ -2,9 +2,10 @@
   "@teqfw/di": {
     "autoload": {
       "ns": "TeqFw_Core",
-      "path": "./src"
+      "path": "./src",
+      "ext": "mjs"
     },
-    "replace": {
+    "replaces": {
       "TeqFw_Core_Shared_Api_Logger": "TeqFw_Core_Shared_Logger",
       "TeqFw_Core_Shared_Api_Logger_Transport": "TeqFw_Core_Shared_Logger_Transport_Console",
       "TeqFw_Core_Shared_Api_Util_Codec": {

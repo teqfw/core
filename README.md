@@ -1,7 +1,26 @@
 # @teqfw/core
 
-|CAUTION: TeqFW is an unstable project w/o backward compatibility. Use it at your own risk.|
-|---|
+## Задачи core-плагина:
+
+Предоставить back-приложение, которое выполняет следующие базовые функции:
+
+* инициализация приложения
+* выполнение приложением запрошенной команды (CLI)
+* завершение приложения
+
+Инициализация приложения включает в себя:
+
+* инициализация базового логгера
+* загрузка локальной конфигурации
+* сканирование файловой системы загрузка конфигурации teq-плагинов
+* конфигурация DI-контейнера (autoload & replacements)
+* инициализация teq-плагинов (выполнение init-функция для каждого плагина)
+* регистрация команд, предоставляемых плагинами
+
+---
+
+| CAUTION: TeqFW is an unstable project w/o backward compatibility. Use it at your own risk. |
+|--------------------------------------------------------------------------------------------|
 
 This `teq`-plugin contains backend application to scan and registry other `teq`-plugins and is used in Tequila Framework
 based projects. `core`-plugin contains CLI [commander](https://github.com/tj/commander.js) and adds plugin's commands to
@@ -82,7 +101,7 @@ const root = join(bin, '..'); // project root (./)
 
 try {
     /* Create and setup DI container */
-    /** @type {TeqFw_Di_Shared_Container} */
+    /** @type {TeqFw_Di_Container} */
     const container = new Container();
     const pathDi = join(root, 'node_modules/@teqfw/di/src');
     const pathCore = join(root, 'node_modules/@teqfw/core/src');
