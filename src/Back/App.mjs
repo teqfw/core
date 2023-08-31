@@ -163,8 +163,8 @@ export default class TeqFw_Core_Back_App {
                     const preProcessor = container.getPreProcessor();
                     const handlers = preProcessor.getHandlers();
                     // TODO: WF-662
-                    /** @type {TeqFw_Di_PreProcessor_Replace|function} */
-                    const replace = handlers.find((one) => one.name === 'TeqFw_Di_PreProcessor_Replace');
+                    /** @type {TeqFw_Di_Container_PreProcessor_Replace|function} */
+                    const replace = handlers.find((one) => one.name === 'TeqFw_Di_Container_PreProcessor_Replace');
                     for (const item of items) {
                         /** @type {TeqFw_Core_Back_Plugin_Dto_Desc_Di.Dto} */
                         const desc = item.teqfw[DEF.SHARED.NAME_DI];
