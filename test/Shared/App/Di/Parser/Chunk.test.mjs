@@ -5,11 +5,11 @@ import assert from 'assert';
 import Defs from '@teqfw/di/src/Defs.js';
 
 // MODULE'S VARS
-/** @type {TeqFw_Core_Shared_App_Di_Parser_Chunk} */
-const parser = await container.get('TeqFw_Core_Shared_App_Di_Parser_Chunk$');
+/** @type {TeqFw_Core_Shared_App_Di_Parser_Legacy} */
+const parser = await container.get('TeqFw_Core_Shared_App_Di_Parser_Legacy$');
 
 
-describe('TeqFw_Core_Shared_App_Di_Parser_Chunk', () => {
+describe('TeqFw_Core_Shared_App_Di_Parser_Legacy', () => {
 
     describe('should parse manual DI IDs:', () => {
         it('named singleton ID (namedSingleton)', async () => {

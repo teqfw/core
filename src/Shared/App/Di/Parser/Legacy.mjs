@@ -2,7 +2,7 @@
  * This is the parser for old-style depIds used in TeqFW packages before @teqfw/di v0.20.0.
  *   - Vnd_Pkg_Prj_Mod[.|#]export$$
  *
- * @namespace TeqFw_Core_Shared_App_Di_Parser_Chunk
+ * @namespace TeqFw_Core_Shared_App_Di_Parser_Legacy
  */
 
 // VARS
@@ -29,15 +29,17 @@ const SNGLT = '$';
 /**
  * @implements TeqFw_Di_Api_Container_Parser_Chunk
  */
-export default class TeqFw_Core_Shared_App_Di_Parser_Chunk {
+export default class TeqFw_Core_Shared_App_Di_Parser_Legacy {
     /**
-     * @param {TeqFw_Di_Defs} Defs
+     * @param {TeqFw_Di_Defs} Defs - DI defaults
      * @param {typeof TeqFw_Di_DepId} Dto
+     * @param {TeqFw_Core_Shared_Defaults} DEF - core defaults
      */
     constructor(
         {
             'TeqFw_Di_Defs#': Defs,
             'TeqFw_Di_DepId#': Dto,
+            TeqFw_Core_Shared_Defaults$: DEF,
         }
     ) {
         this.parse = function (objectKey) {
@@ -52,7 +54,7 @@ export default class TeqFw_Core_Shared_App_Di_Parser_Chunk {
                     && ((parts[7] === INST) || (parts[7] === P_INST))
                 ) {
                     if (parts[7] === P_INST)
-                        res.wrappers.push(Defs.WRAP_PROXY);
+                        res.wrappers.push(DEF.DI_WRAP_PROXY);
                     res.composition = Defs.COMPOSE_FACTORY;
                     res.life = Defs.LIFE_INSTANCE;
                     res.exportName = parts[6];
@@ -63,7 +65,7 @@ export default class TeqFw_Core_Shared_App_Di_Parser_Chunk {
                     && ((parts[7] === SNGLT) || (parts[7] === P_SNGLT))
                 ) {
                     if (parts[7] === P_SNGLT)
-                        res.wrappers.push(Defs.WRAP_PROXY);
+                        res.wrappers.push(DEF.DI_WRAP_PROXY);
                     res.composition = Defs.COMPOSE_FACTORY;
                     res.life = Defs.LIFE_SINGLETON;
                     res.exportName = parts[6];
@@ -80,7 +82,7 @@ export default class TeqFw_Core_Shared_App_Di_Parser_Chunk {
                 // Ns_Module$$[@@]- default instance [proxy]
                 else if ((parts[4] === INST) || (parts[4] === P_INST)) {
                     if (parts[4] === P_INST)
-                        res.wrappers.push(Defs.WRAP_PROXY);
+                        res.wrappers.push(DEF.DI_WRAP_PROXY);
                     res.composition = Defs.COMPOSE_FACTORY;
                     res.life = Defs.LIFE_INSTANCE;
                     res.exportName = DEF_EXP;
@@ -88,7 +90,7 @@ export default class TeqFw_Core_Shared_App_Di_Parser_Chunk {
                 // Ns_Module$[@] - default singleton [proxy]
                 else if ((parts[4] === SNGLT) || (parts[4] === P_SNGLT)) {
                     if (parts[4] === P_SNGLT)
-                        res.wrappers.push(Defs.WRAP_PROXY);
+                        res.wrappers.push(DEF.DI_WRAP_PROXY);
                     res.composition = Defs.COMPOSE_FACTORY;
                     res.life = Defs.LIFE_SINGLETON;
                     res.exportName = DEF_EXP;
