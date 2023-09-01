@@ -46,7 +46,7 @@ export default class TeqFw_Core_Back_App {
     /**
      * @param {TeqFw_Core_Back_Defaults} DEF
      * @param {TeqFw_Core_Back_Plugin_Dto_Desc} dtoDesc
-     * @param {TeqFw_Di_Container} container
+     * @param {TeqFw_Di_Api_Container} container
      * @param {TeqFw_Core_Back_Config} config
      * @param {TeqFw_Core_Back_App_Plugin_Loader} pluginScan
      * @param {typeof TeqFw_Core_Shared_Enum_Sphere} SPHERE
@@ -55,7 +55,7 @@ export default class TeqFw_Core_Back_App {
         {
             TeqFw_Core_Back_Defaults$: DEF,
             TeqFw_Core_Back_Plugin_Dto_Desc$: dtoDesc,
-            container: container,
+            container,
             TeqFw_Core_Back_Config$: config,
             TeqFw_Core_Back_App_Plugin_Loader$: pluginScan,
             TeqFw_Core_Shared_Enum_Sphere$: SPHERE,
@@ -127,14 +127,14 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Go through all plugins hierarchy (down to top) and init DI container (router & parser).
-             * @param {TeqFw_Di_Container} container
+             * @param {TeqFw_Di_Api_Container} container
              * @param {TeqFw_Core_Back_Api_Plugin_Registry} registry
              */
             function initDiContainer(container, registry) {
                 // FUNCS
                 /**
                  * Extract autoload data from `@teqfw/di` nodes of descriptors and initialize resolver.
-                 * @param {TeqFw_Di_Container} container
+                 * @param {TeqFw_Di_Api_Container} container
                  * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]} items
                  */
                 function initAutoload(container, items) {
@@ -156,7 +156,7 @@ export default class TeqFw_Core_Back_App {
 
                 /**
                  * Extract data from ordered `@teqfw/di` nodes and initialize replacement for objectKeys.
-                 * @param {TeqFw_Di_Container} container
+                 * @param {TeqFw_Di_Api_Container} container
                  * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]} items - ordered items
                  */
                 function initReplaces(container, items) {
@@ -186,7 +186,7 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Set console transport for base logger and create own logger.
-             * @param {TeqFw_Di_Container} container
+             * @param {TeqFw_Di_Api_Container} container
              * @return {Promise<TeqFw_Core_Shared_Api_Logger>}
              */
             async function initLogger(container) {

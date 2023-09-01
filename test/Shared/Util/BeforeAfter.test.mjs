@@ -4,7 +4,7 @@ import assert from 'node:assert';
 import {describe, it} from 'mocha';
 
 // MODULE'S VARS
-/** @type {TeqFw_Di_Container} */
+/** @type {TeqFw_Di_Api_Container} */
 const container = await testEnv();
 const util = await container.get('TeqFw_Core_Shared_Util_BeforeAfter');
 

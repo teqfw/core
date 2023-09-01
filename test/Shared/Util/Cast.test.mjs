@@ -2,7 +2,7 @@ import testEnv from '../../TestEnv.mjs';
 import assert from 'node:assert';
 import {describe, it} from 'mocha';
 
-/** @type {TeqFw_Di_Container} */
+/** @type {TeqFw_Di_Api_Container} */
 const container = await testEnv();
 const util = await container.get('TeqFw_Core_Shared_Util_Cast');
 
