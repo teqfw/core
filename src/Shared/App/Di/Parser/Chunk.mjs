@@ -2,7 +2,7 @@
  * This is the parser for old-style depIds used in TeqFW packages before @teqfw/di v0.20.0.
  *   - Vnd_Pkg_Prj_Mod[.|#]export$$
  *
- * @namespace TeqFw_Core_Back_App_Di_Parser
+ * @namespace TeqFw_Core_Shared_App_Di_Parser_Chunk
  */
 
 // VARS
@@ -29,7 +29,7 @@ const SNGLT = '$';
 /**
  * @implements TeqFw_Di_Api_Container_Parser_Chunk
  */
-export default class TeqFw_Core_Back_App_Di_Parser {
+export default class TeqFw_Core_Shared_App_Di_Parser_Chunk {
     /**
      * @param {TeqFw_Di_Defs} Defs
      * @param {typeof TeqFw_Di_DepId} Dto

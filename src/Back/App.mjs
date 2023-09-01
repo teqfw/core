@@ -49,6 +49,7 @@ export default class TeqFw_Core_Back_App {
      * @param {TeqFw_Di_Api_Container} container
      * @param {TeqFw_Core_Back_Config} config
      * @param {TeqFw_Core_Back_App_Plugin_Loader} pluginScan
+     * @param {TeqFw_Core_Shared_App_Di_PreProcessor_Replace} replaceChunk
      * @param {typeof TeqFw_Core_Shared_Enum_Sphere} SPHERE
      */
     constructor(
@@ -58,6 +59,7 @@ export default class TeqFw_Core_Back_App {
             container,
             TeqFw_Core_Back_Config$: config,
             TeqFw_Core_Back_App_Plugin_Loader$: pluginScan,
+            TeqFw_Core_Shared_App_Di_PreProcessor_Replace$: replaceChunk,
             TeqFw_Core_Shared_Enum_Sphere$: SPHERE,
         }) {
         // VARS
@@ -160,11 +162,6 @@ export default class TeqFw_Core_Back_App {
                  * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]} items - ordered items
                  */
                 function initReplaces(container, items) {
-                    const preProcessor = container.getPreProcessor();
-                    const handlers = preProcessor.getHandlers();
-                    // TODO: WF-662
-                    /** @type {TeqFw_Di_Container_PreProcessor_Replace|function} */
-                    const replace = handlers.find((one) => one.name === 'TeqFw_Di_Container_PreProcessor_Replace');
                     for (const item of items) {
                         /** @type {TeqFw_Core_Back_Plugin_Dto_Desc_Di.Dto} */
                         const desc = item.teqfw[DEF.SHARED.NAME_DI];
@@ -174,9 +171,11 @@ export default class TeqFw_Core_Back_App {
                                     (one.sphere === SPHERE.BACK) ||
                                     (one.sphere === SPHERE.SHARED)
                                 )
-                                    replace.add(one.from, one.to);
+                                    replaceChunk.add(one.from, one.to);
                             }
                     }
+                    const preProcessor = container.getPreProcessor();
+                    preProcessor.addChunk(replaceChunk);
                 }
 
                 // MAIN
