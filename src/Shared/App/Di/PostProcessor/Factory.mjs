@@ -14,7 +14,7 @@ export default class TeqFw_Core_Shared_App_Di_PostProcessor_Factory {
         }
     ) {
 
-        this.modify = function (obj, originalId) {
+        this.modify = function (obj, originalId, stack) {
             let res = obj;
             if (originalId.wrappers.includes(DEF.DI_WRAP_PROXY)) {
                 res = new Proxy({dep: undefined, objectKey: originalId}, {
