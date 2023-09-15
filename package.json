@@ -31,11 +31,11 @@
     "test": "./node_modules/mocha/bin/_mocha --recursive './test/**/*.test.mjs'"
   },
   "dependencies": {
-    "@teqfw/di": "*",
-    "commander": "*"
+    "@teqfw/di": "latest",
+    "commander": "latest"
   },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "latest"
   },
   "engines": {
     "node": ">=17"
