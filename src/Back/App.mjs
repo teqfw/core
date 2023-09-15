@@ -46,18 +46,20 @@ export default class TeqFw_Core_Back_App {
     /**
      * @param {TeqFw_Core_Back_Defaults} DEF
      * @param {TeqFw_Core_Back_Plugin_Dto_Desc} dtoDesc
-     * @param {TeqFw_Di_Container} container
+     * @param {TeqFw_Di_Api_Container} container
      * @param {TeqFw_Core_Back_Config} config
      * @param {TeqFw_Core_Back_App_Plugin_Loader} pluginScan
+     * @param {TeqFw_Core_Shared_App_Di_PreProcessor_Replace} replaceChunk
      * @param {typeof TeqFw_Core_Shared_Enum_Sphere} SPHERE
      */
     constructor(
         {
             TeqFw_Core_Back_Defaults$: DEF,
             TeqFw_Core_Back_Plugin_Dto_Desc$: dtoDesc,
-            container: container,
+            container,
             TeqFw_Core_Back_Config$: config,
             TeqFw_Core_Back_App_Plugin_Loader$: pluginScan,
+            TeqFw_Core_Shared_App_Di_PreProcessor_Replace$: replaceChunk,
             TeqFw_Core_Shared_Enum_Sphere$: SPHERE,
         }) {
         // VARS
@@ -127,14 +129,14 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Go through all plugins hierarchy (down to top) and init DI container (router & parser).
-             * @param {TeqFw_Di_Container} container
+             * @param {TeqFw_Di_Api_Container} container
              * @param {TeqFw_Core_Back_Api_Plugin_Registry} registry
              */
             function initDiContainer(container, registry) {
                 // FUNCS
                 /**
                  * Extract autoload data from `@teqfw/di` nodes of descriptors and initialize resolver.
-                 * @param {TeqFw_Di_Container} container
+                 * @param {TeqFw_Di_Api_Container} container
                  * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]} items
                  */
                 function initAutoload(container, items) {
@@ -156,15 +158,10 @@ export default class TeqFw_Core_Back_App {
 
                 /**
                  * Extract data from ordered `@teqfw/di` nodes and initialize replacement for objectKeys.
-                 * @param {TeqFw_Di_Container} container
+                 * @param {TeqFw_Di_Api_Container} container
                  * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]} items - ordered items
                  */
                 function initReplaces(container, items) {
-                    const preProcessor = container.getPreProcessor();
-                    const handlers = preProcessor.getHandlers();
-                    // TODO: WF-662
-                    /** @type {TeqFw_Di_PreProcessor_Replace|function} */
-                    const replace = handlers.find((one) => one.name === 'TeqFw_Di_PreProcessor_Replace');
                     for (const item of items) {
                         /** @type {TeqFw_Core_Back_Plugin_Dto_Desc_Di.Dto} */
                         const desc = item.teqfw[DEF.SHARED.NAME_DI];
@@ -174,9 +171,11 @@ export default class TeqFw_Core_Back_App {
                                     (one.sphere === SPHERE.BACK) ||
                                     (one.sphere === SPHERE.SHARED)
                                 )
-                                    replace.add(one.from, one.to);
+                                    replaceChunk.add(one.from, one.to);
                             }
                     }
+                    const preProcessor = container.getPreProcessor();
+                    preProcessor.addChunk(replaceChunk);
                 }
 
                 // MAIN
@@ -186,7 +185,7 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Set console transport for base logger and create own logger.
-             * @param {TeqFw_Di_Container} container
+             * @param {TeqFw_Di_Api_Container} container
              * @return {Promise<TeqFw_Core_Shared_Api_Logger>}
              */
             async function initLogger(container) {

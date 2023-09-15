@@ -1,5 +1,11 @@
 # @teqfw/core: releases
 
+# 0.20.1
+
+* New DI initialization (parser, pre-, post-processors).
+* Interfaces replaces modification (pre-processor).
+* The post-processor chunk for loggers.
+
 # 0.20.0
 
 * These changes are related to the new architecture of the `@teqfw/di` package.

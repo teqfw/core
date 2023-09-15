@@ -18,9 +18,6 @@ export default class TeqFw_Core_Back_Mod_App_Pid {
             TeqFw_Core_Back_Config$: config,
             ['TeqFw_Core_Shared_Util_Cast.castInt']: castInt,
         }) {
-        // VARS
-        logger.setNamespace(this.constructor.name);
-
         // INSTANCE METHODS
         /**
          * @param {string} filename

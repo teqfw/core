@@ -21,7 +21,6 @@ export default class TeqFw_Core_Back_Mod_App_Uuid {
             TeqFw_Core_Back_Config$: config,
         }) {
         // VARS
-        logger.setNamespace(this.constructor.name);
         let _uuid;
 
         // INSTANCE METHODS

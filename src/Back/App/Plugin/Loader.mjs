@@ -7,7 +7,7 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
     /**
      * @param {TeqFw_Core_Back_Defaults} DEF
      * @param {TeqFw_Core_Back_App_Plugin_Loader_A_Scan|function} scan
-     * @param {TeqFw_Core_Shared_Logger} logger -  instance, not interface!
+     * @param {TeqFw_Core_Shared_Logger} logger -  instance, not interface! we don't load replaces yet
      * @param {TeqFw_Core_Back_Api_Plugin_Registry} registry
      * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory} fItem
      * @param {TeqFw_Core_Back_Plugin_Dto_Desc_Di} dtoDiDesc
@@ -25,9 +25,6 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
             'TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace$': dtoDiReplace,
             'TeqFw_Core_Shared_Enum_Sphere$': SPHERE,
         }) {
-        // MAIN
-        logger.setNamespace(this.constructor.name);
-
         // INSTANCE METHODS
 
         /**
