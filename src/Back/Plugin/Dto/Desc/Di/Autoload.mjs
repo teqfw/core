@@ -21,7 +21,7 @@ class Dto {
      */
     ns;
     /**
-     * Absolute path to the root of the namespace to import sources ('/app/pkg/src', 'https://domain.com/app/pkg/src).
+     * Relative path to the root of the namespace to import sources ('./src').
      * @type {string}
      */
     path;

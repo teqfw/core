@@ -52,7 +52,7 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
                     item.teqfw = one.teqfw;
                     const desc = dtoDiDesc.createDto(item.teqfw[DEF.SHARED.NAME_DI]);
                     // TODO: streamline this code
-                    const replaces = item.teqfw[DEF.SHARED.NAME_DI]['replaces'];
+                    const replaces = item.teqfw[DEF.SHARED.NAME_DI]?.['replaces'];
                     if (replaces && Array.isArray(Object.keys(replaces)))
                         for (const orig of Object.keys(replaces)) {
                             const one = replaces[orig];

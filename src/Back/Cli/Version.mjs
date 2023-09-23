@@ -10,15 +10,12 @@ const NS = 'TeqFw_Core_Back_Cli_Version';
 /**
  * Factory to create CLI command.
  *
- * @param {TeqFw_Di_Shared_SpecProxy} spec
- * @returns {TeqFw_Core_Back_Api_Dto_Command}
- * @constructor
- * @memberOf TeqFw_Core_Back_Cli_Version
- */
-/**
  * @param {TeqFw_Core_Back_Defaults} DEF
  * @param {TeqFw_Core_Back_Config} config
  * @param {TeqFw_Core_Back_Api_Dto_Command.Factory} fCommand
+ * @returns {TeqFw_Core_Back_Api_Dto_Command}
+ * @constructor
+ * @memberOf TeqFw_Core_Back_Cli_Version
  */
 export default function Factory(
     {
