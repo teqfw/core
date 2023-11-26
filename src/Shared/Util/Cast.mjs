@@ -153,6 +153,16 @@ function castInt(data) {
 }
 
 /**
+ * Deep clone of the original object.
+ * @param {Object} data
+ * @return {Object}
+ * @memberOf TeqFw_Core_Shared_Util_Cast
+ */
+function castObject(data) {
+    return (typeof data === 'object') ? JSON.parse(JSON.stringify(data)) : {};
+}
+
+/**
  * Cast input data as a map (objects inside object).
  * @param {Object} data
  * @param {function} fact
@@ -215,6 +225,7 @@ Object.defineProperty(castDecimal, 'namespace', {value: NS});
 Object.defineProperty(castEnum, 'namespace', {value: NS});
 Object.defineProperty(castFunction, 'namespace', {value: NS});
 Object.defineProperty(castInt, 'namespace', {value: NS});
+Object.defineProperty(castObject, 'namespace', {value: NS});
 Object.defineProperty(castObjectsMap, 'namespace', {value: NS});
 Object.defineProperty(castPrimitive, 'namespace', {value: NS});
 Object.defineProperty(castString, 'namespace', {value: NS});
@@ -231,6 +242,7 @@ export {
     castEnum,
     castFunction,
     castInt,
+    castObject,
     castObjectsMap,
     castPrimitive,
     castString,
