@@ -8,6 +8,7 @@
  * This is documentation only code (not executable).
  *
  * @interface
+ * @deprecated use TeqFw_Core_Shared_Api_Act
  */
 export default class TeqFw_Core_Shared_Api_Action_Async {
     /**

@@ -1,5 +1,9 @@
 # @teqfw/core: releases
 
+# 0.x.x
+
+* `TeqFw_Core_Shared_Api_Act` is added instead of `TeqFw_Core_Shared_Api_Action` & `TeqFw_Core_Shared_Api_Action_Async`.
+
 # 0.20.1
 
 * New DI initialization (parser, pre-, post-processors).
