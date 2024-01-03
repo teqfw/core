@@ -3,6 +3,7 @@
 # 0.x.x
 
 * `TeqFw_Core_Shared_Api_Act` is added instead of `TeqFw_Core_Shared_Api_Action` & `TeqFw_Core_Shared_Api_Action_Async`.
+* Some shared defaults are moved to `@teqfw/web` plugin (`DIR_SRC_`).
 
 # 0.20.1
 
