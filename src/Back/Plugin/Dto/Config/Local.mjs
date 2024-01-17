@@ -28,14 +28,13 @@ class Dto {
  */
 export default class TeqFw_Core_Back_Plugin_Dto_Config_Local {
     /**
-     * @param {TeqFw_Core_Shared_Util_Cast.castBoolean|function} castBoolean
-     * @param {TeqFw_Core_Shared_Util_Cast.castString|function} castString
+     * @param {TeqFw_Core_Shared_Util_Cast} util
      */
     constructor(
         {
-            ['TeqFw_Core_Shared_Util_Cast.castBoolean']: castBoolean,
-            ['TeqFw_Core_Shared_Util_Cast.castString']: castString,
-        }) {
+            TeqFw_Core_Shared_Util_Cast$: util,
+        }
+    ) {
         // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Back_Plugin_Dto_Config_Local.Dto} [data]
@@ -44,9 +43,9 @@ export default class TeqFw_Core_Back_Plugin_Dto_Config_Local {
         this.createDto = function (data) {
             // create new DTO and populate it with initialization data
             const res = Object.assign(new Dto(), data);
-            // cast known attributes
-            res.devMode = castBoolean(data?.devMode);
-            res.uuid = castString(data?.uuid);
+            // util.cast known attributes
+            res.devMode = util.castBoolean(data?.devMode);
+            res.uuid = util.castString(data?.uuid);
             return res;
         }
     }

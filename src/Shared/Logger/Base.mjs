@@ -11,7 +11,8 @@ export default class TeqFw_Core_Shared_Logger_Base {
         {
             TeqFw_Core_Shared_Api_Logger_Transport$: transport,
             TeqFw_Core_Shared_Dto_Log$: dtoLog,
-        }) {
+        }
+    ) {
         // VARS
         /** @type {TeqFw_Core_Shared_Dto_Log.Dto[]} */
         const _queue = [];

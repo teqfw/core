@@ -30,16 +30,17 @@ class Dto {
  */
 export default class TeqFw_Core_Back_Plugin_Dto_Desc_Di {
     /**
-     * @param {TeqFw_Core_Shared_Util_Cast.castArrayOfObj|function} castArrayOfObj
+     * @param {TeqFw_Core_Shared_Util_Cast} util
      * @param {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Autoload} dtoAutoload
      * @param {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace} dtoReplace
      */
     constructor(
         {
-            ['TeqFw_Core_Shared_Util_Cast.castArrayOfObj']: castArrayOfObj,
+            TeqFw_Core_Shared_Util_Cast$: util,
             TeqFw_Core_Back_Plugin_Dto_Desc_Di_Autoload$: dtoAutoload,
             TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace$: dtoReplace,
-        }) {
+        }
+    ) {
         // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Back_Plugin_Dto_Desc_Di.Dto} [data]
@@ -50,7 +51,7 @@ export default class TeqFw_Core_Back_Plugin_Dto_Desc_Di {
             const res = Object.assign(new Dto(), data);
             // cast known attributes
             res.autoload = dtoAutoload.createDto(data?.autoload);
-            res.replaces = castArrayOfObj(data?.replaces, dtoReplace.createDto);
+            res.replaces = util.castArrayOfObj(data?.replaces, dtoReplace.createDto);
             return res;
         };
     }

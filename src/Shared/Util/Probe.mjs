@@ -11,6 +11,7 @@ const NS = 'TeqFw_Core_Shared_Util_Probe';
  * @return {Object}
  * @memberOf TeqFw_Core_Shared_Util_Probe
  * @deprecated use TeqFw_Core_Shared_Util_Cast.castObject
+ * TODO: remove it after 2024/06/01
  */
 function deepClone(orig) {
     return JSON.parse(JSON.stringify(orig));

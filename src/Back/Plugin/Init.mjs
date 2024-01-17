@@ -15,7 +15,8 @@ export default function (
         TeqFw_Core_Shared_Logger_Base$: loggerBase,
         TeqFw_Core_Shared_Api_Logger_Transport$: transport,
         TeqFw_Core_Back_Mod_App_Uuid$: modUuid,
-    }) {
+    }
+) {
     // FUNCS
     async function action() {
         // set transport implementation after plugins being loaded (DI rewrites)

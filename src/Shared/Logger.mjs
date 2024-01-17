@@ -12,7 +12,8 @@ export default class TeqFw_Core_Shared_Logger {
     constructor(
         {
             TeqFw_Core_Shared_Logger_Base$: base,
-        }) {
+        }
+    ) {
         // VARS
         let _ns = this.constructor.name; // default namespace should be changed after instantiation
 

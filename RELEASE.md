@@ -1,9 +1,10 @@
 # @teqfw/core: releases
 
-# 0.x.x
+# 0.21.x
 
 * `TeqFw_Core_Shared_Api_Act` is added instead of `TeqFw_Core_Shared_Api_Action` & `TeqFw_Core_Shared_Api_Action_Async`.
 * Some shared defaults are moved to `@teqfw/web` plugin (`DIR_SRC_`).
+* Class based casting utilities (`TeqFw_Core_Shared_Util_Cast`).
 
 # 0.20.1
 

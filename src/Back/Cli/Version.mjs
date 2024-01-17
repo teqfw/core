@@ -22,7 +22,8 @@ export default function Factory(
         TeqFw_Core_Back_Defaults$: DEF,
         TeqFw_Core_Back_Config$: config,
         ['TeqFw_Core_Back_Api_Dto_Command.Factory$']: fCommand,
-    }) {
+    }
+) {
     // FUNCS
     /**
      * Command action.

@@ -19,7 +19,8 @@ export default class TeqFw_Core_Back_Mod_App_Uuid {
             TeqFw_Core_Back_Defaults$: DEF,
             TeqFw_Core_Shared_Api_Logger$$: logger,
             TeqFw_Core_Back_Config$: config,
-        }) {
+        }
+    ) {
         // VARS
         let _uuid;
 

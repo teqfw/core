@@ -13,9 +13,6 @@ describe('TeqFw_Core_Shared_Util_Cast', function () {
 
     describe('castArray', function () {
         const fn = util.castArray;
-        it('has right namespace', async () => {
-            assert.strictEqual(fn.namespace, 'TeqFw_Core_Shared_Util_Cast');
-        });
         it('returns empty array for wrong input', async () => {
             const res = fn(null);
             assert(Array.isArray(res) & res.length === 0, 'expected empty array');
@@ -30,9 +27,6 @@ describe('TeqFw_Core_Shared_Util_Cast', function () {
 
     describe('castBoolean', function () {
         const fn = util.castBoolean;
-        it('has right namespace', async () => {
-            assert.strictEqual(fn.namespace, 'TeqFw_Core_Shared_Util_Cast');
-        });
         it('returns true', async () => {
             const r1 = fn('true');
             const r2 = fn('TRUE');
@@ -61,9 +55,6 @@ describe('TeqFw_Core_Shared_Util_Cast', function () {
 
     describe('castBooleanIfExists', function () {
         const fn = util.castBooleanIfExists;
-        it('has right namespace', async () => {
-            assert.strictEqual(fn.namespace, 'TeqFw_Core_Shared_Util_Cast');
-        });
         it('returns true', async () => {
             const r1 = fn('true');
             const r2 = fn('TRUE');
@@ -94,9 +85,6 @@ describe('TeqFw_Core_Shared_Util_Cast', function () {
 
     describe('castEnum', function () {
         const fn = util.castEnum;
-        it('has right namespace', async () => {
-            assert.strictEqual(fn.namespace, 'TeqFw_Core_Shared_Util_Cast');
-        });
         it('returns value', async () => {
             const data = 'value';
             const enu = {KEY: 'value', OTHER: 'other'};

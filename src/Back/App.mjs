@@ -61,7 +61,8 @@ export default class TeqFw_Core_Back_App {
             TeqFw_Core_Back_App_Plugin_Loader$: pluginScan,
             TeqFw_Core_Shared_App_Di_PreProcessor_Replace$: replaceChunk,
             TeqFw_Core_Shared_Enum_Sphere$: SPHERE,
-        }) {
+        }
+    ) {
         // VARS
         const program = new Command();
         /** @type {TeqFw_Core_Back_Api_Plugin_Registry} */

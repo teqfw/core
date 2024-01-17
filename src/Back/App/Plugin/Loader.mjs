@@ -24,7 +24,8 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
             'TeqFw_Core_Back_Plugin_Dto_Desc_Di$': dtoDiDesc,
             'TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace$': dtoDiReplace,
             'TeqFw_Core_Shared_Enum_Sphere$': SPHERE,
-        }) {
+        }
+    ) {
         // INSTANCE METHODS
 
         /**
