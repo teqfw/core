@@ -64,17 +64,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * @return {boolean}
      */
     castBoolean(data) {
-        if ((data === true)
-            || ((typeof data === 'string')
-                && (
-                    (data.toLowerCase() === 'true')
-                    || (data.toLowerCase() === 'yes')
-                ))
-            || ((typeof data === 'number') && (data !== 0))
-        ) {
-            return true;
-        }
-        return false;
+        return this.boolean(data);
     }
 
     /**
@@ -92,8 +82,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * @return {Date|undefined}
      */
     castDate(data) {
-        return ((typeof data === 'object') && (data instanceof Date)) ? new Date(data) :
-            ((typeof data === 'string') || (typeof data === 'number')) ? new Date(data) : undefined;
+        return this.date(data);
     }
 
     /**
@@ -137,9 +126,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * @return {number|undefined}
      */
     castInt(data) {
-        const norm = (typeof data === 'string') ? data.trim() : data;
-        const res = Number.parseInt(norm);
-        return ((typeof res === 'number') && (!isNaN(res))) ? res : undefined;
+        return this.int(data);
     }
 
     /**
@@ -190,6 +177,55 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * @return {string|undefined}
      */
     castString(data) {
+        return this.string(data);
+    }
+
+    /**
+     * Cast input data into 'boolean' data type.
+     * @param {*} data
+     * @return {boolean}
+     */
+    boolean(data) {
+        if ((data === true)
+            || ((typeof data === 'string')
+                && (
+                    (data.toLowerCase() === 'true')
+                    || (data.toLowerCase() === 'yes')
+                ))
+            || ((typeof data === 'number') && (data !== 0))
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Cast input data into 'boolean' data type if input defined.
+     * @param {Date|string|number} data
+     * @return {Date|undefined}
+     */
+    date(data) {
+        return ((typeof data === 'object') && (data instanceof Date)) ? new Date(data) :
+            ((typeof data === 'string') || (typeof data === 'number')) ? new Date(data) : undefined;
+    }
+
+    /**
+     * Cast input data into integer 'number' data type.
+     * @param {*} data
+     * @return {number|undefined}
+     */
+    int(data) {
+        const norm = (typeof data === 'string') ? data.trim() : data;
+        const res = Number.parseInt(norm);
+        return ((typeof res === 'number') && (!isNaN(res))) ? res : undefined;
+    }
+
+    /**
+     * Cast input data into 'string' data type.
+     * @param {*} data
+     * @return {string|undefined}
+     */
+    string(data) {
         if (typeof data === 'string') {
             return data;
         } else if (typeof data === 'number') {
@@ -210,17 +246,17 @@ const castArray = util.castArray;
 const castArrayOfObj = util.castArrayOfObj;
 const castArrayOfStr = util.castArrayOfStr;
 const castBin = util.castBin;
-const castBoolean = util.castBoolean;
+const castBoolean = util.boolean;
 const castBooleanIfExists = util.castBooleanIfExists;
-const castDate = util.castDate;
+const castDate = util.date;
 const castDecimal = util.castDecimal;
 const castEnum = util.castEnum;
 const castFunction = util.castFunction;
-const castInt = util.castInt;
+const castInt = util.int;
 const castObject = util.castObject;
 const castObjectsMap = util.castObjectsMap;
 const castPrimitive = util.castPrimitive;
-const castString = util.castString;
+const castString = util.string;
 
 export {
     castArray,
