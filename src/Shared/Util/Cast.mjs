@@ -135,7 +135,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * @return {Object}
      */
     castObject(data) {
-        return (typeof data === 'object') ? JSON.parse(JSON.stringify(data)) : {};
+        return this.object(data);
     }
 
     /**
@@ -220,6 +220,10 @@ export default class TeqFw_Core_Shared_Util_Cast {
         return ((typeof res === 'number') && (!isNaN(res))) ? res : undefined;
     }
 
+    object(data) {
+        return (typeof data === 'object') ? JSON.parse(JSON.stringify(data)) : {};
+    }
+
     /**
      * Cast input data into 'string' data type.
      * @param {*} data
@@ -253,7 +257,7 @@ const castDecimal = util.castDecimal;
 const castEnum = util.castEnum;
 const castFunction = util.castFunction;
 const castInt = util.int;
-const castObject = util.castObject;
+const castObject = util.object;
 const castObjectsMap = util.castObjectsMap;
 const castPrimitive = util.castPrimitive;
 const castString = util.string;
