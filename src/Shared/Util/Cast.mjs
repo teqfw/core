@@ -103,9 +103,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * @return {string|undefined}
      */
     castEnum(data, enu, capitalize = true) {
-        const values = Object.values(enu);
-        const norm = (capitalize && (typeof data === 'string')) ? data.toUpperCase() : data;
-        return values.includes(norm) ? norm : undefined;
+        return this.enum(data, enu, capitalize);
     }
 
     /**
@@ -145,13 +143,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * @returns {Object<number|string, Object>}
      */
     castObjectsMap(data, fact) {
-        const defFunc = (a) => a ?? {}; // return input itself or empty Object
-        const norm = (typeof fact === 'function') ? fact : defFunc;
-        const res = {};
-        if ((typeof data === 'object') && (data !== null)) {
-            for (const key of Object.keys(data)) res[key] = norm(data[key]);
-        }
-        return res;
+        return this.objectsMap(data, fact);
     }
 
     /**
@@ -210,6 +202,19 @@ export default class TeqFw_Core_Shared_Util_Cast {
     }
 
     /**
+     * Cast input data into object value (enumerations).
+     * @param {*} data
+     * @param {Object} enu constant with allowable values
+     * @param {boolean} capitalize 'true' - capitalize data before comparison
+     * @return {string|undefined}
+     */
+    enum(data, enu, capitalize = true) {
+        const values = Object.values(enu);
+        const norm = (capitalize && (typeof data === 'string')) ? data.toUpperCase() : data;
+        return values.includes(norm) ? norm : undefined;
+    }
+
+    /**
      * Cast input data into integer 'number' data type.
      * @param {*} data
      * @return {number|undefined}
@@ -222,6 +227,22 @@ export default class TeqFw_Core_Shared_Util_Cast {
 
     object(data) {
         return (typeof data === 'object') ? JSON.parse(JSON.stringify(data)) : {};
+    }
+
+    /**
+     * Cast input data as a map (objects inside object).
+     * @param {Object} data
+     * @param {function} fact
+     * @returns {Object<number|string, Object>}
+     */
+    objectsMap(data, fact) {
+        const defFunc = (a) => a ?? {}; // return input itself or empty Object
+        const norm = (typeof fact === 'function') ? fact : defFunc;
+        const res = {};
+        if ((typeof data === 'object') && (data !== null)) {
+            for (const key of Object.keys(data)) res[key] = norm(data[key]);
+        }
+        return res;
     }
 
     /**
@@ -254,11 +275,11 @@ const castBoolean = util.boolean;
 const castBooleanIfExists = util.castBooleanIfExists;
 const castDate = util.date;
 const castDecimal = util.castDecimal;
-const castEnum = util.castEnum;
+const castEnum = util.enum;
 const castFunction = util.castFunction;
 const castInt = util.int;
 const castObject = util.object;
-const castObjectsMap = util.castObjectsMap;
+const castObjectsMap = util.objectsMap;
 const castPrimitive = util.castPrimitive;
 const castString = util.string;
 
