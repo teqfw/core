@@ -44,7 +44,7 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
             async function extractPluginData(scanned) {
                 const res = [];
                 for (const one of Object.values(scanned)) {
-                    logger.info(`Teq-module is found in '${one.path}'.`);
+                    logger.info(`    ${one.path}`);
                     const item = fItem.create();
                     item.deps = (typeof one.package?.dependencies === 'object')
                         ? Object.keys(one.package.dependencies) : [];
@@ -137,7 +137,7 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
             }
 
             // MAIN
-            logger.info(`Scan '${root}' for teq-modules.`);
+            logger.info(`Scan '${root}' for teq-plugins.`);
             const scanData = await scan(root);
             const items = await extractPluginData(scanData);
             const names = [];
@@ -160,7 +160,7 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
             const levels = composeLevels(names, items);
             registry.setLevels(levels);
             //
-            logger.info(`Total '${items.length}' teq-modules are found.`);
+            logger.info(`Total '${items.length}' teq-plugins are found.`);
             return registry;
         };
     }

@@ -4,12 +4,10 @@
  */
 export default class TeqFw_Core_Shared_Logger_Base {
     /**
-     * @param {TeqFw_Core_Shared_Api_Logger_Transport} transport
      * @param {TeqFw_Core_Shared_Dto_Log} dtoLog
      */
     constructor(
         {
-            TeqFw_Core_Shared_Api_Logger_Transport$: transport,
             TeqFw_Core_Shared_Dto_Log$: dtoLog,
         }
     ) {
@@ -17,7 +15,7 @@ export default class TeqFw_Core_Shared_Logger_Base {
         /** @type {TeqFw_Core_Shared_Dto_Log.Dto[]} */
         const _queue = [];
         /** @type {TeqFw_Core_Shared_Api_Logger_Transport} */
-        let _transport = transport;
+        let _transport;
 
         // FUNCS
         /**
