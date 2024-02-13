@@ -13,7 +13,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * @param {*} data
      * @return {Array}
      */
-    castArray(data) {
+    array(data) {
         return Array.isArray(data) ? [...data] : [];
     }
 
@@ -23,7 +23,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * @param {function} [fact]
      * @return {Array}
      */
-    castArrayOfObj(data, fact) {
+    arrayOfObj(data, fact) {
         const defFunc = (a) => a ?? {}; // return input itself or empty Object
         const norm = (typeof fact === 'function') ? fact : defFunc;
         return Array.isArray(data)
@@ -36,7 +36,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * @param {*} data
      * @return {Array}
      */
-    castArrayOfStr(data) {
+    arrayOfStr(data) {
         return Array.isArray(data)
             ? data.map((one) => castString(one))
             : [];
@@ -47,7 +47,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * @param {*} data
      * @return {Uint8Array}
      */
-    castBin(data) {
+    bin(data) {
         if (typeof data === 'string') {
             return ENCODER.encode(data);
         } else if (data instanceof Uint8Array) {
@@ -56,120 +56,6 @@ export default class TeqFw_Core_Shared_Util_Cast {
             return res;
         }
         return data;
-    }
-
-    /**
-     * Cast input data into 'boolean' data type.
-     * @param {*} data
-     * @return {boolean}
-     */
-    castBoolean(data) {
-        return this.boolean(data);
-    }
-
-    /**
-     * Cast input data into 'boolean' data type if input defined.
-     * @param {*} data
-     * @return {boolean|undefined}
-     */
-    castBooleanIfExists(data) {
-        return ((data === undefined) || (data === null)) ? data : castBoolean(data);
-    }
-
-    /**
-     * Cast input data into 'boolean' data type if input defined.
-     * @param {Date|string|number} data
-     * @return {Date|undefined}
-     */
-    castDate(data) {
-        return this.date(data);
-    }
-
-    /**
-     * Cast input data into decimal 'number' data type.
-     * @param {*} data
-     * @return {number|undefined}
-     */
-    castDecimal(data) {
-        const res = Number.parseFloat(data);
-        return ((typeof res === 'number') && (!isNaN(res))) ? res : undefined;
-    }
-
-    /**
-     * Cast input data into object value (enumerations).
-     * @param {*} data
-     * @param {Object} enu constant with allowable values
-     * @param {boolean} capitalize 'true' - capitalize data before comparison
-     * @return {string|undefined}
-     */
-    castEnum(data, enu, capitalize = true) {
-        return this.enum(data, enu, capitalize);
-    }
-
-    /**
-     * Cast input data into 'function' data type.
-     * @param {*} data
-     * @return {function|undefined}
-     */
-    castFunction(data) {
-        if (typeof data === 'function') {
-            return data;
-        }
-        return undefined;
-    }
-
-    /**
-     * Cast input data into integer 'number' data type.
-     * @param {*} data
-     * @return {number|undefined}
-     */
-    castInt(data) {
-        return this.int(data);
-    }
-
-    /**
-     * Deep clone of the original object.
-     * @param {Object} data
-     * @return {Object}
-     */
-    castObject(data) {
-        return this.object(data);
-    }
-
-    /**
-     * Cast input data as a map (objects inside object).
-     * @param {Object} data
-     * @param {function} fact
-     * @returns {Object<number|string, Object>}
-     */
-    castObjectsMap(data, fact) {
-        return this.objectsMap(data, fact);
-    }
-
-    /**
-     * Cast input data into some primitive type.
-     * @param data
-     * @return {undefined|string|number|boolean|symbol|bigint}
-     */
-    castPrimitive(data) {
-        if (
-            (typeof data === 'string')
-            || (typeof data === 'number')
-            || (typeof data === 'boolean')
-            || (typeof data === 'symbol')
-            || (typeof data === 'bigint')
-            || (data === null)
-        ) return data;
-        return undefined;
-    }
-
-    /**
-     * Cast input data into 'string' data type.
-     * @param {*} data
-     * @return {string|undefined}
-     */
-    castString(data) {
-        return this.string(data);
     }
 
     /**
@@ -193,12 +79,60 @@ export default class TeqFw_Core_Shared_Util_Cast {
 
     /**
      * Cast input data into 'boolean' data type if input defined.
+     * @param {*} data
+     * @return {boolean|undefined}
+     */
+    booleanIfExists(data) {
+        return ((data === undefined) || (data === null)) ? data : castBoolean(data);
+    }
+
+    /**
+     * Cast input data into 'boolean' data type if input defined.
      * @param {Date|string|number} data
      * @return {Date|undefined}
      */
     date(data) {
         return ((typeof data === 'object') && (data instanceof Date)) ? new Date(data) :
             ((typeof data === 'string') || (typeof data === 'number')) ? new Date(data) : undefined;
+    }
+
+    /**
+     * Cast input data into decimal 'number' data type.
+     * @param {*} data
+     * @return {number|undefined}
+     */
+    decimal(data) {
+        const res = Number.parseFloat(data);
+        return ((typeof res === 'number') && (!isNaN(res))) ? res : undefined;
+    }
+
+    /**
+     * Cast input data into 'function' data type.
+     * @param {*} data
+     * @return {function|undefined}
+     */
+    function(data) {
+        if (typeof data === 'function') {
+            return data;
+        }
+        return undefined;
+    }
+
+    /**
+     * Cast input data into some primitive type.
+     * @param data
+     * @return {undefined|string|number|boolean|symbol|bigint}
+     */
+    primitive(data) {
+        if (
+            (typeof data === 'string')
+            || (typeof data === 'number')
+            || (typeof data === 'boolean')
+            || (typeof data === 'symbol')
+            || (typeof data === 'bigint')
+            || (data === null)
+        ) return data;
+        return undefined;
     }
 
     /**
@@ -265,23 +199,22 @@ export default class TeqFw_Core_Shared_Util_Cast {
 // MODULE'S MAIN
 
 // this is the old approach (function based), use decomposition for `TeqFw_Core_Shared_Util_Cast$` singleton.
-const util = new TeqFw_Core_Shared_Util_Cast();
 
-const castArray = util.castArray;
-const castArrayOfObj = util.castArrayOfObj;
-const castArrayOfStr = util.castArrayOfStr;
-const castBin = util.castBin;
-const castBoolean = util.boolean;
-const castBooleanIfExists = util.castBooleanIfExists;
-const castDate = util.date;
-const castDecimal = util.castDecimal;
-const castEnum = util.enum;
-const castFunction = util.castFunction;
-const castInt = util.int;
-const castObject = util.object;
-const castObjectsMap = util.objectsMap;
-const castPrimitive = util.castPrimitive;
-const castString = util.string;
+const castArray = TeqFw_Core_Shared_Util_Cast.prototype.castArray = TeqFw_Core_Shared_Util_Cast.prototype.array;
+const castArrayOfObj = TeqFw_Core_Shared_Util_Cast.prototype.castArrayOfObj = TeqFw_Core_Shared_Util_Cast.prototype.arrayOfObj;
+const castArrayOfStr = TeqFw_Core_Shared_Util_Cast.prototype.castArrayOfStr = TeqFw_Core_Shared_Util_Cast.prototype.arrayOfStr;
+const castBin = TeqFw_Core_Shared_Util_Cast.prototype.castBin = TeqFw_Core_Shared_Util_Cast.prototype.bin;
+const castBoolean = TeqFw_Core_Shared_Util_Cast.prototype.castBoolean = TeqFw_Core_Shared_Util_Cast.prototype.boolean;
+const castBooleanIfExists = TeqFw_Core_Shared_Util_Cast.prototype.castBooleanIfExists = TeqFw_Core_Shared_Util_Cast.prototype.booleanIfExists;
+const castDate = TeqFw_Core_Shared_Util_Cast.prototype.castDate = TeqFw_Core_Shared_Util_Cast.prototype.date;
+const castDecimal = TeqFw_Core_Shared_Util_Cast.prototype.castDecimal = TeqFw_Core_Shared_Util_Cast.prototype.decimal;
+const castEnum = TeqFw_Core_Shared_Util_Cast.prototype.castEnum = TeqFw_Core_Shared_Util_Cast.prototype.enum;
+const castFunction = TeqFw_Core_Shared_Util_Cast.prototype.castFunction = TeqFw_Core_Shared_Util_Cast.prototype.function;
+const castInt = TeqFw_Core_Shared_Util_Cast.prototype.castInt = TeqFw_Core_Shared_Util_Cast.prototype.int;
+const castObject = TeqFw_Core_Shared_Util_Cast.prototype.castObject = TeqFw_Core_Shared_Util_Cast.prototype.object;
+const castObjectsMap = TeqFw_Core_Shared_Util_Cast.prototype.castObjectsMap = TeqFw_Core_Shared_Util_Cast.prototype.objectsMap;
+const castPrimitive = TeqFw_Core_Shared_Util_Cast.prototype.castPrimitive = TeqFw_Core_Shared_Util_Cast.prototype.primitive;
+const castString = TeqFw_Core_Shared_Util_Cast.prototype.castString = TeqFw_Core_Shared_Util_Cast.prototype.string;
 
 export {
     castArray,
