@@ -5,12 +5,10 @@
 export default class TeqFw_Core_Shared_App_Di_PostProcessor_Proxy {
     /**
      * @param {TeqFw_Di_Api_Container} container
-     * @param {TeqFw_Core_Shared_Defaults} DEF
      */
     constructor(
         {
             container,
-            TeqFw_Core_Shared_Defaults$: DEF,
         }
     ) {
         // VARS
@@ -32,9 +30,15 @@ export default class TeqFw_Core_Shared_App_Di_PostProcessor_Proxy {
             map[orig] = wrapper;
         };
 
-        this.modify = function (obj, originalId, stack) {
+        this.modify = async function (obj, originalId, stack) {
             let res = obj;
-            if (map[originalId]) console.log(`Found!`);
+            const modOrig = originalId.moduleName;
+            if (map[modOrig]) {
+                const wrapId = originalId.value.replace(modOrig, map[modOrig]);
+                const wrapper = await container.get(wrapId);
+                wrapper.setOrigin(obj);
+                res = wrapper;
+            }
             return res;
         };
     }

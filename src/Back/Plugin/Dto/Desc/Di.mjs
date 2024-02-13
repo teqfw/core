@@ -19,6 +19,11 @@ class Dto {
      */
     autoload;
     /**
+     * Instructions to wrap objects in post-processing.
+     * @type {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy.Dto[]}
+     */
+    proxy;
+    /**
      * Replacements for object keys:
      * @type {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace.Dto[]}
      */

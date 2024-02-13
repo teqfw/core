@@ -13,7 +13,8 @@ export default class TeqFw_Core_Back_App_A_Init_Di {
      * @param {TeqFw_Di_Api_Container} container
      * @param {TeqFw_Core_Back_Defaults} DEF
      * @param {TeqFw_Core_Shared_Api_Logger} logger -  instance
-     * @param {TeqFw_Core_Shared_App_Di_PreProcessor_Replace} replaceChunk
+     * @param {TeqFw_Core_Shared_App_Di_PostProcessor_Proxy} chunkProxy
+     * @param {TeqFw_Core_Shared_App_Di_PreProcessor_Replace} chunkReplace
      * @param {typeof TeqFw_Core_Shared_Enum_Sphere} SPHERE
      */
     constructor(
@@ -21,7 +22,8 @@ export default class TeqFw_Core_Back_App_A_Init_Di {
             container,
             TeqFw_Core_Back_Defaults$: DEF,
             TeqFw_Core_Shared_Logger$$: logger, // inject the implementation
-            TeqFw_Core_Shared_App_Di_PreProcessor_Replace$: replaceChunk,
+            TeqFw_Core_Shared_App_Di_PostProcessor_Proxy$: chunkProxy,
+            TeqFw_Core_Shared_App_Di_PreProcessor_Replace$: chunkReplace,
             TeqFw_Core_Shared_Enum_Sphere$: SPHERE,
         }
     ) {
@@ -53,6 +55,24 @@ export default class TeqFw_Core_Back_App_A_Init_Di {
             }
 
             /**
+             * Extract data from ordered `@teqfw/di` nodes and initialize proxy wrappers.
+             * @param {TeqFw_Core_Shared_App_Di_PostProcessor_Proxy} chunk
+             * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]} items - ordered items
+             */
+            function initProxy(chunk, items) {
+                for (const item of items) {
+                    /** @type {TeqFw_Core_Back_Plugin_Dto_Desc_Di.Dto} */
+                    const desc = item.teqfw[DEF.SHARED.NAME_DI];
+                    if (Array.isArray(desc?.proxy))
+                        for (const one of desc.proxy)
+                            if (
+                                (one.sphere === SPHERE.BACK) ||
+                                (one.sphere === SPHERE.SHARED)
+                            ) chunk.map(one.from, one.to);
+                }
+            }
+
+            /**
              * Extract data from ordered `@teqfw/di` nodes and initialize replacements for depIds.
              * @param {TeqFw_Core_Shared_App_Di_PreProcessor_Replace} chunk
              * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]} items - ordered items
@@ -74,8 +94,8 @@ export default class TeqFw_Core_Back_App_A_Init_Di {
             const resolver = container.getResolver();
             const items = plugins.getItemsByLevels();
             initAutoload(resolver, items);
-            initReplaces(replaceChunk, items);
-            // TODO: init proxies
+            initProxy(chunkProxy, items);
+            initReplaces(chunkReplace, items);
         };
     }
 

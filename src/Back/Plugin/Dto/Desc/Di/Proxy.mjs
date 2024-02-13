@@ -1,28 +1,28 @@
 /**
- * Structure for the item of the '@teqfw/di/replace' node of the descriptor (teqfw.json).
+ * Structure for the item of the '@teqfw/di/proxy' node of the descriptor (teqfw.json).
  */
 // MODULE'S VARS
-const NS = 'TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace';
+const NS = 'TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy';
 
 // MODULE'S CLASSES
 /**
- * @memberOf TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace
+ * @memberOf TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy
  */
 class Dto {
     static namespace = NS;
     /**
-     * The object key to be replaced.
+     * The object key to be wrapped with a proxy.
      * @type {string}
      */
     from;
     /**
-     * Sphere of the replacement: front or back.
+     * The sphere of the wrapping: front or back.
      * @type {string}
      * @see TeqFw_Core_Shared_Enum_Sphere
      */
     sphere;
     /**
-     * The object key that replaces the original.
+     * The object key for the proxy object that wraps the original.
      * @type {string}
      */
     to;
@@ -31,7 +31,7 @@ class Dto {
 /**
  * @implements TeqFw_Core_Shared_Api_Factory_Dto
  */
-export default class TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace {
+export default class TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy {
     /**
      * @param {TeqFw_Core_Shared_Util_Cast} cast
      * @param {typeof TeqFw_Core_Shared_Enum_Sphere} SPHERE
@@ -44,8 +44,8 @@ export default class TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace {
     ) {
         // INSTANCE METHODS
         /**
-         * @param {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace.Dto} [data]
-         * @return {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace.Dto}
+         * @param {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy.Dto} [data]
+         * @return {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy.Dto}
          */
         this.createDto = function (data) {
             // create new DTO and populate it with initialization data
