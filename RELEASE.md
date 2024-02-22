@@ -1,10 +1,13 @@
 # @teqfw/core: releases
 
-# 0.21.x
+# 0.21.0
 
 * `TeqFw_Core_Shared_Api_Act` is added instead of `TeqFw_Core_Shared_Api_Action` & `TeqFw_Core_Shared_Api_Action_Async`.
 * Some shared defaults are moved to `@teqfw/web` plugin (`DIR_SRC_`).
 * Class based casting utilities (`TeqFw_Core_Shared_Util_Cast`).
+* Extract code from `TeqFw_Core_Back_App` into `TeqFw_Core_Back_App_A_Init_*` modules.
+* New `TeqFw_Core_Shared_App_Di_PostProcessor_Proxy` preprocessor & `TeqFw_Core_Shared_Api_Di_Proxy` interface.
+* New `@teqfw/di.proxy` node in `teqfw.json`.
 
 # 0.20.1
 
