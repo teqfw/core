@@ -134,6 +134,7 @@ export default class TeqFw_Core_Shared_App_Di_Parser_Legacy {
             (depId.indexOf('TeqFw_Web_') === 0) ||
             (depId.indexOf('TeqFw_Web_Api_') === 0) ||
             (depId.indexOf('TeqFw_Web_Event_') === 0) ||
+            (depId.indexOf('TeqFw_Web_Push_') === 0) ||
             (depId.indexOf('Ra_') === 0);
     }
 }

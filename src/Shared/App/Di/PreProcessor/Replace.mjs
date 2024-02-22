@@ -11,7 +11,7 @@ export default class TeqFw_Core_Shared_App_Di_PreProcessor_Replace {
          * Sample: {['Vnd_Plug_Interface']:'Vnd_Plug_Impl', ...}
          * @type {Object<string, string>}
          */
-        const replacements = {};
+        const map = {};
 
         // INSTANCE METHODS
 
@@ -22,12 +22,12 @@ export default class TeqFw_Core_Shared_App_Di_PreProcessor_Replace {
          * @param {string} alter ('Vnd_Plug_Impl')
          */
         this.add = function (orig, alter) {
-            replacements[orig] = alter;
+            map[orig] = alter;
         };
 
         this.modify = function (depId, originalId) {
             let module = depId.moduleName;
-            while (replacements[module]) module = replacements[module];
+            while (map[module]) module = map[module];
             if (module !== depId.moduleName) {
                 const res = Object.assign({}, depId);
                 res.moduleName = module;

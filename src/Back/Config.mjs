@@ -18,7 +18,8 @@ export default class TeqFw_Core_Back_Config {
         {
             TeqFw_Core_Back_Defaults$: DEF,
             ['TeqFw_Core_Shared_Util_Probe.deepFreeze']: deepFreeze,
-        }) {
+        }
+    ) {
         // VARS
         /** @type {Object} storage for local configuration */
         let _local;

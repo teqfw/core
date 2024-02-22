@@ -38,13 +38,11 @@ export class Factory {
     static namespace = NS;
 
     /**
-     * @param {function} castArray
-     * @param {function} castString
+     * @param {TeqFw_Core_Shared_Util_Cast} util
      */
     constructor(
         {
-            ['TeqFw_Core_Shared_Util_Cast.castArray']: castArray,
-            ['TeqFw_Core_Shared_Util_Cast.castString']: castString,
+            TeqFw_Core_Shared_Util_Cast$: util,
         }
     ) {
         // INSTANCE METHODS
@@ -54,9 +52,9 @@ export class Factory {
          */
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item();
-            res.deps = castArray(data?.deps);
-            res.name = castString(data?.name);
-            res.path = castString(data?.path);
+            res.deps = util.castArray(data?.deps);
+            res.name = util.castString(data?.name);
+            res.path = util.castString(data?.path);
             res.teqfw = Object.assign({}, data?.teqfw); // make a copy
             return res;
         }

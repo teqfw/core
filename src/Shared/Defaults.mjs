@@ -3,16 +3,8 @@
  */
 export default class TeqFw_Core_Shared_Defaults {
     DI_WRAP_PROXY = 'proxy'; // wrap DI result as factory proxy
-
-    NAME = '@teqfw/core'; // plugin's node in 'teqfw.json' & './cfg/local.json'
-    NAME_DI = '@teqfw/di'; // DI plugin's node in 'teqfw.json' & './cfg/local.json'
-
-    /**
-     * @type {string}
-     * @deprecated move it to web-plugin
-     */
-    DIR_SRC_FRONT = 'Auth';
-    DIR_SRC_SHARED = 'Shared';
+    NAME = '@teqfw/core'; // plugin's node in 'teqfw.json' & '.cfg/local.json'
+    NAME_DI = '@teqfw/di'; // DI plugin does not have own hardcoded defaults.
 
     constructor() {
         Object.freeze(this);

@@ -30,16 +30,13 @@ class Dto {
  */
 export default class TeqFw_Core_Shared_Dto_Log {
     /**
-     * @param {TeqFw_Core_Shared_Util_Cast.castDate|function} castDate
-     * @param {TeqFw_Core_Shared_Util_Cast.castBoolean|function} castBoolean
-     * @param {TeqFw_Core_Shared_Util_Cast.castString|function} castString
+     * @param {TeqFw_Core_Shared_Util_Cast} util
      */
     constructor(
         {
-            ['TeqFw_Core_Shared_Util_Cast.castDate']: castDate,
-            ['TeqFw_Core_Shared_Util_Cast.castBoolean']: castBoolean,
-            ['TeqFw_Core_Shared_Util_Cast.castString']: castString,
-        }) {
+            TeqFw_Core_Shared_Util_Cast$: util,
+        }
+    ) {
         // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Shared_Dto_Log.Dto} [data]
@@ -47,11 +44,11 @@ export default class TeqFw_Core_Shared_Dto_Log {
          */
         this.createDto = function (data) {
             const res = new Dto();
-            res.date = castDate(data?.date);
-            res.isError = castBoolean(data?.isError);
-            res.message = castString(data?.message);
-            res.meta = structuredClone(data?.meta);
-            res.source = castString(data?.source);
+            res.date = util.castDate(data?.date);
+            res.isError = util.castBoolean(data?.isError);
+            res.message = util.castString(data?.message);
+            res.meta = util.castObject(data?.meta);
+            res.source = util.castString(data?.source);
             return res;
         }
     }

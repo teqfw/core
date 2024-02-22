@@ -6,25 +6,30 @@
 export default class TeqFw_Core_Back_App_Plugin_Loader {
     /**
      * @param {TeqFw_Core_Back_Defaults} DEF
+     * @param {TeqFw_Core_Shared_Util_Cast} cast
      * @param {TeqFw_Core_Back_App_Plugin_Loader_A_Scan|function} scan
      * @param {TeqFw_Core_Shared_Logger} logger -  instance, not interface! we don't load replaces yet
      * @param {TeqFw_Core_Back_Api_Plugin_Registry} registry
      * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory} fItem
      * @param {TeqFw_Core_Back_Plugin_Dto_Desc_Di} dtoDiDesc
+     * @param {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy} dtoDiProxy
      * @param {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace} dtoDiReplace
      * @param {typeof TeqFw_Core_Shared_Enum_Sphere} SPHERE
      */
     constructor(
         {
             TeqFw_Core_Back_Defaults$: DEF,
+            TeqFw_Core_Shared_Util_Cast$: cast,
             'TeqFw_Core_Back_App_Plugin_Loader_A_Scan#': scan,
-            TeqFw_Core_Shared_Logger$$: logger,
+            TeqFw_Core_Shared_Logger$$: logger, // inject the implementation
             TeqFw_Core_Back_Api_Plugin_Registry$: registry,
             'TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory$': fItem,
-            'TeqFw_Core_Back_Plugin_Dto_Desc_Di$': dtoDiDesc,
-            'TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace$': dtoDiReplace,
-            'TeqFw_Core_Shared_Enum_Sphere$': SPHERE,
-        }) {
+            TeqFw_Core_Back_Plugin_Dto_Desc_Di$: dtoDiDesc,
+            TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy$: dtoDiProxy,
+            TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace$: dtoDiReplace,
+            TeqFw_Core_Shared_Enum_Sphere$: SPHERE,
+        }
+    ) {
         // INSTANCE METHODS
 
         /**
@@ -41,18 +46,42 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
              * @returns {Promise<TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item[]>}
              */
             async function extractPluginData(scanned) {
-                const res = [];
-                for (const one of Object.values(scanned)) {
-                    logger.info(`Teq-module is found in '${one.path}'.`);
-                    const item = fItem.create();
-                    item.deps = (typeof one.package?.dependencies === 'object')
-                        ? Object.keys(one.package.dependencies) : [];
-                    item.name = one.package.name;
-                    item.path = one.path;
-                    item.teqfw = one.teqfw;
-                    const desc = dtoDiDesc.createDto(item.teqfw[DEF.SHARED.NAME_DI]);
-                    // TODO: streamline this code
-                    const replaces = item.teqfw[DEF.SHARED.NAME_DI]['replaces'];
+                // FUNCS
+
+                /**
+                 * @param {Object} spheres
+                 * @return {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy.Dto[]}
+                 */
+                function composeDiProxy(spheres) {
+                    const res = [];
+                    if (spheres && Array.isArray(Object.keys(spheres)))
+                        for (const key of Object.keys(spheres)) {
+                            const sphere = cast.enum(key, SPHERE); // back, front, shared
+                            if (sphere) {
+                                // there is a valid sphere in the config
+                                const items = spheres[key];
+                                if (Array.isArray(Object.keys(items))) {
+                                    for (const depId of Object.keys(items)) {
+                                        if (typeof depId === 'string') {
+                                            const dto = dtoDiProxy.createDto();
+                                            dto.from = depId;
+                                            dto.sphere = sphere;
+                                            dto.to = items[depId];
+                                            res.push(dto);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    return res;
+                }
+
+                /**
+                 * @param {Object} replaces
+                 * @return {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace.Dto[]}
+                 */
+                function composeDiReplaces(replaces) {
+                    const res = [];
                     if (replaces && Array.isArray(Object.keys(replaces)))
                         for (const orig of Object.keys(replaces)) {
                             const one = replaces[orig];
@@ -63,7 +92,7 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
                                 dto.from = orig;
                                 dto.sphere = SPHERE.SHARED;
                                 dto.to = one;
-                                desc.replaces.push(dto);
+                                res.push(dto);
                             } else if (typeof one === 'object') {
                                 // {from: {back: to, front: to}}
                                 for (const key of Object.keys(one)) {
@@ -71,10 +100,28 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
                                     dto.from = orig;
                                     dto.sphere = SPHERE[key.toUpperCase()];
                                     dto.to = one[key];
-                                    desc.replaces.push(dto);
+                                    res.push(dto);
                                 }
                             }
                         }
+                    return res;
+                }
+
+                // MAIN
+                const res = [];
+                for (const one of Object.values(scanned)) {
+                    logger.info(`    ${one.path}`);
+                    const item = fItem.create();
+                    item.deps = (typeof one.package?.dependencies === 'object')
+                        ? Object.keys(one.package.dependencies) : [];
+                    item.name = one.package.name;
+                    item.path = one.path;
+                    item.teqfw = one.teqfw;
+                    const desc = dtoDiDesc.createDto(item.teqfw[DEF.SHARED.NAME_DI]);
+                    const replaces = item.teqfw[DEF.SHARED.NAME_DI]?.['replaces'];
+                    const proxy = item.teqfw[DEF.SHARED.NAME_DI]?.['proxy'];
+                    desc.replaces = composeDiReplaces(replaces);
+                    desc.proxy = composeDiProxy(proxy);
                     item.teqfw[DEF.SHARED.NAME_DI] = desc;
                     res.push(item);
                 }
@@ -136,7 +183,7 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
             }
 
             // MAIN
-            logger.info(`Scan '${root}' for teq-modules.`);
+            logger.info(`Scan '${root}' for teq-plugins.`);
             const scanData = await scan(root);
             const items = await extractPluginData(scanData);
             const names = [];
@@ -159,7 +206,7 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
             const levels = composeLevels(names, items);
             registry.setLevels(levels);
             //
-            logger.info(`Total '${items.length}' teq-modules are found.`);
+            logger.info(`Total '${items.length}' teq-plugins are found.`);
             return registry;
         };
     }

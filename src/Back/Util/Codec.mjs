@@ -12,7 +12,8 @@ export default class TeqFw_Core_Back_Util_Codec {
     constructor(
         {
             TeqFw_Core_Shared_Util_Codec: modShared,
-        }) {
+        }
+    ) {
         // FUNCS
         function validateBase64(s) {
             if (!(/^(?:[A-Za-z0-9+\/]{2}[A-Za-z0-9+\/]{2})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/.test(s))) {

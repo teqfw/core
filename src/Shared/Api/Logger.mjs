@@ -10,6 +10,7 @@
  * This is documentation only code (not executable).
  *
  * @interface
+ * TODO: add the `catch` method to log any errors on try-catch
  */
 export default class TeqFw_Core_Shared_Api_Logger {
 

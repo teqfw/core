@@ -10,14 +10,15 @@ export default class TeqFw_Core_Back_Mod_App_Pid {
     /**
      * @param {TeqFw_Core_Shared_Api_Logger} logger -  instance
      * @param {TeqFw_Core_Back_Config} config
-     * @param {TeqFw_Core_Shared_Util_Cast.castInt|function} castInt
+     * @param {TeqFw_Core_Shared_Util_Cast} util
      */
     constructor(
         {
             TeqFw_Core_Shared_Api_Logger$$: logger,
             TeqFw_Core_Back_Config$: config,
-            ['TeqFw_Core_Shared_Util_Cast.castInt']: castInt,
-        }) {
+            TeqFw_Core_Shared_Util_Cast$: util,
+        }
+    ) {
         // INSTANCE METHODS
         /**
          * @param {string} filename
@@ -29,7 +30,7 @@ export default class TeqFw_Core_Back_Mod_App_Pid {
                 const root = config.getPathToRoot();
                 const full = join(root, filename);
                 const data = readFileSync(full);
-                res = castInt(data);
+                res = util.castInt(data);
             } catch (e) {
                 logger.info(`Cannot read PID from file '${filename}'. Error: ${e.toString()}`);
             }
