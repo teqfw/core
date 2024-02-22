@@ -1,5 +1,11 @@
 # @teqfw/core: releases
 
+# 0.22.X
+
+# 0.21.1
+
+* Fix the wrong versioning.
+
 # 0.21.0
 
 * `TeqFw_Core_Shared_Api_Act` is added instead of `TeqFw_Core_Shared_Api_Action` & `TeqFw_Core_Shared_Api_Action_Async`.
