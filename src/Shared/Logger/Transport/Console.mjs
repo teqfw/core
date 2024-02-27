@@ -21,7 +21,7 @@ export default class TeqFw_Core_Shared_Logger_Transport_Console {
         this.log = function (dto) {
             const dt = formatTime(dto.date);
             const level = (dto.isError) ? 'error' : 'info';
-            console.log(`${dt} (${level} ${dto.source}}): ${dto.message}`);
+            console.log(`${dt} (${level} ${dto.source}): ${dto.message}`);
         };
     }
 
