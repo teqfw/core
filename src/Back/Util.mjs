@@ -3,7 +3,7 @@
  * @namespace TeqFw_Core_Back_Util
  */
 // MODULE'S IMPORT
-import {readFileSync, statSync, existsSync, readdirSync} from 'node:fs';
+import {existsSync, readdirSync, readFileSync, statSync} from 'node:fs';
 import {join} from 'node:path';
 
 // MODULE'S VARS
@@ -15,6 +15,7 @@ const NS = 'TeqFw_Core_Back_Util';
  * @param {String} filename
  * @returns {Object|null}
  * @memberOf TeqFw_Core_Back_Util
+ * @deprecated use TeqFw_Core_Back_Util_File
  */
 function readJson(filename) {
     let result = null;
@@ -45,6 +46,7 @@ function readJson(filename) {
  * @param {String} filename
  * @returns {string|null}
  * @memberOf TeqFw_Core_Back_Util
+ * @deprecated use TeqFw_Core_Back_Util_File
  */
 function readString(filename) {
     let result = null;
@@ -72,6 +74,7 @@ function readString(filename) {
  * @param {string} filename
  * @return {string[]}
  * @memberOf TeqFw_Core_Back_Util
+ * @deprecated use TeqFw_Core_Back_Util_File
  */
 function scanNodeModules(path, filename) {
     const res = [];
@@ -103,6 +106,7 @@ function scanNodeModules(path, filename) {
  * @param {string} path
  * @return {string[]}
  * @memberOf TeqFw_Core_Back_Util
+ * @deprecated use TeqFw_Core_Back_Util_File
  */
 function scanRecursively(path) {
     // FUNCS

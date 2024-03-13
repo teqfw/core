@@ -1,5 +1,9 @@
 # @teqfw/core: releases
 
+# 0.22.0
+
+* `TeqFw_Core_Back_Util_File` is added.
+
 # 0.21.1
 
 * Fix the wrong versioning.
