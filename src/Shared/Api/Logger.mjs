@@ -10,17 +10,24 @@
  * This is documentation only code (not executable).
  *
  * @interface
- * TODO: add the `catch` method to log any errors on try-catch
  */
 export default class TeqFw_Core_Shared_Api_Logger {
 
     /**
+     * Log the business level errors.
      * @param {string} msg
      * @param {Object} [meta]
      */
     error(msg, meta) {}
 
     /**
+     * Log the exceptions in `try-catch` & `Promise.catch()` blocks.
+     * @param {Error} e
+     */
+    exception(e) {}
+
+    /**
+     * Log the regular messages.
      * @param {string} msg
      * @param {Object} [meta]
      */

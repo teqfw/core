@@ -120,7 +120,7 @@ export default class TeqFw_Core_Back_App {
             } catch (e) {
                 await initLogger.act();
                 logger.error(e);
-                this.stop().catch(logger.error);
+                this.stop().catch(logger.exception);
             }
         };
 
