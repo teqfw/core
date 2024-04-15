@@ -11,7 +11,7 @@ const NS = 'TeqFw_Core_Back_Util_Cast';
 // MODULE'S CLASSES
 export default class TeqFw_Core_Back_Util_Cast {
     /**
-     * Cast input data into 'Uint8Array' data type.
+     * Cast input data into 'Buffer' data type.
      * @param {*} data
      * @return {Buffer}
      */
@@ -25,6 +25,15 @@ export default class TeqFw_Core_Back_Util_Cast {
         } else {
             return Buffer.from(data);
         }
+    }
+
+    /**
+     * Cast input data into 'Uint8Array' data type.
+     * @param {*} data
+     * @return {Uint8Array}
+     */
+    uint8(data) {
+        return new Uint8Array(data);
     }
 }
 
