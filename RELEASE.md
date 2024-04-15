@@ -1,5 +1,10 @@
 # @teqfw/core: releases
 
+# 0.23.0
+
+* The method `exception(e)` is added to `TeqFw_Core_Shared_Api_Logger`.
+* The cast utils module is used class notation in the 'Back' space.
+
 # 0.22.0
 
 * `TeqFw_Core_Back_Util_File` is added.

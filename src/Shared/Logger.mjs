@@ -8,7 +8,6 @@ export default class TeqFw_Core_Shared_Logger {
     /**
      * @param {TeqFw_Core_Shared_Logger_Base} base
      */
-
     constructor(
         {
             TeqFw_Core_Shared_Logger_Base$: base,
@@ -19,6 +18,7 @@ export default class TeqFw_Core_Shared_Logger {
 
         // INSTANCE METHODS
         this.error = (msg, meta) => base.error(_ns, msg, meta);
+        this.exception = (e) => base.error(_ns, e);
         this.info = (msg, meta) => base.info(_ns, msg, meta);
         this.setNamespace = (namespace) => _ns = namespace;
     }

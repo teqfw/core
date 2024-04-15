@@ -37,8 +37,8 @@ export default class TeqFw_Core_Shared_App_Di_Parser_Legacy {
      */
     constructor(
         {
-            'TeqFw_Di_Defs#': Defs,
-            'TeqFw_Di_DepId#': Dto,
+            TeqFw_Di_Defs$: Defs,
+            TeqFw_Di_DepId$AS: Dto,
             TeqFw_Core_Shared_Defaults$: DEF,
         }
     ) {
