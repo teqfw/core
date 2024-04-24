@@ -25,11 +25,11 @@ export class Factory {
     static namespace = NS;
 
     /**
-     * @param {TeqFw_Core_Shared_Util_Cast} util
+     * @param {TeqFw_Core_Shared_Util_Cast} cast
      */
     constructor(
         {
-            TeqFw_Core_Shared_Util_Cast$: util,
+            TeqFw_Core_Shared_Util_Cast$: cast,
         }
     ) {
         // INSTANCE METHODS
@@ -41,10 +41,10 @@ export class Factory {
             const res = new TeqFw_Core_Back_Api_Dto_Command_Argument();
             res.defaultValue = (typeof data?.defaultValue === 'object')
                 ? JSON.parse(JSON.stringify(data.defaultValue)) // make a copy
-                : util.castString(data.defaultValue);
-            res.description = util.castString(data?.description);
-            res.fn = util.castFunction(data?.fn);
-            res.name = util.castString(data?.name);
+                : cast.string(data.defaultValue);
+            res.description = cast.string(data?.description);
+            res.fn = cast.function(data?.fn);
+            res.name = cast.string(data?.name);
             return res;
         }
     }

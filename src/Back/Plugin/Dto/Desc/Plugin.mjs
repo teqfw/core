@@ -27,11 +27,11 @@ class Dto {
  */
 export default class TeqFw_Core_Back_Plugin_Dto_Desc_Plugin {
     /**
-     * @param {TeqFw_Core_Shared_Util_Cast} util
+     * @param {TeqFw_Core_Shared_Util_Cast} cast
      */
     constructor(
         {
-            TeqFw_Core_Shared_Util_Cast$: util,
+            TeqFw_Core_Shared_Util_Cast$: cast,
         }
     ) {
         // INSTANCE METHODS
@@ -43,8 +43,8 @@ export default class TeqFw_Core_Back_Plugin_Dto_Desc_Plugin {
             // create new DTO and populate it with initialization data
             const res = Object.assign(new Dto(), data);
             // cast known attributes
-            res.onInit = util.castString(data?.onInit);
-            res.onStop = util.castString(data?.onStop);
+            res.onInit = cast.string(data?.onInit);
+            res.onStop = cast.string(data?.onStop);
             return res;
         }
     }
