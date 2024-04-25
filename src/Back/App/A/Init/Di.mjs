@@ -68,7 +68,7 @@ export default class TeqFw_Core_Back_App_A_Init_Di {
                             if (
                                 (one.sphere === SPHERE.BACK) ||
                                 (one.sphere === SPHERE.SHARED)
-                            ) chunk.map(one.from, one.to);
+                            ) chunk.map(one.from, one.to, item.name);
                 }
             }
 

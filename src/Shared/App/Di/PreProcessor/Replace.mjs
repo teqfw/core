@@ -25,7 +25,7 @@ export default class TeqFw_Core_Shared_App_Di_PreProcessor_Replace {
             map[orig] = alter;
         };
 
-        this.modify = function (depId, originalId) {
+        this.modify = function (depId, originalId, stack) {
             let module = depId.moduleName;
             while (map[module]) module = map[module];
             if (module !== depId.moduleName) {
