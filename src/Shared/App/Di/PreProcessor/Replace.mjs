@@ -1,5 +1,16 @@
 /**
  * Pre-processor handler to replace one object key with another.
+ *
+ * Usage in teqfw.json:
+ *     "replaces": {
+ *       "back": {},
+ *       "front": {},
+ *       "shared": {
+ *         "TeqFw_Core_Shared_Api_Logger": "TeqFw_Core_Shared_Logger"
+ *       }
+ *     }
+ *
+ *
  * @implements TeqFw_Di_Api_Container_PreProcessor_Chunk
  */
 export default class TeqFw_Core_Shared_App_Di_PreProcessor_Replace {
