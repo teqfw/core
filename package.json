@@ -3,7 +3,7 @@
   "version": "0.24.0",
   "description": "TeqFW: plugins scanner, local configuration, commander.",
   "type": "module",
-  "main": "src/Back/App.mjs",
+  "main": "src/Back/Launcher.mjs",
   "keywords": [
     "ecmascript 2015",
     "es6+",

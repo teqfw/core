@@ -2,6 +2,8 @@
 
 # 0.24.0 - TODO
 
+* Add the Launcher (`TeqFw_Core_Back_Launcher`).
+
 # 0.23.0
 
 * The method `exception(e)` is added to `TeqFw_Core_Shared_Api_Logger`.
