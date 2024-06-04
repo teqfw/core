@@ -28,11 +28,11 @@ class Dto {
  */
 export default class TeqFw_Core_Back_Plugin_Dto_Config_Local {
     /**
-     * @param {TeqFw_Core_Shared_Util_Cast} util
+     * @param {TeqFw_Core_Shared_Util_Cast} cast
      */
     constructor(
         {
-            TeqFw_Core_Shared_Util_Cast$: util,
+            TeqFw_Core_Shared_Util_Cast$: cast,
         }
     ) {
         // INSTANCE METHODS
@@ -44,9 +44,9 @@ export default class TeqFw_Core_Back_Plugin_Dto_Config_Local {
             // create new DTO and populate it with initialization data
             const res = Object.assign(new Dto(), data);
             // util.cast known attributes
-            res.devMode = util.castBoolean(data?.devMode);
-            res.uuid = util.castString(data?.uuid);
+            res.devMode = cast.boolean(data?.devMode);
+            res.uuid = cast.string(data?.uuid);
             return res;
-        }
+        };
     }
 }

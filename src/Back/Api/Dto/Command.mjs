@@ -44,13 +44,13 @@ export class Factory {
     static namespace = NS;
 
     /**
-     * @param {TeqFw_Core_Shared_Util_Cast} util
+     * @param {TeqFw_Core_Shared_Util_Cast} cast
      * @param {TeqFw_Core_Back_Api_Dto_Command_Argument.Factory} fArg
      * @param {TeqFw_Core_Back_Api_Dto_Command_Option.Factory} fOpt
      */
     constructor(
         {
-            TeqFw_Core_Shared_Util_Cast$: util,
+            TeqFw_Core_Shared_Util_Cast$: cast,
             ['TeqFw_Core_Back_Api_Dto_Command_Argument.Factory$']: fArg,
             ['TeqFw_Core_Back_Api_Dto_Command_Option.Factory$']: fOpt,
         }
@@ -62,12 +62,12 @@ export class Factory {
          */
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Api_Dto_Command();
-            res.action = util.castFunction(data?.action);
-            res.args = util.castArrayOfObj(data?.args, fArg.create);
-            res.desc = util.castString(data?.desc);
-            res.name = util.castString(data?.name);
-            res.opts = util.castArrayOfObj(data?.opts, fOpt.create);
-            res.realm = util.castString(data?.realm);
+            res.action = cast.function(data?.action);
+            res.args = cast.arrayOfObj(data?.args, fArg.create);
+            res.desc = cast.string(data?.desc);
+            res.name = cast.string(data?.name);
+            res.opts = cast.arrayOfObj(data?.opts, fOpt.create);
+            res.realm = cast.string(data?.realm);
             return res;
         }
     }

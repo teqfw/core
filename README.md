@@ -1,30 +1,24 @@
 # @teqfw/core
 
-## Задачи core-плагина:
+The base plugin for any TeqFw-application. It allows building Node.js applications and running console commands.
 
-Предоставить back-приложение, которое выполняет следующие базовые функции:
+## Disclaimer
 
-* инициализация приложения
-* выполнение приложением запрошенной команды (CLI)
-* завершение приложения
+This package is a part of the [Tequila Framework](https://flancer32.com/what-is-teqfw-f84ab4c66abf) (TeqFW). The TeqFW
+is currently in an early stage of development and should be considered unstable. It may change rapidly, leading to
+breaking changes without prior notice. Use it at your own risk. Please note that contributions to the project are
+welcome, but they should only be made by those who understand and accept the risks of working with an unstable
+framework.
 
-Инициализация приложения включает в себя:
-
-* инициализация базового логгера
-* загрузка локальной конфигурации
-* сканирование файловой системы загрузка конфигурации teq-плагинов
-* конфигурация DI-контейнера (autoload & replacements)
-* инициализация teq-плагинов (выполнение init-функция для каждого плагина)
-* регистрация команд, предоставляемых плагинами
-
----
-
-| CAUTION: TeqFW is an unstable project w/o backward compatibility. Use it at your own risk. |
-|--------------------------------------------------------------------------------------------|
+## Overview
 
 This `teq`-plugin contains backend application to scan and registry other `teq`-plugins and is used in Tequila Framework
 based projects. `core`-plugin contains CLI [commander](https://github.com/tj/commander.js) and adds plugin's commands to
-the application. Also, core-plugin loads local configuration from `./cfg/local.json` (if file exist).
+the application. Also, core-plugin loads local configuration from `./cfg/local.json` (if the file exist).
+
+### Namespace
+
+This plugin uses `TeqFw_Core` namespace.
 
 ## Install
 
@@ -38,7 +32,7 @@ This plugin uses `TeqFw_Core` namespace.
 
 ## CLI commands
 
-These command are in the core-plugin:
+These commands are in the plugin:
 
 ```shell
 $ node ./bin/tequila.mjs help
@@ -90,33 +84,22 @@ Create script `./bin/tequila.mjs` to make TeqFW app from your project. Place thi
 ```ecmascript 6
 #!/usr/bin/env node
 'use strict';
-import {dirname, join} from 'path';
-import Container from '@teqfw/di';
+/** Create and run teq-app as a Node.js program. */
+// IMPORT
+import {dirname, join} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import teq from '@teqfw/core';
 
-/* Resolve paths to main folders */
+// VARS
+/* Resolve path to the root folder. */
 const url = new URL(import.meta.url);
-const script = url.pathname;
-const bin = dirname(script);  // current folder (./bin)
-const root = join(bin, '..'); // project root (./)
+const script = fileURLToPath(url);
+const bin = dirname(script);
+const path = join(bin, '..');
 
-try {
-    /* Create and setup DI container */
-    /** @type {TeqFw_Di_Api_Container} */
-    const container = new Container();
-    const pathDi = join(root, 'node_modules/@teqfw/di/src');
-    const pathCore = join(root, 'node_modules/@teqfw/core/src');
-    container.addSourceMapping('TeqFw_Di', pathDi, true, 'mjs');
-    container.addSourceMapping('TeqFw_Core', pathCore, true, 'mjs');
-
-    /* Request Container to construct App then run it */
-    /** @type {TeqFw_Core_Back_App} */
-    const app = await container.get('TeqFw_Core_Back_App$');
-    await app.init({path: root, version: '0.1.0'});
-    await app.run();
-} catch (e) {
-    console.error('Cannot create or run TeqFW application.');
-    console.dir(e);
-}
+// MAIN
+/* Run the teq-app from the given root path. */
+teq({path}).catch((e) => console.error(e));
 ```
 
 ### add `./teqfw.json`

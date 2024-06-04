@@ -30,11 +30,11 @@ class Dto {
  */
 export default class TeqFw_Core_Shared_Dto_Log {
     /**
-     * @param {TeqFw_Core_Shared_Util_Cast} util
+     * @param {TeqFw_Core_Shared_Util_Cast} cast
      */
     constructor(
         {
-            TeqFw_Core_Shared_Util_Cast$: util,
+            TeqFw_Core_Shared_Util_Cast$: cast,
         }
     ) {
         // INSTANCE METHODS
@@ -44,11 +44,11 @@ export default class TeqFw_Core_Shared_Dto_Log {
          */
         this.createDto = function (data) {
             const res = new Dto();
-            res.date = util.castDate(data?.date);
-            res.isError = util.castBoolean(data?.isError);
-            res.message = util.castString(data?.message);
-            res.meta = util.castObject(data?.meta);
-            res.source = util.castString(data?.source);
+            res.date = cast.date(data?.date);
+            res.isError = cast.boolean(data?.isError);
+            res.message = cast.string(data?.message);
+            res.meta = cast.object(data?.meta);
+            res.source = cast.string(data?.source);
             return res;
         }
     }

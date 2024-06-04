@@ -49,6 +49,7 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
                 // FUNCS
 
                 /**
+                 * The sample:
                  * @param {Object} spheres
                  * @return {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy.Dto[]}
                  */
@@ -77,15 +78,32 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
                 }
 
                 /**
-                 * @param {Object} replaces
+                 * @param {Object<string, Object>} spheres
                  * @return {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace.Dto[]}
                  */
-                function composeDiReplaces(replaces) {
-                    const res = [];
-                    if (replaces && Array.isArray(Object.keys(replaces)))
+                function composeDiReplaces(spheres) {
+                    // FUNCS
+                    /**
+                     * Return 'true' if all keys are from ['back', 'front','shared'] array.
+                     * @param {string[]} keys
+                     * @return {boolean}
+                     */
+                    function isSpheres(keys) {
+                        for (const key of keys)
+                            if (!cast.enum(key, SPHERE)) return false;
+                        return true;
+                    }
+
+                    /**
+                     * Parse old style of the replaces definition (namespaces => spheres).
+                     * @param {Object<string, Object>} replaces
+                     * @return {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace.Dto[]}
+                     */
+                    function oldStyle(replaces) {
+                        logger.error(`This style of replaces definition is deprecated, please use "spheres => namespaces" format.`);
+                        const res = [];
                         for (const orig of Object.keys(replaces)) {
                             const one = replaces[orig];
-
                             if (typeof one === 'string') {
                                 // {from: to}
                                 const dto = dtoDiReplace.createDto();
@@ -101,6 +119,32 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
                                     dto.sphere = SPHERE[key.toUpperCase()];
                                     dto.to = one[key];
                                     res.push(dto);
+                                }
+                            }
+                        }
+                        return res;
+                    }
+
+                    // MAIN
+                    const res = [];
+                    if (spheres && Array.isArray(Object.keys(spheres)))
+                        if (!isSpheres(Object.keys(spheres)))
+                            return oldStyle(spheres);
+                        else {
+                            // new style (spheres => namespaces)
+                            for (const key of Object.keys(spheres)) {
+                                const sphere = cast.enum(key, SPHERE); // back, front, shared
+                                const items = spheres[key];
+                                if (Array.isArray(Object.keys(items))) {
+                                    for (const depId of Object.keys(items)) {
+                                        if (typeof depId === 'string') {
+                                            const dto = dtoDiReplace.createDto();
+                                            dto.from = depId;
+                                            dto.sphere = sphere;
+                                            dto.to = items[depId];
+                                            res.push(dto);
+                                        }
+                                    }
                                 }
                             }
                         }
