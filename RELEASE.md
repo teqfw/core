@@ -1,13 +1,13 @@
 # @teqfw/core: releases
 
-# 0.24.0 - TODO
+# 0.24.0
 
 * Add the Launcher (`TeqFw_Core_Back_Launcher`).
 
 # 0.23.0
 
 * The method `exception(e)` is added to `TeqFw_Core_Shared_Api_Logger`.
-* The cast utils module is used class notation in the 'Back' space.
+* The cast utils module uses the class notation in the 'Back' space.
 
 # 0.22.0
 

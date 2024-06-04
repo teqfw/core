@@ -84,33 +84,22 @@ Create script `./bin/tequila.mjs` to make TeqFW app from your project. Place thi
 ```ecmascript 6
 #!/usr/bin/env node
 'use strict';
-import {dirname, join} from 'path';
-import Container from '@teqfw/di';
+/** Create and run teq-app as a Node.js program. */
+// IMPORT
+import {dirname, join} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import teq from '@teqfw/core';
 
-/* Resolve paths to main folders */
+// VARS
+/* Resolve path to the root folder. */
 const url = new URL(import.meta.url);
-const script = url.pathname;
-const bin = dirname(script);  // current folder (./bin)
-const root = join(bin, '..'); // project root (./)
+const script = fileURLToPath(url);
+const bin = dirname(script);
+const path = join(bin, '..');
 
-try {
-    /* Create and setup DI container */
-    /** @type {TeqFw_Di_Api_Container} */
-    const container = new Container();
-    const pathDi = join(root, 'node_modules/@teqfw/di/src');
-    const pathCore = join(root, 'node_modules/@teqfw/core/src');
-    container.addSourceMapping('TeqFw_Di', pathDi, true, 'mjs');
-    container.addSourceMapping('TeqFw_Core', pathCore, true, 'mjs');
-
-    /* Request Container to construct App then run it */
-    /** @type {TeqFw_Core_Back_App} */
-    const app = await container.get('TeqFw_Core_Back_App$');
-    await app.init({path: root, version: '0.1.0'});
-    await app.run();
-} catch (e) {
-    console.error('Cannot create or run TeqFW application.');
-    console.dir(e);
-}
+// MAIN
+/* Run the teq-app from the given root path. */
+teq({path}).catch((e) => console.error(e));
 ```
 
 ### add `./teqfw.json`
