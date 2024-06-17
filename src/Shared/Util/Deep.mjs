@@ -1,21 +1,8 @@
 /**
- * Utility functions to analyze data.
- * @namespace TeqFw_Core_Shared_Util_Probe
+ * This is a set of pure functions to process some objects in the deep.
  */
-// DEFINE WORKING VARS
-const NS = 'TeqFw_Core_Shared_Util_Probe';
 
-/**
- * Deep clone of the original object.
- * @param {Object} orig
- * @return {Object}
- * @memberOf TeqFw_Core_Shared_Util_Probe
- * @deprecated use TeqFw_Core_Shared_Util_Cast.castObject
- * TODO: remove it after 2024/06/01 (still used in the RA project)
- */
-function deepClone(orig) {
-    return JSON.parse(JSON.stringify(orig));
-}
+// MODULE'S FUNCS
 
 /**
  * Compare two variables for equivalence.
@@ -25,10 +12,21 @@ function deepClone(orig) {
  * @param {*} obj1
  * @param {*} obj2
  * @return {boolean}
- * @memberOf TeqFw_Core_Shared_Util_Probe
- * @deprecated use TeqFw_Core_Shared_Util_Deep
+ * @memberOf TeqFw_Core_Shared_Util_Deep
  */
 function deepEqual(obj1, obj2) {
+    // FUNCS
+    /**
+     * Check if value is primitive.
+     * @param {*} obj
+     * @return {boolean}
+     * @memberOf TeqFw_Core_Shared_Util_Probe
+     */
+    function isPrimitive(obj) {
+        return (obj !== Object(obj));
+    }
+
+    // MAIN
     let res;
     if (obj1 === obj2) res = true;
     else if (isPrimitive(obj1) && isPrimitive(obj2)) res = (obj1 === obj2);
@@ -64,8 +62,7 @@ function deepEqual(obj1, obj2) {
  * Example from MDN.
  * @param {Object} obj
  * @return {Object}
- * @memberOf TeqFw_Core_Shared_Util_Probe
- * @deprecated use TeqFw_Core_Shared_Util_Deep
+ * @memberOf TeqFw_Core_Shared_Util_Deep
  */
 function deepFreeze(obj) {
     const propNames = Reflect.ownKeys(obj);
@@ -76,6 +73,7 @@ function deepFreeze(obj) {
     return Object.freeze(obj);
 }
 
+
 /**
  * Deep merge of the 2 objects.
  * Source: https://gist.github.com/ahtcx/0cd94e62691f539160b32ecda18af3d6#gistcomment-2930530
@@ -83,8 +81,7 @@ function deepFreeze(obj) {
  * @param {Object} target
  * @param {Object} source
  * @returns {Object}
- * @memberOf TeqFw_Core_Shared_Util_Probe
- * @deprecated use TeqFw_Core_Shared_Util_Deep
+ * @memberOf TeqFw_Core_Shared_Util_Deep
  */
 function deepMerge(target, source) {
     const isObject = (obj) => obj && typeof obj === 'object';
@@ -109,67 +106,42 @@ function deepMerge(target, source) {
     return target;
 }
 
-/**
- * Return 'true' if `val` is empty.
- * @param {*} val
- * @returns {boolean}
- * @memberOf TeqFw_Core_Shared_Util_Probe
- */
-function isEmpty(val) {
-    return (val === undefined) || (val === null) || (val === '');
+
+// MODULE'S CLASSES
+export default class TeqFw_Core_Shared_Util_Deep {
+
+    constructor() {
+
+        /**
+         * Compare two variables for equivalence.
+         *
+         * https://stackoverflow.com/a/45683145/4073821
+         *
+         * @param {*} obj1
+         * @param {*} obj2
+         * @return {boolean}
+         * @memberOf TeqFw_Core_Shared_Util_Deep
+         */
+        this.equal = deepEqual;
+
+        /**
+         * Example from MDN.
+         * @param {Object} obj
+         * @return {Object}
+         * @memberOf TeqFw_Core_Shared_Util_Deep
+         */
+        this.freeze = deepFreeze;
+
+        /**
+         * Deep merge of the 2 objects.
+         * Source: https://gist.github.com/ahtcx/0cd94e62691f539160b32ecda18af3d6#gistcomment-2930530
+         *
+         * @param {Object} target
+         * @param {Object} source
+         * @returns {Object}
+         * @memberOf TeqFw_Core_Shared_Util_Deep
+         */
+        this.merge = deepMerge;
+
+    }
 }
-
-/**
- * Return 'true' if `val` is Object (not array, function, null).
- * @param {*} val
- * @returns {boolean}
- * @memberOf TeqFw_Core_Shared_Util_Probe
- */
-function isObject(val) {
-    return (
-        (typeof val === 'object') &&
-        (!Array.isArray(val)) &&
-        (val !== null)
-    );
-}
-
-/**
- * Check if value is primitive.
- * @param {*} obj
- * @return {boolean}
- * @memberOf TeqFw_Core_Shared_Util_Probe
- */
-function isPrimitive(obj) {
-    return (obj !== Object(obj));
-}
-
-/**
- * Make object serializable (convert Proxy to clear Object).
- * @param {Object} obj
- * @return {Object}
- * @memberOf TeqFw_Core_Shared_Util_Probe
- */
-function serializable(obj) {
-    return JSON.parse(JSON.stringify(obj));
-}
-
-// finalize code components for this es6-module
-Object.defineProperty(deepClone, 'namespace', {value: NS});
-Object.defineProperty(deepEqual, 'namespace', {value: NS});
-Object.defineProperty(deepFreeze, 'namespace', {value: NS});
-Object.defineProperty(deepMerge, 'namespace', {value: NS});
-Object.defineProperty(isEmpty, 'namespace', {value: NS});
-Object.defineProperty(isObject, 'namespace', {value: NS});
-Object.defineProperty(isPrimitive, 'namespace', {value: NS});
-Object.defineProperty(serializable, 'namespace', {value: NS});
-
-export {
-    deepClone,
-    deepEqual,
-    deepFreeze,
-    deepMerge,
-    isEmpty,
-    isObject,
-    isPrimitive,
-    serializable,
-};
