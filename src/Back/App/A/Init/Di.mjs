@@ -96,6 +96,7 @@ export default class TeqFw_Core_Back_App_A_Init_Di {
             initAutoload(resolver, items);
             initProxy(chunkProxy, items);
             initReplaces(chunkReplace, items);
+            container.setDebug(true);
         };
     }
 
