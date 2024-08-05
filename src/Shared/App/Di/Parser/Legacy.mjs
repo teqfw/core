@@ -38,7 +38,7 @@ export default class TeqFw_Core_Shared_App_Di_Parser_Legacy {
     constructor(
         {
             TeqFw_Di_Defs$: Defs,
-            TeqFw_Di_DepId$AS: Dto,
+            'TeqFw_Di_DepId.default': Dto,
             TeqFw_Core_Shared_Defaults$: DEF,
         }
     ) {
@@ -55,8 +55,8 @@ export default class TeqFw_Core_Shared_App_Di_Parser_Legacy {
                 ) {
                     if (parts[7] === P_INST)
                         res.wrappers.push(DEF.DI_WRAP_PROXY);
-                    res.composition = Defs.COMPOSE_FACTORY;
-                    res.life = Defs.LIFE_INSTANCE;
+                    res.composition = Defs.COMP_F;
+                    res.life = Defs.LIFE_I;
                     res.exportName = parts[6];
                 }
                 // Ns_Module.name$[@] - named singleton [proxy]
@@ -66,8 +66,8 @@ export default class TeqFw_Core_Shared_App_Di_Parser_Legacy {
                 ) {
                     if (parts[7] === P_SNGLT)
                         res.wrappers.push(DEF.DI_WRAP_PROXY);
-                    res.composition = Defs.COMPOSE_FACTORY;
-                    res.life = Defs.LIFE_SINGLETON;
+                    res.composition = Defs.COMP_F;
+                    res.life = Defs.LIFE_S;
                     res.exportName = parts[6];
                 }
                 // Ns_Module.name - named export
@@ -75,24 +75,24 @@ export default class TeqFw_Core_Shared_App_Di_Parser_Legacy {
                     ((parts[5] === EXP) || (parts[5] === EXP_OLD))
                     && ((parts[6] !== undefined) && (parts[6] !== ''))
                 ) {
-                    res.composition = Defs.COMPOSE_AS_IS;
+                    res.composition = Defs.COMP_A;
                     res.exportName = parts[6];
-                    res.life = Defs.LIFE_SINGLETON;
+                    res.life = Defs.LIFE_S;
                 }
                 // Ns_Module$$[@@]- default instance [proxy]
                 else if ((parts[4] === INST) || (parts[4] === P_INST)) {
                     if (parts[4] === P_INST)
                         res.wrappers.push(DEF.DI_WRAP_PROXY);
-                    res.composition = Defs.COMPOSE_FACTORY;
-                    res.life = Defs.LIFE_INSTANCE;
+                    res.composition = Defs.COMP_F;
+                    res.life = Defs.LIFE_I;
                     res.exportName = DEF_EXP;
                 }
                 // Ns_Module$[@] - default singleton [proxy]
                 else if ((parts[4] === SNGLT) || (parts[4] === P_SNGLT)) {
                     if (parts[4] === P_SNGLT)
                         res.wrappers.push(DEF.DI_WRAP_PROXY);
-                    res.composition = Defs.COMPOSE_FACTORY;
-                    res.life = Defs.LIFE_SINGLETON;
+                    res.composition = Defs.COMP_F;
+                    res.life = Defs.LIFE_S;
                     res.exportName = DEF_EXP;
                 }
                 // Ns_Module#[.] - default export
@@ -100,8 +100,8 @@ export default class TeqFw_Core_Shared_App_Di_Parser_Legacy {
                     ((parts[5] === EXP) || (parts[5] === EXP_OLD))
                     && (parts[7] === undefined)
                 ) {
-                    res.composition = Defs.COMPOSE_AS_IS;
-                    res.life = Defs.LIFE_SINGLETON;
+                    res.composition = Defs.COMP_A;
+                    res.life = Defs.LIFE_S;
                     res.exportName = DEF_EXP;
                 } else {
                     // just a es6-module (deprecated)
@@ -111,10 +111,10 @@ export default class TeqFw_Core_Shared_App_Di_Parser_Legacy {
                 const manual = MANUAL.exec(objectKey);
                 if (manual) {
                     if (manual[4] === '$$') {
-                        res.composition = Defs.COMPOSE_FACTORY;
-                        res.life = Defs.LIFE_INSTANCE;
+                        res.composition = Defs.COMP_F;
+                        res.life = Defs.LIFE_I;
                     } else {
-                        res.life = Defs.LIFE_SINGLETON;
+                        res.life = Defs.LIFE_S;
                     }
                 } else {
                     // TODO: add exception

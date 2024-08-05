@@ -1,5 +1,9 @@
 # @teqfw/core: releases
 
+# 0.30.0
+
+* New format for dependency IDs in @teqfw/di.
+
 # 0.24.0
 
 * Add the Launcher (`TeqFw_Core_Back_Launcher`).
