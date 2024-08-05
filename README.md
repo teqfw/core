@@ -1,5 +1,7 @@
 # @teqfw/core
 
+![npms.io](https://img.shields.io/npm/dm/@teqfw/core)
+
 The base plugin for any TeqFw-application. It allows building Node.js applications and running console commands.
 
 ## Disclaimer
