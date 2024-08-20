@@ -1,5 +1,9 @@
 # @teqfw/core: releases
 
+# 0.XX
+
+* Stack trace for exceptions logging.
+
 # 0.30.0
 
 * New format for dependency IDs in @teqfw/di.
