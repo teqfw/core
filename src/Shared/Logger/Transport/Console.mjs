@@ -21,7 +21,13 @@ export default class TeqFw_Core_Shared_Logger_Transport_Console {
         this.log = function (dto) {
             const dt = formatTime(dto.date);
             const level = (dto.isError) ? 'error' : 'info';
-            console.log(`${dt} (${level} ${dto.source}): ${dto.message}`);
+            let meta = '';
+            if (typeof dto?.meta === 'string') {
+                meta += '\n' + dto.meta;
+            } else if (dto?.meta?.['stack'] && typeof dto.meta['stack'] === 'string') {
+                meta += '\n' + dto.meta['stack'];
+            }
+            console.log(`${dt} (${level} ${dto.source}): ${dto.message}${meta}`);
         };
     }
 
