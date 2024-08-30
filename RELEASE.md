@@ -1,8 +1,9 @@
 # @teqfw/core: releases
 
-# 0.XX
+# 0.30.1
 
 * Stack trace for exceptions logging.
+* Disable debug logging for DI.
 
 # 0.30.0
 
