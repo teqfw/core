@@ -21,7 +21,7 @@ export default class TeqFw_Core_Shared_App_Di_PostProcessor_Logger {
             let res = obj;
             if (
                 (originalId.moduleName === 'TeqFw_Core_Shared_Logger') &&
-                (originalId.life === DEF_DI.LIFE_INSTANCE)
+                (originalId.life === DEF_DI.LIFE_I)
             ) {
                 // get depId for the parent
                 const parentId = stack[stack.length - 1];

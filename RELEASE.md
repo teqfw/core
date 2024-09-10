@@ -1,5 +1,10 @@
 # @teqfw/core: releases
 
+# 0.30.2
+
+* Fix the error with logger postprocessor.
+* Remove the legacy format for depIds.
+
 # 0.30.1
 
 * Stack trace for exceptions logging.

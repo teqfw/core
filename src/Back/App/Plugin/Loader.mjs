@@ -20,7 +20,7 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
         {
             TeqFw_Core_Back_Defaults$: DEF,
             TeqFw_Core_Shared_Util_Cast$: cast,
-            'TeqFw_Core_Back_App_Plugin_Loader_A_Scan#': scan,
+            'TeqFw_Core_Back_App_Plugin_Loader_A_Scan.default': scan,
             TeqFw_Core_Shared_Logger$$: logger, // inject the implementation
             TeqFw_Core_Back_Api_Plugin_Registry$: registry,
             'TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item.Factory$': fItem,

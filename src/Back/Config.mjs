@@ -17,7 +17,7 @@ export default class TeqFw_Core_Back_Config {
     constructor(
         {
             TeqFw_Core_Back_Defaults$: DEF,
-            ['TeqFw_Core_Shared_Util_Probe.deepFreeze']: deepFreeze,
+            'TeqFw_Core_Shared_Util_Probe.deepFreeze': deepFreeze,
         }
     ) {
         // VARS

@@ -51,8 +51,8 @@ export class Factory {
     constructor(
         {
             TeqFw_Core_Shared_Util_Cast$: cast,
-            ['TeqFw_Core_Back_Api_Dto_Command_Argument.Factory$']: fArg,
-            ['TeqFw_Core_Back_Api_Dto_Command_Option.Factory$']: fOpt,
+            'TeqFw_Core_Back_Api_Dto_Command_Argument.Factory$': fArg,
+            'TeqFw_Core_Back_Api_Dto_Command_Option.Factory$': fOpt,
         }
     ) {
         // INSTANCE METHODS
