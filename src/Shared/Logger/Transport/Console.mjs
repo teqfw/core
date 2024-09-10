@@ -9,7 +9,7 @@ export default class TeqFw_Core_Shared_Logger_Transport_Console {
      */
     constructor(
         {
-            ['TeqFw_Core_Shared_Util_Format.dateTimeForLog']: formatTime,
+            'TeqFw_Core_Shared_Util_Format.dateTimeForLog': formatTime,
         }
     ) {
         // INSTANCE METHODS

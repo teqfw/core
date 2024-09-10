@@ -125,15 +125,7 @@ export default class TeqFw_Core_Shared_App_Di_Parser_Legacy {
     }
 
     canParse(depId) {
-        return (depId.indexOf('TeqFw_Core_') === 0) ||
-            (depId.indexOf('TeqFw_Db_') === 0) ||
-            (depId.indexOf('TeqFw_I18n') === 0) ||
-            (depId.indexOf('TeqFw_Test_') === 0) ||
-            (depId.indexOf('TeqFw_Ui_Quasar_') === 0) ||
-            (depId.indexOf('TeqFw_Vue_') === 0) ||
-            (depId.indexOf('TeqFw_Web_') === 0) ||
-            (depId.indexOf('TeqFw_Web_Api_') === 0) ||
-            (depId.indexOf('TeqFw_Web_Event_') === 0) ||
+        return (depId.indexOf('TeqFw_Web_Event_') === 0) ||
             (depId.indexOf('TeqFw_Web_Push_') === 0) ||
             (depId.indexOf('Ra_') === 0);
     }
