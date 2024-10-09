@@ -1,6 +1,6 @@
 {
   "name": "@teqfw/core",
-  "version": "0.30.2",
+  "version": "0.30.3",
   "description": "TeqFW: plugins scanner, local configuration, commander.",
   "type": "module",
   "main": "src/Back/Launcher.mjs",
