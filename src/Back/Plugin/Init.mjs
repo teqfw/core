@@ -20,7 +20,7 @@ export default function (
     // FUNCS
     async function action() {
         // set transport implementation after plugins being loaded (DI rewrites)
-        loggerBase.setTransport(transport);
+        // loggerBase.setTransport(transport);
         // backend UUID
         await modUuid.init();
     }

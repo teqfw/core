@@ -1,5 +1,11 @@
 # @teqfw/core: releases
 
+# 0.30.3
+
+* Disable console output for logging by default.
+* New command `core-verbose` to display startup log.
+* Initial [documentation](./doc/logging.md) for logger.
+
 # 0.30.2
 
 * Fix the error with logger postprocessor.

@@ -19,7 +19,8 @@ export default class TeqFw_Core_Back_App_A_Init_Logger {
          * @return {Promise<void>}
          */
         this.act = async function ({} = {}) {
-            base.setTransport(trnCons);
+            // base.setTransport(trnCons);
+            // TODO: pause logging before setting the transport
         };
     }
 

@@ -18,6 +18,7 @@
   },
   "@teqfw/core": {
     "commands": [
+      "TeqFw_Core_Back_Cli_Verbose",
       "TeqFw_Core_Back_Cli_Version"
     ],
     "plugin": {
