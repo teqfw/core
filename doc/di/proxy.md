@@ -35,7 +35,7 @@ export default class App_Back_Di_Proxy_Plugin_Back_Obj {
     constructor() {
         /**
          * @param {Plugin_Back_Obj} origin
-         * @return {Plugin_Back_Obj}
+         * @returns {Plugin_Back_Obj}
          */
         this.wrapOrigin = function (origin) {
             // FUNCS

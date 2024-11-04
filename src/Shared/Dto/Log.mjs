@@ -40,7 +40,7 @@ export default class TeqFw_Core_Shared_Dto_Log {
         // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Shared_Dto_Log.Dto} [data]
-         * @return {TeqFw_Core_Shared_Dto_Log.Dto}
+         * @returns {TeqFw_Core_Shared_Dto_Log.Dto}
          */
         this.createDto = function (data) {
             const res = new Dto();

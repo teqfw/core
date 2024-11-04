@@ -29,7 +29,7 @@ export default class TeqFw_Core_Back_App_A_Init_Di {
     ) {
         /**
          * @param {TeqFw_Core_Back_Api_Plugin_Registry} plugins
-         * @return {Promise<void>}
+         * @returns {Promise<void>}
          */
         this.act = async function ({plugins}) {
             // FUNCS

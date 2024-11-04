@@ -51,7 +51,7 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
                 /**
                  * The sample:
                  * @param {Object} spheres
-                 * @return {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy.Dto[]}
+                 * @returns {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy.Dto[]}
                  */
                 function composeDiProxy(spheres) {
                     const res = [];
@@ -79,14 +79,14 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
 
                 /**
                  * @param {Object<string, Object>} spheres
-                 * @return {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace.Dto[]}
+                 * @returns {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace.Dto[]}
                  */
                 function composeDiReplaces(spheres) {
                     // FUNCS
                     /**
                      * Return 'true' if all keys are from ['back', 'front','shared'] array.
                      * @param {string[]} keys
-                     * @return {boolean}
+                     * @returns {boolean}
                      */
                     function isSpheres(keys) {
                         for (const key of keys)
@@ -97,7 +97,7 @@ export default class TeqFw_Core_Back_App_Plugin_Loader {
                     /**
                      * Parse old style of the replaces definition (namespaces => spheres).
                      * @param {Object<string, Object>} replaces
-                     * @return {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace.Dto[]}
+                     * @returns {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Replace.Dto[]}
                      */
                     function oldStyle(replaces) {
                         logger.error(`This style of replaces definition is deprecated, please use "spheres => namespaces" format.`);

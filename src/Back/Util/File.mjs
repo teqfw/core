@@ -68,7 +68,7 @@ export default class TeqFw_Core_Back_Util_File {
      * for files named  '${filename}'.
      * @param {string} path
      * @param {string} filename
-     * @return {string[]}
+     * @returns {string[]}
      * @memberOf TeqFw_Core_Back_Util
      */
     scanNodeModules(path, filename) {
@@ -99,7 +99,7 @@ export default class TeqFw_Core_Back_Util_File {
      * @see https://stackoverflow.com/a/47492545/4073821
      *
      * @param {string} path
-     * @return {string[]}
+     * @returns {string[]}
      * @memberOf TeqFw_Core_Back_Util
      */
     scanRecursively(path) {

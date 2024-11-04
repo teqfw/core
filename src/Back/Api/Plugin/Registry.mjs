@@ -18,14 +18,14 @@ export default class TeqFw_Core_Back_Api_Plugin_Registry {
 
         /**
          * Get root plugin name as application name.
-         * @return {string}
+         * @returns {string}
          */
         this.getAppName = () => _appName;
 
         /**
          * Get plugin names ordered by weights (from base plugins to dependent).
          *
-         * @return {Object<number, string[]>}
+         * @returns {Object<number, string[]>}
          */
         this.getLevels = function () {
             return _storeByLevel;
@@ -47,7 +47,7 @@ export default class TeqFw_Core_Back_Api_Plugin_Registry {
         /**
          * Get mapping for plugin's root paths to plugin names.
          * ('/home/prj/app/node_modules/@scope/plugin' => '@scope/plugin')
-         * @return {Object<string, string>}
+         * @returns {Object<string, string>}
          */
         this.getMapPath2Name = function () {
             const res = {};

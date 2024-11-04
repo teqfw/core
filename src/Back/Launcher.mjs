@@ -11,7 +11,7 @@ import {platform} from 'node:process';
 /**
  * Set up the DI container and launch the backend application.
  * @param {string} path - the full path to the root of the app (contains `./node_modules/`).
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export default async function TeqFw_Core_Back_Launcher({path}) {
     // FUNCS

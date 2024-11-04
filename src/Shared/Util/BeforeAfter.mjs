@@ -33,7 +33,7 @@ export default class TeqFw_Core_Shared_Util_BeforeAfter {
             // FUNCS
             /**
              * Convert 'before/after' notation to 'dependent' notation and compose successors list.
-             * @return Object<string, string[]>
+             * @returns Object<string, string[]>
              */
             function initSuccessors() {
                 /** @type {Object<string, string[]>} */

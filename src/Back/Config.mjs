@@ -40,19 +40,19 @@ export default class TeqFw_Core_Back_Config {
          * Get local configuration options (all or for given 'node' only).
          *
          * @param {string|null} node
-         * @return {*}
+         * @returns {*}
          */
         this.getLocal = (node = null) => (node === null) ? _local : (_local) ? _local[node] : null;
 
         /**
          * Get absolute path to application's root folder (contains 'mode_modules').
-         * @return {string}
+         * @returns {string}
          */
         this.getPathToRoot = () => _projectRoot;
 
         /**
          * Get application version.
-         * @return {string}
+         * @returns {string}
          */
         this.getVersion = () => _version;
 

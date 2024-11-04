@@ -12,7 +12,7 @@ const util = await container.get('TeqFw_Core_Shared_Util_BeforeAfter');
 /**
  * 'true' if 'obj' is a class definition (can be used as 'new obj()').
  * @param {*} obj
- * @return {boolean}
+ * @returns {boolean}
  */
 function isClass(obj) {
     let result = false;

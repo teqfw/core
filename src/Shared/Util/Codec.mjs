@@ -8,7 +8,7 @@ const NS = 'TeqFw_Core_Shared_Util_Codec';
 /**
  * Convert ArrayBuffer to HEX-string.
  * @param {ArrayBuffer} buf
- * @return {string}
+ * @returns {string}
  * @memberOf TeqFw_Core_Shared_Util_Codec
  * TODO: remove expired code and use one common algorithm (see binToHex)
  */
@@ -21,7 +21,7 @@ function ab2hex(buf) {
 /**
  * Convert ArrayBuffer to string.
  * @param {ArrayBuffer} buf
- * @return {string}
+ * @returns {string}
  * @memberOf TeqFw_Core_Shared_Util_Codec
  */
 function ab2str(buf) {
@@ -31,7 +31,7 @@ function ab2str(buf) {
 /**
  * Convert binary data to HEX-string.
  * @param {Uint8Array} data
- * @return {string}
+ * @returns {string}
  * @memberOf TeqFw_Core_Shared_Util_Codec
  */
 function binToHex(data) {
@@ -45,7 +45,7 @@ function binToHex(data) {
 /**
  * Convert HEX-string to binary data.
  * @param {string} data
- * @return {Uint8Array}
+ * @returns {Uint8Array}
  * @memberOf TeqFw_Core_Shared_Util_Codec
  */
 function hexToBin(data) {

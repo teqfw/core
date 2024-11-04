@@ -45,7 +45,7 @@ export default class TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy {
         // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy.Dto} [data]
-         * @return {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy.Dto}
+         * @returns {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Proxy.Dto}
          */
         this.createDto = function (data) {
             // create new DTO and populate it with initialization data

@@ -11,7 +11,7 @@
  *
  * @param {*} obj1
  * @param {*} obj2
- * @return {boolean}
+ * @returns {boolean}
  * @memberOf TeqFw_Core_Shared_Util_Deep
  */
 function deepEqual(obj1, obj2) {
@@ -19,7 +19,7 @@ function deepEqual(obj1, obj2) {
     /**
      * Check if value is primitive.
      * @param {*} obj
-     * @return {boolean}
+     * @returns {boolean}
      * @memberOf TeqFw_Core_Shared_Util_Probe
      */
     function isPrimitive(obj) {
@@ -61,7 +61,7 @@ function deepEqual(obj1, obj2) {
 /**
  * Example from MDN.
  * @param {Object} obj
- * @return {Object}
+ * @returns {Object}
  * @memberOf TeqFw_Core_Shared_Util_Deep
  */
 function deepFreeze(obj) {
@@ -119,7 +119,7 @@ export default class TeqFw_Core_Shared_Util_Deep {
          *
          * @param {*} obj1
          * @param {*} obj2
-         * @return {boolean}
+         * @returns {boolean}
          * @memberOf TeqFw_Core_Shared_Util_Deep
          */
         this.equal = deepEqual;
@@ -127,7 +127,7 @@ export default class TeqFw_Core_Shared_Util_Deep {
         /**
          * Example from MDN.
          * @param {Object} obj
-         * @return {Object}
+         * @returns {Object}
          * @memberOf TeqFw_Core_Shared_Util_Deep
          */
         this.freeze = deepFreeze;
