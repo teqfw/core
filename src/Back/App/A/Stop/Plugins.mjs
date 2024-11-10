@@ -21,7 +21,7 @@ export default class TeqFw_Core_Back_App_A_Stop_Plugins {
          * @returns {Promise<void>}
          */
         this.act = async function ({plugins}) {
-            const items = plugins.getItemsByLevels();
+            const items = plugins?.getItemsByLevels() ?? [];
             for (const item of items) {
                 /** @type {TeqFw_Core_Back_Plugin_Dto_Desc.Dto} */
                 const desc = item.teqfw[DEF.SHARED.NAME];
