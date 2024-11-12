@@ -25,9 +25,9 @@ export default class TeqFw_Core_Shared_App_Di_PostProcessor_Proxy {
          *
          * @param {string} orig ('Ns_To_Wrap')
          * @param {string} wrapper ('Ns_Wrapper')
-         * @param {string} module ('Ns_Wrapper')
+         * @param {string} [pack] ('@flancer32/gpt-action-test') - TODO: use it or remove (we can use the package name only here)
          */
-        this.map = function (orig, wrapper, module) {
+        this.map = function (orig, wrapper, pack) {
             if (!map[orig]) map[orig] = [];
             map[orig].push(wrapper);
         };
