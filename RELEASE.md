@@ -2,6 +2,7 @@
 
 # 0.31.0
 
+* Replaced all JSDoc annotations `@return` with `@returns` for consistency with JSDoc standards.
 * Fixed an error in `TeqFw_Core_Back_App_A_Stop_Plugins.act`.
 * Introduced a new API for Models: `TeqFw_Core_Shared_Api_Model`.
 
