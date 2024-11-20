@@ -10,6 +10,10 @@
 * Fixed an error in `TeqFw_Core_Back_App_A_Stop_Plugins.act`.
 * Introduced a new API for Models: `TeqFw_Core_Shared_Api_Model`.
 
+# 0.31.0 - TODO
+
+* Added `TeqFw_Core_Back_Api_Convert`.
+
 # 0.30.3
 
 * Disable console output for logging by default.
