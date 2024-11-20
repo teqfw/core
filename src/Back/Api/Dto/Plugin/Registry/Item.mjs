@@ -48,7 +48,7 @@ export class Factory {
         // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item|null} data
-         * @return {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item}
+         * @returns {TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item}
          */
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Api_Dto_Plugin_Registry_Item();

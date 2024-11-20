@@ -13,7 +13,7 @@ export default class TeqFw_Core_Back_Util_Cast {
     /**
      * Cast input data into 'Buffer' data type.
      * @param {*} data
-     * @return {Buffer}
+     * @returns {Buffer}
      */
     buffer(data) {
         if (data instanceof Buffer) {
@@ -30,7 +30,7 @@ export default class TeqFw_Core_Back_Util_Cast {
     /**
      * Cast input data into 'Uint8Array' data type.
      * @param {*} data
-     * @return {Uint8Array}
+     * @returns {Uint8Array}
      */
     uint8(data) {
         return new Uint8Array(data);

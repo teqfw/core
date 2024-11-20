@@ -19,7 +19,7 @@ const FILES_SKIP = [];
 
 /**
  * Get first argument as a root path in the filesystem and scan this directory for the JS sources.
- * @return {string[]}
+ * @returns {string[]}
  */
 function getFiles() {
     // FUNCS

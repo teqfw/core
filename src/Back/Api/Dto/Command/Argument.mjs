@@ -35,7 +35,7 @@ export class Factory {
         // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Back_Api_Dto_Command_Argument|null} data
-         * @return {TeqFw_Core_Back_Api_Dto_Command_Argument}
+         * @returns {TeqFw_Core_Back_Api_Dto_Command_Argument}
          */
         this.create = function (data = null) {
             const res = new TeqFw_Core_Back_Api_Dto_Command_Argument();

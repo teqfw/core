@@ -9,7 +9,7 @@ export default class TeqFw_Core_Shared_Api_Factory_Dto {
     /**
      * Create new DTO and clone 'data' into new object.
      * @param {*} [data]
-     * @return {*}
+     * @returns {*}
      */
     createDto(data) {}
 }

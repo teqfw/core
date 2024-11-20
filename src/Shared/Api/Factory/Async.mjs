@@ -12,7 +12,7 @@ export default class TeqFw_Core_Shared_Api_Factory_Async {
     /**
      *
      * @param {*} [opts]
-     * @return {Promise<*>}
+     * @returns {Promise<*>}
      */
     async create(opts) {}
 }

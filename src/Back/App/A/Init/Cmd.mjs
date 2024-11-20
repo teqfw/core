@@ -19,7 +19,7 @@ export default class TeqFw_Core_Back_App_A_Init_Cmd {
         /**
          * @param {{command:function}} program
          * @param {TeqFw_Core_Back_Api_Plugin_Registry} plugins
-         * @return {Promise<void>}
+         * @returns {Promise<void>}
          */
         this.act = async function ({program, plugins}) {
             // FUNCS

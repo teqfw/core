@@ -8,7 +8,7 @@ const NS = 'TeqFw_Core_Shared_Util_Format';
 /**
  * Convert local date to YYYY/MM/DD.
  * @param {Date|string|null} dateIn
- * @return {string}
+ * @returns {string}
  * @memberOf TeqFw_Core_Shared_Util_Format
  */
 function date(dateIn = null) {
@@ -26,7 +26,7 @@ function date(dateIn = null) {
  * Convert local date to YYYY/MM/DD HH:MM:SS.
  * @param {Date|string|null} dateIn
  * @param {boolean} withSeconds
- * @return {string}
+ * @returns {string}
  * @memberOf TeqFw_Core_Shared_Util_Format
  */
 function dateTime(dateIn = null, withSeconds = true) {
@@ -48,7 +48,7 @@ function dateTime(dateIn = null, withSeconds = true) {
 /**
  * Convert date as UTC to MM/DD HH:MM:SS.
  * @param {Date} [date]
- * @return {string}
+ * @returns {string}
  * @memberOf TeqFw_Core_Shared_Util_Format
  */
 function dateTimeForLog(date) {
@@ -66,7 +66,7 @@ function dateTimeForLog(date) {
  * Convert local time to HH:MM:SS.
  * @param {Date|string|null} dateIn
  * @param {boolean} withSeconds
- * @return {string}
+ * @returns {string}
  * @memberOf TeqFw_Core_Shared_Util_Format
  */
 function time(dateIn = null, withSeconds = true) {
@@ -83,7 +83,7 @@ function time(dateIn = null, withSeconds = true) {
 /**
  * Convert seconds (integer) into 'mm:ss' format
  * @param {number|string} seconds
- * @return {string}
+ * @returns {string}
  * @memberOf TeqFw_Core_Shared_Util_Format
  */
 function timeInSec(seconds) {
@@ -100,7 +100,7 @@ function timeInSec(seconds) {
  * Convert UTC time to HH:MM:SS.
  * @param {Date|string|null} dateIn
  * @param {boolean} withSeconds
- * @return {string}
+ * @returns {string}
  * @memberOf TeqFw_Core_Shared_Util_Format
  */
 function timeUtc(dateIn = null, withSeconds = true) {

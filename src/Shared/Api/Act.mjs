@@ -14,7 +14,7 @@
 export default class TeqFw_Core_Shared_Api_Act {
     /**
      * @param {Object} [opts]
-     * @return {Promise<Object>}
+     * @returns {Promise<Object>}
      */
     act(opts) {}
 }

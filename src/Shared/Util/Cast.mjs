@@ -11,7 +11,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
     /**
      * Cast input data into array data type.
      * @param {*} data
-     * @return {Array}
+     * @returns {Array}
      */
     array(data) {
         return Array.isArray(data) ? [...data] : [];
@@ -21,7 +21,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * Cast input data into array of object using factory function.
      * @param {*} data
      * @param {function} [fact]
-     * @return {Array}
+     * @returns {Array}
      */
     arrayOfObj(data, fact) {
         const defFunc = (a) => a ?? {}; // return input itself or empty Object
@@ -34,7 +34,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
     /**
      * Cast input data into array of strings.
      * @param {*} data
-     * @return {Array}
+     * @returns {Array}
      */
     arrayOfStr(data) {
         return Array.isArray(data)
@@ -45,7 +45,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
     /**
      * Cast input data into 'Uint8Array' data type.
      * @param {*} data
-     * @return {Uint8Array}
+     * @returns {Uint8Array}
      */
     bin(data) {
         if (typeof data === 'string') {
@@ -61,7 +61,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
     /**
      * Cast input data into 'boolean' data type.
      * @param {*} data
-     * @return {boolean}
+     * @returns {boolean}
      */
     boolean(data) {
         if ((data === true)
@@ -80,7 +80,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
     /**
      * Cast input data into 'boolean' data type if input defined.
      * @param {*} data
-     * @return {boolean|undefined}
+     * @returns {boolean|undefined}
      */
     booleanIfExists(data) {
         return ((data === undefined) || (data === null)) ? data : castBoolean(data);
@@ -89,7 +89,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
     /**
      * Cast input data into 'boolean' data type if input defined.
      * @param {Date|string|number} data
-     * @return {Date|undefined}
+     * @returns {Date|undefined}
      */
     date(data) {
         return ((typeof data === 'object') && (data instanceof Date)) ? new Date(data) :
@@ -99,7 +99,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
     /**
      * Cast input data into decimal 'number' data type.
      * @param {*} data
-     * @return {number|undefined}
+     * @returns {number|undefined}
      */
     decimal(data) {
         const res = Number.parseFloat(data);
@@ -109,7 +109,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
     /**
      * Cast input data into 'function' data type.
      * @param {*} data
-     * @return {function|undefined}
+     * @returns {function|undefined}
      */
     function(data) {
         if (typeof data === 'function') {
@@ -121,7 +121,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
     /**
      * Cast input data into some primitive type.
      * @param data
-     * @return {undefined|string|number|boolean|symbol|bigint}
+     * @returns {undefined|string|number|boolean|symbol|bigint}
      */
     primitive(data) {
         if (
@@ -140,7 +140,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * @param {*} data
      * @param {Object} enu constant with allowable values
      * @param {boolean} capitalize 'true' - capitalize data before comparison
-     * @return {string|undefined}
+     * @returns {string|undefined}
      */
     enum(data, enu, capitalize = true) {
         const values = Object.values(enu);
@@ -151,7 +151,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
     /**
      * Cast input data into integer 'number' data type.
      * @param {*} data
-     * @return {number|undefined}
+     * @returns {number|undefined}
      */
     int(data) {
         const norm = (typeof data === 'string') ? data.trim() : data;
@@ -182,7 +182,7 @@ export default class TeqFw_Core_Shared_Util_Cast {
     /**
      * Cast input data into 'string' data type.
      * @param {*} data
-     * @return {string|undefined}
+     * @returns {string|undefined}
      */
     string(data) {
         if (typeof data === 'string') {

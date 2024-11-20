@@ -41,7 +41,7 @@ export default class TeqFw_Core_Back_App {
 
         /**
          * @param {string} path absolute path to the root of the project files (where ./node_modules/ is placed)
-         * @return {Promise<void>}
+         * @returns {Promise<void>}
          */
         this.run = async function ({path}) {
             // VARS
@@ -62,7 +62,7 @@ export default class TeqFw_Core_Back_App {
 
             /**
              * Event handler to run application finalization on stop events.
-             * @return {Promise<void>}
+             * @returns {Promise<void>}
              */
             async function onStop() {
                 await me.stop();
@@ -72,7 +72,7 @@ export default class TeqFw_Core_Back_App {
             /**
              * Read the project name and version from './package.json' or use the default one.
              * @param root
-             * @return {{name: string, version: string}}
+             * @returns {{name: string, version: string}}
              */
             function readAppMeta(root) {
                 const filename = join(root, 'package.json');

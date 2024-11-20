@@ -8,7 +8,7 @@ const NS = 'TeqFw_Core_Shared_Util_Probe';
 /**
  * Deep clone of the original object.
  * @param {Object} orig
- * @return {Object}
+ * @returns {Object}
  * @memberOf TeqFw_Core_Shared_Util_Probe
  * @deprecated use TeqFw_Core_Shared_Util_Cast.castObject
  * TODO: remove it after 2024/06/01 (still used in the RA project)
@@ -24,7 +24,7 @@ function deepClone(orig) {
  *
  * @param {*} obj1
  * @param {*} obj2
- * @return {boolean}
+ * @returns {boolean}
  * @memberOf TeqFw_Core_Shared_Util_Probe
  * @deprecated use TeqFw_Core_Shared_Util_Deep
  */
@@ -63,7 +63,7 @@ function deepEqual(obj1, obj2) {
 /**
  * Example from MDN.
  * @param {Object} obj
- * @return {Object}
+ * @returns {Object}
  * @memberOf TeqFw_Core_Shared_Util_Probe
  * @deprecated use TeqFw_Core_Shared_Util_Deep
  */
@@ -136,7 +136,7 @@ function isObject(val) {
 /**
  * Check if value is primitive.
  * @param {*} obj
- * @return {boolean}
+ * @returns {boolean}
  * @memberOf TeqFw_Core_Shared_Util_Probe
  */
 function isPrimitive(obj) {
@@ -146,7 +146,7 @@ function isPrimitive(obj) {
 /**
  * Make object serializable (convert Proxy to clear Object).
  * @param {Object} obj
- * @return {Object}
+ * @returns {Object}
  * @memberOf TeqFw_Core_Shared_Util_Probe
  */
 function serializable(obj) {

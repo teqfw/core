@@ -15,7 +15,7 @@ export default class TeqFw_Core_Shared_Api_Di_Proxy {
     /**
      * Wraps the origin object and returns the wrapped object.
      * @param {*} origin
-     * @return {*}
+     * @returns {*}
      */
     wrapOrigin(origin) {
         return origin;

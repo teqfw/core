@@ -28,7 +28,7 @@ class Dto {
 
 /**
  * @param {string} path
- * @return {Object<string, Dto>} - the key is an absolute path to the teq-plugin
+ * @returns {Object<string, Dto>} - the key is an absolute path to the teq-plugin
  * @namespace TeqFw_Core_Back_App_Plugin_Loader_A_Scan
  */
 export default function (path) {

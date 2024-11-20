@@ -12,7 +12,7 @@ const NS = 'TeqFw_Core_Shared_Util_Date';
  * Add days to given date or to now.
  * @param {number} days
  * @param {Date} [date]
- * @return {Date}
+ * @returns {Date}
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function addDays(days, date) {
@@ -25,7 +25,7 @@ function addDays(days, date) {
  * Add minutes to given date or to now.
  * @param {number} minutes
  * @param {Date} [date]
- * @return {Date}
+ * @returns {Date}
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function addMinutes(minutes, date) {
@@ -38,7 +38,7 @@ function addMinutes(minutes, date) {
  * Add months to given date or to now.
  * @param {number} months
  * @param {Date} [date]
- * @return {Date}
+ * @returns {Date}
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function addMonths(months, date) {
@@ -50,7 +50,7 @@ function addMonths(months, date) {
 /**
  * Get first date of the month (UTC). Time is 00:00:00.
  * @param {Date|string|number} [date]
- * @return {Date}
+ * @returns {Date}
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function monthDayFirst(date) {
@@ -65,7 +65,7 @@ function monthDayFirst(date) {
 /**
  * Get the last date of the month (UTC). Time is 00:00:00.
  * @param {Date|string|number} [date]
- * @return {Date}
+ * @returns {Date}
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function monthDayLast(date) {
@@ -80,7 +80,7 @@ function monthDayLast(date) {
 /**
  * Get first date of the next month (UTC). Time is 00:00:00.
  * @param {Date|string|number} [date]
- * @return {Date}
+ * @returns {Date}
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function nextMonthDayFirst(date) {
@@ -92,7 +92,7 @@ function nextMonthDayFirst(date) {
 /**
  * Parse string representation of a date (2023/01/31) as UTC date (Tue Jan 31 2023 00:00:00 GMT+0000).
  * @param {string} date
- * @return {Date} UTC date
+ * @returns {Date} UTC date
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function parseAsUtc(date) {
@@ -108,7 +108,7 @@ function parseAsUtc(date) {
  * Subtract days from given date or from now.
  * @param {number} days
  * @param {Date} [date]
- * @return {Date}
+ * @returns {Date}
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function subtractDays(days, date) {
@@ -121,7 +121,7 @@ function subtractDays(days, date) {
  * Subtract minutes from given date or from now.
  * @param {number} minutes
  * @param {Date} [date]
- * @return {Date}
+ * @returns {Date}
  * @memberOf TeqFw_Core_Shared_Util_Date
  */
 function subtractMinutes(minutes, date) {

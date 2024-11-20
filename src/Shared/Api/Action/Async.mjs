@@ -13,7 +13,7 @@
 export default class TeqFw_Core_Shared_Api_Action_Async {
     /**
      * @param {Object} [opts]
-     * @return {Promise<Object>}
+     * @returns {Promise<Object>}
      */
     async exec(opts) {}
 }

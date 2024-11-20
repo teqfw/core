@@ -42,7 +42,7 @@ export default class TeqFw_Core_Back_Plugin_Dto_Desc_Di_Autoload {
         // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Autoload.Dto} [data]
-         * @return {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Autoload.Dto}
+         * @returns {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Autoload.Dto}
          */
         this.createDto = function (data) {
             // create new DTO and populate it with initialization data

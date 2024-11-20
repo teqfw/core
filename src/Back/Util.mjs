@@ -72,7 +72,7 @@ function readString(filename) {
  * for files named  '${filename}'.
  * @param {string} path
  * @param {string} filename
- * @return {string[]}
+ * @returns {string[]}
  * @memberOf TeqFw_Core_Back_Util
  * @deprecated use TeqFw_Core_Back_Util_File
  */
@@ -104,7 +104,7 @@ function scanNodeModules(path, filename) {
  * @see https://stackoverflow.com/a/47492545/4073821
  *
  * @param {string} path
- * @return {string[]}
+ * @returns {string[]}
  * @memberOf TeqFw_Core_Back_Util
  * @deprecated use TeqFw_Core_Back_Util_File
  */

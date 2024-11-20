@@ -36,7 +36,7 @@ export default class TeqFw_Core_Back_Plugin_Dto_Desc {
         // INSTANCE METHODS
         /**
          * @param {TeqFw_Core_Back_Plugin_Dto_Desc.Dto} [data]
-         * @return {TeqFw_Core_Back_Plugin_Dto_Desc.Dto}
+         * @returns {TeqFw_Core_Back_Plugin_Dto_Desc.Dto}
          */
         this.createDto = function (data) {
             // create new DTO and populate it with initialization data
