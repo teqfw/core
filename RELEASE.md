@@ -1,8 +1,16 @@
 # @teqfw/core: releases
 
-# 0.31.0 - TODO
+## 0.31.0 - API Updates, Proxy Fixes, and JSDoc Improvements
 
-* 
+* Added `TeqFw_Core_Back_Api_Convert` interface for converting between Domain DTO and Persistent DTO.
+* Enhanced `TeqFw_Core_Shared_App_Di_PostProcessor_Proxy` to handle dependency stack propagation and prevent proxy
+  loops.
+* Replaced all `@return` annotations with `@returns` for consistency with JSDoc standards.
+* Fixed an error in `TeqFw_Core_Back_App_A_Stop_Plugins.act`.
+
+## 0.30.3
+
+* Disabled console output for logging by default.
 
 # 0.31.0
 
