@@ -62,6 +62,7 @@ export default class TeqFw_Core_Back_Config {
          *
          * @param {string} path absolute path to application root
          * @param {string} version application version
+         * TODO: I need a separate path to root folder and to local configuration file for tests
          */
         this.init = function (path, version) {
             _projectRoot = path;
