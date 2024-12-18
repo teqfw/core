@@ -1,4 +1,8 @@
-# @teqfw/core: releases
+# @teqfw/core: Releases
+
+## 0.33.0 - Planned
+
+- Introduced the `TeqFw_Core_Shared_Api_Repo_Context` interface for execution context repositories.
 
 ## 0.32.0 - API Updates, Proxy Fixes, and JSDoc Improvements
 
