@@ -1,7 +1,7 @@
 {
   "name": "@teqfw/core",
-  "version": "0.32.0",
-  "description": "TeqFW: plugins scanner, local configuration, commander.",
+  "version": "0.33.0",
+  "description": "Core functionalities for plugin scanning, local configuration management, and command-line utilities for building modern web applications with the Tequila Framework.",
   "type": "module",
   "main": "src/Back/Launcher.mjs",
   "keywords": [
@@ -11,7 +11,12 @@
     "spa",
     "teqfw",
     "tequila framework",
-    "web applications"
+    "web applications",
+    "framework",
+    "javascript",
+    "plugin-based",
+    "scalable",
+    "config management"
   ],
   "homepage": "https://github.com/teqfw/core#readme",
   "bugs": {
@@ -31,13 +36,17 @@
     "test": "./node_modules/mocha/bin/_mocha --recursive './test/**/*.test.mjs'"
   },
   "dependencies": {
-    "@teqfw/di": "latest",
-    "commander": "latest"
+    "@teqfw/di": "^0.31.0",
+    "commander": "^13.1.0"
   },
   "devDependencies": {
-    "mocha": "latest"
+    "mocha": "^11.0.1"
   },
   "engines": {
     "node": ">=17"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/teqfw"
   }
 }
