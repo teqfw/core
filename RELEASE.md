@@ -1,4 +1,16 @@
-# @teqfw/core: releases
+# @teqfw/core: Releases
+
+## 0.33.0 - Added execution context management interface and improved CRUD methods
+
+* Introduced `TeqFw_Core_Shared_Api_Repo_Context` interface for managing execution context repositories with CRUD
+  operations.
+* Added `TeqFw_Core_Shared_Api_Store_Memory` for handling in-memory data with key-value storage.
+* Enhanced `TeqFw_Core_Shared_Api_Model` with improved CRUD methods and better parameter handling.
+* Added `dateISO` utility method in `TeqFw_Core_Shared_Util_Cast` for converting dates to ISO strings.
+* Improved documentation across interfaces, including better JSDoc annotations for clarity.
+* Refined DTO creation methods with lightweight and entity-specific options.
+* Fixed inconsistencies in method return types and improved API stability.
+* Expanded test coverage to validate new interfaces and utilities.
 
 ## 0.32.0 - API Updates, Proxy Fixes, and JSDoc Improvements
 

@@ -87,13 +87,23 @@ export default class TeqFw_Core_Shared_Util_Cast {
     }
 
     /**
-     * Cast input data into 'boolean' data type if input defined.
+     * Cast input data into 'Date' data type if input defined.
      * @param {Date|string|number} data
      * @returns {Date|undefined}
      */
     date(data) {
         return ((typeof data === 'object') && (data instanceof Date)) ? new Date(data) :
             ((typeof data === 'string') || (typeof data === 'number')) ? new Date(data) : undefined;
+    }
+
+    /**
+     * Cast input date into ISO string or empty string.
+     * @param {Date|string|number} data
+     * @returns {string}
+     */
+    dateISO(data) {
+        const date = this.date(data);
+        return date ? date.toISOString() : '';
     }
 
     /**
