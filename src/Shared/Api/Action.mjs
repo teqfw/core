@@ -1,19 +1,22 @@
 /**
- * Abstraction of synchronous functionality with one input & one output argument.
- * Both input and output arguments are an objects.
+ * A new abstraction of functionality with one input and one output argument. Actions are used as units
+ * at the runtime level to compose chains of functionality.
  *
- * 'function' notation is better than 'class' notation for an actions but there were some
- * troubles with 'Find Usages' operation in IDEA for 'function' notation.
+ * The class constructor sets up the environment for the action (deps), and the `run` method performs the action itself.
  *
- * This is documentation only code (not executable).
+ * 'function' notation is better than 'class' notation for actions, but there were some
+ * issues with the 'Find Usages' operation in IDEA for 'function' notation.
  *
  * @interface
- * @deprecated use TeqFw_Core_Shared_Api_Act
+ * This code is for documentation purposes only (not executable).
+ *
+ * @namespace TeqFw_Core_Shared_Api_Act
+ * Used to refer to implementations of old versions of this interface.
  */
-export default class TeqFw_Core_Shared_Api_Action {
+class TeqFw_Core_Shared_Api_Action {
     /**
-     * @param {Object} [opts]
+     * @param {Object} [params]
      * @returns {Promise<Object>}
      */
-    exec(opts) {}
+    async run(params) {}
 }
