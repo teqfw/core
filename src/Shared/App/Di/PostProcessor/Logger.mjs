@@ -5,12 +5,12 @@
 export default class TeqFw_Core_Shared_App_Di_PostProcessor_Logger {
     /**
      * @param {TeqFw_Di_Api_Container} container
-     * @param {TeqFw_Di_Defs} DEF_DI
+     * @param {TeqFw_Core_Shared_Defaults} DEFS
      */
     constructor(
         {
             container,
-            TeqFw_Di_Defs$: DEF_DI,
+            TeqFw_Core_Shared_Defaults$: DEFS,
         }
     ) {
 
@@ -21,7 +21,7 @@ export default class TeqFw_Core_Shared_App_Di_PostProcessor_Logger {
                 (
                     (originalId.moduleName === 'TeqFw_Core_Shared_Api_Logger')  // interface
                     || (originalId.moduleName === 'TeqFw_Core_Shared_Logger')   // default implementation
-                ) && (originalId.life === DEF_DI.LIFE_I)
+                ) && (originalId.life === DEFS.DI_LIFE_INSTANCE)
             ) {
                 // get depId for the parent
                 const parentId = stack[stack.length - 1];
