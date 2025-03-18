@@ -1,5 +1,16 @@
 # @teqfw/core: Releases
 
+## 0.34.0 - Refactored dependency injection (DI) container initialization (`node:` prefix)
+
+- **Refactored dependency injection (DI) container initialization**, improving modularity and setup flexibility.
+- **Deprecated `TeqFw_Core_Shared_Api_Act`**, replaced with **new `Operation`, `Action`, and `Service` abstractions**
+  for better separation of concerns.
+- **Deleted outdated `src/Shared/Api/Act.mjs`**, transitioning to the new API structure.
+- **Enhanced in-memory store interface (`Store/Memory.js`)**, adding expiration handling and storage integrity
+  improvements.
+- **Updated DI post-processors and parsers**, aligning with the new dependency handling structure.
+- **Improved date handling in `Util/Cast.mjs`**, ensuring better support for different time formats.
+
 ## 0.33.0 - Added execution context management interface and improved CRUD methods
 
 * Introduced `TeqFw_Core_Shared_Api_Repo_Context` interface for managing execution context repositories with CRUD

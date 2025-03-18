@@ -92,8 +92,21 @@ export default class TeqFw_Core_Shared_Util_Cast {
      * @returns {Date|undefined}
      */
     date(data) {
-        return ((typeof data === 'object') && (data instanceof Date)) ? new Date(data) :
-            ((typeof data === 'string') || (typeof data === 'number')) ? new Date(data) : undefined;
+        if (typeof data === 'object' && data instanceof Date) {
+            return new Date(data);
+        }
+
+        if (typeof data === 'string') {
+            // Add 'Z' if no timezone is specified
+            const hasTimeZone = /[+-]\d{2}:\d{2}|Z$/.test(data);
+            return new Date(hasTimeZone ? data : `${data}Z`);
+        }
+
+        if (typeof data === 'number') {
+            return new Date(data);
+        }
+
+        return undefined;
     }
 
     /**
