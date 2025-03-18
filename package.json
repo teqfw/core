@@ -1,6 +1,6 @@
 {
   "name": "@teqfw/core",
-  "version": "0.33.0",
+  "version": "0.34.0",
   "description": "Core functionalities for plugin scanning, local configuration management, and command-line utilities for building modern web applications with the Tequila Framework.",
   "type": "module",
   "main": "src/Back/Launcher.mjs",
