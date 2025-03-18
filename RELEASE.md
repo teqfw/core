@@ -1,5 +1,9 @@
 # @teqfw/core: Releases
 
+## 0.34.1 - Fix `@teqfw/di` version in the `package.json`
+
+- Fix `@teqfw/di` version in the `package.json`
+
 ## 0.34.0 - Refactored dependency injection (DI) container initialization (`node:` prefix)
 
 - **Refactored dependency injection (DI) container initialization**, improving modularity and setup flexibility.
