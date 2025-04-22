@@ -2,9 +2,9 @@
  * Abstraction of functionality that creates some objects synchronously.
  *
  * 'function' notation is better than 'class' notation for an actions but there were some
- * troubles with 'Find Usages' operation in IDEA for 'function' notation.
+ * troubles with the 'Find Usages' operation in IDEA for 'function' notation.
  *
- * This is documentation only code (not executable).
+ * This is documentation-only code (not executable).
  *
  * @interface
  */
