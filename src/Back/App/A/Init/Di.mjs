@@ -10,7 +10,7 @@ import {join} from 'node:path';
  */
 export default class TeqFw_Core_Back_App_A_Init_Di {
     /**
-     * @param {TeqFw_Di_Api_Container} container
+     * @param {TeqFw_Di_Container} container
      * @param {TeqFw_Core_Back_Defaults} DEF
      * @param {TeqFw_Core_Shared_Api_Logger} logger -  instance
      * @param {TeqFw_Core_Shared_App_Di_PostProcessor_Proxy} chunkProxy

@@ -13,7 +13,7 @@ const pathPrj = $path.join(pathScript, '..', '..', '..', '..');
 
 /* Create and setup DI container (once per all imports) */
 
-/** @type {TeqFw_Di_Api_Container} */
+/** @type {TeqFw_Di_Container} */
 const container = new Container();
 container.setDebug(false);
 // add path mapping for @teqfw/core to the DI resolver
@@ -38,7 +38,7 @@ post.addChunk(postLogger);
 /**
  * Setup development environment (if not set before) and return DI container.
  *
- * @returns {Promise<TeqFw_Di_Api_Container>}
+ * @returns {Promise<TeqFw_Di_Container>}
  */
 export default async function () {
     return container;
