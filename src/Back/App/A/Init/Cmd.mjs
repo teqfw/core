@@ -5,23 +5,22 @@
  */
 export default class TeqFw_Core_Back_App_A_Init_Cmd {
     /**
-     * @param {TeqFw_Di_Container} container
      * @param {TeqFw_Core_Back_Defaults} DEF
      * @param {TeqFw_Core_Shared_Api_Logger} logger -  instance
      */
     constructor(
         {
-            container,
             TeqFw_Core_Back_Defaults$: DEF,
             TeqFw_Core_Shared_Logger$$: logger, // inject the implementation
         }
     ) {
         /**
+         * @param {TeqFw_Di_Container} container
          * @param {{command:function}} program
          * @param {TeqFw_Core_Back_Api_Plugin_Registry} plugins
          * @returns {Promise<void>}
          */
-        this.act = async function ({program, plugins}) {
+        this.act = async function ({container, program, plugins}) {
             // FUNCS
             /**
              * Add single command to the app's commander.

@@ -36,14 +36,19 @@ export default class TeqFw_Core_Back_App {
         /** @type {TeqFw_Core_Back_Api_Plugin_Registry} */
         let _plugins;
         let _name, _version;
+        /**
+         * @type {TeqFw_Di_Container}
+         */
+        let _container;
 
         // INSTANCE METHODS
 
         /**
+         * @param {TeqFw_Di_Container} container
          * @param {string} path absolute path to the root of the project files (where ./node_modules/ is placed)
          * @returns {Promise<void>}
          */
-        this.run = async function ({path}) {
+        this.run = async function ({container, path}) {
             // VARS
             const me = this;
 
@@ -100,14 +105,14 @@ export default class TeqFw_Core_Back_App {
                 // load and save plugins definitions (`teqfw.json`)
                 _plugins = await pluginScan.exec(path);
                 logger.info(`Teq-plugins have been loaded.`);
-                await initDi.act({plugins: _plugins});
+                await initDi.act({container, plugins: _plugins});
                 logger.info(`The DI container has been initialized with teq-plugin data.`);
                 await initLogger.act();
                 logger.info(`The logger has been initialized. Starting the initialization of teq-plugins...`);
-                await initPlugins.act({plugins: _plugins});
+                await initPlugins.act({container, plugins: _plugins});
                 logger.info(`All teq-plugins have been initialized. Adding the CLI commands...`);
                 // run the commander
-                await initCmd.act({program, plugins: _plugins});
+                await initCmd.act({container, program, plugins: _plugins});
                 logger.info(`All CLI commands have been added.`);
                 if (!process.argv.slice(2).length) {
                     // print out help and stop by default

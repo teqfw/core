@@ -59,8 +59,8 @@ export async function initPlugins(container, root) {
     /** @type {TeqFw_Core_Back_App_A_Init_Plugins} */
     const aInit = await container.get('TeqFw_Core_Back_App_A_Init_Plugins$');
     const plugins = await pluginScan.exec(root);
-    await aDi.act({plugins});
-    await aInit.act({plugins});
+    await aDi.act({container, plugins});
+    await aInit.act({container, plugins});
 }
 
 /**
@@ -89,5 +89,5 @@ export default async function TeqFw_Core_Back_Launcher({path}) {
      * @type {TeqFw_Core_Back_App}
      */
     const app = await container.get('TeqFw_Core_Back_App$');
-    await app.run({path});
+    await app.run({container, path});
 }
