@@ -1,6 +1,6 @@
 {
   "name": "@teqfw/core",
-  "version": "0.34.1",
+  "version": "0.35.0",
   "description": "Core functionalities for plugin scanning, local configuration management, and command-line utilities for building modern web applications with the Tequila Framework.",
   "type": "module",
   "main": "src/Back/Launcher.mjs",
@@ -36,10 +36,11 @@
     "test": "./node_modules/mocha/bin/_mocha --recursive './test/**/*.test.mjs'"
   },
   "dependencies": {
-    "@teqfw/di": "^0.32.0",
+    "@teqfw/di": "^0.36.0",
     "commander": "^13.1.0"
   },
   "devDependencies": {
+    "@teqfw/test": "^0.24.0",
     "mocha": "^11.0.1"
   },
   "engines": {

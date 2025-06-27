@@ -1,5 +1,14 @@
 # @teqfw/core: Releases
 
+## 0.35.0 - Enhanced DI container integration and plugin autoload configuration
+
+- **Unified DI container usage**: replaced `TeqFw_Di_Api_Container` with the concrete `TeqFw_Di_Container` across the codebase for improved consistency and maintainability.
+- **Extended plugin autoload configuration**: added support for multiple namespace roots via the new `autoload.extra` property in plugin descriptors, allowing more flexible DI namespace mapping.
+- **Updated DI initialization logic**: now explicitly passes the DI container to all plugin and app initialization actions, enhancing clarity and testability.
+- **Improved logging during DI setup**: logs all namespace mappings, including new `extra` autoloads, to improve traceability of the plugin resolution process.
+- **Refactored `Launcher.mjs` and related app bootstrapping logic**, aligning initialization steps with the updated container and plugin setup API.
+- **Minor corrections in documentation comments**, improving clarity and consistency in factory-related modules.
+
 ## 0.34.1 - Fix `@teqfw/di` version in the `package.json`
 
 - Fix `@teqfw/di` version in the `package.json`

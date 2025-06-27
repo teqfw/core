@@ -10,7 +10,6 @@ import {join} from 'node:path';
  */
 export default class TeqFw_Core_Back_App_A_Init_Di {
     /**
-     * @param {TeqFw_Di_Api_Container} container
      * @param {TeqFw_Core_Back_Defaults} DEF
      * @param {TeqFw_Core_Shared_Api_Logger} logger -  instance
      * @param {TeqFw_Core_Shared_App_Di_PostProcessor_Proxy} chunkProxy
@@ -19,7 +18,6 @@ export default class TeqFw_Core_Back_App_A_Init_Di {
      */
     constructor(
         {
-            container,
             TeqFw_Core_Back_Defaults$: DEF,
             TeqFw_Core_Shared_Logger$$: logger, // inject the implementation
             TeqFw_Core_Shared_App_Di_PostProcessor_Proxy$: chunkProxy,
@@ -28,10 +26,11 @@ export default class TeqFw_Core_Back_App_A_Init_Di {
         }
     ) {
         /**
+         * @param {TeqFw_Di_Container} container
          * @param {TeqFw_Core_Back_Api_Plugin_Registry} plugins
          * @returns {Promise<void>}
          */
-        this.act = async function ({plugins}) {
+        this.act = async function ({container, plugins}) {
             // FUNCS
             /**
              * Extract autoload data from `@teqfw/di` nodes of descriptors and initialize the resolver.
@@ -44,15 +43,26 @@ export default class TeqFw_Core_Back_App_A_Init_Di {
                     const desc = item.teqfw[DEF.SHARED.NAME_DI];
                     /** @type {TeqFw_Core_Back_Plugin_Dto_Desc_Di_Autoload.Dto} */
                     const auto = desc.autoload;
-                    const ext = auto.ext ?? 'js';
-                    const ns = auto.ns;
-                    if (ns) {
-                        const path = join(item.path, auto.path);
-                        resolver.addNamespaceRoot(ns, path, ext);
-                        logger.info(`'${ns}' namespace with default '${ext}' ext is mapped to '${path}'.`);
+                    if (!auto?.ns || !auto?.path) continue;
+
+                    const extMain = auto.ext ?? 'js';
+                    const rootMain = join(item.path, auto.path);
+                    resolver.addNamespaceRoot(auto.ns, rootMain, extMain);
+                    logger.info(`'${auto.ns}' namespace with '${extMain}' ext is mapped to '${rootMain}'.`);
+
+                    // Process extra autoloads
+                    if (Array.isArray(auto.extra)) {
+                        for (const sub of auto.extra) {
+                            if (!sub?.ns || !sub?.path) continue;
+                            const ext = sub.ext ?? extMain;
+                            const root = join(item.path, sub.path);
+                            resolver.addNamespaceRoot(sub.ns, root, ext);
+                            logger.info(`'${sub.ns}' namespace with '${ext}' ext is mapped to '${root}'.`);
+                        }
                     }
                 }
             }
+
 
             /**
              * Extract data from ordered `@teqfw/di` nodes and initialize proxy wrappers.

@@ -4,7 +4,7 @@
  */
 export default class TeqFw_Core_Shared_App_Di_PostProcessor_Factory {
     /**
-     * @param {TeqFw_Di_Api_Container} container
+     * @param {TeqFw_Di_Container} container
      * @param {TeqFw_Core_Shared_Defaults} DEF
      */
     constructor(

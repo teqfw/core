@@ -11,10 +11,10 @@ import {platform} from 'node:process';
 /**
  * Create and manually set up the DI container.
  * @param {string} root - The root folder of the app (where the `node_modules` folder is located).
- * @returns {Promise<TeqFw_Di_Api_Container>}
+ * @returns {Promise<TeqFw_Di_Container>}
  */
 export async function initContainer(root) {
-    /** @type {TeqFw_Di_Api_Container} */
+    /** @type {TeqFw_Di_Container} */
     const res = new Container();
     res.setDebug(false);
     // add path mapping for @teqfw/core to the DI resolver
@@ -47,7 +47,7 @@ export async function initContainer(root) {
 }
 
 /**
- * @param {TeqFw_Di_Api_Container} container
+ * @param {TeqFw_Di_Container} container
  * @param {string} root
  * @return {Promise<void>}
  */
@@ -59,12 +59,12 @@ export async function initPlugins(container, root) {
     /** @type {TeqFw_Core_Back_App_A_Init_Plugins} */
     const aInit = await container.get('TeqFw_Core_Back_App_A_Init_Plugins$');
     const plugins = await pluginScan.exec(root);
-    await aDi.act({plugins});
-    await aInit.act({plugins});
+    await aDi.act({container, plugins});
+    await aInit.act({container, plugins});
 }
 
 /**
- * @param {TeqFw_Di_Api_Container} container
+ * @param {TeqFw_Di_Container} container
  * @return {Promise<void>}
  */
 export async function stopPlugins(container) {
@@ -89,5 +89,5 @@ export default async function TeqFw_Core_Back_Launcher({path}) {
      * @type {TeqFw_Core_Back_App}
      */
     const app = await container.get('TeqFw_Core_Back_App$');
-    await app.run({path});
+    await app.run({container, path});
 }
