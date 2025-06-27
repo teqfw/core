@@ -1,15 +1,25 @@
 /**
  * Initialize test environment to run unit tests.
  */
-import $path from 'path';
-import $url from 'url';
 import Container from '@teqfw/di';
-import {join} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {dirname, join, resolve} from 'node:path';
+import {existsSync} from 'node:fs';
 
-/* Resolve paths to main folders */
-const {path: currentScript} = $url.parse(import.meta.url);
-const pathScript = $path.dirname(currentScript);
-const pathPrj = $path.join(pathScript, '..', '..', '..', '..');
+
+// Get the absolute path to the current file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const pkgRoot = join(__dirname, '..');
+
+let projectRoot, pathCore;
+if (existsSync(join(pkgRoot, 'node_modules'))) {
+    projectRoot = pkgRoot;
+    pathCore = join(projectRoot, 'src');
+} else {
+    projectRoot = resolve(pkgRoot, '..', '..', '..', '..');
+    pathCore = join(projectRoot, 'node_modules', '@teqfw', 'core', 'src');
+}
 
 /* Create and setup DI container (once per all imports) */
 
@@ -18,8 +28,7 @@ const container = new Container();
 container.setDebug(false);
 // add path mapping for @teqfw/core to the DI resolver
 const resolver = container.getResolver();
-const pathDi = join(pathPrj, 'node_modules', '@teqfw', 'di', 'src');
-const pathCore = join(pathPrj, 'node_modules', '@teqfw', 'core', 'src');
+const pathDi = join(projectRoot, 'node_modules', '@teqfw', 'di', 'src');
 resolver.addNamespaceRoot('TeqFw_Di_', pathDi, 'js');
 resolver.addNamespaceRoot('TeqFw_Core_', pathCore, 'mjs');
 // setup parser for the legacy code

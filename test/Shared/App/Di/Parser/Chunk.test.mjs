@@ -17,7 +17,7 @@ describe('TeqFw_Core_Shared_App_Di_Parser_Legacy', () => {
             const dto = parser.parse('namedSingleton');
             assert.strictEqual(dto.composition, undefined);
             assert.strictEqual(dto.exportName, undefined);
-            assert.strictEqual(dto.life, Defs.LIFE_SINGLETON);
+            assert.strictEqual(dto.life, Defs.LS);
             assert.strictEqual(dto.moduleName, undefined);
             assert.strictEqual(dto.value, 'namedSingleton');
             assert.strictEqual(dto.wrappers.length, 0);
@@ -25,9 +25,9 @@ describe('TeqFw_Core_Shared_App_Di_Parser_Legacy', () => {
         it('named constructor ID (namedFactory$$)', async () => {
             /** @type {TeqFw_Di_DepId} */
             const dto = parser.parse('namedFactory$$');
-            assert.strictEqual(dto.composition, Defs.COMPOSE_FACTORY);
+            assert.strictEqual(dto.composition, Defs.CF);
             assert.strictEqual(dto.exportName, undefined);
-            assert.strictEqual(dto.life, Defs.LIFE_INSTANCE);
+            assert.strictEqual(dto.life, Defs.LI);
             assert.strictEqual(dto.moduleName, undefined);
             assert.strictEqual(dto.value, 'namedFactory$$');
             assert.strictEqual(dto.wrappers.length, 0);
@@ -55,9 +55,9 @@ describe('TeqFw_Core_Shared_App_Di_Parser_Legacy', () => {
                 it('as-is (Ns_Module.)', async () => {
                     /** @type {TeqFw_Di_DepId} */
                     const dto = parser.parse('Ns_Module.');
-                    assert.strictEqual(dto.composition, Defs.COMPOSE_AS_IS);
+                    assert.strictEqual(dto.composition, Defs.CA);
                     assert.strictEqual(dto.exportName, 'default');
-                    assert.strictEqual(dto.life, Defs.LIFE_SINGLETON);
+                    assert.strictEqual(dto.life, Defs.LS);
                     assert.strictEqual(dto.moduleName, 'Ns_Module');
                     assert.strictEqual(dto.value, 'Ns_Module.');
                     assert.strictEqual(dto.wrappers.length, 0);
@@ -65,9 +65,9 @@ describe('TeqFw_Core_Shared_App_Di_Parser_Legacy', () => {
                 it('singleton (Ns_Module$)', async () => {
                     /** @type {TeqFw_Di_DepId} */
                     const dto = parser.parse('Ns_Module$');
-                    assert.strictEqual(dto.composition, Defs.COMPOSE_FACTORY);
+                    assert.strictEqual(dto.composition, Defs.CF);
                     assert.strictEqual(dto.exportName, 'default');
-                    assert.strictEqual(dto.life, Defs.LIFE_SINGLETON);
+                    assert.strictEqual(dto.life, Defs.LS);
                     assert.strictEqual(dto.moduleName, 'Ns_Module');
                     assert.strictEqual(dto.value, 'Ns_Module$');
                     assert.strictEqual(dto.wrappers.length, 0);
@@ -75,9 +75,9 @@ describe('TeqFw_Core_Shared_App_Di_Parser_Legacy', () => {
                 it('instance (Ns_Module$$)', async () => {
                     /** @type {TeqFw_Di_DepId} */
                     const dto = parser.parse('Ns_Module$$');
-                    assert.strictEqual(dto.composition, Defs.COMPOSE_FACTORY);
+                    assert.strictEqual(dto.composition, Defs.CF);
                     assert.strictEqual(dto.exportName, 'default');
-                    assert.strictEqual(dto.life, Defs.LIFE_INSTANCE);
+                    assert.strictEqual(dto.life, Defs.LI);
                     assert.strictEqual(dto.moduleName, 'Ns_Module');
                     assert.strictEqual(dto.value, 'Ns_Module$$');
                     assert.strictEqual(dto.wrappers.length, 0);
@@ -85,9 +85,9 @@ describe('TeqFw_Core_Shared_App_Di_Parser_Legacy', () => {
                 it('singleton proxy (Ns_Module@)', async () => {
                     /** @type {TeqFw_Di_DepId} */
                     const dto = parser.parse('Ns_Module@');
-                    assert.strictEqual(dto.composition, Defs.COMPOSE_FACTORY);
+                    assert.strictEqual(dto.composition, Defs.CF);
                     assert.strictEqual(dto.exportName, 'default');
-                    assert.strictEqual(dto.life, Defs.LIFE_SINGLETON);
+                    assert.strictEqual(dto.life, Defs.LS);
                     assert.strictEqual(dto.moduleName, 'Ns_Module');
                     assert.strictEqual(dto.value, 'Ns_Module@');
                     assert.strictEqual(dto.wrappers[0], 'proxy');
@@ -95,9 +95,9 @@ describe('TeqFw_Core_Shared_App_Di_Parser_Legacy', () => {
                 it('instance proxy (Ns_Module@@)', async () => {
                     /** @type {TeqFw_Di_DepId} */
                     const dto = parser.parse('Ns_Module@@');
-                    assert.strictEqual(dto.composition, Defs.COMPOSE_FACTORY);
+                    assert.strictEqual(dto.composition, Defs.CF);
                     assert.strictEqual(dto.exportName, 'default');
-                    assert.strictEqual(dto.life, Defs.LIFE_INSTANCE);
+                    assert.strictEqual(dto.life, Defs.LI);
                     assert.strictEqual(dto.moduleName, 'Ns_Module');
                     assert.strictEqual(dto.value, 'Ns_Module@@');
                     assert.strictEqual(dto.wrappers[0], 'proxy');
@@ -108,9 +108,9 @@ describe('TeqFw_Core_Shared_App_Di_Parser_Legacy', () => {
                 it('simple (Ns_Module.name)', async () => {
                     /** @type {TeqFw_Di_DepId} */
                     const dto = parser.parse('Ns_Module.name');
-                    assert.strictEqual(dto.composition, Defs.COMPOSE_AS_IS);
+                    assert.strictEqual(dto.composition, Defs.CA);
                     assert.strictEqual(dto.exportName, 'name');
-                    assert.strictEqual(dto.life, Defs.LIFE_SINGLETON);
+                    assert.strictEqual(dto.life, Defs.LS);
                     assert.strictEqual(dto.moduleName, 'Ns_Module');
                     assert.strictEqual(dto.value, 'Ns_Module.name');
                     assert.strictEqual(dto.wrappers.length, 0);
@@ -118,9 +118,9 @@ describe('TeqFw_Core_Shared_App_Di_Parser_Legacy', () => {
                 it('singleton (Ns_Module.name$)', async () => {
                     /** @type {TeqFw_Di_DepId} */
                     const dto = parser.parse('Ns_Module.name$');
-                    assert.strictEqual(dto.composition, Defs.COMPOSE_FACTORY);
+                    assert.strictEqual(dto.composition, Defs.CF);
                     assert.strictEqual(dto.exportName, 'name');
-                    assert.strictEqual(dto.life, Defs.LIFE_SINGLETON);
+                    assert.strictEqual(dto.life, Defs.LS);
                     assert.strictEqual(dto.moduleName, 'Ns_Module');
                     assert.strictEqual(dto.value, 'Ns_Module.name$');
                     assert.strictEqual(dto.wrappers.length, 0);
@@ -128,9 +128,9 @@ describe('TeqFw_Core_Shared_App_Di_Parser_Legacy', () => {
                 it('instance (Ns_Module.name$$)', async () => {
                     /** @type {TeqFw_Di_DepId} */
                     const dto = parser.parse('Ns_Module.name$$');
-                    assert.strictEqual(dto.composition, Defs.COMPOSE_FACTORY);
+                    assert.strictEqual(dto.composition, Defs.CF);
                     assert.strictEqual(dto.exportName, 'name');
-                    assert.strictEqual(dto.life, Defs.LIFE_INSTANCE);
+                    assert.strictEqual(dto.life, Defs.LI);
                     assert.strictEqual(dto.moduleName, 'Ns_Module');
                     assert.strictEqual(dto.value, 'Ns_Module.name$$');
                     assert.strictEqual(dto.wrappers.length, 0);
@@ -138,9 +138,9 @@ describe('TeqFw_Core_Shared_App_Di_Parser_Legacy', () => {
                 it('singleton proxy (Ns_Module.name@)', async () => {
                     /** @type {TeqFw_Di_DepId} */
                     const dto = parser.parse('Ns_Module.name@');
-                    assert.strictEqual(dto.composition, Defs.COMPOSE_FACTORY);
+                    assert.strictEqual(dto.composition, Defs.CF);
                     assert.strictEqual(dto.exportName, 'name');
-                    assert.strictEqual(dto.life, Defs.LIFE_SINGLETON);
+                    assert.strictEqual(dto.life, Defs.LS);
                     assert.strictEqual(dto.moduleName, 'Ns_Module');
                     assert.strictEqual(dto.value, 'Ns_Module.name@');
                     assert.strictEqual(dto.wrappers[0], 'proxy');
@@ -148,9 +148,9 @@ describe('TeqFw_Core_Shared_App_Di_Parser_Legacy', () => {
                 it('instance proxy (Ns_Module.name@@)', async () => {
                     /** @type {TeqFw_Di_DepId} */
                     const dto = parser.parse('Ns_Module.name@@');
-                    assert.strictEqual(dto.composition, Defs.COMPOSE_FACTORY);
+                    assert.strictEqual(dto.composition, Defs.CF);
                     assert.strictEqual(dto.exportName, 'name');
-                    assert.strictEqual(dto.life, Defs.LIFE_INSTANCE);
+                    assert.strictEqual(dto.life, Defs.LI);
                     assert.strictEqual(dto.moduleName, 'Ns_Module');
                     assert.strictEqual(dto.value, 'Ns_Module.name@@');
                     assert.strictEqual(dto.wrappers[0], 'proxy');
